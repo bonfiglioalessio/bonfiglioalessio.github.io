@@ -1,0 +1,22 @@
+#intro {
+    @apply py-20 space-y-10;
+    h2 {
+        @apply text-5xl;
+    }
+    p {
+        @apply text-3xl leading-relaxed;
+    }
+    button {
+        &:hover {
+            @apply rotate-0;
+            a {
+                @apply rotate-0;
+            }
+        };
+        @apply scale-[2] border border-white rounded-[100%] p-8 relative rotate-[-18deg] top-9 left-8;
+        a {
+            @apply block rotate-[18deg];
+        }
+    }
+
+}
