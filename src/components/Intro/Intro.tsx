@@ -1,17 +1,21 @@
+import Buttons from "../Buttons";
 import "./intro.scss";
 
 const Intro = () => {
   return (
     <section id="intro">
-      <h2><span>Ciao a tutti!</span> Sono un ragazzo di classe <span>'98</span> nato a Sanremo.</h2>
+      <h2>
+        <span>Ciao a tutti!</span> Sono un ragazzo di classe <span>'98</span>{" "}
+        nato a Sanremo.
+      </h2>
       <p>
-        Finito il liceo artistico, il mio pane quotidiano iniziava ad essere il
-        codice su <span>Visual Studio Code</span> e lo strumento “ispeziona elemento” di
-        Chrome.
+        Fin da piccolino super appassionato dello sviluppo web e della{" "}
+        <span>tecnologia</span>.<br></br>Ho frequentato il{" "}
+        <span>liceo artistico</span> nel ramo del multimediale, successivamente
+        ho continuato gli studi frequentando corsi specializzati per{" "}
+        <span>Web Design</span> e <span>Web programming</span>.
       </p>
-      <button>
-        <a href="#">Scopri le mie skill</a>
-      </button>
+      <Buttons href={["#", "#"]} text={["Scopri i miei progetti", "Contatti"]} />
     </section>
   );
 };
