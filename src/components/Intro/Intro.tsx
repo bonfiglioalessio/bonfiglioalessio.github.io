@@ -4,18 +4,18 @@ import "./intro.scss";
 const Intro = () => {
   return (
     <section id="intro">
-      <h2>
-        <span>Ciao a tutti!</span> Sono un ragazzo di classe <span>'98</span>{" "}
-        nato a Sanremo.
-      </h2>
-      <p>
-        Fin da piccolino super appassionato dello sviluppo web e della{" "}
-        <span>tecnologia</span>.<br></br>Ho frequentato il{" "}
-        <span>liceo artistico</span> nel ramo del multimediale, successivamente
-        ho continuato gli studi frequentando corsi specializzati per{" "}
-        <span>Web Design</span> e <span>Web programming</span>.
+      <h3 className="drop-shadow-2xl">
+        <strong>Hello everyone!</strong> I am a class of <strong>'98</strong>{" "}
+        boy born in San Remo.
+      </h3>
+      <p className="drop-shadow-2xl">
+        Since childhood I've been super enthusiast about web development and <strong>technology</strong>.<br></br>I attended <strong>liceo artistico</strong> in the branch of multimediale, later i
+        continued my studies by taking specialised courses in <strong>Web Design</strong> and <strong>Web Programming</strong>.
       </p>
-      <Buttons href={["#", "#"]} text={["Scopri i miei progetti", "Contatti"]} />
+      <Buttons
+        href={["#", "#"]}
+        text={["Experiences", "Contact me"]}
+      />
     </section>
   );
 };
