@@ -1,6 +1,6 @@
 #hero {
-    @apply bg-accent h-[80vh] relative overflow-hidden;
+    @apply bg-accent h-[84vh] relative overflow-hidden text-black font-normal;
     .title h1{
-        @apply absolute bottom-[21px] text-[6.6rem] left-[-12px] leading-[.9] text-black
+        @apply absolute bottom-[21px] text-[6.2rem] left-[-15px] leading-[.9] text-white font-bold drop-shadow-2xl
     }
 }

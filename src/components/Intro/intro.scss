@@ -1,12 +1,6 @@
 #intro {
-    // h2 {
-    //     @apply text-4xl;
-    // }
-    // p {
-    //     @apply text-2xl leading-relaxed;
-    // }
     button {
-        @apply border border-accent p-3 text-accent;
+        @apply border border-[#c7c7c7] dark:border-accent p-3 dark:text-accent backdrop-blur-3xl dark:bg-dark/50 bg-light/20;
     }
 
 }

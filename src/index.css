@@ -13,13 +13,17 @@ html {
 }
 
 body {
-  @apply bg-black text-white w-screen overflow-x-hidden;
+  @apply dark:bg-black bg-white dark:text-white text-black w-screen overflow-x-hidden;
 }
 
 section {
-  @apply px-9 prose-stone dark:prose-invert prose-lg lg:prose-xl prose-img:rounded-xl;
+  @apply px-9 prose-stone dark:prose-invert prose-lg lg:prose-xl;
 }
 
-span {
-  @apply text-accent font-bold;
+span, strong {
+  @apply dark:text-accent font-bold;
+}
+
+h4 {
+  @apply text-xl
 }

@@ -8,6 +8,7 @@ module.exports = {
       'dark': '#3c3c3c',
       'white': '#FFFFFF',
       'black': '#000000',
+      'transparent': 'rgba(0,0,0,0)',
     },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],
