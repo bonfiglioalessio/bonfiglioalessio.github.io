@@ -20,9 +20,9 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="px-9 relative prose-stone dark:prose-invert prose-lg lg:prose-xl pt-20 pb-36">
-      <hr className="mb-1 text-light w-1/3" />
-      <ul className="flex items-center m-0 p-0 gap-5">
+    <footer className="px-9 relative prose-stone dark:prose-invert prose-lg lg:prose-xl pt-20 pb-36 max-w-4xl mx-auto">
+      <hr className="mb-1 text-light w-1/3 md:mx-auto" />
+      <ul className="flex items-center m-0 p-0 gap-5 md:justify-center">
         {Social.map(({ name, url }) => (
           <li key={name} className="p-0">
             <a href={url} target="_blank">{name}</a>

@@ -17,7 +17,7 @@ body {
 }
 
 section {
-  @apply px-9 prose-stone dark:prose-invert prose-lg lg:prose-xl;
+  @apply px-9 prose-stone dark:prose-invert prose-lg lg:prose-xl max-w-4xl mx-auto;
 }
 
 span, strong {

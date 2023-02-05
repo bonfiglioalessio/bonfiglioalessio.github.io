@@ -9,7 +9,7 @@ const Project = () => {
         my favorite works
       </p>
 
-      <div className="space-y-6">
+      <div className="space-y-6 md:max-w-xl">
         {Projects.map((props) => {
           const { key, name, image, technology, link } = props;
           return (

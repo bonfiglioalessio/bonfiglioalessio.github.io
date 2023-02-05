@@ -4,7 +4,7 @@ const Experiences = () => {
       <h3 className="py-4 border-b drop-shadow-2xl">Work Experiences ✨</h3>
       <p className="drop-shadow-2xl">Wonderful companies I worked with.</p>
 
-      <ul className="list-[disclosure-closed]">
+      <ul className="list-[disclosure-closed] md:max-w-md">
         <li className="relative">
           <h4 className="m-0 drop-shadow-2xl">AdKaora <small>- Mondadori Media</small></h4>
           <p className="m-0 text-sm drop-shadow-2xl">
