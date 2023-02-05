@@ -13,7 +13,7 @@ const Intro = () => {
         continued my studies by taking specialised courses in <strong>Web Design</strong> and <strong>Web Programming</strong>.
       </p>
       <Buttons
-        href={["#", "#"]}
+        href={["#experiences", "#contact"]}
         text={["Experiences", "Contact me"]}
       />
     </section>

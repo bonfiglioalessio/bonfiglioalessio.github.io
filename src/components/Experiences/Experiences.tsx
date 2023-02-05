@@ -1,7 +1,7 @@
 const Experiences = () => {
   return (
-    <section>
-      <h3 className="border-b py-4 drop-shadow-2xl">Work Experiences ✨</h3>
+    <section id="experiences">
+      <h3 className="py-4 border-b drop-shadow-2xl">Work Experiences ✨</h3>
       <p className="drop-shadow-2xl">Wonderful companies I worked with.</p>
 
       <ul className="list-[disclosure-closed]">
@@ -12,7 +12,7 @@ const Experiences = () => {
           </p>
           <hr className="my-3 shadow-2xl" />
           <p className="m-0 text-sm drop-shadow-2xl">Frontend Developer - Milan, Italy</p>
-          <img src="/experiences/mondadori.svg" className="absolute top-4 right-0 m-0 drop-shadow-2xl" width={50} alt="" />
+          <img src="/experiences/mondadori.svg" className="absolute right-0 m-0 top-4 drop-shadow-2xl" width={50} alt="" />
         </li>
       </ul>
 
