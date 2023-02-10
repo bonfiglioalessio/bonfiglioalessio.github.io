@@ -1,5 +1,5 @@
 #hero {
-  @apply bg-accent h-[74vh] relative overflow-hidden text-black font-normal max-w-full;
+  @apply bg-accent h-[74vh] relative overflow-hidden text-black font-normal max-w-full mt-[40px];
   .title h1 {
     @apply absolute bottom-[21px] text-[6.2rem] left-[-15px] leading-[.9] md:left-auto text-white font-bold drop-shadow-2xl;
   }
