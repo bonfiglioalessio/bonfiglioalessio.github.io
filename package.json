@@ -2,14 +2,18 @@
   "name": "portfolio",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://github.com/bonfiglioalessio/bonfiglioalessio.github.io",
   "type": "module",
   "scripts": {
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d dist",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.9",
+    "gh-pages": "^5.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sass": "^1.57.1"
