@@ -13,10 +13,18 @@ const Project = () => {
         {Projects.map((props) => {
           const { key, name, image, technology, link } = props;
           return (
-            <div key={key} className="border border-[#c7c7c7] backdrop-blur-3xl dark:bg-dark/50 bg-light/20 p-2 m-0 relative flex flex-col items-start h-[160px] justify-end  shadow-2xl">
-              <img src={image} width={image.includes('unique') ? 110 : 70} className="drop-shadow-2xl mx-0 my-3 !rounded-none absolute top-1 right-5 " alt="" />
+            <div
+              key={key}
+              className="border border-[#c7c7c7] backdrop-blur-3xl dark:bg-dark/50 bg-light/20 p-2 m-0 relative flex flex-col items-start h-[160px] justify-end  shadow-2xl"
+            >
+              <img
+                src={image}
+                width={image.includes("unique") ? 110 : 70}
+                className="drop-shadow-2xl mx-0 my-3 !rounded-none absolute top-1 right-5 "
+                alt=""
+              />
               <h4 className="m-0 drop-shadow-2xl">{name}</h4>
-              <ul className="flex items-center flex-wrap p-0 gap-1">
+              <ul className="flex items-center flex-wrap p-0 gap-1 mb-2">
                 {technology.map((name, index) => {
                   return (
                     <li
@@ -29,7 +37,19 @@ const Project = () => {
                   );
                 })}
               </ul>
-              {/* <a href={link} target="_blank">Scopri di più</a> */}
+              {link ? (
+                <a href={link} target="_blank" className="p-1">
+                  <small>
+                    Vai al sito <span className="text-xl pl-1">👉</span>
+                  </small>
+                </a>
+              ) : (
+                <a className="p-1">
+                  <small>
+                    Work in progress.. <span className="text-xl pl-1">🔧</span>
+                  </small>
+                </a>
+              )}
             </div>
           );
         })}

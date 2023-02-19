@@ -11,15 +11,15 @@ const ProjectList: ProjectProps[] = [
         key: 0,
         name: "Snorlax Toodo!",
         image: "/project/snorlax.svg",
-        technology: ["React", "Material UI", "Redux", "Webpack"],
-        link: "www.google.it",
+        technology: ["Preact", "Material UI", "Redux", "Vite"],
+        link: "https://snorlax-toodo.netlify.app",
     },
     {
         key: 1,
         name: "Sunshi",
         image: "/project/sunshi.svg",
         technology: ["React", "Typescript", "SCSS", "Redux", "Vite"],
-        link: "www.google.it",
+        link: "",
     },
     {
         key: 2,

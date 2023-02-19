@@ -46,8 +46,8 @@ const Skills = () => {
       name: "Git",
     },
     {
-      icon: "webpack",
-      name: "Webpack",
+      icon: "mu",
+      name: "MaterialUI",
     },
   ];
 
@@ -62,13 +62,13 @@ const Skills = () => {
         {skills.map((skill, index) => {
           const { icon, name } = skill;
           return (
-            <li
+            <button
               key={index}
-              className="border border-[#c7c7c7] backdrop-blur-3xl dark:bg-dark/50 bg-light/20 p-2 m-0 min-w-[65px] text-center flex items-center gap-2 shadow-2xl"
+              className="border border-[#c7c7c7] backdrop-blur-3xl dark:bg-dark/50 dark:hover:bg-dark/80 bg-light/20 hover:bg-light/80  p-2 m-0 min-w-[65px] text-center flex items-center gap-2 shadow-2xl"
             >
               <img src={`/skills/${icon}.svg`} className="m-0" width={28} height={28} alt="" />
-              <a href="">{name}</a>
-            </li>
+              <p className="m-0 p-0">{name}</p>
+            </button>
           );
         })}
       </ul>

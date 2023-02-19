@@ -6,7 +6,6 @@
 html {
   @apply font-light;
   box-sizing: border-box;
-  /* font-size: 62.5%; */
   width: 100%;
   height: 100%;
   font-family: "Ubuntu", sans-serif;
@@ -21,10 +20,34 @@ section {
   @apply px-9 prose-stone dark:prose-invert prose-lg lg:prose-xl max-w-4xl mx-auto;
 }
 
-span, strong {
+span,
+strong {
   @apply dark:text-accent font-bold;
 }
 
 h4 {
-  @apply text-xl
+  @apply text-xl;
+}
+
+.loader-container {
+  @apply dark:bg-black/80 animate-pulse bg-light/80 backdrop-blur-sm h-screen w-screen fixed flex items-center justify-center top-0 z-20;
+}
+
+.loader-container img {
+  @apply fixed bottom-9;
+}
+
+.spinner {
+  @apply w-[60px] h-[60px] border-accent border-8 rounded-full;
+  border-color: #d7ef15 transparent #d7ef15 transparent;
+  animation: spin-anim 1.2s linear infinite;
+}
+
+@keyframes spin-anim {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
