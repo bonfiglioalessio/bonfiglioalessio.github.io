@@ -22,6 +22,14 @@ const Skills = () => {
       name: "Javascript",
     },
     {
+      icon: "vue",
+      name: "Vue",
+    },
+    {
+      icon: "nuxt",
+      name: "Nuxt",
+    },
+    {
       icon: "react",
       name: "React",
     },
@@ -36,10 +44,6 @@ const Skills = () => {
     {
       icon: "ts",
       name: "Typescript",
-    },
-    {
-      icon: "redux",
-      name: "Redux",
     },
     {
       icon: "git",
