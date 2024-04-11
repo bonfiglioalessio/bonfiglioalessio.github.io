@@ -1,26 +1,26 @@
 const Experiences = () => {
   const experiences = [
     {
+      name: "iliad",
+      location: "",
+      duration: "Present",
+      description: "Software Engineer - Milan, Italy",
+      image: "/experiences/iliad.svg",
+    },
+    {
       name: "AdKaora",
       location: "Mondadori Media",
       duration: "3 yrs / July 2023",
       description: "Frontend Developer - Milan, Italy",
       image: "/experiences/mondadori.svg",
     },
-    {
-      name: "iliad",
-      location: "",
-      duration: "Present",
-      description: "Frontend Developer - Milan, Italy",
-      image: "/experiences/iliad.svg",
-    }
   ]
   return (
     <section id="experiences">
       <h3 className="py-4 border-b drop-shadow-2xl">Work Experiences ✨</h3>
       <p className="drop-shadow-2xl">Wonderful companies I worked with.</p>
 
-      <ul className="list-[disclosure-closed] md:max-w-md">
+      <ul className="list-[circle] md:max-w-md">
         {experiences.map(({ name, location, duration, description, image }) => (
           <li className="relative" key={name}>
             <h4 className="m-0 drop-shadow-2xl">{name} <small className="text-sm">{location}</small></h4>
