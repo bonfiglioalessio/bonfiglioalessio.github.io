@@ -10,12 +10,16 @@
   import ExperienceSection from './components/experience/ExperienceSection.vue'
   import ContactSection from './components/contact/ContactSection.vue'
   import AudioHudControl from './components/ui/AudioHudControl.vue'
+  import CyberCursor from './components/ui/CyberCursor.vue'
 </script>
 
 <template>
   <div
     class="min-h-screen bg-dark-950 text-slate-200 font-mono relative overflow-hidden flex flex-col justify-between"
   >
+    <!-- Custom Cyber 60fps Precision Cursor -->
+    <CyberCursor />
+
     <!-- Interactive Canvas 3D Starfield Layer -->
     <SpaceCanvas />
 
