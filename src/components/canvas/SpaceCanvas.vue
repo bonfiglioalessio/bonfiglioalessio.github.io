@@ -161,6 +161,67 @@
     camera.targetScrollY = window.scrollY * 0.35
   }
 
+  function triggerSupernovaExplosion(worldX = 0, worldY = 0, clickZ = 250) {
+    // 1. Expanding 3D Shockwave rings
+    shockwaves.push({
+      x: worldX,
+      y: worldY,
+      z: clickZ,
+      radius: 10,
+      maxRadius: 320,
+      alpha: 0.95,
+      color: '226, 241, 97',
+    })
+
+    shockwaves.push({
+      x: worldX,
+      y: worldY,
+      z: clickZ,
+      radius: 5,
+      maxRadius: 240,
+      alpha: 0.8,
+      color: '56, 189, 248',
+    })
+
+    // 2. 3D Explosive Sparks in spherical directions
+    const count = width < 768 ? 18 : 34
+    for (let i = 0; i < count; i++) {
+      const theta = Math.random() * Math.PI * 2
+      const phi = Math.acos(Math.random() * 2 - 1)
+      const speed = Math.random() * 7.5 + 2.5
+      const color = sparkColors[Math.floor(Math.random() * sparkColors.length)]
+
+      sparks.push({
+        x: worldX,
+        y: worldY,
+        z: clickZ,
+        vx: Math.sin(phi) * Math.cos(theta) * speed,
+        vy: Math.sin(phi) * Math.sin(theta) * speed,
+        vz: Math.cos(phi) * speed * 0.8,
+        radius: Math.random() * 2.4 + 1.0,
+        alpha: 1,
+        color,
+        decay: Math.random() * 0.022 + 0.012,
+      })
+    }
+
+    // 3. Volumetric 3D impulse push to nearby stars
+    for (let i = 0; i < stars.length; i++) {
+      const s = stars[i]
+      const dx = s.x - worldX
+      const dy = s.y - worldY
+      const dz = s.z - clickZ
+      const dist3D = Math.sqrt(dx * dx + dy * dy + dz * dz)
+
+      if (dist3D < 380 && dist3D > 1) {
+        const force = (1 - dist3D / 380) * 10.0
+        s.vx += (dx / dist3D) * force
+        s.vy += (dy / dist3D) * force
+        s.vz += (dz / dist3D) * force * 0.6
+      }
+    }
+  }
+
   // 3D Supernova Click Event
   function handleClick(e: MouseEvent) {
     playSupernova()
@@ -173,64 +234,11 @@
     const worldX = clickScreenX * scale
     const worldY = clickScreenY * scale
 
-    // 1. Expanding 3D Shockwave rings
-    shockwaves.push({
-      x: worldX,
-      y: worldY,
-      z: clickZ,
-      radius: 10,
-      maxRadius: 280,
-      alpha: 0.9,
-      color: '226, 241, 97',
-    })
+    triggerSupernovaExplosion(worldX, worldY, clickZ)
+  }
 
-    shockwaves.push({
-      x: worldX,
-      y: worldY,
-      z: clickZ,
-      radius: 5,
-      maxRadius: 200,
-      alpha: 0.75,
-      color: '56, 189, 248',
-    })
-
-    // 2. 3D Explosive Sparks in spherical directions
-    const count = width < 768 ? 14 : 26
-    for (let i = 0; i < count; i++) {
-      const theta = Math.random() * Math.PI * 2
-      const phi = Math.acos(Math.random() * 2 - 1)
-      const speed = Math.random() * 6.5 + 2.0
-      const color = sparkColors[Math.floor(Math.random() * sparkColors.length)]
-
-      sparks.push({
-        x: worldX,
-        y: worldY,
-        z: clickZ,
-        vx: Math.sin(phi) * Math.cos(theta) * speed,
-        vy: Math.sin(phi) * Math.sin(theta) * speed,
-        vz: Math.cos(phi) * speed * 0.8,
-        radius: Math.random() * 2.2 + 0.8,
-        alpha: 1,
-        color,
-        decay: Math.random() * 0.025 + 0.015,
-      })
-    }
-
-    // 3. Volumetric 3D impulse push to nearby stars
-    for (let i = 0; i < stars.length; i++) {
-      const s = stars[i]
-      const dx = s.x - worldX
-      const dy = s.y - worldY
-      const dz = s.z - clickZ
-      const dist3D = Math.sqrt(dx * dx + dy * dy + dz * dz)
-
-      if (dist3D < 320 && dist3D > 1) {
-        const force = (1 - dist3D / 320) * 8.0
-        s.vx += (dx / dist3D) * force
-        s.vy += (dy / dist3D) * force
-        s.vz += (dz / dist3D) * force * 0.5
-      }
-    }
+  function handleCustomSupernova() {
+    triggerSupernovaExplosion((Math.random() - 0.5) * 100, (Math.random() - 0.5) * 100, 200)
   }
 
   function render(time: number) {
@@ -484,6 +492,7 @@
       window.addEventListener('mouseleave', handleMouseLeave, { passive: true })
       window.addEventListener('scroll', handleScroll, { passive: true })
       window.addEventListener('click', handleClick, { passive: true })
+      window.addEventListener('space-supernova-event', handleCustomSupernova)
       document.addEventListener('visibilitychange', handleVisibilityChange)
 
       animationFrameId = requestAnimationFrame(render)
@@ -499,6 +508,7 @@
     window.removeEventListener('mouseleave', handleMouseLeave)
     window.removeEventListener('scroll', handleScroll)
     window.removeEventListener('click', handleClick)
+    window.removeEventListener('space-supernova-event', handleCustomSupernova)
     document.removeEventListener('visibilitychange', handleVisibilityChange)
   })
 </script>
