@@ -9,6 +9,7 @@
   import ProjectsSection from './components/projects/ProjectsSection.vue'
   import ExperienceSection from './components/experience/ExperienceSection.vue'
   import ContactSection from './components/contact/ContactSection.vue'
+  import AudioHudControl from './components/ui/AudioHudControl.vue'
 </script>
 
 <template>
@@ -52,5 +53,8 @@
 
     <!-- Seamless System Telemetry Footer -->
     <AppFooter />
+
+    <!-- Fixed Bottom-Right HUD Audio Synthesizer Control -->
+    <AudioHudControl />
   </div>
 </template>
