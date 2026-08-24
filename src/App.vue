@@ -3,6 +3,7 @@
   import MarqueeTicker from './components/layout/MarqueeTicker.vue'
   import AppContainer from './components/layout/AppContainer.vue'
   import AppFooter from './components/layout/AppFooter.vue'
+  import SpaceCanvas from './components/canvas/SpaceCanvas.vue'
   import HeroSection from './components/hero/HeroSection.vue'
   import TechConstellation from './components/stack/TechConstellation.vue'
   import ProjectsSection from './components/projects/ProjectsSection.vue'
@@ -14,6 +15,9 @@
   <div
     class="min-h-screen bg-dark-950 text-slate-200 font-mono relative overflow-hidden flex flex-col justify-between"
   >
+    <!-- Interactive Canvas 2D Starfield Layer -->
+    <SpaceCanvas />
+
     <!-- Sticky TopBar -->
     <TopBar />
 
