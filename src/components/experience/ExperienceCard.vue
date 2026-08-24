@@ -23,17 +23,27 @@
   // Compute if the laser beam has reached this node
   const isReached = computed(() => {
     if (props.timelineProgress === 0) return props.index === 0 && false
-    // Calculate fractional position of each node along the vertical rail
-    const activationThreshold = props.total > 1 ? (props.index / (props.total - 1)) * 75 + 10 : 20
+    // Calculate fractional position of each node along the vertical rail (including header offset)
+    const activationThreshold = props.total > 1 ? (props.index / (props.total - 1)) * 65 + 25 : 30
     return props.timelineProgress >= activationThreshold
   })
 </script>
 
 <template>
-  <div class="relative pl-6 sm:pl-8 group">
-    <!-- Glowing Timeline Node Marker (Activated on Scroll) -->
+  <div class="relative w-full group">
+    <!-- Horizontal Neon Connector Branch (From Rail to Card) -->
     <div
-      class="absolute top-6 -left-[13px] sm:-left-[17px] w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-dark-950 flex items-center justify-center z-20 transition-all duration-500"
+      class="absolute top-7 -left-7 sm:-left-9 lg:-left-10 w-7 sm:w-9 lg:w-10 h-[2px] pointer-events-none transition-all duration-500 z-10"
+      :class="[
+        isReached
+          ? 'bg-gradient-to-r from-lime-400 to-lime-400/40 shadow-[0_0_8px_#e2f161]'
+          : 'bg-lime-400/15 group-hover:bg-lime-400/30',
+      ]"
+    />
+
+    <!-- Glowing Timeline Node Marker (Centered Directly on the Left Rail) -->
+    <div
+      class="absolute top-4 -left-[40px] sm:-left-[49px] lg:-left-[53px] w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-dark-950 flex items-center justify-center z-20 transition-all duration-500"
       :class="
         isReached || experience.isCurrent
           ? 'border-2 border-lime-400 shadow-[0_0_15px_rgba(226,241,97,0.7)] scale-110'
@@ -66,7 +76,7 @@
       :hud-reticles="true"
       :tilt="false"
       :float-animation="floatAnimation"
-      class="transition-all duration-500 select-none space-y-4"
+      class="transition-all duration-500 select-none space-y-4 w-full"
       :class="[
         isReached
           ? 'border-lime-400/35 shadow-[0_0_20px_rgba(226,241,97,0.15)] opacity-100'
