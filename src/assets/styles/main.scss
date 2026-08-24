@@ -1,3 +1,14 @@
+// ==========================================
+// MAIN STYLESHEET ENTRY POINT
+// ==========================================
+
+// 1. SCSS Partials (@use must be at the very top)
+@use 'variables' as *;
+@use 'mixins' as *;
+@use 'base' as *;
+@use 'layout' as *;
+
+// 2. Tailwind Directives
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

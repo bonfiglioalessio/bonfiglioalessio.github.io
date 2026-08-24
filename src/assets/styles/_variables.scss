@@ -1,0 +1,39 @@
+// ==========================================
+// SCSS DESIGN TOKENS & VARIABLES
+// ==========================================
+
+// --- Color Palette: Dark Cyber Backgrounds ---
+$color-dark-950: #020408;
+$color-dark-900: #060910;
+$color-dark-850: #0b101d;
+$color-dark-800: #12192c;
+$color-dark-700: #1b2640;
+$color-dark-600: #28385e;
+
+// --- Color Palette: Accents & Glows ---
+$color-lime-300: #f5ff80;
+$color-lime-400: #e2f161;
+$color-lime-500: #ccff00;
+$color-cyan-accent: #38bdf8;
+$color-emerald-accent: #34d399;
+
+// --- Text Colors ---
+$color-text-primary: #f8fafc;
+$color-text-secondary: #cbd5e1;
+$color-text-muted: #64748b;
+
+// --- Typography ---
+$font-mono: 'JetBrains Mono', monospace;
+$font-display: 'Syne', sans-serif;
+$font-sans: 'Plus Jakarta Sans', sans-serif;
+
+// --- Layout & Breakpoints ---
+$container-max-width: 80rem; // 1280px (max-w-7xl)
+$container-padding-mobile: 1.5rem; // 24px (px-6)
+$container-padding-desktop: 2rem; // 32px (px-8)
+$section-gap: 6rem; // 96px (space-y-24)
+
+// --- Transitions ---
+$transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+$transition-slow: 400ms cubic-bezier(0.16, 1, 0.3, 1);

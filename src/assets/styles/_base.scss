@@ -1,0 +1,37 @@
+// ==========================================
+// BASE STYLES & RESET
+// ==========================================
+@use 'variables' as *;
+
+html {
+  scroll-behavior: smooth;
+  background-color: $color-dark-950;
+  color: $color-text-secondary;
+}
+
+body {
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  font-family: $font-mono;
+}
+
+/* Custom Cyber Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: $color-dark-950;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $color-dark-800;
+  border-radius: 3px;
+  transition: background $transition-fast;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $color-lime-400;
+}

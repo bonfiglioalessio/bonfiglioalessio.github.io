@@ -1,0 +1,69 @@
+// ==========================================
+// LAYOUT & STRUCTURAL UTILITIES
+// ==========================================
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.app-container {
+  width: 100%;
+  max-width: $container-max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $container-padding-mobile;
+  padding-right: $container-padding-mobile;
+
+  @media (min-width: 640px) {
+    padding-left: $container-padding-desktop;
+    padding-right: $container-padding-desktop;
+  }
+}
+
+.section-wrapper {
+  scroll-margin-top: 6rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+
+  @media (min-width: 768px) {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+}
+
+.space-floating-card {
+  @include glass-panel(0.45, 14px, rgba(226, 241, 97, 0.16));
+  position: relative;
+  transition:
+    border-color $transition-base,
+    box-shadow $transition-base,
+    transform $transition-base;
+
+  &:hover {
+    border-color: rgba(226, 241, 97, 0.65);
+    box-shadow:
+      0 12px 40px 0 rgba(0, 0, 0, 0.6),
+      0 0 35px 2px rgba(226, 241, 97, 0.25);
+  }
+
+  &.has-hud-reticles {
+    @include hud-reticles(rgba(226, 241, 97, 0.45));
+  }
+}
+
+/* Ambient glow orb */
+.ambient-glow-lime {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 9999px;
+  background-color: rgba(226, 241, 97, 0.12);
+  filter: blur(160px);
+}
+
+.ambient-glow-cyan {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 9999px;
+  background-color: rgba(56, 189, 248, 0.1);
+  filter: blur(140px);
+}
