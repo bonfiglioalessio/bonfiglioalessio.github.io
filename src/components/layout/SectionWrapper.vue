@@ -14,12 +14,12 @@
   const spacingClasses = computed(() => {
     switch (props.spacing) {
       case 'tight':
-        return 'py-8 sm:py-12'
+        return 'py-2 sm:py-4'
       case 'loose':
-        return 'py-16 sm:py-28'
+        return 'py-8 sm:py-12'
       case 'default':
       default:
-        return 'py-12 sm:py-20'
+        return 'py-3 sm:py-6'
     }
   })
 </script>

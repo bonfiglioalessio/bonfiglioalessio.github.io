@@ -33,7 +33,7 @@
 
     <!-- Main Content Container -->
     <AppContainer size="default">
-      <main class="space-y-16 lg:space-y-24 pb-0">
+      <main class="space-y-6 sm:space-y-10 lg:space-y-14 pb-4">
         <!-- 00 Hero Section -->
         <HeroSection />
 
