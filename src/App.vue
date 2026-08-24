@@ -3,6 +3,7 @@
   import MarqueeTicker from './components/layout/MarqueeTicker.vue'
   import AppContainer from './components/layout/AppContainer.vue'
   import HeroSection from './components/hero/HeroSection.vue'
+  import TechConstellation from './components/stack/TechConstellation.vue'
 </script>
 
 <template>
@@ -21,9 +22,12 @@
 
     <!-- Main Content Container -->
     <AppContainer size="default">
-      <main>
-        <!-- Hero Section -->
+      <main class="space-y-16 lg:space-y-24 pb-20">
+        <!-- 00 Hero Section -->
         <HeroSection />
+
+        <!-- 01 Tech Constellation Section -->
+        <TechConstellation />
       </main>
     </AppContainer>
   </div>
