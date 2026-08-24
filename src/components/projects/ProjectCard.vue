@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { ref } from 'vue'
   import type { Project } from '../../types/portfolio'
+  import { useAudioSynth } from '../../composables/useAudioSynth'
   import AppCard from '../ui/AppCard.vue'
   import AppBadge from '../ui/AppBadge.vue'
 
@@ -9,10 +10,12 @@
     floatAnimation?: string
   }>()
 
+  const { playDiffToggle, playClick, playHover } = useAudioSynth()
   const isDiffOpen = ref(false)
 
   function toggleDiff() {
     isDiffOpen.value = !isDiffOpen.value
+    playDiffToggle(isDiffOpen.value)
   }
 </script>
 
@@ -24,6 +27,7 @@
     :tilt="true"
     :float-animation="floatAnimation"
     class="flex flex-col justify-between group transition-all duration-300 select-none h-full"
+    @mouseenter="playHover"
   >
     <div class="space-y-4">
       <!-- Card Top: Badge (Left) & Big Project Number (Right) -->
@@ -129,6 +133,7 @@
           target="_blank"
           rel="noopener noreferrer"
           class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-lime-400 text-black font-mono font-bold text-xs shadow-[0_0_15px_rgba(226,241,97,0.35)] hover:shadow-[0_0_25px_rgba(226,241,97,0.65)] hover:scale-105 active:scale-95 transition-all cursor-pointer"
+          @click="playClick"
         >
           <span>VISIT</span>
           <span class="text-sm">&rarr;</span>

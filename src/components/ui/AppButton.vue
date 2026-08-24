@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { computed } from 'vue'
+  import { useAudioSynth } from '../../composables/useAudioSynth'
 
   interface Props {
     as?: 'button' | 'a'
@@ -22,6 +23,8 @@
     disabled: false,
     type: 'button',
   })
+
+  const { playClick, playHover } = useAudioSynth()
 
   const computedRel = computed(() => {
     if (props.rel) return props.rel
@@ -67,6 +70,8 @@
     :disabled="disabled"
     class="inline-flex items-center justify-center font-mono transition-all duration-200 cursor-pointer select-none disabled:opacity-50 disabled:pointer-events-none"
     :class="[variantClasses, sizeClasses]"
+    @click="playClick"
+    @mouseenter="playHover"
   >
     <slot name="icon-left" />
     <slot />
