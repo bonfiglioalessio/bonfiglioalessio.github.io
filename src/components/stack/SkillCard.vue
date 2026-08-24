@@ -9,9 +9,9 @@
 
 <template>
   <div
-    class="space-floating-card p-4 sm:p-5 rounded-2xl flex items-center justify-between group transition-all duration-300 hover:scale-[1.02] select-none cursor-default"
+    class="space-floating-card p-4 sm:p-5 rounded-2xl flex items-center justify-between gap-3 group transition-all duration-300 hover:scale-[1.02] select-none cursor-default"
   >
-    <div class="flex items-center gap-3.5 sm:gap-4">
+    <div class="flex items-center gap-3.5 sm:gap-4 min-w-0 flex-1">
       <!-- Icon Container (DevIcon or Custom Styled Text Icon) -->
       <div
         v-if="skill.customIconText"
@@ -38,20 +38,22 @@
         />
       </div>
 
-      <!-- Skill Titles -->
-      <div>
+      <!-- Skill Titles (Wrapping naturally to multiple lines without ellipsis) -->
+      <div class="min-w-0 flex-1">
         <h4
-          class="font-bold text-sm sm:text-base text-white group-hover:text-lime-400 transition-colors font-mono"
+          class="font-bold text-sm sm:text-base text-white group-hover:text-lime-400 transition-colors font-mono leading-tight"
         >
           {{ skill.name }}
         </h4>
-        <p class="text-[11px] sm:text-xs text-slate-400 font-mono">
+        <p class="text-[11px] sm:text-xs text-slate-400 font-mono leading-snug pt-0.5 break-words">
           {{ skill.description }}
         </p>
       </div>
     </div>
 
-    <!-- Classification Badge -->
-    <AppBadge :variant="skill.badgeVariant" class="shrink-0">{{ skill.badge }}</AppBadge>
+    <!-- Classification Badge with Fixed Margin -->
+    <AppBadge :variant="skill.badgeVariant" class="shrink-0 ml-2 self-center">{{
+      skill.badge
+    }}</AppBadge>
   </div>
 </template>

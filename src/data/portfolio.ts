@@ -138,7 +138,7 @@ export const portfolioData: PortfolioData = {
       skills: [
         {
           name: 'Anthropic Claude',
-          description: 'Architecture & Context Engineering',
+          description: 'Context & Architecture',
           badge: 'AI',
           badgeVariant: 'amber',
           iconUrl: '/icons/claude.svg',
