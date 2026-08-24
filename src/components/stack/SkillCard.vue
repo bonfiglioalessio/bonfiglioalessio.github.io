@@ -1,17 +1,21 @@
 <script setup lang="ts">
   import type { SkillItem } from '../../types/portfolio'
+  import { useAudioSynth } from '../../composables/useAudioSynth'
   import AppBadge from '../ui/AppBadge.vue'
 
   defineProps<{
     skill: SkillItem
     floatAnimation?: string
   }>()
+
+  const { playBorderLoad } = useAudioSynth()
 </script>
 
 <template>
   <div :class="floatAnimation" class="w-full">
     <div
       class="skill-card space-floating-card p-4 sm:p-5 rounded-2xl flex items-center justify-between gap-3 group transition-all duration-300 hover:scale-[1.02] select-none cursor-default relative overflow-hidden h-full"
+      @mouseenter="playBorderLoad(0.5)"
     >
       <!-- Animated Yellow/Lime Border Loader on Hover -->
       <svg

@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { onMounted, onUnmounted, ref } from 'vue'
+  import { useAudioSynth } from '../../composables/useAudioSynth'
 
   interface Props {
     targetValue: number
@@ -19,6 +20,8 @@
     delay: 0,
   })
 
+  const { playBorderLoad, playHover } = useAudioSynth()
+
   const displayValue = ref(0)
   const progress = ref(0) // 0 to 100
   const isLoaded = ref(false)
@@ -33,6 +36,9 @@
     displayValue.value = 0
     progress.value = 0
     isLoaded.value = false
+
+    // Play cyber border loading synth sound
+    playBorderLoad(props.duration / 1000)
 
     const startTime = performance.now()
 
@@ -80,6 +86,7 @@
     <div
       class="stat-counter-card relative p-3 sm:p-3.5 rounded-2xl bg-dark-900/60 backdrop-blur-md border border-lime-400/20 flex flex-col justify-center text-center sm:text-left select-none cursor-pointer group transition-all duration-300 hover:scale-[1.04] overflow-hidden"
       @click="runCounterAnimation"
+      @mouseenter="playHover"
     >
       <!-- Animated Yellow/Lime SVG Loading Border Perimeter -->
       <svg
