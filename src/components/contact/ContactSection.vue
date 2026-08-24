@@ -1,12 +1,14 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { onMounted, onUnmounted, ref } from 'vue'
   import { portfolioData } from '../../data/portfolio'
-  import SectionWrapper from '../layout/SectionWrapper.vue'
-  import AppCard from '../ui/AppCard.vue'
 
   const { socialLinks } = portfolioData
   const emailAddress = 'bonfi.alessio98@gmail.com'
   const isCopied = ref(false)
+  const isEmerged = ref(false)
+  const contactSectionRef = ref<HTMLElement | null>(null)
+
+  let observer: IntersectionObserver | null = null
 
   async function copyEmail() {
     try {
@@ -19,36 +21,78 @@
       // Fallback
     }
   }
+
+  onMounted(() => {
+    if (contactSectionRef.value) {
+      observer = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[0]
+          isEmerged.value = entry.isIntersecting
+        },
+        {
+          threshold: 0.25,
+          rootMargin: '0px 0px -40px 0px',
+        },
+      )
+      observer.observe(contactSectionRef.value)
+    }
+  })
+
+  onUnmounted(() => {
+    if (observer) {
+      observer.disconnect()
+    }
+  })
 </script>
 
 <template>
-  <SectionWrapper id="contact" spacing="default">
-    <!-- Main Contact Showcase Card -->
-    <AppCard
-      padding="none"
-      rounded="3xl"
-      :hud-reticles="false"
-      :tilt="false"
-      class="p-6 sm:p-10 lg:p-14 space-y-6 sm:space-y-8 select-none relative overflow-hidden"
+  <section
+    id="contact"
+    ref="contactSectionRef"
+    class="fullscreen-contact-section w-screen relative left-1/2 -translate-x-1/2 min-h-[90vh] lg:min-h-screen pt-20 sm:pt-28 lg:pt-36 pb-16 sm:pb-24 px-6 sm:px-12 lg:px-20 flex flex-col justify-center items-center select-none overflow-hidden transition-colors duration-1000 ease-out"
+    :class="[isEmerged ? 'bg-emerged' : 'bg-submerged']"
+  >
+    <!-- Top Glowing Cyber Horizon Divider -->
+    <div
+      class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-lime-400/40 to-transparent transition-opacity duration-1000"
+      :class="isEmerged ? 'opacity-100' : 'opacity-20'"
+    />
+
+    <!-- Deep Space Atmospheric Nebula Glows -->
+    <div
+      class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] sm:w-[1000px] h-[500px] rounded-full bg-cyan-500/10 blur-[120px] pointer-events-none transition-all duration-1000"
+      :class="isEmerged ? 'scale-110 opacity-100' : 'scale-75 opacity-0'"
+    />
+    <div
+      class="absolute bottom-1/4 left-1/2 -translate-x-1/2 translate-y-1/2 w-[600px] sm:w-[900px] h-[450px] rounded-full bg-lime-400/10 blur-[130px] pointer-events-none transition-all duration-1000"
+      :class="isEmerged ? 'scale-110 opacity-100' : 'scale-75 opacity-0'"
+    />
+
+    <!-- Central Content Stage (Scales smoothly from dead center) -->
+    <div
+      class="max-w-4xl w-full mx-auto space-y-8 sm:space-y-10 relative z-10 transition-all duration-1000 cubic-bezier(0.16, 1, 0.3, 1) origin-center text-left"
+      :class="[
+        isEmerged ? 'scale-100 opacity-100 translate-y-0' : 'scale-90 opacity-40 translate-y-8',
+      ]"
     >
       <!-- Top Tag -->
       <div class="flex items-center gap-2">
         <span
-          class="text-lime-400 font-mono font-bold text-xs sm:text-sm tracking-wider drop-shadow-[0_0_8px_#e2f161]"
+          class="text-lime-400 font-mono font-bold text-xs sm:text-sm tracking-widest uppercase drop-shadow-[0_0_8px_#e2f161]"
         >
           // WANNA WORK WITH ME?
         </span>
       </div>
 
-      <!-- Main Glowing Display Headline -->
-      <div class="space-y-1">
+      <!-- Main Display Headline (Monumental Fullscreen Typography) -->
+      <div class="space-y-2">
         <h2
-          class="text-3xl sm:text-5xl lg:text-6xl font-extrabold font-syne text-white tracking-tight leading-[1.08]"
+          class="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold font-syne text-white tracking-tight leading-[1.05]"
         >
           Let's build<br />
           something<br />
           <span
-            class="text-lime-400 underline decoration-lime-400 decoration-2 sm:decoration-4 underline-offset-4 sm:underline-offset-8 drop-shadow-[0_0_24px_rgba(226,241,97,0.55)]"
+            class="text-lime-400 underline decoration-lime-400 decoration-4 sm:decoration-6 underline-offset-6 sm:underline-offset-10 drop-shadow-[0_0_35px_rgba(226,241,97,0.7)]"
           >
             extraordinary.
           </span>
@@ -56,28 +100,28 @@
       </div>
 
       <!-- Subtitle Description -->
-      <p class="text-xs sm:text-sm text-slate-300 font-mono leading-relaxed max-w-xl pt-2">
+      <p class="text-sm sm:text-base text-slate-300 font-mono leading-relaxed max-w-2xl pt-2">
         Se cerchi un Frontend Engineer con solida esperienza in React/Vue che mette la passione per
         il codice e i dettagli visivi al primo posto, connettiamoci.
       </p>
 
       <!-- Action Interaction Row -->
-      <div class="flex flex-col sm:flex-row sm:items-center gap-4 pt-2 sm:pt-4 flex-wrap">
-        <!-- Copy Email Pill Box with Reticles -->
+      <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 pt-4 flex-wrap">
+        <!-- Copy Email Pill Box -->
         <div
-          class="relative bg-dark-950/90 border border-lime-400/25 rounded-2xl px-4 py-2.5 sm:py-3 flex items-center justify-between gap-3 shadow-inner min-w-0"
+          class="relative bg-dark-900/90 border border-lime-400/30 rounded-2xl px-5 py-3 sm:py-3.5 flex items-center justify-between gap-4 shadow-[0_0_20px_rgba(0,0,0,0.6)] min-w-0"
         >
-          <div class="flex items-center gap-2 min-w-0 font-mono text-xs sm:text-sm">
+          <div class="flex items-center gap-2.5 min-w-0 font-mono text-xs sm:text-sm">
             <span class="text-lime-400 font-bold">$ copy:</span>
-            <span class="text-slate-200 truncate select-all">{{ emailAddress }}</span>
+            <span class="text-slate-100 truncate select-all font-mono">{{ emailAddress }}</span>
           </div>
 
           <button
             type="button"
-            class="px-2.5 py-1 text-[11px] font-mono rounded-lg border transition-all cursor-pointer shrink-0"
+            class="px-3 py-1.5 text-xs font-mono rounded-lg border transition-all cursor-pointer shrink-0"
             :class="
               isCopied
-                ? 'bg-lime-400 text-black border-lime-400 font-bold shadow-[0_0_10px_rgba(226,241,97,0.4)]'
+                ? 'bg-lime-400 text-black border-lime-400 font-bold shadow-[0_0_12px_rgba(226,241,97,0.5)]'
                 : 'bg-lime-400/15 text-lime-400 hover:bg-lime-400/25 border-lime-400/30'
             "
             @click="copyEmail"
@@ -89,30 +133,50 @@
         <!-- Direct Email Button CTA -->
         <a
           :href="`mailto:${emailAddress}`"
-          class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-lime-400 text-black font-mono font-bold text-xs sm:text-sm shadow-[0_0_20px_rgba(226,241,97,0.35)] hover:shadow-[0_0_30px_rgba(226,241,97,0.6)] hover:scale-105 active:scale-95 transition-all cursor-pointer shrink-0"
+          class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl bg-lime-400 text-black font-mono font-bold text-xs sm:text-sm shadow-[0_0_25px_rgba(226,241,97,0.4)] hover:shadow-[0_0_40px_rgba(226,241,97,0.8)] hover:scale-105 active:scale-95 transition-all cursor-pointer shrink-0"
         >
           <span>Send Email</span>
-          <span class="text-sm">&rarr;</span>
+          <span class="text-base">&rarr;</span>
         </a>
       </div>
 
       <!-- Social Links Row -->
-      <div class="flex items-center gap-6 sm:gap-8 pt-4 flex-wrap">
+      <div class="flex items-center gap-8 sm:gap-12 pt-6 flex-wrap">
         <a
           v-for="link in socialLinks.filter((l) => !l.isMailto)"
           :key="link.platform"
           :href="link.url"
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-1.5 font-mono text-xs sm:text-sm text-slate-400 hover:text-lime-400 transition-colors group cursor-pointer"
+          class="inline-flex items-center gap-2 font-mono text-xs sm:text-sm text-slate-400 hover:text-lime-400 transition-all duration-300 group cursor-pointer"
         >
           <span
-            class="text-lime-400/80 group-hover:text-lime-400 group-hover:-translate-y-0.5 transition-transform"
+            class="text-lime-400/80 group-hover:text-lime-400 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform font-bold"
             >&#x2197;</span
           >
           <span class="font-bold">{{ link.platform }}</span>
         </a>
       </div>
-    </AppCard>
-  </SectionWrapper>
+    </div>
+  </section>
 </template>
+
+<style scoped lang="scss">
+  .fullscreen-contact-section {
+    will-change: background;
+  }
+
+  .bg-submerged {
+    background: transparent;
+  }
+
+  .bg-emerged {
+    // Deep cosmic cyber-nebula smoothly fading into the footer
+    background: radial-gradient(
+      circle at 50% 40%,
+      rgba(16, 36, 68, 0.75) 0%,
+      rgba(8, 16, 30, 0.92) 60%,
+      rgba(3, 7, 18, 0.98) 100%
+    );
+  }
+</style>
