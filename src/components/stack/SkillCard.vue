@@ -4,12 +4,14 @@
 
   defineProps<{
     skill: SkillItem
+    floatAnimation?: string
   }>()
 </script>
 
 <template>
   <div
     class="space-floating-card p-4 sm:p-5 rounded-2xl flex items-center justify-between gap-3 group transition-all duration-300 hover:scale-[1.02] select-none cursor-default"
+    :class="floatAnimation"
   >
     <div class="flex items-center gap-3.5 sm:gap-4 min-w-0 flex-1">
       <!-- Icon Container (DevIcon or Custom Styled Text Icon) -->

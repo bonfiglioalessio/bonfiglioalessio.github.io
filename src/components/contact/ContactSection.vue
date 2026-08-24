@@ -28,7 +28,7 @@
       padding="none"
       rounded="3xl"
       :hud-reticles="true"
-      class="p-6 sm:p-10 lg:p-14 space-y-6 sm:space-y-8 select-none relative overflow-hidden"
+      class="p-6 sm:p-10 lg:p-14 space-y-6 sm:space-y-8 select-none relative overflow-hidden animate-float-slow"
     >
       <!-- Top Tag -->
       <div class="flex items-center gap-2">

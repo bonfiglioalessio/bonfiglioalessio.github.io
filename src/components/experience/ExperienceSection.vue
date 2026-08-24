@@ -5,6 +5,8 @@
   import ExperienceCard from './ExperienceCard.vue'
 
   const { careerMissionLog } = portfolioData
+
+  const floatPatterns = ['animate-float-slow', 'animate-float-delayed', 'animate-float-subtle']
 </script>
 
 <template>
@@ -18,14 +20,15 @@
         description="Il percorso professionale tra grandi realtà enterprise, sistemi ad alto traffico e ingegneria frontend."
       />
 
-      <!-- Vertical Timeline Track -->
+      <!-- Vertical Timeline Track with Staggered Zero-Gravity Floating Cards -->
       <div
         class="relative border-l border-lime-400/20 ml-2.5 sm:ml-3.5 space-y-8 sm:space-y-10 pt-2 pb-4"
       >
         <ExperienceCard
-          v-for="experience in careerMissionLog"
+          v-for="(experience, idx) in careerMissionLog"
           :key="experience.id"
           :experience="experience"
+          :float-animation="floatPatterns[idx % floatPatterns.length]"
         />
       </div>
     </div>

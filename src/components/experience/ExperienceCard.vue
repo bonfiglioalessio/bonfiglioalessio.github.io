@@ -5,6 +5,7 @@
 
   defineProps<{
     experience: Experience
+    floatAnimation?: string
   }>()
 </script>
 
@@ -28,12 +29,13 @@
       />
     </div>
 
-    <!-- Experience Content Card -->
+    <!-- Experience Content Card with Zero-Gravity Floating Motion -->
     <AppCard
       padding="md"
       rounded="2xl"
       :hud-reticles="true"
       class="transition-all duration-300 select-none space-y-4"
+      :class="floatAnimation"
     >
       <!-- Header: Mission Number, Period & Status Badge -->
       <div

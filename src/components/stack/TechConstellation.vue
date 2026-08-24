@@ -9,6 +9,8 @@
 
   const coreClusters = computed(() => skillsConstellation.filter((c) => c.clusterNumber !== '#04'))
   const aiCluster = computed(() => skillsConstellation.find((c) => c.clusterNumber === '#04'))
+
+  const floatPatterns = ['animate-float-slow', 'animate-float-delayed', 'animate-float-subtle']
 </script>
 
 <template>
@@ -24,7 +26,7 @@
 
       <!-- Top: 3-Column Core Engineering Clusters Grid -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-2">
-        <div v-for="cluster in coreClusters" :key="cluster.clusterNumber" class="space-y-4">
+        <div v-for="(cluster, cIdx) in coreClusters" :key="cluster.clusterNumber" class="space-y-4">
           <!-- Cluster Category Title -->
           <div
             class="text-[11px] font-mono text-slate-400 uppercase tracking-widest flex items-center gap-2 pb-1 border-b border-lime-400/10"
@@ -33,9 +35,14 @@
             <span>{{ cluster.title }}</span>
           </div>
 
-          <!-- Cards inside Cluster -->
+          <!-- Cards inside Cluster with Staggered Zero-Gravity Floating Motion -->
           <div class="space-y-3.5 sm:space-y-4">
-            <SkillCard v-for="skill in cluster.skills" :key="skill.name" :skill="skill" />
+            <SkillCard
+              v-for="(skill, sIdx) in cluster.skills"
+              :key="skill.name"
+              :skill="skill"
+              :float-animation="floatPatterns[(cIdx + sIdx) % floatPatterns.length]"
+            />
           </div>
         </div>
       </div>
@@ -50,14 +57,19 @@
             <span class="text-lime-400 font-bold">{{ aiCluster.clusterNumber }}</span>
             <span>{{ aiCluster.title }}</span>
           </div>
-          <span class="text-[10px] text-lime-400/80 font-mono hidden sm:inline"
-            >HUMAN-IN-THE-LOOP AI WORKFLOW</span
-          >
+          <span class="text-[10px] text-lime-400/80 font-mono hidden sm:inline">
+            HUMAN-IN-THE-LOOP AI WORKFLOW
+          </span>
         </div>
 
-        <!-- 3 Cards Grid for AI -->
+        <!-- 3 Cards Grid for AI with Staggered Float -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <SkillCard v-for="skill in aiCluster.skills" :key="skill.name" :skill="skill" />
+          <SkillCard
+            v-for="(skill, idx) in aiCluster.skills"
+            :key="skill.name"
+            :skill="skill"
+            :float-animation="floatPatterns[idx % floatPatterns.length]"
+          />
         </div>
       </div>
     </div>

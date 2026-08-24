@@ -15,7 +15,7 @@
     padding="none"
     rounded="2xl"
     :hud-reticles="true"
-    class="w-full max-w-md lg:max-w-lg h-[400px] sm:h-[430px] p-4 sm:p-5 flex flex-col justify-between select-none overflow-hidden"
+    class="w-full max-w-md lg:max-w-lg h-[400px] sm:h-[430px] p-4 sm:p-5 flex flex-col justify-between select-none overflow-hidden animate-float-slow"
   >
     <!-- Window Header & Tab Navigation -->
     <div class="space-y-3 shrink-0">
