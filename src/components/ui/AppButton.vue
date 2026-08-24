@@ -35,7 +35,7 @@
   const variantClasses = computed(() => {
     switch (props.variant) {
       case 'primary':
-        return 'bg-lime-400 hover:bg-lime-300 text-black font-extrabold shadow-[0_0_20px_rgba(204,255,0,0.35)] hover:scale-105 active:scale-95'
+        return 'bg-lime-400 hover:bg-lime-300 text-black font-extrabold shadow-[0_0_25px_rgba(226,241,97,0.4)] hover:scale-105 active:scale-95'
       case 'outline':
         return 'space-floating-card text-slate-200 hover:text-lime-400 hover:border-lime-400/50 hover:scale-105 active:scale-95'
       case 'ghost':
@@ -50,9 +50,9 @@
   const sizeClasses = computed(() => {
     switch (props.size) {
       case 'sm':
-        return 'text-[11px] px-3 py-1.5 rounded-lg gap-1.5'
+        return 'text-[11px] px-3.5 py-1.5 rounded-lg gap-1.5'
       case 'lg':
-        return 'text-sm px-6 py-4 rounded-xl gap-2.5 font-bold'
+        return 'text-xs sm:text-sm px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl gap-2.5 font-extrabold tracking-wide'
       case 'md':
       default:
         return 'text-xs px-4 py-2.5 rounded-xl gap-2 font-semibold'

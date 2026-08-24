@@ -10,13 +10,15 @@
 </script>
 
 <template>
-  <section class="min-h-[calc(100vh-6.5rem)] flex items-center py-8 lg:py-12 relative z-10 w-full">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center w-full">
+  <section
+    class="min-h-[calc(100vh-6.5rem)] flex items-center py-4 sm:py-8 lg:py-12 relative z-10 w-full"
+  >
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center w-full">
       <!-- Left Column: Bio, Headline, Stats & CTA -->
-      <div class="lg:col-span-7 space-y-5 lg:space-y-6">
-        <!-- Status & Company Badge Pill -->
+      <div class="lg:col-span-7 space-y-4 sm:space-y-5 lg:space-y-6">
+        <!-- Status & Company Badge Pill (Hidden on Mobile) -->
         <div
-          class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full space-floating-card text-xs font-mono select-none"
+          class="hidden sm:inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full space-floating-card text-xs font-mono select-none"
         >
           <span class="relative flex h-2.5 w-2.5">
             <span
@@ -35,16 +37,16 @@
         </div>
 
         <!-- Level Indicator & Main Display Headline (Zero-Gravity Floating) -->
-        <div class="space-y-2.5">
+        <div class="space-y-2">
           <p
-            class="text-xs text-lime-400 font-mono tracking-widest uppercase flex items-center gap-2 drop-shadow-[0_0_8px_rgba(226,241,97,0.5)] select-none"
+            class="text-[11px] sm:text-xs text-lime-400 font-mono tracking-widest uppercase flex items-center gap-2 drop-shadow-[0_0_8px_rgba(226,241,97,0.5)] select-none"
           >
             <span>&gt;_ LEVEL 06 DEVELOPER</span>
-            <span class="h-px w-12 bg-lime-400/60 shadow-[0_0_8px_#e2f161]" />
+            <span class="h-px w-10 sm:w-12 bg-lime-400/60 shadow-[0_0_8px_#e2f161]" />
           </p>
 
           <h1
-            class="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-display text-white tracking-tight leading-[1.05]"
+            class="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-display text-white tracking-tight leading-[1.08] sm:leading-[1.05]"
           >
             <span class="inline-block animate-float-slow"> Turning complex logic into </span>
             <br class="hidden sm:inline" />
@@ -64,7 +66,7 @@
         </p>
 
         <!-- Stats Counters Grid (Floating with staggered delays, roll-up counter & yellow loading border) -->
-        <div class="grid grid-cols-3 gap-3 py-1 max-w-md">
+        <div class="grid grid-cols-3 gap-2.5 sm:gap-3 py-1 max-w-md">
           <StatCounterCard
             v-for="(stat, idx) in profile.stats"
             :key="stat.label"
@@ -78,13 +80,27 @@
           />
         </div>
 
-        <!-- Call to Action Buttons -->
-        <div class="flex flex-wrap items-center gap-3.5 pt-1">
-          <AppButton variant="primary" size="md" href="#projects" as="a">
+        <!-- Call to Action Buttons (Stacked on Mobile, Row on Desktop) -->
+        <div
+          class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1 w-full sm:w-auto"
+        >
+          <AppButton
+            variant="primary"
+            size="lg"
+            href="#projects"
+            as="a"
+            class="w-full sm:w-auto text-center"
+          >
             <span>EXPLORE WORK</span>
             <span class="text-sm">&rarr;</span>
           </AppButton>
-          <AppButton variant="outline" size="md" href="#contact" as="a">
+          <AppButton
+            variant="outline"
+            size="lg"
+            href="#contact"
+            as="a"
+            class="w-full sm:w-auto text-center"
+          >
             <span>$ contact_me</span>
           </AppButton>
         </div>

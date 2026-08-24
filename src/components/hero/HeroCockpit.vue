@@ -90,7 +90,7 @@
 
     <!-- Main Cockpit Card Container (Fixed border & glow without hover-shift) -->
     <div
-      class="w-full h-[400px] sm:h-[430px] p-4 sm:p-5 rounded-2xl bg-dark-900/80 backdrop-blur-xl border border-lime-400/35 flex flex-col justify-between select-none overflow-hidden relative z-10 shadow-[0_0_40px_rgba(226,241,97,0.2),0_0_90px_rgba(226,241,97,0.1)]"
+      class="w-full h-[360px] sm:h-[410px] lg:h-[430px] p-3.5 sm:p-5 rounded-2xl bg-dark-900/80 backdrop-blur-xl border border-lime-400/35 flex flex-col justify-between select-none overflow-hidden relative z-10 shadow-[0_0_40px_rgba(226,241,97,0.2),0_0_90px_rgba(226,241,97,0.1)]"
     >
       <!-- Window Header & Tab Navigation -->
       <div class="space-y-3 shrink-0">
