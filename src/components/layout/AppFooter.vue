@@ -1,5 +1,13 @@
 <script setup lang="ts">
+  import { ref } from 'vue'
   import AppContainer from './AppContainer.vue'
+  import { useScrollReveal } from '../../composables/useScrollReveal'
+
+  const footerRef = ref<HTMLElement | null>(null)
+  useScrollReveal(footerRef, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -20px 0px',
+  })
 
   function scrollToTop() {
     window.scrollTo({
@@ -11,7 +19,8 @@
 
 <template>
   <footer
-    class="border-t border-lime-400/10 bg-dark-950/40 backdrop-blur-sm relative z-10 select-none"
+    ref="footerRef"
+    class="border-t border-lime-400/10 bg-dark-950/40 backdrop-blur-sm relative z-10 select-none reveal-on-scroll"
   >
     <AppContainer size="default">
       <div class="py-8 sm:py-10 flex flex-col sm:flex-row items-center justify-between gap-6">
