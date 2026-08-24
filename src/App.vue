@@ -1,7 +1,8 @@
 <script setup lang="ts">
+  import TopBar from './components/layout/TopBar.vue'
+  import MarqueeTicker from './components/layout/MarqueeTicker.vue'
   import AppContainer from './components/layout/AppContainer.vue'
   import SectionWrapper from './components/layout/SectionWrapper.vue'
-  import AppButton from './components/ui/AppButton.vue'
   import AppBadge from './components/ui/AppBadge.vue'
   import AppCard from './components/ui/AppCard.vue'
   import SectionHeader from './components/ui/SectionHeader.vue'
@@ -9,70 +10,84 @@
 
 <template>
   <div class="min-h-screen bg-dark-950 text-slate-200 font-mono relative overflow-hidden">
+    <!-- Sticky TopBar -->
+    <TopBar />
+
+    <!-- Infinite Marquee Ticker -->
+    <MarqueeTicker />
+
     <!-- Ambient Atmospheric Glows -->
     <div
       class="ambient-glow-lime top-[-160px] left-1/2 -translate-x-1/2 w-[800px] h-[400px] animate-glow-pulse"
     />
     <div class="ambient-glow-cyan bottom-[-140px] left-1/4 w-[600px] h-[350px]" />
 
+    <!-- Main Content Container -->
     <AppContainer>
-      <!-- Base Foundation Header -->
-      <header class="flex items-center justify-between border-b border-lime-400/15 py-6">
-        <div class="flex items-center gap-2">
-          <span class="w-3 h-3 rounded-full bg-lime-400 shadow-[0_0_10px_#e2f161]" />
-          <span class="text-lime-400 font-bold">&lt;</span>
-          <span class="font-display font-extrabold text-xl text-white tracking-tight"
-            >A.BONFIGLIO</span
-          >
-          <span class="text-lime-400 font-bold">/&gt;</span>
-        </div>
-
-        <div class="flex items-center gap-3">
-          <AppBadge variant="lime" :dot="true">STEP 2: FOUNDATION &amp; SCSS</AppBadge>
-        </div>
-      </header>
-
-      <!-- Foundation & Base Tokens Verification -->
       <SectionWrapper spacing="default">
         <SectionHeader
           section-number="00"
-          title="Design System & Base Tokens"
-          status-badge="● READY FOR SECTION-BY-SECTION BUILD"
-          description="Infrastruttura base pronta: SCSS modulare, container semantici, data layer tipizzato e componenti atomici."
+          title="TopBar &amp; Marquee Ticker"
+          status-badge="● STEP 3 IMPLEMENTED"
+          description="Navigazione semantica sticky con effetto glassmorphism e ticker infinito di highlight professionali."
         />
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8">
-          <!-- AppCard & AppBadge Showcase -->
-          <AppCard padding="lg" rounded="2xl" class="space-y-5">
+          <!-- TopBar Specs Card -->
+          <AppCard padding="lg" rounded="2xl" class="space-y-4">
             <div class="flex items-center justify-between border-b border-lime-400/15 pb-3">
-              <h3 class="text-sm font-bold text-white font-mono">AppBadge Variants</h3>
-              <span class="text-[10px] text-slate-400">Tokens</span>
+              <h3 class="text-sm font-bold text-white font-mono">TopBar Specifications</h3>
+              <AppBadge variant="lime" :dot="true">Sticky</AppBadge>
             </div>
 
-            <div class="flex flex-wrap gap-2">
-              <AppBadge variant="lime" :dot="true">Lime Accent</AppBadge>
-              <AppBadge variant="cyan">TypeScript</AppBadge>
-              <AppBadge variant="amber">JavaScript</AppBadge>
-              <AppBadge variant="pink">SCSS</AppBadge>
-              <AppBadge variant="emerald" pill>Live Deploy</AppBadge>
-              <AppBadge variant="orange">Git VCS</AppBadge>
-              <AppBadge variant="dark">Dark Chip</AppBadge>
-            </div>
+            <ul class="space-y-2.5 text-xs text-slate-300">
+              <li class="flex items-center gap-2">
+                <span class="text-lime-400">✔</span>
+                <span>Glassmorphism con <code>backdrop-blur-xl</code></span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-lime-400">✔</span>
+                <span>Brand logo animato <code>&lt;A.BONFIGLIO/&gt;</code></span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-lime-400">✔</span>
+                <span
+                  >Navigazione interna (<code>#stack</code>, <code>#projects</code>,
+                  <code>#experience</code>, <code>#contact</code>)</span
+                >
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-lime-400">✔</span>
+                <span>Menu a scomparsa responsive per mobile</span>
+              </li>
+            </ul>
           </AppCard>
 
-          <!-- AppButton Showcase -->
-          <AppCard padding="lg" rounded="2xl" class="space-y-5">
+          <!-- Marquee Ticker Specs Card -->
+          <AppCard padding="lg" rounded="2xl" class="space-y-4">
             <div class="flex items-center justify-between border-b border-lime-400/15 pb-3">
-              <h3 class="text-sm font-bold text-white font-mono">AppButton Variants</h3>
-              <span class="text-[10px] text-slate-400">Interactive</span>
+              <h3 class="text-sm font-bold text-white font-mono">Marquee Ticker Specifications</h3>
+              <AppBadge variant="cyan">60 FPS</AppBadge>
             </div>
 
-            <div class="flex flex-wrap gap-3">
-              <AppButton variant="primary" size="sm">Primary Lime</AppButton>
-              <AppButton variant="outline" size="sm">Outline Space</AppButton>
-              <AppButton variant="chip" size="sm">⚡ zsh</AppButton>
-              <AppButton variant="ghost" size="sm">Ghost Button</AppButton>
-            </div>
+            <ul class="space-y-2.5 text-xs text-slate-300">
+              <li class="flex items-center gap-2">
+                <span class="text-cyan-400">✦</span>
+                <span>Loop infinito senza scatti (CSS keyframes)</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-cyan-400">✦</span>
+                <span>Pausa automatica su hover per agevolare la lettura</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-cyan-400">✦</span>
+                <span>Dati collegati direttamente al Data Layer tipizzato</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-cyan-400">✦</span>
+                <span>Accessibilità semantica (<code>aria-hidden</code> sul clone)</span>
+              </li>
+            </ul>
           </AppCard>
         </div>
       </SectionWrapper>
