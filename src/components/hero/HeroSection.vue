@@ -1,8 +1,8 @@
 <script setup lang="ts">
   import { portfolioData } from '../../data/portfolio'
-  import AppCard from '../ui/AppCard.vue'
   import AppButton from '../ui/AppButton.vue'
   import HeroCockpit from './HeroCockpit.vue'
+  import StatCounterCard from './StatCounterCard.vue'
 
   const { profile } = portfolioData
 
@@ -63,27 +63,19 @@
           {{ profile.bio }}
         </p>
 
-        <!-- Stats Counters Grid (Floating with staggered delays) -->
+        <!-- Stats Counters Grid (Floating with staggered delays, roll-up counter & yellow loading border) -->
         <div class="grid grid-cols-3 gap-3 py-1 max-w-md">
-          <AppCard
+          <StatCounterCard
             v-for="(stat, idx) in profile.stats"
             :key="stat.label"
-            padding="sm"
-            :interactive="true"
-            class="cursor-pointer group select-none text-center sm:text-left"
-            :class="statAnimClasses[idx % statAnimClasses.length]"
-          >
-            <div
-              class="text-xl sm:text-2xl font-bold font-display text-lime-400 flex items-center justify-center sm:justify-start drop-shadow-[0_0_10px_rgba(226,241,97,0.5)]"
-            >
-              <span>{{ stat.prefix }}{{ stat.value }}{{ stat.suffix }}</span>
-            </div>
-            <div
-              class="text-[9px] sm:text-[10px] text-slate-400 uppercase tracking-wider group-hover:text-slate-200 transition-colors"
-            >
-              {{ stat.label }}
-            </div>
-          </AppCard>
+            :target-value="stat.value"
+            :prefix="stat.prefix"
+            :suffix="stat.suffix"
+            :label="stat.label"
+            :delay="idx * 950 + 300"
+            :duration="900"
+            :float-animation="statAnimClasses[idx % statAnimClasses.length]"
+          />
         </div>
 
         <!-- Call to Action Buttons -->
