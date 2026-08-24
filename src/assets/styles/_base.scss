@@ -65,3 +65,17 @@ body {
     height: 0;
   }
 }
+
+/* Custom Cyber Cursor pointer reset on fine pointer devices */
+@media (hover: hover) and (pointer: fine) {
+  body,
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  [role='button'],
+  .cursor-pointer {
+    cursor: none !important;
+  }
+}
