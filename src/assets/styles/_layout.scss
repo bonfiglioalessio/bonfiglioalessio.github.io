@@ -52,13 +52,22 @@
   }
 }
 
+/* Keyframes for hardware accelerated infinite marquee */
+@keyframes marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
 /* Marquee infinite scroll GPU accelerated */
 .animate-marquee-wrapper {
   display: flex;
-  width: 200%;
-  transform: translate3d(0, 0, 0);
+  width: max-content;
   will-change: transform;
-  animation: marquee 20s linear infinite;
+  animation: marquee 25s linear infinite;
 
   &:hover {
     animation-play-state: paused;
