@@ -168,7 +168,7 @@ export const portfolioData: PortfolioData = {
       badge: 'live app',
       typeBadge: 'side project',
       description:
-        'Task management app pensata per la massima rapidità e fluidità, con sincronizzazione reattiva dello stato ed esperienza utente snella.',
+        'Task management app minimal per la gestione rapida delle to-do list con sincronizzazione dello stato e persistenza locale.',
       stack: ['Preact', 'Redux', 'Material UI'],
       liveUrl: 'https://snorlax-toodo.netlify.app/',
       diff: {
@@ -186,8 +186,9 @@ export const portfolioData: PortfolioData = {
       projectNumber: '02',
       title: 'Weather App',
       badge: 'live app',
+      typeBadge: 'side project',
       description:
-        'Visualizzatore meteo real-time con grafici dinamici, geolocalizzazione istantanea e radar chart reattivo.',
+        'Semplice web app meteo con geolocalizzazione, grafici dinamici e previsioni real-time tramite OpenWeather API.',
       stack: ['React', 'Sass', 'Recharts'],
       liveUrl: 'https://bonfi-weather-app.netlify.app/',
       diff: {
@@ -204,11 +205,12 @@ export const portfolioData: PortfolioData = {
       id: 'unique-photography',
       projectNumber: '03',
       title: 'Unique Photography',
-      badge: 'live production',
+      badge: 'live demo',
+      typeBadge: 'side project',
       description:
-        'Piattaforma portfolio fotografico integrata con headless CMS e query GraphQL per caricamenti istantanei.',
+        'Esperimento di portfolio fotografico collegato a Contentful headless CMS tramite query GraphQL.',
       stack: ['Next.js', 'GraphQL', 'Tailwind'],
-      liveUrl: 'https://www.uniquephotography.it/',
+      liveUrl: 'https://unique-contentful.netlify.app/',
       diff: {
         filename: 'lib/graphql/contentful.ts',
         additions: 540,
@@ -226,7 +228,7 @@ export const portfolioData: PortfolioData = {
       badge: 'active repo',
       typeBadge: 'portfolio',
       description:
-        'Design geeky con particellare interattiva, synth sonoro nativo, shell CLI interattiva e micro-interazioni ad alte prestazioni.',
+        'Questo portfolio personale sviluppato con architettura modulare Vue 3, SCSS, CLI cockpit e design geeky.',
       stack: ['Vue 3', 'TailwindCSS', 'Canvas 2D', 'Web Audio'],
       isCurrentSite: true,
       diff: {
