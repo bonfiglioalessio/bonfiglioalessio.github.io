@@ -125,7 +125,7 @@
   exCompany: <span class="text-white font-bold">"AdKaora Mondadori Media"</span>,
   origin: <span class="text-lime-300">"Sanremo, IT ('98)"</span>,
   experience: <span class="text-emerald-400">"6+ Years in Production"</span>,
-  coreStack: [<span class="text-emerald-400">"React"</span>, <span class="text-emerald-400">"Vue"</span>, <span class="text-emerald-400">"Next.js"</span>, <span class="text-emerald-400">"TypeScript"</span>],
+  coreStack: [<span class="text-emerald-400">"React"</span>, <span class="text-emerald-400">"Vue"</span>, <span class="text-emerald-400">"Angular"</span>, <span class="text-emerald-400">"Next.js"</span>, <span class="text-emerald-400">"TypeScript"</span>],
   focus: <span class="text-lime-400">"60fps Pixel-Perfect Rendering"</span>
 };</code></pre>
     </div>
@@ -137,7 +137,7 @@
     >
       <pre class="whitespace-pre overflow-x-auto"><code>{
   <span class="text-lime-400">"frontend"</span>: [
-    <span class="text-lime-300">"React"</span>, <span class="text-lime-300">"Next.js"</span>, <span class="text-lime-300">"Vue"</span>, <span class="text-lime-300">"Nuxt"</span>
+    <span class="text-lime-300">"React"</span>, <span class="text-lime-300">"Next.js"</span>, <span class="text-lime-300">"Vue"</span>, <span class="text-lime-300">"Nuxt"</span>, <span class="text-lime-300">"Angular"</span>
   ],
   <span class="text-lime-400">"styling"</span>: [
     <span class="text-lime-300">"TailwindCSS"</span>, <span class="text-lime-300">"SCSS"</span>, <span class="text-lime-300">"Design Tokens"</span>

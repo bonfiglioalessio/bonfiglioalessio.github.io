@@ -24,7 +24,22 @@ export interface SkillItem {
   name: string
   description: string
   badge: string
-  badgeVariant: 'core' | 'meta' | 'stack' | 'safe' | 'base' | 'css' | 'pre' | 'vcs'
+  badgeVariant:
+    | 'core'
+    | 'meta'
+    | 'stack'
+    | 'safe'
+    | 'base'
+    | 'css'
+    | 'pre'
+    | 'vcs'
+    | 'lime'
+    | 'cyan'
+    | 'amber'
+    | 'pink'
+    | 'emerald'
+    | 'orange'
+    | 'dark'
   iconUrl?: string
   customIconText?: string
   iconBgColor?: string
