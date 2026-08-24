@@ -1,38 +1,37 @@
 <script setup lang="ts">
   import { onMounted, onUnmounted, ref } from 'vue'
 
-  interface Particle {
-    x: number
-    y: number
-    baseVx: number
-    baseVy: number
+  interface Star3D {
+    x: number // -width/2 to width/2
+    y: number // -height/2 to height/2
+    z: number // 10 to 1000 depth
+    vz: number // slow drift through depth
     vx: number
     vy: number
-    z: number // 3D depth layer: 0.25 (distant) to 1.0 (foreground)
     radius: number
-    alpha: number
     baseAlpha: number
     color: string
     pulseOffset: number
     pulseSpeed: number
-    waveFreq: number
   }
 
-  interface Shockwave {
+  interface Shockwave3D {
     x: number
     y: number
+    z: number
     radius: number
     maxRadius: number
     alpha: number
-    lineWidth: number
     color: string
   }
 
-  interface Spark {
+  interface Spark3D {
     x: number
     y: number
+    z: number
     vx: number
     vy: number
+    vz: number
     radius: number
     alpha: number
     color: string
@@ -46,70 +45,68 @@
   let width = 0
   let height = 0
   let dpr = 1
-  let particles: Particle[] = []
-  let shockwaves: Shockwave[] = []
-  let sparks: Spark[] = []
+  const fov = 450
+  const maxDepth = 1000
 
-  // Parallax Camera State (Mouse Offset + Scroll Offset)
+  let stars: Star3D[] = []
+  let shockwaves: Shockwave3D[] = []
+  let sparks: Spark3D[] = []
+
+  // 3D Camera Orbit & Perspective Angles
   const camera = {
-    x: 0,
-    y: 0,
-    targetX: 0,
-    targetY: 0,
+    rotX: 0,
+    rotY: 0,
+    targetRotX: 0,
+    targetRotY: 0,
+    panX: 0,
+    panY: 0,
+    targetPanX: 0,
+    targetPanY: 0,
     scrollY: 0,
     targetScrollY: 0,
   }
 
-  // Mouse cursor tracking
+  // Mouse screen coordinates
   const mouse = {
-    x: -1000,
-    y: -1000,
+    screenX: -1000,
+    screenY: -1000,
     targetX: -1000,
     targetY: -1000,
-    radius: 170,
+    radius: 160,
   }
 
   const colors = [
-    'rgba(226, 241, 97, ', // Lime glow
-    'rgba(56, 189, 248, ', // Cyan glow
-    'rgba(248, 250, 252, ', // White star
-    'rgba(148, 163, 184, ', // Slate dust
+    'rgba(226, 241, 97, ', // Vivid Lime
+    'rgba(56, 189, 248, ', // Vivid Cyan
+    'rgba(255, 255, 255, ', // Crisp White
+    'rgba(203, 213, 225, ', // Slate Dust
   ]
 
   const sparkColors = ['rgba(226, 241, 97, ', 'rgba(56, 189, 248, ', 'rgba(255, 255, 255, ']
 
-  function initParticles() {
+  function initStars() {
     const isMobile = width < 768
-    const particleCount = isMobile ? 40 : 85
-    particles = []
+    const starCount = isMobile ? 55 : 110
+    stars = []
 
-    for (let i = 0; i < particleCount; i++) {
+    for (let i = 0; i < starCount; i++) {
       const color = colors[Math.floor(Math.random() * colors.length)]
-      const z = Math.pow(Math.random(), 1.4) * 0.75 + 0.25
-      const baseAlpha = z * 0.5 + 0.2
-      const baseRadius = (z * 1.9 + 0.6) * (isMobile ? 0.85 : 1.0)
+      const z = Math.random() * (maxDepth - 50) + 50
+      const baseAlpha = Math.random() * 0.4 + 0.55
 
-      // Continuous ambient drifting velocities (noticeable, elegant fluid movement)
-      const angle = Math.random() * Math.PI * 2
-      const speed = (0.25 + z * 0.45) * (isMobile ? 0.8 : 1.0)
-      const baseVx = Math.cos(angle) * speed
-      const baseVy = Math.sin(angle) * speed
-
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        baseVx,
-        baseVy,
-        vx: baseVx,
-        vy: baseVy,
+      // Natural gentle 3D drift
+      stars.push({
+        x: (Math.random() - 0.5) * (width * 1.5),
+        y: (Math.random() - 0.5) * (height * 1.5),
         z,
-        radius: baseRadius,
-        alpha: baseAlpha,
+        vz: -(Math.random() * 0.25 + 0.1), // Slow forward cruise through space
+        vx: (Math.random() - 0.5) * 0.18,
+        vy: (Math.random() - 0.5) * 0.18,
+        radius: Math.random() * 1.8 + 1.2,
         baseAlpha,
         color,
         pulseOffset: Math.random() * Math.PI * 2,
-        pulseSpeed: Math.random() * 0.02 + 0.008,
-        waveFreq: Math.random() * 0.0015 + 0.0008,
+        pulseSpeed: Math.random() * 0.015 + 0.008,
       })
     }
   }
@@ -129,70 +126,84 @@
       ctx.scale(dpr, dpr)
     }
 
-    initParticles()
+    initStars()
   }
 
   function handleMouseMove(e: MouseEvent) {
     mouse.targetX = e.clientX
     mouse.targetY = e.clientY
 
-    // Tangible 3D mouse parallax offset relative to screen center
-    const normalizedX = (e.clientX - width / 2) / (width / 2)
-    const normalizedY = (e.clientY - height / 2) / (height / 2)
+    // 3D Camera Orbit: Tilts angular perspective in space
+    const normX = (e.clientX - width / 2) / (width / 2)
+    const normY = (e.clientY - height / 2) / (height / 2)
 
-    camera.targetX = normalizedX * 50
-    camera.targetY = normalizedY * 40
+    camera.targetRotY = normX * 0.18 // Yaw rotation in radians
+    camera.targetRotX = -normY * 0.14 // Pitch rotation in radians
+
+    camera.targetPanX = -normX * 40
+    camera.targetPanY = -normY * 30
   }
 
   function handleMouseLeave() {
     mouse.targetX = -1000
     mouse.targetY = -1000
-    camera.targetX = 0
-    camera.targetY = 0
+    camera.targetRotX = 0
+    camera.targetRotY = 0
+    camera.targetPanX = 0
+    camera.targetPanY = 0
   }
 
   function handleScroll() {
     camera.targetScrollY = window.scrollY * 0.35
   }
 
-  // Interactive Click: Triggers Supernova Shockwave & Spark Burst
+  // 3D Supernova Click Event
   function handleClick(e: MouseEvent) {
-    const clickX = e.clientX
-    const clickY = e.clientY
+    const clickScreenX = e.clientX - width / 2
+    const clickScreenY = e.clientY - height / 2
 
-    // 1. Add expanding dual shockwave rings
+    // Unproject to a 3D mid-plane (z = 250)
+    const clickZ = 250
+    const scale = (fov + clickZ) / fov
+    const worldX = clickScreenX * scale
+    const worldY = clickScreenY * scale
+
+    // 1. Expanding 3D Shockwave rings
     shockwaves.push({
-      x: clickX,
-      y: clickY,
-      radius: 5,
-      maxRadius: 210,
+      x: worldX,
+      y: worldY,
+      z: clickZ,
+      radius: 10,
+      maxRadius: 280,
       alpha: 0.9,
-      lineWidth: 2.5,
-      color: '226, 241, 97', // Lime
+      color: '226, 241, 97',
     })
 
     shockwaves.push({
-      x: clickX,
-      y: clickY,
-      radius: 2,
-      maxRadius: 160,
+      x: worldX,
+      y: worldY,
+      z: clickZ,
+      radius: 5,
+      maxRadius: 200,
       alpha: 0.75,
-      lineWidth: 1.5,
-      color: '56, 189, 248', // Cyan
+      color: '56, 189, 248',
     })
 
-    // 2. Spawn explosive spark particles
-    const sparkCount = width < 768 ? 14 : 26
-    for (let i = 0; i < sparkCount; i++) {
-      const angle = Math.random() * Math.PI * 2
-      const speed = Math.random() * 6.5 + 2.5
+    // 2. 3D Explosive Sparks in spherical directions
+    const count = width < 768 ? 14 : 26
+    for (let i = 0; i < count; i++) {
+      const theta = Math.random() * Math.PI * 2
+      const phi = Math.acos(Math.random() * 2 - 1)
+      const speed = Math.random() * 6.5 + 2.0
       const color = sparkColors[Math.floor(Math.random() * sparkColors.length)]
 
       sparks.push({
-        x: clickX,
-        y: clickY,
-        vx: Math.cos(angle) * speed,
-        vy: Math.sin(angle) * speed,
+        x: worldX,
+        y: worldY,
+        z: clickZ,
+        vx: Math.sin(phi) * Math.cos(theta) * speed,
+        vy: Math.sin(phi) * Math.sin(theta) * speed,
+        vz: Math.cos(phi) * speed * 0.8,
         radius: Math.random() * 2.2 + 0.8,
         alpha: 1,
         color,
@@ -200,17 +211,19 @@
       })
     }
 
-    // 3. Gravitational impulse push to nearby ambient particles
-    for (let i = 0; i < particles.length; i++) {
-      const p = particles[i]
-      const dx = p.x - clickX
-      const dy = p.y - clickY
-      const dist = Math.sqrt(dx * dx + dy * dy)
+    // 3. Volumetric 3D impulse push to nearby stars
+    for (let i = 0; i < stars.length; i++) {
+      const s = stars[i]
+      const dx = s.x - worldX
+      const dy = s.y - worldY
+      const dz = s.z - clickZ
+      const dist3D = Math.sqrt(dx * dx + dy * dy + dz * dz)
 
-      if (dist < 260 && dist > 1) {
-        const force = (1 - dist / 260) * 7.5 * p.z
-        p.vx += (dx / dist) * force
-        p.vy += (dy / dist) * force
+      if (dist3D < 320 && dist3D > 1) {
+        const force = (1 - dist3D / 320) * 8.0
+        s.vx += (dx / dist3D) * force
+        s.vy += (dy / dist3D) * force
+        s.vz += (dz / dist3D) * force * 0.5
       }
     }
   }
@@ -218,117 +231,176 @@
   function render(time: number) {
     if (!ctx) return
 
-    // Smooth camera & mouse coordinates dampening
-    camera.x += (camera.targetX - camera.x) * 0.05
-    camera.y += (camera.targetY - camera.y) * 0.05
-    camera.scrollY += (camera.targetScrollY - camera.scrollY) * 0.08
+    // Smooth camera rotation & position dampening
+    camera.rotX += (camera.targetRotX - camera.rotX) * 0.04
+    camera.rotY += (camera.targetRotY - camera.rotY) * 0.04
+    camera.panX += (camera.targetPanX - camera.panX) * 0.05
+    camera.panY += (camera.targetPanY - camera.panY) * 0.05
+    camera.scrollY += (camera.targetScrollY - camera.scrollY) * 0.06
 
-    mouse.x += (mouse.targetX - mouse.x) * 0.1
-    mouse.y += (mouse.targetY - mouse.y) * 0.1
+    mouse.screenX += (mouse.targetX - mouse.screenX) * 0.08
+    mouse.screenY += (mouse.targetY - mouse.screenY) * 0.08
 
-    // Clear frame with transparent background
     ctx.clearRect(0, 0, width, height)
 
-    const isMobile = width < 768
-    const connectionDist = isMobile ? 90 : 130
-    const connectionDistSq = connectionDist * connectionDist
+    const centerX = width / 2
+    const centerY = height / 2
 
-    // Calculate computed render positions for all particles based on 3D Parallax & Organic Wave
-    const projected: Array<{ rx: number; ry: number; p: Particle }> = []
+    const cosY = Math.cos(camera.rotY)
+    const sinY = Math.sin(camera.rotY)
+    const cosX = Math.cos(camera.rotX)
+    const sinX = Math.sin(camera.rotX)
 
-    for (let i = 0; i < particles.length; i++) {
-      const p = particles[i]
-
-      // Organic fluid wave oscillation added to continuous movement
-      const waveX = Math.sin(time * p.waveFreq + p.pulseOffset) * (0.3 * p.z)
-      const waveY = Math.cos(time * p.waveFreq * 1.1 + p.pulseOffset) * (0.25 * p.z)
-
-      // Position update
-      p.x += p.vx + waveX
-      p.y += p.vy + waveY
-
-      // Smooth recovery back to base drift velocity after mouse/click impulse
-      p.vx += (p.baseVx - p.vx) * 0.02
-      p.vy += (p.baseVy - p.vy) * 0.02
-
-      // Screen wrapping for base positions
-      if (p.x < -20) p.x = width + 20
-      else if (p.x > width + 20) p.x = -20
-
-      if (p.y < -20) p.y = height + 20
-      else if (p.y > height + 20) p.y = -20
-
-      // Calculate projected 3D coordinates based on depth (z), mouse shift, and scroll drift
-      let rx = p.x + camera.x * p.z * 1.6
-      let ry = p.y + camera.y * p.z * 1.6 - ((camera.scrollY * p.z * 0.6) % height)
-
-      if (ry < -20) ry += height + 40
-      if (ry > height + 20) ry -= height + 40
-      if (rx < -20) rx += width + 40
-      if (rx > width + 20) rx -= width + 40
-
-      projected.push({ rx, ry, p })
+    interface ProjectedStar {
+      sx: number
+      sy: number
+      scale: number
+      alpha: number
+      radius: number
+      color: string
+      worldZ: number
+      s: Star3D
     }
 
-    // 1. Draw Constellation lines using projected positions
+    const projected: ProjectedStar[] = []
+
+    // 1. Update 3D Stars & Project to 2D Screen with 3D Rotation Matrix
+    for (let i = 0; i < stars.length; i++) {
+      const s = stars[i]
+
+      // Natural continuous 3D drift + friction recovery
+      s.x += s.vx
+      s.y += s.vy
+      s.z += s.vz
+      s.vx *= 0.985
+      s.vy *= 0.985
+      s.vz = s.vz * 0.985 - 0.05 // Maintain slow forward drift
+
+      // Screen/Depth 3D Wrapping
+      const boundaryX = width * 0.9
+      const boundaryY = height * 0.9
+
+      if (s.z < 20) {
+        s.z = maxDepth
+        s.x = (Math.random() - 0.5) * boundaryX * 2
+        s.y = (Math.random() - 0.5) * boundaryY * 2
+      } else if (s.z > maxDepth) {
+        s.z = 20
+      }
+
+      if (s.x < -boundaryX) s.x = boundaryX
+      else if (s.x > boundaryX) s.x = -boundaryX
+
+      if (s.y < -boundaryY) s.y = boundaryY
+      else if (s.y > boundaryY) s.y = -boundaryY
+
+      // Apply 3D Scroll vertical offset
+      const adjustedY = s.y - ((camera.scrollY * 0.5) % (boundaryY * 2))
+
+      // Apply 3D Camera Rotation (Yaw around Y-axis, Pitch around X-axis)
+      // 1. Rotate Y (yaw)
+      const x1 = s.x * cosY + s.z * sinY
+      const z1 = -s.x * sinY + s.z * cosY
+
+      // 2. Rotate X (pitch)
+      const y2 = adjustedY * cosX - z1 * sinX
+      const z2 = adjustedY * sinX + z1 * cosX
+
+      // Check if star is in front of camera
+      if (z2 <= 5) continue
+
+      // True 3D Perspective Projection
+      const scale = fov / (fov + z2)
+      const sx = centerX + (x1 + camera.panX) * scale
+      const sy = centerY + (y2 + camera.panY) * scale
+
+      // Depth-based fade & sizing
+      const depthFactor = Math.max(0, 1 - z2 / maxDepth)
+      const pulse = Math.sin(time * s.pulseSpeed + s.pulseOffset) * (s.baseAlpha * 0.25)
+      const alpha = Math.min(1, Math.max(0.08, (s.baseAlpha + pulse) * (0.3 + depthFactor * 0.7)))
+      const renderedRadius = Math.max(0.6, s.radius * scale * 1.6)
+
+      projected.push({
+        sx,
+        sy,
+        scale,
+        alpha,
+        radius: renderedRadius,
+        color: s.color,
+        worldZ: z2,
+        s,
+      })
+    }
+
+    // 2. Draw 3D Volumetric Constellation Lines with Smooth Fade-In/Out
+    const isMobile = width < 768
+    const connectionDist3D = isMobile ? 130 : 180
+    const connectionDist3DSq = connectionDist3D * connectionDist3D
+
     for (let i = 0; i < projected.length; i++) {
       const p1 = projected[i]
       for (let j = i + 1; j < projected.length; j++) {
         const p2 = projected[j]
 
-        // Connect particles on nearby depth layers
-        if (Math.abs(p1.p.z - p2.p.z) > 0.45) continue
+        // Check TRUE 3D Euclidean distance between stars in world space
+        const dx = p1.s.x - p2.s.x
+        const dy = p1.s.y - p2.s.y
+        const dz = p1.s.z - p2.s.z
+        const distSq3D = dx * dx + dy * dy + dz * dz
 
-        const dx = p1.rx - p2.rx
-        const dy = p1.ry - p2.ry
-        const distSq = dx * dx + dy * dy
+        if (distSq3D < connectionDist3DSq) {
+          const dist3D = Math.sqrt(distSq3D)
+          const normDist = dist3D / connectionDist3D
+          // Smooth cosine fade-in and fade-out
+          const smoothFade = (Math.cos(normDist * Math.PI) + 1) * 0.5
+          const avgScale = (p1.scale + p2.scale) * 0.5
+          const opacity = smoothFade * 0.08 * avgScale
 
-        if (distSq < connectionDistSq) {
-          const dist = Math.sqrt(distSq)
-          const depthAlpha = Math.min(p1.p.z, p2.p.z)
-          const opacity = (1 - dist / connectionDist) * 0.18 * depthAlpha
-
-          ctx.beginPath()
-          ctx.moveTo(p1.rx, p1.ry)
-          ctx.lineTo(p2.rx, p2.ry)
-          ctx.strokeStyle = `rgba(226, 241, 97, ${opacity})`
-          ctx.lineWidth = 0.5 + depthAlpha * 0.4
-          ctx.stroke()
+          if (opacity > 0.003) {
+            ctx.beginPath()
+            ctx.moveTo(p1.sx, p1.sy)
+            ctx.lineTo(p2.sx, p2.sy)
+            ctx.strokeStyle = `rgba(226, 241, 97, ${opacity})`
+            ctx.lineWidth = Math.max(0.3, 0.6 * avgScale)
+            ctx.stroke()
+          }
         }
       }
 
-      // Mouse interactive beam connection
-      if (mouse.x > 0) {
-        const dx = p1.rx - mouse.x
-        const dy = p1.ry - mouse.y
-        const dist = Math.sqrt(dx * dx + dy * dy)
+      // Mouse interactive 3D beam connection with soft fade
+      if (mouse.screenX > 0) {
+        const dx = p1.sx - mouse.screenX
+        const dy = p1.sy - mouse.screenY
+        const dist2D = Math.sqrt(dx * dx + dy * dy)
 
-        if (dist < mouse.radius) {
-          const opacity = (1 - dist / mouse.radius) * 0.35 * p1.p.z
-          ctx.beginPath()
-          ctx.moveTo(p1.rx, p1.ry)
-          ctx.lineTo(mouse.x, mouse.y)
-          ctx.strokeStyle = `rgba(56, 189, 248, ${opacity})`
-          ctx.lineWidth = 0.9
-          ctx.stroke()
+        if (dist2D < mouse.radius) {
+          const normDist = dist2D / mouse.radius
+          const smoothFade = (Math.cos(normDist * Math.PI) + 1) * 0.5
+          const opacity = smoothFade * 0.14 * p1.scale
+
+          if (opacity > 0.004) {
+            ctx.beginPath()
+            ctx.moveTo(p1.sx, p1.sy)
+            ctx.lineTo(mouse.screenX, mouse.screenY)
+            ctx.strokeStyle = `rgba(56, 189, 248, ${opacity})`
+            ctx.lineWidth = Math.max(0.4, 0.7 * p1.scale)
+            ctx.stroke()
+          }
         }
       }
     }
 
-    // 2. Draw Stars/Particles using projected 3D positions
+    // 3. Draw 3D Stars
     for (let i = 0; i < projected.length; i++) {
-      const { rx, ry, p } = projected[i]
-
-      // Soft twinkle pulsing
-      p.alpha = p.baseAlpha + Math.sin(time * p.pulseSpeed + p.pulseOffset) * (p.baseAlpha * 0.35)
+      const p = projected[i]
 
       ctx.beginPath()
-      ctx.arc(rx, ry, p.radius, 0, Math.PI * 2)
-      ctx.fillStyle = `${p.color}${Math.max(0.05, p.alpha)})`
+      ctx.arc(p.sx, p.sy, p.radius, 0, Math.PI * 2)
+      ctx.fillStyle = `${p.color}${p.alpha})`
       ctx.fill()
     }
 
-    // 3. Update & Draw Click Shockwaves
+    // 4. Update & Draw 3D Click Shockwaves
     for (let i = shockwaves.length - 1; i >= 0; i--) {
       const sw = shockwaves[i]
       sw.radius += (sw.maxRadius - sw.radius) * 0.09
@@ -339,30 +411,41 @@
         continue
       }
 
+      const scale = fov / (fov + sw.z)
+      const sx = centerX + sw.x * scale + camera.panX * scale
+      const sy = centerY + sw.y * scale + camera.panY * scale
+      const r = sw.radius * scale
+
       ctx.beginPath()
-      ctx.arc(sw.x, sw.y, sw.radius, 0, Math.PI * 2)
-      ctx.strokeStyle = `rgba(${sw.color}, ${sw.alpha})`
-      ctx.lineWidth = sw.lineWidth * (sw.alpha / 0.9)
+      ctx.arc(sx, sy, r, 0, Math.PI * 2)
+      ctx.strokeStyle = `rgba(${sw.color}, ${sw.alpha * scale})`
+      ctx.lineWidth = Math.max(0.8, 2.5 * scale * (sw.alpha / 0.9))
       ctx.stroke()
     }
 
-    // 4. Update & Draw Click Sparks
+    // 5. Update & Draw 3D Click Sparks
     for (let i = sparks.length - 1; i >= 0; i--) {
       const s = sparks[i]
       s.x += s.vx
       s.y += s.vy
+      s.z += s.vz
       s.vx *= 0.96
       s.vy *= 0.96
+      s.vz *= 0.96
       s.alpha -= s.decay
 
-      if (s.alpha <= 0) {
+      if (s.alpha <= 0 || s.z <= 10) {
         sparks.splice(i, 1)
         continue
       }
 
+      const scale = fov / (fov + s.z)
+      const sx = centerX + s.x * scale + camera.panX * scale
+      const sy = centerY + s.y * scale + camera.panY * scale
+
       ctx.beginPath()
-      ctx.arc(s.x, s.y, s.radius * s.alpha, 0, Math.PI * 2)
-      ctx.fillStyle = `${s.color}${s.alpha})`
+      ctx.arc(sx, sy, Math.max(0.5, s.radius * scale * s.alpha), 0, Math.PI * 2)
+      ctx.fillStyle = `${s.color}${s.alpha * scale})`
       ctx.fill()
     }
 
