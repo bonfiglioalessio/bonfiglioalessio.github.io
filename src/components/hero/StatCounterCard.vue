@@ -20,7 +20,7 @@
     delay: 0,
   })
 
-  const { playBorderLoad, playHover } = useAudioSynth()
+  const { playBorderLoad } = useAudioSynth()
 
   const displayValue = ref(0)
   const progress = ref(0) // 0 to 100
@@ -86,7 +86,6 @@
     <div
       class="stat-counter-card relative p-3 sm:p-3.5 rounded-2xl bg-dark-900/60 backdrop-blur-md border border-lime-400/20 flex flex-col justify-center text-center sm:text-left select-none cursor-pointer group transition-all duration-300 hover:scale-[1.04] overflow-hidden"
       @click="runCounterAnimation"
-      @mouseenter="playHover"
     >
       <!-- Animated Yellow/Lime SVG Loading Border Perimeter -->
       <svg

@@ -10,7 +10,7 @@
     floatAnimation?: string
   }>()
 
-  const { playDiffToggle, playClick, playHover } = useAudioSynth()
+  const { playDiffToggle, playClick } = useAudioSynth()
   const isDiffOpen = ref(false)
 
   function toggleDiff() {
@@ -27,7 +27,6 @@
     :tilt="true"
     :float-animation="floatAnimation"
     class="flex flex-col justify-between group transition-all duration-300 select-none h-full"
-    @mouseenter="playHover"
   >
     <div class="space-y-4">
       <!-- Card Top: Badge (Left) & Big Project Number (Right) -->
