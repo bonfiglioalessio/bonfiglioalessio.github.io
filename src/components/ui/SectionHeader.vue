@@ -34,8 +34,13 @@
       </div>
     </div>
 
-    <p v-if="description" class="text-xs sm:text-sm text-slate-400 font-mono max-w-xl">
-      {{ description }}
+    <p
+      v-if="description || $slots.description"
+      class="text-xs sm:text-sm text-slate-400 font-mono max-w-xl leading-relaxed"
+    >
+      <slot name="description">
+        {{ description }}
+      </slot>
     </p>
   </div>
 </template>
