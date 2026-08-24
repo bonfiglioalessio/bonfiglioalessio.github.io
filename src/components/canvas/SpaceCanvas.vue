@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { onMounted, onUnmounted, ref } from 'vue'
+  import { useAudioSynth } from '../../composables/useAudioSynth'
 
   interface Star3D {
     x: number // -width/2 to width/2
@@ -129,7 +130,10 @@
     initStars()
   }
 
+  const { playSupernova, playParticleShimmer } = useAudioSynth()
+
   function handleMouseMove(e: MouseEvent) {
+    playParticleShimmer()
     mouse.targetX = e.clientX
     mouse.targetY = e.clientY
 
@@ -159,6 +163,7 @@
 
   // 3D Supernova Click Event
   function handleClick(e: MouseEvent) {
+    playSupernova()
     const clickScreenX = e.clientX - width / 2
     const clickScreenY = e.clientY - height / 2
 
