@@ -1,19 +1,44 @@
 <script setup lang="ts">
+  import { computed } from 'vue'
   import type { Experience } from '../../types/portfolio'
   import AppCard from '../ui/AppCard.vue'
   import AppBadge from '../ui/AppBadge.vue'
 
-  defineProps<{
-    experience: Experience
-    floatAnimation?: string
-  }>()
+  const props = withDefaults(
+    defineProps<{
+      experience: Experience
+      floatAnimation?: string
+      index?: number
+      total?: number
+      timelineProgress?: number
+    }>(),
+    {
+      floatAnimation: '',
+      index: 0,
+      total: 3,
+      timelineProgress: 0,
+    },
+  )
+
+  // Compute if the laser beam has reached this node
+  const isReached = computed(() => {
+    if (props.timelineProgress === 0) return props.index === 0 && false
+    // Calculate fractional position of each node along the vertical rail
+    const activationThreshold = props.total > 1 ? (props.index / (props.total - 1)) * 75 + 10 : 20
+    return props.timelineProgress >= activationThreshold
+  })
 </script>
 
 <template>
   <div class="relative pl-6 sm:pl-8 group">
-    <!-- Glowing Timeline Node Marker -->
+    <!-- Glowing Timeline Node Marker (Activated on Scroll) -->
     <div
-      class="absolute top-6 -left-[13px] sm:-left-[17px] w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-dark-950 border border-lime-400/30 flex items-center justify-center z-10 transition-transform group-hover:scale-110"
+      class="absolute top-6 -left-[13px] sm:-left-[17px] w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-dark-950 flex items-center justify-center z-20 transition-all duration-500"
+      :class="
+        isReached || experience.isCurrent
+          ? 'border-2 border-lime-400 shadow-[0_0_15px_rgba(226,241,97,0.7)] scale-110'
+          : 'border border-lime-400/25 bg-dark-950/80 scale-95 opacity-70'
+      "
     >
       <span v-if="experience.isCurrent" class="relative flex h-2.5 w-2.5 sm:h-3 sm:w-3">
         <span
@@ -25,17 +50,28 @@
       </span>
       <span
         v-else
-        class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-slate-500 group-hover:bg-lime-400/70 transition-colors"
+        class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full transition-all duration-300"
+        :class="
+          isReached
+            ? 'bg-lime-400 shadow-[0_0_8px_#e2f161]'
+            : 'bg-slate-500 group-hover:bg-lime-400/70'
+        "
       />
     </div>
 
-    <!-- Experience Content Card with Zero-Gravity Floating Motion -->
+    <!-- Experience Content Card with Scroll Activation -->
     <AppCard
       padding="md"
       rounded="2xl"
       :hud-reticles="true"
+      :tilt="false"
       :float-animation="floatAnimation"
-      class="transition-all duration-300 select-none space-y-4"
+      class="transition-all duration-500 select-none space-y-4"
+      :class="[
+        isReached
+          ? 'border-lime-400/35 shadow-[0_0_20px_rgba(226,241,97,0.15)] opacity-100'
+          : 'opacity-85 hover:opacity-100',
+      ]"
     >
       <!-- Header: Mission Number, Period & Status Badge -->
       <div
