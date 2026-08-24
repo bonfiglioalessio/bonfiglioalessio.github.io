@@ -4,6 +4,7 @@
   import AppContainer from './components/layout/AppContainer.vue'
   import HeroSection from './components/hero/HeroSection.vue'
   import TechConstellation from './components/stack/TechConstellation.vue'
+  import ProjectsSection from './components/projects/ProjectsSection.vue'
 </script>
 
 <template>
@@ -28,6 +29,9 @@
 
         <!-- 01 Tech Constellation Section -->
         <TechConstellation />
+
+        <!-- 02 Selected Work Section -->
+        <ProjectsSection />
       </main>
     </AppContainer>
   </div>
