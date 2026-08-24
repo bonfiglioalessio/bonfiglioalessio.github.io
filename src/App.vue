@@ -2,14 +2,18 @@
   import TopBar from './components/layout/TopBar.vue'
   import MarqueeTicker from './components/layout/MarqueeTicker.vue'
   import AppContainer from './components/layout/AppContainer.vue'
+  import AppFooter from './components/layout/AppFooter.vue'
   import HeroSection from './components/hero/HeroSection.vue'
   import TechConstellation from './components/stack/TechConstellation.vue'
   import ProjectsSection from './components/projects/ProjectsSection.vue'
   import ExperienceSection from './components/experience/ExperienceSection.vue'
+  import ContactSection from './components/contact/ContactSection.vue'
 </script>
 
 <template>
-  <div class="min-h-screen bg-dark-950 text-slate-200 font-mono relative overflow-hidden">
+  <div
+    class="min-h-screen bg-dark-950 text-slate-200 font-mono relative overflow-hidden flex flex-col justify-between"
+  >
     <!-- Sticky TopBar -->
     <TopBar />
 
@@ -36,7 +40,13 @@
 
         <!-- 03 Career Mission Log Section -->
         <ExperienceSection />
+
+        <!-- 04 Contact Open Channel Section -->
+        <ContactSection />
       </main>
     </AppContainer>
+
+    <!-- System Telemetry Footer -->
+    <AppFooter />
   </div>
 </template>
