@@ -5,6 +5,7 @@
   import HeroSection from './components/hero/HeroSection.vue'
   import TechConstellation from './components/stack/TechConstellation.vue'
   import ProjectsSection from './components/projects/ProjectsSection.vue'
+  import ExperienceSection from './components/experience/ExperienceSection.vue'
 </script>
 
 <template>
@@ -32,6 +33,9 @@
 
         <!-- 02 Selected Work Section -->
         <ProjectsSection />
+
+        <!-- 03 Career Mission Log Section -->
+        <ExperienceSection />
       </main>
     </AppContainer>
   </div>
