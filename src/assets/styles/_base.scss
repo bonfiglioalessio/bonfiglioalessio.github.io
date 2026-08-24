@@ -1,5 +1,5 @@
 // ==========================================
-// BASE STYLES & RESET
+// BASE STYLES & RESET (Core Web Vitals & a11y)
 // ==========================================
 @use 'variables' as *;
 
@@ -7,6 +7,9 @@ html {
   scroll-behavior: smooth;
   background-color: $color-dark-950;
   color: $color-text-secondary;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -14,6 +17,22 @@ body {
   position: relative;
   overflow-x: hidden;
   font-family: $font-mono;
+}
+
+/* Reduced Motion for a11y & Core Web Vitals */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Custom Cyber Scrollbar */
