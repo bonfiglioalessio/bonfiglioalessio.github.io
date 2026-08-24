@@ -4,6 +4,7 @@
   import AppContainer from './components/layout/AppContainer.vue'
   import AppFooter from './components/layout/AppFooter.vue'
   import SpaceCanvas from './components/canvas/SpaceCanvas.vue'
+  import FloatingGlyphs from './components/canvas/FloatingGlyphs.vue'
   import HeroSection from './components/hero/HeroSection.vue'
   import TechConstellation from './components/stack/TechConstellation.vue'
   import ProjectsSection from './components/projects/ProjectsSection.vue'
@@ -17,6 +18,9 @@
   >
     <!-- Interactive Canvas 2D Starfield Layer -->
     <SpaceCanvas />
+
+    <!-- Ambient Cosmic Floating Glyphs Layer -->
+    <FloatingGlyphs />
 
     <!-- Sticky TopBar -->
     <TopBar />

@@ -74,6 +74,89 @@
   }
 }
 
+/* Zero-Gravity Floating Keyframes (Tangible & Visible) */
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0) rotate(0.7deg);
+  }
+}
+
+@keyframes float-delayed {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -16px, 0) rotate(-0.8deg);
+  }
+}
+
+@keyframes float-subtle {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0);
+  }
+}
+
+@keyframes float-glyph-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate3d(16px, -26px, 0) rotate(6deg);
+  }
+  66% {
+    transform: translate3d(-12px, -38px, 0) rotate(-5deg);
+  }
+}
+
+@keyframes float-glyph-drift-rev {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate3d(-18px, -30px, 0) rotate(-7deg);
+  }
+  66% {
+    transform: translate3d(14px, -18px, 0) rotate(5deg);
+  }
+}
+
+/* Zero-Gravity Floating Classes */
+.animate-float-slow {
+  animation: float-slow 6.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 8s ease-in-out 1.2s infinite;
+  will-change: transform;
+}
+
+.animate-float-subtle {
+  animation: float-subtle 5s ease-in-out 0.6s infinite;
+  will-change: transform;
+}
+
+.animate-glyph-float {
+  animation: float-glyph-drift 10s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-glyph-float-rev {
+  animation: float-glyph-drift-rev 12s ease-in-out 1.5s infinite;
+  will-change: transform;
+}
+
 /* Ambient glow orbs */
 .ambient-glow-lime {
   position: fixed;
