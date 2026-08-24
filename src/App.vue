@@ -32,7 +32,7 @@
 
     <!-- Main Content Container -->
     <AppContainer size="default">
-      <main class="space-y-16 lg:space-y-24 pb-20">
+      <main class="space-y-16 lg:space-y-24 pb-0">
         <!-- 00 Hero Section -->
         <HeroSection />
 
@@ -50,7 +50,7 @@
       </main>
     </AppContainer>
 
-    <!-- System Telemetry Footer -->
+    <!-- Seamless System Telemetry Footer -->
     <AppFooter />
   </div>
 </template>

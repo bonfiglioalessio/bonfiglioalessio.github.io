@@ -11,7 +11,7 @@
 
 <template>
   <footer
-    class="border-t border-lime-400/15 bg-dark-950/80 backdrop-blur-md relative z-10 select-none"
+    class="border-t border-lime-400/10 bg-dark-950/40 backdrop-blur-sm relative z-10 select-none"
   >
     <AppContainer size="default">
       <div class="py-8 sm:py-10 flex flex-col sm:flex-row items-center justify-between gap-6">
