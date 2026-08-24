@@ -15,8 +15,9 @@
     padding="md"
     rounded="2xl"
     :hud-reticles="true"
+    :tilt="true"
+    :float-animation="floatAnimation"
     class="flex flex-col justify-between group transition-all duration-300 select-none h-full"
-    :class="floatAnimation"
   >
     <div class="space-y-4">
       <!-- Card Header: Project Number & Badges -->

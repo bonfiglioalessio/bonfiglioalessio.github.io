@@ -1,5 +1,10 @@
 <script setup lang="ts">
-  import { computed } from 'vue'
+  import { computed, ref } from 'vue'
+  import { use3DTilt } from '../../composables/use3DTilt'
+
+  defineOptions({
+    inheritAttrs: false,
+  })
 
   interface Props {
     hudReticles?: boolean
@@ -7,6 +12,10 @@
     rounded?: 'md' | 'xl' | '2xl' | '3xl'
     interactive?: boolean
     as?: string
+    tilt?: boolean
+    maxTilt?: number
+    glare?: boolean
+    floatAnimation?: string
   }
 
   const props = withDefaults(defineProps<Props>(), {
@@ -15,7 +24,20 @@
     rounded: '2xl',
     interactive: false,
     as: 'div',
+    tilt: false,
+    maxTilt: 8,
+    glare: true,
+    floatAnimation: undefined,
   })
+
+  const cardRef = ref<HTMLElement | null>(null)
+
+  const { transformStyle, glareStyle, handleMouseEnter, handleMouseMove, handleMouseLeave } =
+    use3DTilt(cardRef, {
+      maxTilt: props.maxTilt,
+      glare: props.glare,
+      disabled: !props.tilt,
+    })
 
   const paddingClasses = computed(() => {
     switch (props.padding) {
@@ -49,16 +71,52 @@
 </script>
 
 <template>
+  <div v-if="floatAnimation" :class="floatAnimation" class="w-full h-full">
+    <component
+      :is="as"
+      ref="cardRef"
+      v-bind="$attrs"
+      class="space-floating-card relative overflow-hidden h-full"
+      :class="[
+        paddingClasses,
+        roundedClasses,
+        hudReticles ? 'has-hud-reticles' : '',
+        interactive ? 'cursor-pointer' : '',
+      ]"
+      :style="transformStyle"
+      @mouseenter="handleMouseEnter"
+      @mousemove="handleMouseMove"
+      @mouseleave="handleMouseLeave"
+    >
+      <!-- Dynamic Holographic Glare Layer -->
+      <div v-if="glare && tilt" :style="glareStyle" aria-hidden="true" />
+
+      <slot name="header" />
+      <slot />
+      <slot name="footer" />
+    </component>
+  </div>
+
   <component
     :is="as"
-    class="space-floating-card"
+    v-else
+    ref="cardRef"
+    v-bind="$attrs"
+    class="space-floating-card relative overflow-hidden"
     :class="[
       paddingClasses,
       roundedClasses,
       hudReticles ? 'has-hud-reticles' : '',
-      interactive ? 'transition-all duration-300 hover:scale-[1.02] cursor-pointer' : '',
+      interactive ? 'cursor-pointer' : '',
     ]"
+    :style="transformStyle"
+    @mouseenter="handleMouseEnter"
+    @mousemove="handleMouseMove"
+    @mouseleave="handleMouseLeave"
   >
+    <!-- Dynamic Holographic Glare Layer -->
+    <div v-if="glare && tilt" :style="glareStyle" aria-hidden="true" />
+
     <slot name="header" />
     <slot />
     <slot name="footer" />

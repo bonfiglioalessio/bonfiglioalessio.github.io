@@ -34,8 +34,8 @@
       padding="md"
       rounded="2xl"
       :hud-reticles="true"
+      :float-animation="floatAnimation"
       class="transition-all duration-300 select-none space-y-4"
-      :class="floatAnimation"
     >
       <!-- Header: Mission Number, Period & Status Badge -->
       <div
