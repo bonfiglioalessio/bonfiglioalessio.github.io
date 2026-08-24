@@ -14,8 +14,10 @@
   <AppCard
     padding="none"
     rounded="2xl"
-    :hud-reticles="true"
-    class="w-full max-w-md lg:max-w-lg h-[400px] sm:h-[430px] p-4 sm:p-5 flex flex-col justify-between select-none overflow-hidden animate-float-slow"
+    :hud-reticles="false"
+    :tilt="false"
+    float-animation="animate-float-slow"
+    class="w-full max-w-md lg:max-w-lg h-[400px] sm:h-[430px] p-4 sm:p-5 flex flex-col justify-between select-none overflow-hidden"
   >
     <!-- Window Header & Tab Navigation -->
     <div class="space-y-3 shrink-0">
@@ -84,7 +86,7 @@
     <!-- Tab 1: Terminal Screen -->
     <div
       v-show="activeTab === 'terminal'"
-      class="flex flex-col flex-1 min-h-0 bg-dark-950/70 border border-lime-400/15 rounded-xl p-3 sm:p-4 my-2 font-mono text-[11px] sm:text-xs overflow-hidden"
+      class="flex flex-col justify-between flex-1 min-h-0 bg-dark-950/70 border border-lime-400/15 rounded-xl p-3 sm:p-4 my-2 font-mono text-[11px] sm:text-xs overflow-hidden"
     >
       <div class="flex-1 overflow-y-auto space-y-1.5 pr-1 no-scrollbar text-slate-200">
         <p class="text-slate-400">// Interactive CLI environment ready.</p>

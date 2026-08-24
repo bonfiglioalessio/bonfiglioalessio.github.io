@@ -27,8 +27,9 @@
     <AppCard
       padding="none"
       rounded="3xl"
-      :hud-reticles="true"
-      class="p-6 sm:p-10 lg:p-14 space-y-6 sm:space-y-8 select-none relative overflow-hidden animate-float-slow"
+      :hud-reticles="false"
+      :tilt="false"
+      class="p-6 sm:p-10 lg:p-14 space-y-6 sm:space-y-8 select-none relative overflow-hidden"
     >
       <!-- Top Tag -->
       <div class="flex items-center gap-2">
