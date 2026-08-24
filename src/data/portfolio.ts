@@ -179,6 +179,27 @@ export const portfolioData: PortfolioData = {
           '+ Migrazione da React a Preact per ridurre il bundle a soli ~8KB gzip.',
           '+ Persistenza localStorage atomica con debounce a zero frame drop.',
         ],
+        codeLines: [
+          {
+            type: 'context',
+            lineNum: 14,
+            code: 'import { configureStore } from "@reduxjs/toolkit"',
+          },
+          { type: 'del', lineNum: 15, code: '- import React, { useState } from "react"' },
+          { type: 'add', lineNum: 15, code: '+ import { h, Fragment } from "preact"' },
+          {
+            type: 'add',
+            lineNum: 16,
+            code: '+ import { useEffect, useSignal } from "@preact/signals"',
+          },
+          { type: 'context', lineNum: 17, code: 'export const todoStore = configureStore({' },
+          {
+            type: 'add',
+            lineNum: 18,
+            code: '+   middleware: (getDefault) => getDefault().concat(localStorageMiddleware),',
+          },
+          { type: 'context', lineNum: 19, code: '})' },
+        ],
       },
     },
     {
@@ -198,6 +219,31 @@ export const portfolioData: PortfolioData = {
         highlights: [
           '+ Integrazione API OpenWeather con caching in-memory su service worker.',
           '+ Visualizzazioni grafiche animate con Recharts su metriche a 60fps.',
+        ],
+        codeLines: [
+          {
+            type: 'context',
+            lineNum: 28,
+            code: 'export async function fetchLiveRadar(coords: Coords) {',
+          },
+          {
+            type: 'del',
+            lineNum: 29,
+            code: '-   const res = await fetch(`/api/weather?lat=${coords.lat}`)',
+          },
+          {
+            type: 'add',
+            lineNum: 29,
+            code: '+   const cacheKey = `weather_${coords.lat.toFixed(2)}`',
+          },
+          { type: 'add', lineNum: 30, code: '+   const cached = await radarCache.get(cacheKey)' },
+          {
+            type: 'add',
+            lineNum: 31,
+            code: '+   if (cached && Date.now() - cached.ts < 300_000) return cached.data',
+          },
+          { type: 'context', lineNum: 32, code: '    return transformRechartsData(res.data)' },
+          { type: 'context', lineNum: 33, code: '}' },
         ],
       },
     },
@@ -219,6 +265,23 @@ export const portfolioData: PortfolioData = {
           '+ Query frammentate per asset AVIF ad alta risoluzione con lazy load progressivo.',
           '+ Static Site Generation (SSG) su Next.js con rigenerazione incrementale.',
         ],
+        codeLines: [
+          { type: 'context', lineNum: 8, code: 'export const GET_GALLERY_ASSETS = gql`' },
+          {
+            type: 'del',
+            lineNum: 9,
+            code: '-   query { photoCollection { items { url, title } } }',
+          },
+          { type: 'add', lineNum: 9, code: '+   query GetOptimizedPhotos($locale: String!) {' },
+          { type: 'add', lineNum: 10, code: '+     photoCollection(locale: $locale) {' },
+          {
+            type: 'add',
+            lineNum: 11,
+            code: '+       items { url(transform: { format: AVIF, quality: 85 }) }',
+          },
+          { type: 'context', lineNum: 12, code: '    }' },
+          { type: 'context', lineNum: 13, code: '  }' },
+        ],
       },
     },
     {
@@ -238,6 +301,19 @@ export const portfolioData: PortfolioData = {
         highlights: [
           '+ Sintetizzatore Web Audio API puro integrato a zero byte di asset multimediali.',
           '+ Rendering isometrico 3D su Canvas con fisica a molla ed elasticità.',
+        ],
+        codeLines: [
+          { type: 'context', lineNum: 42, code: 'export class AudioSynthEngine {' },
+          { type: 'add', lineNum: 43, code: '+   private ctx: AudioContext | null = null' },
+          { type: 'add', lineNum: 44, code: '+   playLaserBurst(freq = 880, decay = 0.12) {' },
+          { type: 'add', lineNum: 45, code: '+     const osc = this.ctx.createOscillator()' },
+          {
+            type: 'add',
+            lineNum: 46,
+            code: '+     osc.frequency.exponentialRampToValueAtTime(110, this.ctx.currentTime + decay)',
+          },
+          { type: 'context', lineNum: 47, code: '  }' },
+          { type: 'context', lineNum: 48, code: '}' },
         ],
       },
     },

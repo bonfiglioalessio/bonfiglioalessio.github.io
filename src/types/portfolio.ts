@@ -52,11 +52,18 @@ export interface SkillCluster {
   skills: SkillItem[]
 }
 
+export interface CodeDiffLine {
+  type: 'add' | 'del' | 'context'
+  lineNum?: number
+  code: string
+}
+
 export interface ProjectDiff {
   filename: string
   additions: number
   deletions: number
   highlights: string[]
+  codeLines?: CodeDiffLine[]
 }
 
 export interface Project {
