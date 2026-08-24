@@ -1,10 +1,11 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { onMounted, onUnmounted, ref } from 'vue'
   import { portfolioData } from '../../data/portfolio'
   import AppContainer from './AppContainer.vue'
 
   const { profile } = portfolioData
   const isMobileMenuOpen = ref(false)
+  const isScrolled = ref(false)
 
   const navLinks = [
     { href: '#stack', label: './stack' },
@@ -20,67 +21,103 @@
   function closeMobileMenu() {
     isMobileMenuOpen.value = false
   }
+
+  function handleScroll() {
+    if (typeof window !== 'undefined') {
+      isScrolled.value = window.scrollY > 25
+    }
+  }
+
+  onMounted(() => {
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+  })
+
+  onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll)
+  })
 </script>
 
 <template>
   <header
-    class="fixed top-0 inset-x-0 z-50 h-16 min-h-[4rem] bg-dark-950/80 backdrop-blur-xl border-b border-lime-400/15 transition-colors shrink-0"
+    class="fixed top-0 inset-x-0 z-50 transition-all duration-300 ease-out shrink-0"
+    :class="
+      isScrolled
+        ? 'h-12 min-h-[3rem] bg-dark-950/35 backdrop-blur-md border-b border-lime-400/10 shadow-[0_8px_32px_rgba(0,0,0,0.6)]'
+        : 'h-16 min-h-[4rem] bg-dark-950/85 backdrop-blur-xl border-b border-lime-400/15'
+    "
   >
     <AppContainer size="default">
-      <div class="h-16 flex items-center justify-between">
-        <!-- Brand Logo (Fixed Dimensions to prevent CLS) -->
+      <div
+        class="flex items-center justify-between transition-all duration-300 ease-out"
+        :class="isScrolled ? 'h-12' : 'h-16'"
+      >
+        <!-- Brand Logo (Shrinks smoothly on scroll) -->
         <a
           href="#"
-          class="h-10 inline-flex items-center gap-1 font-bold text-sm tracking-wider text-slate-100 group select-none shrink-0"
+          class="inline-flex items-center gap-1 font-bold tracking-wider text-slate-100 group select-none shrink-0 transition-all duration-300"
+          :class="isScrolled ? 'h-8 text-xs' : 'h-10 text-sm'"
         >
           <span class="text-lime-400 font-mono">&lt;</span>
           <span
-            class="tracking-tight text-base font-display font-extrabold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.4)]"
+            class="tracking-tight font-display font-extrabold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.4)] transition-all duration-300"
+            :class="isScrolled ? 'text-xs sm:text-sm' : 'text-sm sm:text-base'"
           >
             {{ profile.displayLogo }}
           </span>
           <span class="text-lime-400 font-mono">/&gt;</span>
         </a>
 
-        <!-- Desktop Navigation Links (44px min tap targets) -->
-        <div class="flex items-center gap-6">
-          <nav class="hidden md:flex items-center gap-2 text-xs text-slate-300 font-mono">
+        <!-- Desktop Navigation Links (Shrinks smoothly on scroll) -->
+        <div class="flex items-center gap-4 sm:gap-6">
+          <nav
+            class="hidden md:flex items-center gap-1.5 text-slate-300 font-mono transition-all duration-300"
+            :class="isScrolled ? 'text-[11px]' : 'text-xs'"
+          >
             <a
               v-for="link in navLinks"
               :key="link.href"
               :href="link.href"
-              class="h-10 min-w-[44px] px-3 inline-flex items-center justify-center hover:text-lime-400 transition-colors drop-shadow-[0_0_8px_rgba(226,241,97,0.3)] rounded-lg hover:bg-dark-900/50"
+              class="inline-flex items-center justify-center hover:text-lime-400 transition-all duration-200 drop-shadow-[0_0_8px_rgba(226,241,97,0.3)] rounded-lg hover:bg-dark-900/50"
+              :class="isScrolled ? 'h-8 px-2.5' : 'h-10 px-3'"
             >
               {{ link.label }}
             </a>
           </nav>
 
-          <!-- Mobile Hamburger Toggle (Fixed 44x44px CWV Target & Zero Width Shift) -->
+          <!-- Mobile Hamburger Toggle (Shrinks smoothly on scroll) -->
           <button
             type="button"
-            class="md:hidden w-11 h-11 min-w-[44px] min-h-[44px] rounded-lg text-slate-300 hover:text-lime-400 hover:bg-dark-900/80 border border-lime-400/20 flex flex-col items-center justify-center gap-1.5 transition-colors cursor-pointer select-none shrink-0"
+            class="md:hidden rounded-lg text-slate-300 hover:text-lime-400 hover:bg-dark-900/80 border border-lime-400/20 flex flex-col items-center justify-center transition-all duration-300 cursor-pointer select-none shrink-0"
+            :class="isScrolled ? 'w-8 h-8 min-w-[32px] gap-1' : 'w-10 h-10 min-w-[40px] gap-1.5'"
             :aria-expanded="isMobileMenuOpen"
             aria-label="Toggle navigation menu"
             @click="toggleMobileMenu"
           >
             <span
-              class="w-5 h-0.5 bg-current transition-transform duration-200"
-              :class="isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''"
+              class="h-0.5 bg-current transition-all duration-200"
+              :class="[
+                isScrolled ? 'w-4' : 'w-5',
+                isMobileMenuOpen ? 'rotate-45 translate-y-1.5' : '',
+              ]"
             />
             <span
-              class="w-5 h-0.5 bg-current transition-opacity duration-200"
-              :class="isMobileMenuOpen ? 'opacity-0' : 'opacity-100'"
+              class="h-0.5 bg-current transition-all duration-200"
+              :class="[isScrolled ? 'w-4' : 'w-5', isMobileMenuOpen ? 'opacity-0' : 'opacity-100']"
             />
             <span
-              class="w-5 h-0.5 bg-current transition-transform duration-200"
-              :class="isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''"
+              class="h-0.5 bg-current transition-all duration-200"
+              :class="[
+                isScrolled ? 'w-4' : 'w-5',
+                isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : '',
+              ]"
             />
           </button>
         </div>
       </div>
     </AppContainer>
 
-    <!-- Mobile Dropdown Navigation (Absolute Overlay to prevent document CLS) -->
+    <!-- Mobile Dropdown Navigation (Absolute Overlay) -->
     <transition
       enter-active-class="transition-all duration-200 ease-out"
       enter-from-class="opacity-0 -translate-y-2"
@@ -91,7 +128,8 @@
     >
       <div
         v-if="isMobileMenuOpen"
-        class="md:hidden absolute top-16 inset-x-0 bg-dark-950/95 border-b border-lime-400/15 backdrop-blur-2xl py-4 shadow-2xl font-mono text-xs z-50"
+        class="md:hidden absolute inset-x-0 bg-dark-950/95 border-b border-lime-400/15 backdrop-blur-2xl py-3 shadow-2xl font-mono text-xs z-50 transition-all duration-300"
+        :class="isScrolled ? 'top-12' : 'top-16'"
       >
         <AppContainer size="default">
           <div class="space-y-1">
@@ -99,7 +137,7 @@
               v-for="link in navLinks"
               :key="link.href"
               :href="link.href"
-              class="flex items-center h-11 min-h-[44px] px-4 text-slate-300 hover:text-lime-400 transition-colors rounded-lg hover:bg-dark-900/80 active:bg-dark-900 font-semibold"
+              class="flex items-center h-10 px-4 text-slate-300 hover:text-lime-400 transition-colors rounded-lg hover:bg-dark-900/80 active:bg-dark-900 font-semibold"
               @click="closeMobileMenu"
             >
               {{ link.label }}
