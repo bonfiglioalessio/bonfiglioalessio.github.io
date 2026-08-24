@@ -1,22 +1,32 @@
 <script setup lang="ts">
   import type { SkillItem } from '../../types/portfolio'
-  import { useAudioSynth } from '../../composables/useAudioSynth'
   import AppBadge from '../ui/AppBadge.vue'
 
   defineProps<{
     skill: SkillItem
     floatAnimation?: string
   }>()
-
-  const { playBorderLoad } = useAudioSynth()
 </script>
 
 <template>
   <div :class="floatAnimation" class="w-full">
     <div
-      class="skill-card space-floating-card p-4 sm:p-5 rounded-2xl flex items-center justify-between gap-3 group transition-all duration-300 hover:scale-[1.02] select-none cursor-default relative overflow-hidden h-full"
-      @mouseenter="playBorderLoad(0.5)"
+      class="skill-card space-floating-card has-hud-reticles p-4 sm:p-5 rounded-2xl flex items-center justify-between gap-3 group transition-all duration-300 hover:scale-[1.02] select-none cursor-default relative overflow-hidden h-full"
     >
+      <!-- HUD Corner Reticles (Precision Cyber Brackets) -->
+      <span
+        class="absolute top-2 left-2 w-2 h-2 border-t border-l border-lime-400/40 group-hover:border-lime-400 group-hover:shadow-[0_0_6px_#e2f161] transition-all pointer-events-none"
+      />
+      <span
+        class="absolute top-2 right-2 w-2 h-2 border-t border-r border-lime-400/40 group-hover:border-lime-400 group-hover:shadow-[0_0_6px_#e2f161] transition-all pointer-events-none"
+      />
+      <span
+        class="absolute bottom-2 left-2 w-2 h-2 border-b border-l border-lime-400/40 group-hover:border-lime-400 group-hover:shadow-[0_0_6px_#e2f161] transition-all pointer-events-none"
+      />
+      <span
+        class="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-lime-400/40 group-hover:border-lime-400 group-hover:shadow-[0_0_6px_#e2f161] transition-all pointer-events-none"
+      />
+
       <!-- Animated Yellow/Lime Border Loader on Hover -->
       <svg
         class="absolute inset-0 w-full h-full pointer-events-none z-20 overflow-visible"
