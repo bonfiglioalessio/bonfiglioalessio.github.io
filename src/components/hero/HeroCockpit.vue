@@ -16,16 +16,17 @@
   const terminalScrollRef = ref<HTMLDivElement | null>(null)
   const inputRef = ref<HTMLInputElement | null>(null)
 
-  // Gentle 3D Tilt for CLI Cockpit (Subtler than Selected Work cards: maxTilt 3.5 vs 8)
-  const { transformStyle, glareStyle, handleMouseEnter, handleMouseMove, handleMouseLeave } =
-    use3DTilt(cockpitRef, {
+  // Gentle 3D Tilt for CLI Cockpit (Subtle tilt without internal glare wash)
+  const { transformStyle, handleMouseEnter, handleMouseMove, handleMouseLeave } = use3DTilt(
+    cockpitRef,
+    {
       maxTilt: 3.5,
       perspective: 1200,
       scale: 1.01,
       speed: 550,
-      glare: true,
-      maxGlare: 0.16,
-    })
+      glare: false,
+    },
+  )
 
   function setTab(tab: TabType) {
     playClick()
@@ -101,7 +102,7 @@
       class="absolute -bottom-10 -left-10 w-64 h-64 bg-emerald-500/15 rounded-full blur-2xl pointer-events-none z-0"
     />
 
-    <!-- Main Cockpit Card Container with Gentle 3D Tilt & Subtle Dynamic Border -->
+    <!-- Main Cockpit Card Container with Gentle 3D Tilt & Subtle Clean Border -->
     <div
       ref="cockpitRef"
       class="w-full h-[360px] sm:h-[410px] lg:h-[430px] p-3.5 sm:p-5 rounded-2xl bg-dark-900/80 backdrop-blur-xl border border-lime-400/30 hover:border-lime-400/60 flex flex-col justify-between select-none overflow-hidden relative z-10 shadow-[0_0_30px_rgba(226,241,97,0.18),0_0_70px_rgba(226,241,97,0.08)] hover:shadow-[0_0_45px_rgba(226,241,97,0.3),0_0_90px_rgba(226,241,97,0.15)] transition-all duration-300 group"
@@ -110,9 +111,6 @@
       @mousemove="handleMouseMove"
       @mouseleave="handleMouseLeave"
     >
-      <!-- Dynamic Holographic Glare Sheen -->
-      <div :style="glareStyle" aria-hidden="true" />
-
       <!-- Window Header & Tab Navigation -->
       <div class="space-y-3 shrink-0 relative z-10">
         <!-- MacOS Controls & Window Title with Vivid Glows -->
