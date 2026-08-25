@@ -35,19 +35,21 @@
     let idx1 = 0
     while (idx1 < fullPart1.length) {
       const chunkSize = Math.min(Math.floor(Math.random() * 3) + 1, fullPart1.length - idx1)
-      displayedPart1.value += fullPart1.slice(idx1, idx1 + chunkSize)
+      displayedPart1.value = fullPart1.slice(0, idx1 + chunkSize)
       idx1 += chunkSize
-      const delay = Math.floor(Math.random() * 25) + 18 // 18ms - 43ms
+      const delay = Math.floor(Math.random() * 25) + 25 // 25ms - 50ms
       await new Promise((r) => setTimeout(r, delay))
     }
+
+    await new Promise((r) => setTimeout(r, 90))
 
     // Stream Part 2 (1 to 3 chars chunking)
     let idx2 = 0
     while (idx2 < fullPart2.length) {
       const chunkSize = Math.min(Math.floor(Math.random() * 3) + 1, fullPart2.length - idx2)
-      displayedPart2.value += fullPart2.slice(idx2, idx2 + chunkSize)
+      displayedPart2.value = fullPart2.slice(0, idx2 + chunkSize)
       idx2 += chunkSize
-      const delay = Math.floor(Math.random() * 30) + 22 // 22ms - 52ms
+      const delay = Math.floor(Math.random() * 30) + 30 // 30ms - 60ms
       await new Promise((r) => setTimeout(r, delay))
     }
 
@@ -155,9 +157,9 @@
           {{ profile.bio }}
         </p>
 
-        <!-- Stats Counters Grid (Floating with staggered delays, roll-up counter & yellow loading border) -->
+        <!-- Metric Stat Counters (Grid 3 Columns with Counter Animation & Delayed Entrance) -->
         <div
-          class="grid grid-cols-3 gap-2.5 sm:gap-3 py-1 max-w-md transition-all duration-700 delay-450 ease-out"
+          class="grid grid-cols-3 gap-2 sm:gap-4 py-2 transition-all duration-700 delay-450 ease-out"
           :class="
             isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'
           "
@@ -212,3 +214,14 @@
     </div>
   </section>
 </template>
+
+<style scoped lang="scss">
+  .space-floating-card {
+    background: rgba(10, 15, 30, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(226, 241, 97, 0.15);
+    box-shadow:
+      0 0 20px rgba(0, 0, 0, 0.6),
+      inset 0 0 12px rgba(226, 241, 97, 0.05);
+  }
+</style>
