@@ -183,18 +183,18 @@
               v-for="link in navLinks"
               :key="link.href"
               :href="link.href"
-              class="inline-flex items-center justify-center transition-all duration-200 rounded-lg select-none"
+              class="inline-flex items-center justify-center transition-all duration-200 select-none px-2 sm:px-2.5 rounded-lg"
               :class="[
-                isScrolled ? 'h-8 px-2.5' : 'h-10 px-3',
+                isScrolled ? 'h-8' : 'h-10',
                 activeSectionId === link.href
-                  ? 'bg-lime-400/15 text-lime-400 border border-lime-400/35 shadow-[0_0_12px_rgba(226,241,97,0.25)] font-bold'
-                  : 'text-slate-300 hover:text-lime-400 hover:bg-dark-900/50',
+                  ? 'text-lime-400 font-bold drop-shadow-[0_0_10px_rgba(226,241,97,0.75)]'
+                  : 'text-slate-400 hover:text-slate-100 hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]',
               ]"
               @click="(e) => handleNavClick(e, link.href)"
             >
               <span
                 v-if="activeSectionId === link.href"
-                class="w-1.5 h-1.5 rounded-full bg-lime-400 mr-1.5 animate-pulse"
+                class="w-1.5 h-1.5 rounded-full bg-lime-400 mr-1.5 animate-pulse shadow-[0_0_8px_#e2f161]"
               />
               {{ link.label }}
             </a>
