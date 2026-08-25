@@ -76,29 +76,6 @@
     >
       <!-- Left Column: Bio, Headline, Stats with Staggered Entrance Reveal -->
       <div class="lg:col-span-7 space-y-5 sm:space-y-6 lg:space-y-7">
-        <!-- Status & Company Badge Pill (Hidden on Mobile) -->
-        <div
-          class="hidden sm:inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full space-floating-card text-xs font-mono select-none transition-all duration-700 ease-out"
-          :class="
-            isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'
-          "
-        >
-          <span class="relative flex h-2.5 w-2.5">
-            <span
-              class="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-75"
-            />
-            <span
-              class="relative inline-flex rounded-full h-2.5 w-2.5 bg-lime-400 shadow-[0_0_8px_#e2f161]"
-            />
-          </span>
-          <span class="text-slate-200">
-            Software Engineer
-            <strong class="text-lime-400 font-bold drop-shadow-[0_0_8px_#e2f161]"> @ iliad </strong>
-          </span>
-          <span class="text-lime-400/40">|</span>
-          <span class="text-slate-400">Milano &amp; Remote</span>
-        </div>
-
         <!-- Level Indicator & Main Display Headline (Zero-Gravity Floating) -->
         <div
           class="space-y-2 transition-all duration-700 delay-150 ease-out"
@@ -206,14 +183,3 @@
     </div>
   </section>
 </template>
-
-<style scoped lang="scss">
-  .space-floating-card {
-    background: rgba(10, 15, 30, 0.7);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(226, 241, 97, 0.15);
-    box-shadow:
-      0 0 20px rgba(0, 0, 0, 0.6),
-      inset 0 0 12px rgba(226, 241, 97, 0.05);
-  }
-</style>
