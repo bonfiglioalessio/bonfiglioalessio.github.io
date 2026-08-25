@@ -69,16 +69,16 @@
 
 <template>
   <section
-    class="min-h-screen flex flex-col justify-between pt-28 sm:pt-32 lg:pt-36 pb-8 sm:pb-12 lg:pb-14 relative z-10 w-full"
+    class="min-h-screen flex flex-col justify-between pt-36 sm:pt-40 lg:pt-40 pb-10 sm:pb-14 lg:pb-16 relative z-10 w-full"
   >
     <div
       class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-center w-full flex-1"
     >
       <!-- Left Column: Bio, Headline, Stats with Generous Spacing -->
-      <div class="lg:col-span-7 space-y-6 sm:space-y-7 lg:space-y-8">
+      <div class="lg:col-span-7 space-y-6 sm:space-y-8 lg:space-y-9">
         <!-- Level Indicator & Main Display Headline (Zero-Gravity Floating) -->
         <div
-          class="space-y-2.5 transition-all duration-700 delay-150 ease-out"
+          class="space-y-3 transition-all duration-700 delay-150 ease-out"
           :class="
             isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'
           "
@@ -94,7 +94,7 @@
           <div class="relative">
             <!-- Invisible Ghost Placeholder: Locks exact layout dimensions & line wraps immediately -->
             <h1
-              class="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-display tracking-tight leading-[1.12] sm:leading-[1.05] opacity-0 select-none pointer-events-none"
+              class="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-display tracking-tight leading-[1.14] sm:leading-[1.05] opacity-0 select-none pointer-events-none"
               aria-hidden="true"
             >
               <span class="inline-block">Turning complex logic into</span>
@@ -104,7 +104,7 @@
 
             <!-- Active Streamed Overlay (Perfect match, zero displacement of bio/stats) -->
             <h1
-              class="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-display text-white tracking-tight leading-[1.12] sm:leading-[1.05] absolute inset-0"
+              class="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-display text-white tracking-tight leading-[1.14] sm:leading-[1.05] absolute inset-0"
             >
               <span class="inline-block animate-float-slow">
                 {{ displayedPart1 }}
@@ -127,7 +127,7 @@
 
         <!-- Narrative Bio -->
         <p
-          class="text-sm sm:text-base text-slate-300 font-mono leading-relaxed max-w-xl drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] transition-all duration-700 delay-300 ease-out"
+          class="text-sm sm:text-base text-slate-300 font-mono leading-relaxed max-w-xl drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] transition-all duration-700 delay-300 ease-out pt-1"
           :class="
             isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'
           "
@@ -137,7 +137,7 @@
 
         <!-- Metric Stat Counters (Grid 3 Columns with Counter Animation & Delayed Entrance) -->
         <div
-          class="grid grid-cols-3 gap-2.5 sm:gap-4 pt-1 transition-all duration-700 delay-450 ease-out"
+          class="grid grid-cols-3 gap-3 sm:gap-4 pt-2 transition-all duration-700 delay-450 ease-out"
           :class="
             isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'
           "
@@ -158,7 +158,7 @@
       </div>
 
       <!-- Right Column: Interactive Orbital Satellite Cockpit (Half-peeking on Mobile) -->
-      <div class="lg:col-span-5 flex justify-center lg:justify-end mt-4 lg:mt-0">
+      <div class="lg:col-span-5 flex justify-center lg:justify-end mt-8 sm:mt-10 lg:mt-0">
         <HeroCockpit />
       </div>
     </div>
