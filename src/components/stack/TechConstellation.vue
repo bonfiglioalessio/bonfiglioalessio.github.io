@@ -5,7 +5,7 @@
   import SectionHeader from '../ui/SectionHeader.vue'
   import SkillCard from './SkillCard.vue'
 
-  const { skillsConstellation } = usePortfolioData()
+  const { skillsConstellation, sections } = usePortfolioData()
   const { playClick } = useAudioSynth()
 
   const coreClusters = computed(() =>
@@ -181,10 +181,13 @@
     >
       <!-- Section Header -->
       <SectionHeader
-        section-number="01"
-        title="The Tech Constellation"
-        status-badge="● 12 CORE MODULES & AI ORCHESTRATION"
-        description="I tool e le tecnologie fondamentali su cui fondo architetture solide, veloci e workflow agentici aumentati dall'AI."
+        :section-number="sections?.stack?.sectionNumber || '01'"
+        :title="sections?.stack?.title || 'The Tech Constellation'"
+        :status-badge="sections?.stack?.statusBadge || '● 12 CORE MODULES & AI ORCHESTRATION'"
+        :description="
+          sections?.stack?.description ||
+          'I tool e le tecnologie fondamentali su cui fondo architetture solide, veloci e workflow agentici aumentati dall\'AI.'
+        "
       />
 
       <!-- ================= MOBILE VIEW: Compact Constellation Sector Dock + Touch Swipe (< lg) ================= -->
