@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import { portfolioData } from '../data/portfolio'
+import { usePortfolioData } from './usePortfolioData'
 import { useAudioSynth } from './useAudioSynth'
 
 export interface CliEntry {
@@ -11,6 +11,7 @@ export interface CliEntry {
 }
 
 export function useCliEngine() {
+  const { portfolioData } = usePortfolioData()
   const { playClick, playDiffToggle, playSupernova, toggleAudio, isAudioEnabled } = useAudioSynth()
 
   const entries = ref<CliEntry[]>([
@@ -143,25 +144,31 @@ export function useCliEngine() {
     history.value.push(trimmed)
     historyIndex.value = -1
 
-    const lower = trimmed.toLowerCase()
-
-    switch (lower) {
+    switch (trimmed) {
       case 'help':
-        pushStreamedOutput(
-          [
-            `<div class="text-slate-300 font-mono text-[11px] leading-relaxed">
-              Available commands: <span class="text-lime-400 font-bold">skills</span>, <span class="text-lime-400 font-bold">projects</span>, <span class="text-lime-400 font-bold">experience</span>, <span class="text-lime-400 font-bold">contact</span>, <span class="text-lime-400 font-bold">clear</span>
-            </div>`,
-          ],
-          'space-y-0.5',
-        )
+        entries.value.push({
+          id: `out-${Date.now()}`,
+          type: 'output',
+          html: `<div class="space-y-1 text-slate-300 font-mono text-[11px]">
+            <div class="text-lime-400 font-bold">AVAILABLE TELEMETRY COMMANDS:</div>
+            <div>&bull; <strong class="text-white">skills</strong> / <strong class="text-white">stack</strong> — Technical skill constellation</div>
+            <div>&bull; <strong class="text-white">projects</strong> / <strong class="text-white">work</strong> — Selected works &amp; code diffs</div>
+            <div>&bull; <strong class="text-white">experience</strong> / <strong class="text-white">career</strong> — Career mission log &amp; milestones</div>
+            <div>&bull; <strong class="text-white">contact</strong> / <strong class="text-white">hire</strong> — Direct transmission channel &amp; email</div>
+            <div>&bull; <strong class="text-white">supernova</strong> — Trigger cosmic particle storm</div>
+            <div>&bull; <strong class="text-white">audio</strong> / <strong class="text-white">mute</strong> — Toggle Web Audio FX synthesizer</div>
+            <div>&bull; <strong class="text-white">status</strong> — View orbital station telemetry</div>
+            <div>&bull; <strong class="text-white">whoami</strong> — View developer identity credentials</div>
+            <div>&bull; <strong class="text-white">clear</strong> — Clear terminal window log</div>
+          </div>`,
+        })
         break
 
       case 'skills':
       case 'stack': {
         const skillLines = [
           `<div class="text-lime-400 font-bold">⚡ TECHNICAL SKILLS CONSTELLATION:</div>`,
-          ...portfolioData.skillsConstellation.map(
+          ...portfolioData.value.skillsConstellation.map(
             (c) =>
               `<div>&bull; <strong class="text-slate-200">${c.title}:</strong> ${c.skills.map((s) => s.name).join(', ')}</div>`,
           ),
@@ -175,7 +182,7 @@ export function useCliEngine() {
       case 'career': {
         const expLines = [
           `<div class="text-lime-400 font-bold">🛰️ CAREER MISSIONS:</div>`,
-          ...portfolioData.careerMissionLog.map(
+          ...portfolioData.value.careerMissionLog.map(
             (m) =>
               `<div>&bull; <span class="text-lime-300 font-bold">${m.period}:</span> ${m.role} @ <strong class="text-white">${m.company}</strong></div>`,
           ),
@@ -190,7 +197,7 @@ export function useCliEngine() {
       case 'explore_work': {
         const projectLines = [
           `<div class="text-lime-400 font-bold">🚀 SELECTED WORK &amp; EXPERIMENTS:</div>`,
-          ...portfolioData.selectedWork.map(
+          ...portfolioData.value.selectedWork.map(
             (p, idx) =>
               `<div>0${idx + 1}. <strong class="text-white">${p.title}</strong> &bull; ${p.description.slice(0, 52)}... <span class="text-slate-400">(${p.stack.join(', ')})</span></div>`,
           ),
@@ -206,8 +213,8 @@ export function useCliEngine() {
         playDiffToggle(true)
         const contactLines = [
           `<div class="text-lime-400 font-bold">📬 DIRECT TRANSMISSION CHANNEL:</div>`,
-          `<div>${portfolioData.profile.name} &bull; ${portfolioData.profile.role}</div>`,
-          ...portfolioData.socialLinks.map(
+          `<div>${portfolioData.value.profile.name} &bull; ${portfolioData.value.profile.role}</div>`,
+          ...portfolioData.value.socialLinks.map(
             (s) =>
               `<div>${s.platform}: <a href="${s.url}" target="_blank" rel="noopener noreferrer" class="text-lime-300 underline font-bold">${s.label}</a></div>`,
           ),
@@ -220,6 +227,7 @@ export function useCliEngine() {
       }
 
       case 'supernova':
+      case 'storm':
         playSupernova()
         if (typeof window !== 'undefined') {
           window.dispatchEvent(new CustomEvent('space-supernova-event'))
@@ -255,7 +263,7 @@ export function useCliEngine() {
       case 'whoami':
         pushStreamedOutput([
           `<div class="text-slate-200 font-mono text-[11px]">
-            <span class="text-lime-400 font-bold">${portfolioData.profile.name.toLowerCase().replace(' ', '.')}</span> (${portfolioData.profile.role} @ ${portfolioData.profile.currentCompany})
+            <span class="text-lime-400 font-bold">${portfolioData.value.profile.name.toLowerCase().replace(' ', '.')}</span> (${portfolioData.value.profile.role} @ ${portfolioData.value.profile.currentCompany})
           </div>`,
         ])
         break
