@@ -75,53 +75,6 @@
 
   let observer: IntersectionObserver | null = null
 
-  // Smart Magnetic Scroll-Snap Assist Logic
-  let lastScrollY = typeof window !== 'undefined' ? window.scrollY : 0
-  let isSnapping = false
-  let hasSnapped = false
-  let snapTimeoutId: ReturnType<typeof setTimeout> | null = null
-
-  function handleScrollSnap() {
-    if (typeof window === 'undefined' || !contactSectionRef.value) return
-    const currentScrollY = window.scrollY
-    const isScrollingDown = currentScrollY > lastScrollY
-    lastScrollY = currentScrollY
-
-    const rect = contactSectionRef.value.getBoundingClientRect()
-
-    // Reset snap lock if user scrolls well back up above Contact
-    if (rect.top > window.innerHeight * 1.1) {
-      hasSnapped = false
-    }
-
-    // Trigger magnetic centering when user is scrolling downward and enters approach zone
-    if (
-      isScrollingDown &&
-      !isSnapping &&
-      !hasSnapped &&
-      rect.top <= window.innerHeight * 0.8 &&
-      rect.top >= window.innerHeight * 0.15
-    ) {
-      isSnapping = true
-      hasSnapped = true
-
-      const targetY =
-        rect.top +
-        window.scrollY -
-        Math.max(0, (window.innerHeight - contactSectionRef.value.offsetHeight) / 2)
-
-      window.scrollTo({
-        top: Math.max(0, targetY),
-        behavior: 'smooth',
-      })
-
-      if (snapTimeoutId) clearTimeout(snapTimeoutId)
-      snapTimeoutId = setTimeout(() => {
-        isSnapping = false
-      }, 1000)
-    }
-  }
-
   async function copyEmail() {
     try {
       await navigator.clipboard.writeText(emailAddress)
@@ -152,17 +105,11 @@
       )
       observer.observe(contactSectionRef.value)
     }
-
-    window.addEventListener('scroll', handleScrollSnap, { passive: true })
   })
 
   onUnmounted(() => {
     if (observer) {
       observer.disconnect()
-    }
-    window.removeEventListener('scroll', handleScrollSnap)
-    if (snapTimeoutId) {
-      clearTimeout(snapTimeoutId)
     }
   })
 </script>
@@ -171,8 +118,9 @@
   <section
     id="contact"
     ref="contactSectionRef"
-    class="fullscreen-contact-section w-screen relative left-1/2 -translate-x-1/2 min-h-[90vh] lg:min-h-screen pt-20 sm:pt-28 lg:pt-36 pb-16 sm:pb-24 px-6 sm:px-12 lg:px-20 flex flex-col justify-center items-center select-none overflow-hidden transition-colors duration-1000 ease-out"
+    class="fullscreen-contact-section w-screen relative left-1/2 -translate-x-1/2 min-h-[90vh] lg:min-h-screen pt-20 sm:pt-28 lg:pt-36 pb-16 sm:pb-24 px-6 sm:px-12 lg:px-20 flex flex-col justify-center items-center select-none overflow-hidden transition-colors duration-1000 ease-out snap-center"
     :class="[isEmerged ? 'bg-emerged' : 'bg-submerged']"
+    style="scroll-snap-align: center; scroll-snap-stop: normal"
   >
     <!-- Top Glowing Cyber Horizon Divider -->
     <div
