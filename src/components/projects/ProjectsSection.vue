@@ -191,16 +191,16 @@
           </div>
         </div>
 
-        <!-- Horizontal Swipeable Project Cards Carousel with Themed Colors -->
+        <!-- Horizontal Swipeable Project Cards Carousel with Themed Colors (Edge-to-Edge bleed) -->
         <div
           ref="mobileCarouselRef"
-          class="flex overflow-x-auto snap-x snap-mandatory gap-6 -mx-4 px-4 sm:mx-0 sm:px-0 pt-4 pb-6 no-scrollbar"
+          class="flex overflow-x-auto snap-x snap-mandatory gap-5 -mx-6 sm:-mx-8 px-6 sm:px-8 pt-3 pb-5 no-scrollbar"
           @scroll.passive="handleCarouselScroll"
         >
           <div
             v-for="(project, idx) in selectedWork"
             :key="project.id"
-            class="w-[84vw] max-w-[350px] shrink-0 snap-center flex flex-col"
+            class="w-[85vw] max-w-[340px] shrink-0 snap-center flex flex-col"
           >
             <ProjectCard :project="project" :theme="getProjectTheme(idx)" />
           </div>

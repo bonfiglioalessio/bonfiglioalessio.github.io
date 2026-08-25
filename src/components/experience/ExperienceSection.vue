@@ -239,16 +239,16 @@
             </div>
           </div>
 
-          <!-- Middle: Horizontal Swipeable Experience Cards with Scroll Snap -->
+          <!-- Middle: Horizontal Swipeable Experience Cards with Scroll Snap (Edge-to-Edge bleed) -->
           <div
             ref="mobileExperienceRef"
-            class="flex overflow-x-auto snap-x snap-mandatory gap-6 -mx-4 px-4 sm:mx-0 sm:px-0 pt-4 pb-4 no-scrollbar"
+            class="flex overflow-x-auto snap-x snap-mandatory gap-5 -mx-6 sm:-mx-8 px-6 sm:px-8 pt-3 pb-4 no-scrollbar"
             @scroll.passive="handleMobileScroll"
           >
             <div
               v-for="(experience, idx) in careerMissionLog"
               :key="experience.id"
-              class="w-[84vw] max-w-[360px] shrink-0 snap-center flex flex-col"
+              class="w-[85vw] max-w-[340px] shrink-0 snap-center flex flex-col"
             >
               <ExperienceCard
                 :experience="experience"

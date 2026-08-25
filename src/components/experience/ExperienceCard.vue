@@ -97,15 +97,15 @@
 
 <template>
   <div class="relative w-full group">
-    <!-- Horizontal Neon Connector Branch (Themed) -->
+    <!-- Horizontal Neon Connector Branch (Desktop only >= lg) -->
     <div
-      class="absolute top-7 -left-7 sm:-left-9 lg:-left-10 w-7 sm:w-9 lg:w-10 h-[2px] pointer-events-none transition-all duration-300 z-10"
+      class="hidden lg:block absolute top-7 -left-7 sm:-left-9 lg:-left-10 w-7 sm:w-9 lg:w-10 h-[2px] pointer-events-none transition-all duration-300 z-10"
       :class="[isReached ? themeConfig.connectorActive : themeConfig.connectorInactive]"
     />
 
-    <!-- Glowing Timeline Node Marker (Themed) -->
+    <!-- Glowing Timeline Node Marker (Desktop only >= lg) -->
     <div
-      class="absolute top-4 -left-[40px] sm:-left-[49px] lg:-left-[53px] w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-dark-950 flex items-center justify-center z-20 transition-all duration-300 border border-lime-400/30"
+      class="hidden lg:flex absolute top-4 -left-[40px] sm:-left-[49px] lg:-left-[53px] w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-dark-950 items-center justify-center z-20 transition-all duration-300 border border-lime-400/30"
       :class="[
         isReached || experience.isCurrent ? themeConfig.nodeBorderActive : 'opacity-70 scale-95',
       ]"
