@@ -1,16 +1,18 @@
 <script setup lang="ts">
   import { computed, ref } from 'vue'
-  import { portfolioData } from '../../data/portfolio'
+  import { usePortfolioData } from '../../composables/usePortfolioData'
   import { useAudioSynth } from '../../composables/useAudioSynth'
   import SectionHeader from '../ui/SectionHeader.vue'
   import SkillCard from './SkillCard.vue'
 
-  const { skillsConstellation } = portfolioData
+  const { skillsConstellation } = usePortfolioData()
   const { playClick } = useAudioSynth()
 
-  const coreClusters = computed(() => skillsConstellation.filter((c) => c.clusterNumber !== '#04'))
-  const aiCluster = computed(() => skillsConstellation.find((c) => c.clusterNumber === '#04'))
-  const allClusters = computed(() => skillsConstellation)
+  const coreClusters = computed(() =>
+    skillsConstellation.value.filter((c) => c.clusterNumber !== '#04'),
+  )
+  const aiCluster = computed(() => skillsConstellation.value.find((c) => c.clusterNumber === '#04'))
+  const allClusters = computed(() => skillsConstellation.value)
 
   // Mobile Active Cluster Selector & Touch Gestures
   const activeClusterIndex = ref(0)
