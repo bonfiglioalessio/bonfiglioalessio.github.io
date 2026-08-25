@@ -74,24 +74,25 @@
 <template>
   <section
     id="stack"
-    class="tech-constellation-sector w-screen relative left-1/2 -translate-x-1/2 py-16 sm:py-20 lg:py-24 overflow-hidden select-none transition-colors duration-1000 ease-out scroll-mt-20"
+    class="tech-constellation-sector w-screen relative left-1/2 -translate-x-1/2 py-20 sm:py-24 lg:py-28 overflow-hidden select-none transition-colors duration-1000 ease-out scroll-mt-20"
   >
-    <!-- Top Glowing Electric Cyan Cyber Horizon Divider -->
+    <!-- Cosmic Smoke / Cloud Nebula Transition Drift at Top (Hero to Stack) -->
     <div
-      class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-sky-400/50 to-transparent shadow-[0_0_14px_#38bdf8]"
+      class="absolute -top-14 inset-x-0 h-48 bg-gradient-to-b from-transparent via-sky-500/12 to-transparent blur-3xl pointer-events-none"
     />
-
-    <!-- Bottom Glowing Sky/Lime Horizon Divider -->
     <div
-      class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-sky-400/30 to-transparent shadow-[0_0_12px_#38bdf8]"
+      class="absolute -top-20 left-1/4 -translate-x-1/2 w-[750px] h-[240px] rounded-full bg-cyan-400/15 blur-[110px] pointer-events-none"
+    />
+    <div
+      class="absolute -top-24 right-1/4 translate-x-1/2 w-[650px] h-[220px] rounded-full bg-indigo-500/18 blur-[120px] pointer-events-none"
     />
 
     <!-- Distinct Constellation Atmospheric Nebulas (Electric Sky & Deep Indigo Aura) -->
     <div
-      class="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[450px] rounded-full bg-sky-500/12 blur-[140px] pointer-events-none"
+      class="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] rounded-full bg-sky-500/12 blur-[150px] pointer-events-none"
     />
     <div
-      class="absolute bottom-1/3 right-1/4 translate-x-1/2 translate-y-1/2 w-[650px] h-[400px] rounded-full bg-indigo-500/10 blur-[150px] pointer-events-none"
+      class="absolute bottom-1/3 right-1/4 translate-x-1/2 translate-y-1/2 w-[700px] h-[450px] rounded-full bg-indigo-500/12 blur-[160px] pointer-events-none"
     />
 
     <!-- Subtle Cybernetic Constellation Background Lattice Grid -->
@@ -230,14 +231,34 @@
   .tech-constellation-sector {
     // Unique Electric Sky & Deep Indigo Cyber-Lattice background
     background: radial-gradient(
-      ellipse at 50% 25%,
+      ellipse at 50% 35%,
       rgba(8, 26, 48, 0.78) 0%,
       rgba(4, 13, 26, 0.94) 55%,
       rgba(2, 6, 16, 0.98) 100%
     );
-    box-shadow:
-      inset 0 30px 60px -25px rgba(0, 0, 0, 0.9),
-      inset 0 -30px 60px -25px rgba(0, 0, 0, 0.9);
+    // Smooth ethereal smoke/cloud feather mask at top and bottom edges (Zero hard line cuts!)
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.3) 30px,
+      rgba(0, 0, 0, 0.8) 80px,
+      black 130px,
+      black calc(100% - 130px),
+      rgba(0, 0, 0, 0.8) calc(100% - 80px),
+      rgba(0, 0, 0, 0.3) calc(100% - 30px),
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.3) 30px,
+      rgba(0, 0, 0, 0.8) 80px,
+      black 130px,
+      black calc(100% - 130px),
+      rgba(0, 0, 0, 0.8) calc(100% - 80px),
+      rgba(0, 0, 0, 0.3) calc(100% - 30px),
+      transparent 100%
+    );
   }
 
   .constellation-grid {
