@@ -72,7 +72,7 @@
     class="min-h-screen lg:h-screen lg:max-h-screen flex flex-col justify-between pt-28 sm:pt-32 lg:pt-24 xl:pt-26 pb-6 sm:pb-8 lg:pb-3 relative z-10 w-full"
   >
     <div
-      class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 xl:gap-20 2xl:gap-24 items-center w-full my-auto flex-1"
+      class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-10 xl:gap-12 items-center w-full my-auto flex-1"
     >
       <!-- Left Column: Bio, Headline, Stats with Balanced Spacing -->
       <div class="lg:col-span-7 space-y-5 sm:space-y-7 lg:space-y-4 xl:space-y-5">

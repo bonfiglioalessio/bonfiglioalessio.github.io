@@ -31,8 +31,8 @@
     />
     <div class="ambient-glow-cyan bottom-[-140px] left-1/4 w-[600px] h-[350px]" />
 
-    <!-- Main Content Container (Expanded wide container for less lateral margins and airy layout) -->
-    <AppContainer size="wide">
+    <!-- Main Content Container -->
+    <AppContainer size="default">
       <main class="pb-0">
         <!-- 00 Hero Section -->
         <HeroSection />

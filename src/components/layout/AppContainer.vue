@@ -16,7 +16,7 @@
       case 'narrow':
         return 'max-w-5xl'
       case 'wide':
-        return 'max-w-[96rem]'
+        return 'max-w-[90rem]'
       case 'full':
         return 'max-w-full'
       case 'default':
@@ -27,11 +27,7 @@
 </script>
 
 <template>
-  <component
-    :is="as"
-    class="w-full mx-auto px-2 sm:px-4 lg:px-4 xl:px-5 transition-all"
-    :class="sizeClasses"
-  >
+  <component :is="as" class="w-full mx-auto px-6 sm:px-8 transition-all" :class="sizeClasses">
     <slot />
   </component>
 </template>
