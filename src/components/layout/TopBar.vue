@@ -164,10 +164,10 @@
       </div>
     </transition>
 
-    <!-- Navbar Container: Exact same padding as page container at top (px-6 sm:px-8), tighter padding on scroll (px-2 sm:px-4) -->
+    <!-- Navbar Container: Exact same padding as page container at top (px-6 sm:px-8 max-w-7xl), expanded spread on scroll (px-0 sm:px-2 max-w-[88rem]) -->
     <div
-      class="w-full mx-auto max-w-7xl transition-all duration-300 ease-out"
-      :class="isScrolled ? 'px-2 sm:px-4' : 'px-6 sm:px-8'"
+      class="w-full mx-auto transition-all duration-300 ease-out"
+      :class="isScrolled ? 'px-0 sm:px-2 max-w-[88rem]' : 'px-6 sm:px-8 max-w-7xl'"
     >
       <div
         class="flex items-center justify-between transition-all duration-300 ease-out"
