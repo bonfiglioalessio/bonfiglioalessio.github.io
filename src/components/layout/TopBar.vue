@@ -76,50 +76,62 @@
     }
   }
 
-  function handleScroll() {
-    if (typeof window !== 'undefined') {
-      isScrolled.value = window.scrollY > 25
+  let isScrollTicking = false
+  let scrollRafId: number | null = null
 
-      // Show LET'S TALK CTA button ONLY starting from Selected Work (#projects) section
-      const projectsEl = document.getElementById('projects')
-      if (projectsEl) {
-        const rect = projectsEl.getBoundingClientRect()
-        isCtaVisible.value = rect.top <= window.innerHeight * 0.75
-      }
+  function updateScrollState() {
+    if (typeof window === 'undefined') return
 
-      // Exact check for contact section visibility to auto-hide navbar
-      const contactEl = document.getElementById('contact')
-      if (contactEl) {
-        const rect = contactEl.getBoundingClientRect()
-        isContactVisible.value = rect.top <= window.innerHeight * 0.7 && rect.bottom >= 50
-      }
+    isScrolled.value = window.scrollY > 25
 
-      // Precise Real-Time Scrollspy: Active section detection
-      if (window.scrollY < 180) {
-        activeSectionId.value = ''
-      } else {
-        const sectionIds = ['stack', 'projects', 'experience', 'contact']
-        const focalY = window.innerHeight * 0.38
-        let currentActive = ''
-        for (const id of sectionIds) {
-          const el = document.getElementById(id)
-          if (el) {
-            const rect = el.getBoundingClientRect()
-            if (rect.top <= focalY && rect.bottom > focalY) {
-              currentActive = '#' + id
-              break
-            }
+    // Show LET'S TALK CTA button ONLY starting from Selected Work (#projects) section
+    const projectsEl = document.getElementById('projects')
+    if (projectsEl) {
+      const rect = projectsEl.getBoundingClientRect()
+      isCtaVisible.value = rect.top <= window.innerHeight * 0.75
+    }
+
+    // Exact check for contact section visibility to auto-hide navbar
+    const contactEl = document.getElementById('contact')
+    if (contactEl) {
+      const rect = contactEl.getBoundingClientRect()
+      isContactVisible.value = rect.top <= window.innerHeight * 0.7 && rect.bottom >= 50
+    }
+
+    // Precise Real-Time Scrollspy: Active section detection
+    if (window.scrollY < 180) {
+      activeSectionId.value = ''
+    } else {
+      const sectionIds = ['stack', 'projects', 'experience', 'contact']
+      const focalY = window.innerHeight * 0.38
+      let currentActive = ''
+      for (const id of sectionIds) {
+        const el = document.getElementById(id)
+        if (el) {
+          const rect = el.getBoundingClientRect()
+          if (rect.top <= focalY && rect.bottom > focalY) {
+            currentActive = '#' + id
+            break
           }
         }
-        if (currentActive) {
-          activeSectionId.value = currentActive
-        }
       }
+      if (currentActive) {
+        activeSectionId.value = currentActive
+      }
+    }
+
+    isScrollTicking = false
+  }
+
+  function handleScroll() {
+    if (!isScrollTicking) {
+      isScrollTicking = true
+      scrollRafId = requestAnimationFrame(updateScrollState)
     }
   }
 
   onMounted(() => {
-    handleScroll()
+    updateScrollState()
     window.addEventListener('scroll', handleScroll, { passive: true })
 
     // Observe Contact section to auto-hide navbar when contact section is in view
@@ -127,7 +139,9 @@
     if (contactEl && 'IntersectionObserver' in window) {
       contactObserver = new IntersectionObserver(
         ([entry]) => {
-          isContactVisible.value = entry.isIntersecting
+          if (entry) {
+            isContactVisible.value = entry.isIntersecting
+          }
         },
         {
           threshold: 0.05,
@@ -139,6 +153,9 @@
   })
 
   onUnmounted(() => {
+    if (scrollRafId !== null) {
+      cancelAnimationFrame(scrollRafId)
+    }
     window.removeEventListener('scroll', handleScroll)
     if (contactObserver) {
       contactObserver.disconnect()
