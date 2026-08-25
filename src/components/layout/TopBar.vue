@@ -40,10 +40,12 @@
     }
     const contactEl = document.getElementById('contact')
     if (contactEl) {
+      const contentEl = contactEl.querySelector('div.max-w-4xl') as HTMLElement | null
+      const targetEl = contentEl || contactEl
       const targetY = Math.round(
-        contactEl.getBoundingClientRect().top +
+        targetEl.getBoundingClientRect().top +
           window.scrollY -
-          Math.max(0, (window.innerHeight - contactEl.offsetHeight) / 2),
+          Math.max(0, (window.innerHeight - targetEl.offsetHeight) / 2),
       )
       window.scrollTo({
         top: Math.max(0, targetY),
