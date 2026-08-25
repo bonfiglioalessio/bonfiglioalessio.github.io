@@ -16,6 +16,10 @@
     floatAnimation: '',
   })
 
+  const emit = defineEmits<{
+    (e: 'preview', project: Project): void
+  }>()
+
   const { playDiffToggle, playClick } = useAudioSynth()
   const isDiffOpen = ref(false)
 
@@ -36,6 +40,8 @@
           diffBorderClass: 'border-white/25 ring-white/20',
           diffDividerClass: 'bg-white/15',
           bulletClass: 'text-white/60',
+          previewBtnClass:
+            'border-white/30 text-white hover:bg-white hover:text-black hover:shadow-[0_0_15px_rgba(255,255,255,0.4)]',
           visitBtnClass:
             'bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.35)] hover:shadow-[0_0_25px_rgba(255,255,255,0.65)]',
           activeSessionText: 'text-white',
@@ -51,6 +57,8 @@
           diffBorderClass: 'border-emerald-400/25 ring-emerald-400/20',
           diffDividerClass: 'bg-emerald-400/15',
           bulletClass: 'text-emerald-400/60',
+          previewBtnClass:
+            'border-emerald-400/30 text-emerald-400 hover:bg-emerald-400 hover:text-black hover:shadow-[0_0_15px_rgba(52,211,153,0.4)]',
           visitBtnClass:
             'bg-emerald-400 text-black shadow-[0_0_15px_rgba(52,211,153,0.35)] hover:shadow-[0_0_25px_rgba(52,211,153,0.65)]',
           activeSessionText: 'text-emerald-400',
@@ -66,6 +74,8 @@
           diffBorderClass: 'border-sky-400/25 ring-sky-400/20',
           diffDividerClass: 'bg-sky-400/15',
           bulletClass: 'text-sky-400/60',
+          previewBtnClass:
+            'border-sky-400/30 text-sky-400 hover:bg-sky-400 hover:text-black hover:shadow-[0_0_15px_rgba(56,189,248,0.4)]',
           visitBtnClass:
             'bg-sky-400 text-black shadow-[0_0_15px_rgba(56,189,248,0.35)] hover:shadow-[0_0_25px_rgba(56,189,248,0.65)]',
           activeSessionText: 'text-sky-400',
@@ -82,6 +92,8 @@
           diffBorderClass: 'border-lime-400/25 ring-lime-400/20',
           diffDividerClass: 'bg-lime-400/15',
           bulletClass: 'text-lime-400/60',
+          previewBtnClass:
+            'border-lime-400/30 text-lime-400 hover:bg-lime-400 hover:text-black hover:shadow-[0_0_15px_rgba(226,241,97,0.4)]',
           visitBtnClass:
             'bg-lime-400 text-black shadow-[0_0_15px_rgba(226,241,97,0.35)] hover:shadow-[0_0_25px_rgba(226,241,97,0.65)]',
           activeSessionText: 'text-lime-400',
@@ -207,14 +219,25 @@
         </template>
       </div>
 
-      <!-- Action Button -->
-      <div class="shrink-0">
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-2 shrink-0">
+        <!-- Preview Lightbox Trigger -->
+        <button
+          type="button"
+          class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl font-mono font-bold text-xs bg-dark-950/90 border transition-all cursor-pointer active:scale-95"
+          :class="themeConfig.previewBtnClass"
+          @click="emit('preview', project)"
+        >
+          <span class="text-[10px]">⬡</span>
+          <span>PREVIEW</span>
+        </button>
+
         <a
           v-if="project.liveUrl"
           :href="project.liveUrl"
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl font-mono font-bold text-xs hover:scale-105 active:scale-95 transition-all cursor-pointer"
+          class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-mono font-bold text-xs hover:scale-105 active:scale-95 transition-all cursor-pointer"
           :class="themeConfig.visitBtnClass"
           @click="playClick"
         >

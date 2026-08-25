@@ -1,9 +1,11 @@
 <script setup lang="ts">
   import { computed, ref } from 'vue'
+  import type { Project } from '../../types/portfolio'
   import { portfolioData } from '../../data/portfolio'
   import { useAudioSynth } from '../../composables/useAudioSynth'
   import SectionHeader from '../ui/SectionHeader.vue'
   import ProjectCard from './ProjectCard.vue'
+  import ProjectPreviewModal from './ProjectPreviewModal.vue'
 
   const { selectedWork } = portfolioData
   const { playClick } = useAudioSynth()
@@ -114,6 +116,19 @@
       scrollToProject(0)
     }
   }
+
+  // Live Preview Lightbox State
+  const selectedPreviewProject = ref<Project | null>(null)
+  const isPreviewOpen = ref(false)
+
+  function openPreview(project: Project) {
+    selectedPreviewProject.value = project
+    isPreviewOpen.value = true
+  }
+
+  function closePreview() {
+    isPreviewOpen.value = false
+  }
 </script>
 
 <template>
@@ -148,7 +163,13 @@
           >
             [+] inspect diff
           </span>
-          in ogni card per esaminare i dettagli tecnici, i commit e le metriche di codice.
+          per i dettagli di codice o su
+          <span
+            class="text-lime-400 font-bold bg-dark-950 px-2 py-0.5 rounded-md border border-lime-400/40 shadow-[0_0_8px_rgba(226,241,97,0.25)] inline-flex items-center gap-1 font-mono text-xs select-all"
+          >
+            [⬡ PREVIEW]
+          </span>
+          per testare l'anteprima interattiva responsive.
         </template>
       </SectionHeader>
 
@@ -199,7 +220,7 @@
             :key="project.id"
             class="w-[85vw] max-w-[340px] shrink-0 snap-center flex flex-col h-full self-stretch"
           >
-            <ProjectCard :project="project" :theme="getProjectTheme(idx)" />
+            <ProjectCard :project="project" :theme="getProjectTheme(idx)" @preview="openPreview" />
           </div>
         </div>
 
@@ -232,6 +253,7 @@
             :project="project"
             :theme="getProjectTheme(originalIndex)"
             :float-animation="floatPatterns[(idx * 2) % floatPatterns.length]"
+            @preview="openPreview"
           />
         </div>
 
@@ -243,10 +265,20 @@
             :project="project"
             :theme="getProjectTheme(originalIndex)"
             :float-animation="floatPatterns[(idx * 2 + 1) % floatPatterns.length]"
+            @preview="openPreview"
           />
         </div>
       </div>
     </div>
+
+    <!-- Live Preview Lightbox Modal Component -->
+    <ProjectPreviewModal
+      :is-open="isPreviewOpen"
+      :project="selectedPreviewProject"
+      :all-projects="selectedWork"
+      @close="closePreview"
+      @select="(p) => (selectedPreviewProject = p)"
+    />
   </section>
 </template>
 
