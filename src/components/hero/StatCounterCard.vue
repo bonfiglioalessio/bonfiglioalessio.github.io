@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed, onMounted, onUnmounted, ref } from 'vue'
+  import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
   import { useAudioSynth } from '../../composables/useAudioSynth'
 
   interface Props {
@@ -11,6 +11,7 @@
     floatAnimation?: string
     duration?: number
     delay?: number
+    active?: boolean
   }
 
   const props = withDefaults(defineProps<Props>(), {
@@ -20,6 +21,7 @@
     floatAnimation: '',
     duration: 850,
     delay: 0,
+    active: true,
   })
 
   const { playBorderLoad } = useAudioSynth()
@@ -101,10 +103,26 @@
     animFrameId = requestAnimationFrame(step)
   }
 
-  onMounted(() => {
+  function startWithDelay() {
+    if (timeoutId !== null) clearTimeout(timeoutId)
     timeoutId = setTimeout(() => {
       runCounterAnimation()
     }, props.delay)
+  }
+
+  watch(
+    () => props.active,
+    (isActive) => {
+      if (isActive) {
+        startWithDelay()
+      }
+    },
+  )
+
+  onMounted(() => {
+    if (props.active) {
+      startWithDelay()
+    }
   })
 
   onUnmounted(() => {
