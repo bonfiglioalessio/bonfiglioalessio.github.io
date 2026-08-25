@@ -70,7 +70,7 @@
 
 <template>
   <section
-    class="min-h-[calc(100vh-6.5rem)] flex items-center py-4 sm:py-8 lg:py-12 relative z-10 w-full"
+    class="min-h-screen flex items-center pt-24 sm:pt-28 lg:pt-32 pb-6 sm:pb-10 lg:pb-14 relative z-10 w-full"
   >
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center w-full">
       <!-- Left Column: Bio, Headline, Stats & CTA with Staggered Entrance Reveal -->

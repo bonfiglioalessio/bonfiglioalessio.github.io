@@ -4,6 +4,7 @@
   import { useAudioSynth } from '../../composables/useAudioSynth'
   import AppContainer from './AppContainer.vue'
   import AppButton from '../ui/AppButton.vue'
+  import MarqueeTicker from './MarqueeTicker.vue'
 
   const { profile } = portfolioData
   const { playClick } = useAudioSynth()
@@ -140,22 +141,23 @@
 
 <template>
   <header
-    class="fixed top-0 inset-x-0 z-50 transition-all duration-500 ease-out shrink-0"
+    class="fixed top-0 inset-x-0 z-50 transition-all duration-500 ease-out shrink-0 bg-transparent border-none shadow-none"
     :class="[
       isContactVisible
         ? '-translate-y-full opacity-0 pointer-events-none'
         : 'translate-y-0 opacity-100',
-      isScrolled
-        ? 'h-12 min-h-[3rem] bg-dark-950/35 backdrop-blur-md border-b border-lime-400/10 shadow-[0_8px_32px_rgba(0,0,0,0.6)]'
-        : 'h-16 min-h-[4rem] bg-dark-950/85 backdrop-blur-xl border-b border-lime-400/15',
     ]"
   >
+    <!-- Topmost Marquee Ticker: Transparent & Borderless -->
+    <MarqueeTicker />
+
+    <!-- Navbar Container: Transparent & Borderless -->
     <AppContainer size="default">
       <div
         class="flex items-center justify-between transition-all duration-300 ease-out"
-        :class="isScrolled ? 'h-12' : 'h-16'"
+        :class="isScrolled ? 'h-11 sm:h-12' : 'h-14 sm:h-16'"
       >
-        <!-- Brand Logo (Shrinks smoothly on scroll) -->
+        <!-- Brand Logo -->
         <a
           href="#"
           class="inline-flex items-center gap-1 font-bold tracking-wider text-slate-100 group select-none shrink-0 transition-all duration-300"
@@ -174,7 +176,7 @@
 
         <!-- Right Side: Desktop Navigation Links (with Scrollspy) + Real Primary CTA Button -->
         <div class="flex items-center gap-2.5 sm:gap-4">
-          <!-- Desktop Navigation Links (Scrollspy Active Highlighting) -->
+          <!-- Desktop Navigation Links (Scrollspy Active Highlighting without background/borders) -->
           <nav
             class="hidden md:flex items-center gap-1 text-slate-300 font-mono transition-all duration-300"
             :class="isScrolled ? 'text-[11px]' : 'text-xs'"
@@ -223,7 +225,7 @@
             </AppButton>
           </transition>
 
-          <!-- Mobile Hamburger Toggle (Shrinks smoothly on scroll) -->
+          <!-- Mobile Hamburger Toggle -->
           <button
             type="button"
             class="md:hidden rounded-lg text-slate-300 hover:text-lime-400 hover:bg-dark-900/80 border border-lime-400/20 flex flex-col items-center justify-center transition-all duration-300 cursor-pointer select-none shrink-0"
@@ -266,8 +268,7 @@
     >
       <div
         v-if="isMobileMenuOpen"
-        class="md:hidden absolute inset-x-0 bg-dark-950/95 border-b border-lime-400/15 backdrop-blur-2xl py-3 shadow-2xl font-mono text-xs z-50 transition-all duration-300"
-        :class="isScrolled ? 'top-12' : 'top-16'"
+        class="md:hidden absolute inset-x-0 top-full bg-dark-950/95 border-b border-lime-400/15 backdrop-blur-2xl py-3 shadow-2xl font-mono text-xs z-50 transition-all duration-300"
       >
         <AppContainer size="default">
           <div class="space-y-1">
@@ -278,7 +279,7 @@
               class="flex items-center justify-between h-10 px-4 transition-colors rounded-lg font-semibold"
               :class="[
                 activeSectionId === link.href
-                  ? 'bg-lime-400/20 text-lime-400 border border-lime-400/30 shadow-[0_0_12px_rgba(226,241,97,0.2)] font-bold'
+                  ? 'text-lime-400 font-bold drop-shadow-[0_0_10px_rgba(226,241,97,0.75)]'
                   : 'text-slate-300 hover:text-lime-400 hover:bg-dark-900/80 active:bg-dark-900',
               ]"
               @click="(e) => handleMobileNavClick(e, link.href)"

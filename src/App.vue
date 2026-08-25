@@ -1,6 +1,5 @@
 <script setup lang="ts">
   import TopBar from './components/layout/TopBar.vue'
-  import MarqueeTicker from './components/layout/MarqueeTicker.vue'
   import AppContainer from './components/layout/AppContainer.vue'
   import AppFooter from './components/layout/AppFooter.vue'
   import SpaceCanvas from './components/canvas/SpaceCanvas.vue'
@@ -23,11 +22,8 @@
     <!-- Interactive Canvas 3D Starfield Layer -->
     <SpaceCanvas />
 
-    <!-- Sticky TopBar -->
+    <!-- Sticky/Fixed TopBar Header (Includes Top Marquee + Transparent Borderless Navbar) -->
     <TopBar />
-
-    <!-- Infinite Marquee Ticker -->
-    <MarqueeTicker />
 
     <!-- Ambient Atmospheric Glows -->
     <div
