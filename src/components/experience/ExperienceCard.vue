@@ -145,11 +145,11 @@
       :spotlight-color="themeConfig.spotlightColor"
       :shine="true"
       :float-animation="floatAnimation"
-      class="select-none space-y-4 w-full h-full flex flex-col justify-between relative overflow-hidden transition-all duration-500 backdrop-blur-xl"
+      class="select-none space-y-4 w-full h-full flex flex-col justify-between relative overflow-hidden transition-opacity duration-300 bg-dark-900/95 lg:bg-dark-900/80 lg:backdrop-blur-xl transform-gpu"
       :class="[
         isFocused
           ? `${themeConfig.activeCardClass} opacity-100 scale-100`
-          : 'opacity-35 scale-[0.985] blur-[0.2px] hover:opacity-100 hover:scale-100 hover:blur-none',
+          : 'lg:opacity-35 lg:scale-[0.985] lg:blur-[0.2px] lg:hover:opacity-100 lg:hover:scale-100 lg:hover:blur-none',
       ]"
     >
       <!-- Header: Mission Number, Period & Stable Badge Slot -->
