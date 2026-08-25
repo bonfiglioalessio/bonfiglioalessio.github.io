@@ -39,6 +39,21 @@
     decay: number
   }
 
+  interface MeteorStreak {
+    x: number
+    y: number
+    length: number
+    speed: number
+    angle: number
+    vx: number
+    vy: number
+    alpha: number
+    color: string
+    tailColor: string
+    decay: number
+    width: number
+  }
+
   const canvasRef = ref<HTMLCanvasElement | null>(null)
   let animationFrameId: number | null = null
   let ctx: CanvasRenderingContext2D | null = null
@@ -52,6 +67,8 @@
   let stars: Star3D[] = []
   let shockwaves: Shockwave3D[] = []
   let sparks: Spark3D[] = []
+  const meteors: MeteorStreak[] = []
+  let nextMeteorTime = performance.now() + 2500
 
   // 3D Camera Orbit & Perspective Angles
   const camera = {
@@ -460,6 +477,76 @@
       ctx.arc(sx, sy, Math.max(0.5, s.radius * scale * s.alpha), 0, Math.PI * 2)
       ctx.fillStyle = `${s.color}${s.alpha * scale})`
       ctx.fill()
+    }
+
+    // --- Dynamic Shooting Stars & Meteor Trails ---
+    const now = performance.now()
+    if (now > nextMeteorTime) {
+      const angle = Math.PI / 4 + (Math.random() - 0.5) * 0.35 // ~45 deg diagonal flight
+      const speed = 12 + Math.random() * 8
+      const length = 120 + Math.random() * 140
+      const colors = [
+        { head: '#ffffff', tail: 'rgba(226, 241, 97, 0.85)' }, // Lime
+        { head: '#ffffff', tail: 'rgba(52, 211, 153, 0.85)' }, // Emerald
+        { head: '#ffffff', tail: 'rgba(56, 189, 248, 0.85)' }, // Cyan
+        { head: '#ffffff', tail: 'rgba(255, 255, 255, 0.95)' }, // White
+      ]
+      const colorPair = colors[Math.floor(Math.random() * colors.length)]
+
+      meteors.push({
+        x: Math.random() * (width * 0.9) - width * 0.05,
+        y: Math.random() * (height * 0.4) - height * 0.1,
+        length,
+        speed,
+        angle,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        alpha: 0.95,
+        color: colorPair.head,
+        tailColor: colorPair.tail,
+        decay: 0.012 + Math.random() * 0.008,
+        width: 1.5 + Math.random() * 1.2,
+      })
+
+      nextMeteorTime = now + (6000 + Math.random() * 8000) // Next meteor in 6-14 seconds
+    }
+
+    for (let i = meteors.length - 1; i >= 0; i--) {
+      const m = meteors[i]
+      m.x += m.vx
+      m.y += m.vy
+      m.alpha -= m.decay
+
+      if (m.alpha <= 0 || m.x > width + 250 || m.y > height + 250) {
+        meteors.splice(i, 1)
+        continue
+      }
+
+      const tailX = m.x - Math.cos(m.angle) * m.length
+      const tailY = m.y - Math.sin(m.angle) * m.length
+
+      const gradient = ctx.createLinearGradient(tailX, tailY, m.x, m.y)
+      gradient.addColorStop(0, 'rgba(0, 0, 0, 0)')
+      gradient.addColorStop(0.7, m.tailColor.replace('0.85', (m.alpha * 0.75).toString()))
+      gradient.addColorStop(1, `rgba(255, 255, 255, ${m.alpha})`)
+
+      ctx.save()
+      ctx.strokeStyle = gradient
+      ctx.lineWidth = m.width
+      ctx.lineCap = 'round'
+      ctx.beginPath()
+      ctx.moveTo(tailX, tailY)
+      ctx.lineTo(m.x, m.y)
+      ctx.stroke()
+
+      // High-intensity head light orb
+      ctx.fillStyle = `rgba(255, 255, 255, ${m.alpha})`
+      ctx.shadowColor = m.tailColor
+      ctx.shadowBlur = 10
+      ctx.beginPath()
+      ctx.arc(m.x, m.y, m.width * 0.9, 0, Math.PI * 2)
+      ctx.fill()
+      ctx.restore()
     }
 
     animationFrameId = requestAnimationFrame(render)
