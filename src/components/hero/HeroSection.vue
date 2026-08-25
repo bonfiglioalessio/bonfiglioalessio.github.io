@@ -150,7 +150,7 @@
             :suffix="stat.suffix"
             :label="stat.label"
             :theme="statThemes[idx] || 'lime'"
-            :delay="idx * 220 + 80"
+            :delay="idx * 200 + 350"
             :duration="800"
             :float-animation="statAnimClasses[idx % statAnimClasses.length]"
           />
