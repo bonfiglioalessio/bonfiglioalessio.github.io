@@ -16,6 +16,8 @@
   let contactObserver: IntersectionObserver | null = null
   const sectionObservers: IntersectionObserver[] = []
 
+  const emailUrl = 'mailto:bonfi.alessio98@gmail.com'
+
   const navLinks = [
     { href: '#stack', label: './stack' },
     { href: '#projects', label: './projects' },
@@ -222,17 +224,17 @@
             </a>
           </nav>
 
-          <!-- Dedicated Slot for Primary CTA Button: 0px at top, smoothly expands when Selected Work is reached -->
+          <!-- Dedicated Slot for Send Email CTA Button: 0px at top, smoothly expands when Selected Work is reached -->
           <div
             class="hidden md:flex items-center justify-end shrink-0 transition-all duration-300 ease-out overflow-hidden"
             :class="
-              isCtaVisible ? 'w-[130px] opacity-100 ml-2' : 'w-0 opacity-0 ml-0 pointer-events-none'
+              isCtaVisible ? 'w-[136px] opacity-100 ml-2' : 'w-0 opacity-0 ml-0 pointer-events-none'
             "
           >
             <AppButton
               variant="primary"
               size="sm"
-              href="#contact"
+              :href="emailUrl"
               as="a"
               class="whitespace-nowrap font-extrabold uppercase tracking-wider shadow-[0_0_18px_rgba(226,241,97,0.45)] shrink-0 transition-all duration-300"
               :class="
@@ -240,9 +242,9 @@
                   ? 'opacity-100 scale-100 pointer-events-auto'
                   : 'opacity-0 scale-95 pointer-events-none'
               "
-              @click="(e: MouseEvent) => handleNavClick(e, '#contact')"
+              @click="playClick"
             >
-              <span>LET'S TALK</span>
+              <span>Send Email</span>
               <span class="text-xs">&rarr;</span>
             </AppButton>
           </div>
@@ -314,6 +316,18 @@
                 ● ACTIVE
               </span>
             </a>
+
+            <!-- Mobile Dedicated Direct Email Action CTA -->
+            <div class="pt-2 mt-2 border-t border-lime-400/15">
+              <a
+                :href="emailUrl"
+                class="w-full py-2.5 px-4 rounded-xl bg-lime-400 text-black font-bold font-mono text-xs shadow-[0_0_15px_rgba(226,241,97,0.35)] flex items-center justify-center gap-2 cursor-pointer active:scale-95 transition-transform"
+                @click="playClick"
+              >
+                <span>Send Email</span>
+                <span>&rarr;</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
