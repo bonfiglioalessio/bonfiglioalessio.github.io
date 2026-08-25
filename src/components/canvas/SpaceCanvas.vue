@@ -106,7 +106,7 @@
 
   function initStars() {
     const isMobile = width < 768
-    const starCount = isMobile ? 55 : 110
+    const starCount = isMobile ? 30 : 85
     stars = []
 
     for (let i = 0; i < starCount; i++) {
@@ -135,7 +135,8 @@
     if (!bgCanvasRef.value) return
     width = window.innerWidth
     height = window.innerHeight
-    dpr = Math.min(window.devicePixelRatio || 1, 2)
+    // Cap DPR to 1.5 for ultra-efficient GPU fill-rate (dramatically lowers rasterization overhead)
+    dpr = Math.min(window.devicePixelRatio || 1, 1.5)
 
     // Resize Background Canvas
     bgCanvasRef.value.width = width * dpr
@@ -392,36 +393,44 @@
       }
     }
 
-    // 3. Constellation Micro-Lines Between Neighboring Stars (Depth-Matched)
-    const maxLinkDist = width < 768 ? 65 : 85
-    const linkLimit = width < 768 ? 1 : 2
+    // 3. Constellation Micro-Lines Between Neighboring Stars (Desktop Only, Depth-Matched, Squared Distance Optimized)
+    const isMobile = width < 768
+    if (!isMobile) {
+      const maxLinkDist = 85
+      const maxLinkDistSq = maxLinkDist * maxLinkDist
+      const linkLimit = 2
 
-    for (let i = 0; i < projectedStars.length; i++) {
-      let connections = 0
-      const p1 = projectedStars[i]
+      for (let i = 0; i < projectedStars.length; i++) {
+        let connections = 0
+        const p1 = projectedStars[i]
+        if (!p1) continue
 
-      for (let j = i + 1; j < projectedStars.length && connections < linkLimit; j++) {
-        const p2 = projectedStars[j]
-        const zDiff = Math.abs(p1.z - p2.z)
+        for (let j = i + 1; j < projectedStars.length && connections < linkLimit; j++) {
+          const p2 = projectedStars[j]
+          if (!p2) continue
 
-        if (zDiff > 140) continue
+          const zDiff = Math.abs(p1.z - p2.z)
+          if (zDiff > 140) continue
 
-        const ldx = p1.sx - p2.sx
-        const ldy = p1.sy - p2.sy
-        const ldist = Math.sqrt(ldx * ldx + ldy * ldy)
+          const ldx = p1.sx - p2.sx
+          const ldy = p1.sy - p2.sy
+          const distSq = ldx * ldx + ldy * ldy
 
-        if (ldist < maxLinkDist) {
-          const lineAlpha =
-            (1 - ldist / maxLinkDist) * Math.min(p1.alpha, p2.alpha) * 0.22 * (1 - zDiff / 140)
+          // Only calculate square root when within range
+          if (distSq < maxLinkDistSq) {
+            const ldist = Math.sqrt(distSq)
+            const lineAlpha =
+              (1 - ldist / maxLinkDist) * Math.min(p1.alpha, p2.alpha) * 0.22 * (1 - zDiff / 140)
 
-          if (lineAlpha > 0.02) {
-            ctxBg.beginPath()
-            ctxBg.moveTo(p1.sx, p1.sy)
-            ctxBg.lineTo(p2.sx, p2.sy)
-            ctxBg.strokeStyle = `rgba(226, 241, 97, ${lineAlpha})`
-            ctxBg.lineWidth = 0.6
-            ctxBg.stroke()
-            connections++
+            if (lineAlpha > 0.02) {
+              ctxBg.beginPath()
+              ctxBg.moveTo(p1.sx, p1.sy)
+              ctxBg.lineTo(p2.sx, p2.sy)
+              ctxBg.strokeStyle = `rgba(226, 241, 97, ${lineAlpha})`
+              ctxBg.lineWidth = 0.6
+              ctxBg.stroke()
+              connections++
+            }
           }
         }
       }
