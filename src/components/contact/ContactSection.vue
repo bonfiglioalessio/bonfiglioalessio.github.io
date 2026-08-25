@@ -75,6 +75,93 @@
 
   let observer: IntersectionObserver | null = null
 
+  // Dedicated Magnetic Glide Engine to Center Contact Section
+  let lastScrollY = typeof window !== 'undefined' ? window.scrollY : 0
+  let isGliding = false
+  let hasGlided = false
+  let snapFrameId: number | null = null
+
+  function cancelGlide() {
+    if (snapFrameId !== null) {
+      cancelAnimationFrame(snapFrameId)
+      snapFrameId = null
+    }
+    isGliding = false
+  }
+
+  function glideToCenter() {
+    if (typeof window === 'undefined' || !contactSectionRef.value) return
+    isGliding = true
+    hasGlided = true
+
+    const startY = window.scrollY
+    const rect = contactSectionRef.value.getBoundingClientRect()
+    const targetY = Math.round(
+      rect.top +
+        window.scrollY -
+        Math.max(0, (window.innerHeight - contactSectionRef.value.offsetHeight) / 2),
+    )
+    const distance = targetY - startY
+
+    if (Math.abs(distance) < 8) {
+      isGliding = false
+      return
+    }
+
+    const startTime = performance.now()
+    const duration = 900 // 900ms smooth gentle glide
+
+    function step(currentTime: number) {
+      const elapsed = currentTime - startTime
+      const p = Math.min(1, elapsed / duration)
+      // Smooth ease-out cubic curve
+      const eased = 1 - Math.pow(1 - p, 3)
+
+      window.scrollTo(0, startY + distance * eased)
+
+      if (p < 1 && isGliding) {
+        snapFrameId = requestAnimationFrame(step)
+      } else {
+        isGliding = false
+        snapFrameId = null
+      }
+    }
+
+    snapFrameId = requestAnimationFrame(step)
+  }
+
+  function handleScroll() {
+    if (typeof window === 'undefined' || !contactSectionRef.value) return
+    const currentScrollY = window.scrollY
+    const isScrollingDown = currentScrollY > lastScrollY
+    const isScrollingUp = currentScrollY < lastScrollY
+    lastScrollY = currentScrollY
+
+    // If user is actively scrolling up, cancel any in-progress glide immediately
+    if (isScrollingUp && isGliding) {
+      cancelGlide()
+    }
+
+    const rect = contactSectionRef.value.getBoundingClientRect()
+
+    // Reset glide state when scrolling back up above Contact section
+    if (rect.top > window.innerHeight * 0.75) {
+      hasGlided = false
+      cancelGlide()
+    }
+
+    // Trigger magnetic glide when scrolling down and contact top is in the entry zone
+    if (
+      isScrollingDown &&
+      !isGliding &&
+      !hasGlided &&
+      rect.top <= window.innerHeight * 0.4 &&
+      rect.top >= 50
+    ) {
+      glideToCenter()
+    }
+  }
+
   async function copyEmail() {
     try {
       await navigator.clipboard.writeText(emailAddress)
@@ -105,12 +192,16 @@
       )
       observer.observe(contactSectionRef.value)
     }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
   })
 
   onUnmounted(() => {
     if (observer) {
       observer.disconnect()
     }
+    window.removeEventListener('scroll', handleScroll)
+    cancelGlide()
   })
 </script>
 
@@ -118,9 +209,8 @@
   <section
     id="contact"
     ref="contactSectionRef"
-    class="fullscreen-contact-section w-screen relative left-1/2 -translate-x-1/2 min-h-[90vh] lg:min-h-screen pt-20 sm:pt-28 lg:pt-36 pb-16 sm:pb-24 px-6 sm:px-12 lg:px-20 flex flex-col justify-center items-center select-none overflow-hidden transition-colors duration-1000 ease-out snap-center"
+    class="fullscreen-contact-section w-screen relative left-1/2 -translate-x-1/2 min-h-[90vh] lg:min-h-screen pt-20 sm:pt-28 lg:pt-36 pb-16 sm:pb-24 px-6 sm:px-12 lg:px-20 flex flex-col justify-center items-center select-none overflow-hidden transition-colors duration-1000 ease-out"
     :class="[isEmerged ? 'bg-emerged' : 'bg-submerged']"
-    style="scroll-snap-align: center; scroll-snap-stop: normal"
   >
     <!-- Top Glowing Cyber Horizon Divider -->
     <div
