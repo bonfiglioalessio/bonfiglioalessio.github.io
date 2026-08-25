@@ -10,6 +10,69 @@
   const isEmerged = ref(false)
   const contactSectionRef = ref<HTMLElement | null>(null)
 
+  // AI Agent Token Streaming Typewriter Engine
+  const fullPart1 = "Let's build"
+  const fullPart2 = 'something'
+  const fullPart3 = 'extraordinary.'
+
+  const displayedPart1 = ref('')
+  const displayedPart2 = ref('')
+  const displayedPart3 = ref('')
+  const isTypingComplete = ref(false)
+  let isStreamingStarted = false
+
+  async function startAiStreaming() {
+    if (isStreamingStarted) return
+    isStreamingStarted = true
+
+    if (
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      displayedPart1.value = fullPart1
+      displayedPart2.value = fullPart2
+      displayedPart3.value = fullPart3
+      isTypingComplete.value = true
+      return
+    }
+
+    // Stream Part 1 ("Let's build")
+    let i = 0
+    while (i < fullPart1.length) {
+      const chunkSize = Math.min(Math.floor(Math.random() * 3) + 1, fullPart1.length - i)
+      displayedPart1.value = fullPart1.slice(0, i + chunkSize)
+      i += chunkSize
+      const delay = Math.random() * 25 + 25 // 25-50ms
+      await new Promise((resolve) => setTimeout(resolve, delay))
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 80))
+
+    // Stream Part 2 ("something")
+    let j = 0
+    while (j < fullPart2.length) {
+      const chunkSize = Math.min(Math.floor(Math.random() * 3) + 1, fullPart2.length - j)
+      displayedPart2.value = fullPart2.slice(0, j + chunkSize)
+      j += chunkSize
+      const delay = Math.random() * 25 + 25
+      await new Promise((resolve) => setTimeout(resolve, delay))
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 100))
+
+    // Stream Part 3 ("extraordinary.")
+    let k = 0
+    while (k < fullPart3.length) {
+      const chunkSize = Math.min(Math.floor(Math.random() * 3) + 1, fullPart3.length - k)
+      displayedPart3.value = fullPart3.slice(0, k + chunkSize)
+      k += chunkSize
+      const delay = Math.random() * 30 + 30
+      await new Promise((resolve) => setTimeout(resolve, delay))
+    }
+
+    isTypingComplete.value = true
+  }
+
   let observer: IntersectionObserver | null = null
 
   async function copyEmail() {
@@ -30,10 +93,13 @@
       observer = new IntersectionObserver(
         (entries) => {
           const entry = entries[0]
-          isEmerged.value = entry.isIntersecting
+          if (entry.isIntersecting) {
+            isEmerged.value = true
+            startAiStreaming()
+          }
         },
         {
-          threshold: 0.25,
+          threshold: 0.2,
           rootMargin: '0px 0px -40px 0px',
         },
       )
@@ -87,18 +153,41 @@
         </span>
       </div>
 
-      <!-- Main Display Headline (Monumental Fullscreen Typography) -->
-      <div class="space-y-2">
+      <!-- Main Display Headline (Monumental Fullscreen Typography with AI Agent Streaming & Zero CLS) -->
+      <div class="relative">
+        <!-- Invisible Ghost Placeholder: Locks exact layout dimensions & line wraps immediately -->
         <h2
-          class="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold font-syne text-white tracking-tight leading-[1.05]"
+          class="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold font-syne tracking-tight leading-[1.05] opacity-0 select-none pointer-events-none"
+          aria-hidden="true"
         >
           Let's build<br />
           something<br />
           <span
-            class="text-lime-400 underline decoration-lime-400 decoration-4 sm:decoration-6 underline-offset-6 sm:underline-offset-10 drop-shadow-[0_0_35px_rgba(226,241,97,0.7)]"
+            class="underline decoration-lime-400 decoration-4 sm:decoration-6 underline-offset-6 sm:underline-offset-10"
           >
             extraordinary.
           </span>
+        </h2>
+
+        <!-- Active Streamed Overlay (Zero CLS, AI Token Stream) -->
+        <h2
+          class="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold font-syne text-white tracking-tight leading-[1.05] absolute inset-0"
+        >
+          <span>{{ displayedPart1 }}</span>
+          <br v-if="displayedPart1.length >= fullPart1.length" />
+          <span>{{ displayedPart2 }}</span>
+          <br v-if="displayedPart2.length >= fullPart2.length" />
+          <span
+            v-if="displayedPart3"
+            class="text-lime-400 underline decoration-lime-400 decoration-4 sm:decoration-6 underline-offset-6 sm:underline-offset-10 drop-shadow-[0_0_35px_rgba(226,241,97,0.7)]"
+          >
+            {{ displayedPart3 }}
+          </span>
+          <!-- AI Streaming Token Caret -->
+          <span
+            v-if="!isTypingComplete"
+            class="inline-block w-[4px] sm:w-[6px] h-[0.7em] align-baseline ml-1 bg-lime-400 shadow-[0_0_10px_#e2f161] rounded-sm animate-pulse"
+          />
         </h2>
       </div>
 
