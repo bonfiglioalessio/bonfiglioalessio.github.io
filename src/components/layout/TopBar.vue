@@ -2,7 +2,6 @@
   import { onMounted, onUnmounted, ref } from 'vue'
   import { portfolioData } from '../../data/portfolio'
   import { useAudioSynth } from '../../composables/useAudioSynth'
-  import AppContainer from './AppContainer.vue'
   import AppButton from '../ui/AppButton.vue'
   import MarqueeTicker from './MarqueeTicker.vue'
 
@@ -165,11 +164,14 @@
       </div>
     </transition>
 
-    <!-- Navbar Container -->
-    <AppContainer size="default">
+    <!-- Navbar Container with Horizontal & Vertical Padding Morphing on Scroll -->
+    <div
+      class="w-full mx-auto max-w-7xl transition-all duration-300 ease-out"
+      :class="isScrolled ? 'px-4 sm:px-6 lg:px-8' : 'px-6 sm:px-10 lg:px-14'"
+    >
       <div
         class="flex items-center justify-between transition-all duration-300 ease-out"
-        :class="isScrolled ? 'h-12 min-h-[3rem]' : 'h-14 sm:h-16'"
+        :class="isScrolled ? 'h-11 sm:h-12 min-h-[2.75rem]' : 'h-14 sm:h-16'"
       >
         <!-- Brand Logo -->
         <a
@@ -269,7 +271,7 @@
           </button>
         </div>
       </div>
-    </AppContainer>
+    </div>
 
     <!-- Mobile Dropdown Navigation (Absolute Overlay with Scrollspy) -->
     <transition
@@ -284,7 +286,7 @@
         v-if="isMobileMenuOpen"
         class="md:hidden absolute inset-x-0 top-full bg-dark-950/95 border-b border-lime-400/15 backdrop-blur-2xl py-3 shadow-2xl font-mono text-xs z-50 transition-all duration-300"
       >
-        <AppContainer size="default">
+        <div class="w-full mx-auto px-4 sm:px-6">
           <div class="space-y-1">
             <a
               v-for="link in navLinks"
@@ -307,7 +309,7 @@
               </span>
             </a>
           </div>
-        </AppContainer>
+        </div>
       </div>
     </transition>
   </header>
