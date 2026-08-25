@@ -170,42 +170,33 @@
     >
       <!-- Solar Array Body (Deep space photovoltaic cells with cyan lattice grid) -->
       <div
-        class="w-8 xl:w-9 h-32 xl:h-36 rounded-xl solar-wing-surface border border-sky-400/40 group-hover:border-sky-400 shadow-[0_0_20px_rgba(56,189,248,0.25)] group-hover:shadow-[0_0_35px_rgba(56,189,248,0.65),0_0_70px_rgba(56,189,248,0.3)] flex flex-col justify-between p-1.5 relative overflow-hidden transition-all duration-300"
+        class="w-8 xl:w-9 h-36 xl:h-40 rounded-xl solar-wing-surface border border-sky-400/40 group-hover:border-sky-400 shadow-[0_0_20px_rgba(56,189,248,0.25)] group-hover:shadow-[0_0_35px_rgba(56,189,248,0.65)] flex flex-col items-center justify-between py-2 px-1 relative overflow-hidden transition-all duration-300"
       >
-        <!-- Solar Bus Bar & Cell Dividers -->
-        <div class="flex justify-between items-center w-full px-0.5">
-          <span
-            class="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8] group-hover:shadow-[0_0_10px_#38bdf8]"
-          />
-          <span
-            class="text-[7px] font-mono text-sky-400/80 group-hover:text-sky-300 tracking-tighter transition-colors"
-            >PV-A1</span
-          >
-          <span
-            class="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8] group-hover:shadow-[0_0_10px_#38bdf8]"
-          />
+        <!-- Top Telemetry Header -->
+        <div class="flex items-center justify-center gap-1 w-full">
+          <span class="w-1 h-1 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8]" />
+          <span class="text-[7px] font-mono text-sky-300 font-bold tracking-tighter">PV-A1</span>
+          <span class="w-1 h-1 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8]" />
         </div>
 
-        <!-- Vertical Solar Telemetry Line -->
-        <div
-          class="h-full w-px bg-sky-400/30 group-hover:bg-sky-400/60 mx-auto my-1 transition-colors"
-        />
+        <!-- Vertical Solar Telemetry Divider -->
+        <div class="w-px h-3 bg-sky-400/30 group-hover:bg-sky-400/60" />
 
-        <!-- Vertical Text Label -->
+        <!-- Vertical Native Text Label (Zero Collision) -->
         <div
-          class="text-[7px] font-mono text-sky-300 font-bold -rotate-90 origin-center whitespace-nowrap tracking-widest uppercase select-none opacity-80 group-hover:opacity-100 group-hover:text-white group-hover:drop-shadow-[0_0_8px_#38bdf8] transition-all"
+          class="text-[7.5px] font-mono text-sky-200 font-bold uppercase tracking-[0.2em] select-none [writing-mode:vertical-rl] rotate-180 group-hover:text-white group-hover:drop-shadow-[0_0_8px_#38bdf8] transition-all my-auto"
         >
-          SOLAR ARRAY // α
+          SOLAR // α
         </div>
 
-        <div
-          class="h-full w-px bg-sky-400/30 group-hover:bg-sky-400/60 mx-auto my-1 transition-colors"
-        />
+        <!-- Vertical Solar Telemetry Divider -->
+        <div class="w-px h-3 bg-sky-400/30 group-hover:bg-sky-400/60" />
 
-        <div class="flex justify-between items-center w-full px-0.5">
-          <span class="w-1 h-1 rounded-full bg-sky-400/60 group-hover:bg-sky-300" />
-          <span class="text-[7px] font-mono text-sky-400/60 group-hover:text-sky-300">450W</span>
-          <span class="w-1 h-1 rounded-full bg-sky-400/60 group-hover:bg-sky-300" />
+        <!-- Bottom Power Indicator -->
+        <div class="flex items-center justify-center gap-1 w-full">
+          <span class="w-1 h-1 rounded-full bg-sky-400/70" />
+          <span class="text-[7px] font-mono text-sky-300/90 font-bold">450W</span>
+          <span class="w-1 h-1 rounded-full bg-sky-400/70" />
         </div>
       </div>
 
@@ -226,43 +217,33 @@
 
       <!-- Solar Array Body (Deep space photovoltaic cells with cyan lattice grid) -->
       <div
-        class="w-8 xl:w-9 h-32 xl:h-36 rounded-xl solar-wing-surface border border-sky-400/40 group-hover:border-sky-400 shadow-[0_0_20px_rgba(56,189,248,0.25)] group-hover:shadow-[0_0_35px_rgba(56,189,248,0.65),0_0_70px_rgba(56,189,248,0.3)] flex flex-col justify-between p-1.5 relative overflow-hidden transition-all duration-300"
+        class="w-8 xl:w-9 h-36 xl:h-40 rounded-xl solar-wing-surface border border-sky-400/40 group-hover:border-sky-400 shadow-[0_0_20px_rgba(56,189,248,0.25)] group-hover:shadow-[0_0_35px_rgba(56,189,248,0.65)] flex flex-col items-center justify-between py-2 px-1 relative overflow-hidden transition-all duration-300"
       >
-        <!-- Solar Bus Bar & Cell Dividers -->
-        <div class="flex justify-between items-center w-full px-0.5">
-          <span
-            class="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8] group-hover:shadow-[0_0_10px_#38bdf8]"
-          />
-          <span
-            class="text-[7px] font-mono text-sky-400/80 group-hover:text-sky-300 tracking-tighter transition-colors"
-            >PV-B2</span
-          >
-          <span
-            class="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8] group-hover:shadow-[0_0_10px_#38bdf8]"
-          />
+        <!-- Top Telemetry Header -->
+        <div class="flex items-center justify-center gap-1 w-full">
+          <span class="w-1 h-1 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8]" />
+          <span class="text-[7px] font-mono text-sky-300 font-bold tracking-tighter">PV-B2</span>
+          <span class="w-1 h-1 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8]" />
         </div>
 
-        <div
-          class="h-full w-px bg-sky-400/30 group-hover:bg-sky-400/60 mx-auto my-1 transition-colors"
-        />
+        <!-- Vertical Solar Telemetry Divider -->
+        <div class="w-px h-3 bg-sky-400/30 group-hover:bg-sky-400/60" />
 
-        <!-- Vertical Text Label -->
+        <!-- Vertical Native Text Label (Zero Collision) -->
         <div
-          class="text-[7px] font-mono text-sky-300 font-bold rotate-90 origin-center whitespace-nowrap tracking-widest uppercase select-none opacity-80 group-hover:opacity-100 group-hover:text-white group-hover:drop-shadow-[0_0_8px_#38bdf8] transition-all"
+          class="text-[7.5px] font-mono text-sky-200 font-bold uppercase tracking-[0.2em] select-none [writing-mode:vertical-rl] rotate-180 group-hover:text-white group-hover:drop-shadow-[0_0_8px_#38bdf8] transition-all my-auto"
         >
-          SOLAR ARRAY // β
+          SOLAR // β
         </div>
 
-        <div
-          class="h-full w-px bg-sky-400/30 group-hover:bg-sky-400/60 mx-auto my-1 transition-colors"
-        />
+        <!-- Vertical Solar Telemetry Divider -->
+        <div class="w-px h-3 bg-sky-400/30 group-hover:bg-sky-400/60" />
 
-        <div class="flex justify-between items-center w-full px-0.5">
-          <span class="w-1 h-1 rounded-full bg-sky-400/60 group-hover:bg-sky-300" />
-          <span class="text-[7px] font-mono text-sky-400/60 group-hover:text-sky-300"
-            >PWR 100%</span
-          >
-          <span class="w-1 h-1 rounded-full bg-sky-400/60 group-hover:bg-sky-300" />
+        <!-- Bottom Power Indicator -->
+        <div class="flex items-center justify-center gap-1 w-full">
+          <span class="w-1 h-1 rounded-full bg-sky-400/70" />
+          <span class="text-[7px] font-mono text-sky-300/90 font-bold">100%</span>
+          <span class="w-1 h-1 rounded-full bg-sky-400/70" />
         </div>
       </div>
     </div>
@@ -472,7 +453,7 @@
         class="flex items-center justify-between gap-1.5 pt-1.5 text-[9px] sm:text-[10px] text-slate-400 font-mono shrink-0 border-t border-lime-400/15 overflow-x-auto no-scrollbar relative z-10"
       >
         <div class="flex items-center gap-1.5 shrink-0 whitespace-nowrap">
-          <span class="text-slate-500 font-bold">Quick:</span>
+          <span class="text-slate-300 font-bold">Quick:</span>
           <button
             type="button"
             class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-lime-400/30 transition-all font-bold active:scale-95"
@@ -496,14 +477,14 @@
           </button>
           <button
             type="button"
-            class="text-slate-300 hover:text-lime-400 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-slate-700 transition-all active:scale-95"
+            class="text-slate-300 hover:text-lime-400 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-slate-700 transition-all font-bold active:scale-95"
             @click="runQuickAction('contact')"
           >
             contact
           </button>
           <button
             type="button"
-            class="text-slate-500 hover:text-slate-300 cursor-pointer bg-dark-950 px-1.5 py-0.5 rounded-md border border-slate-800 transition-all active:scale-95"
+            class="text-slate-300 hover:text-white cursor-pointer bg-dark-950 px-1.5 py-0.5 rounded-md border border-slate-700 transition-all active:scale-95"
             @click="runQuickAction('clear')"
           >
             clear
