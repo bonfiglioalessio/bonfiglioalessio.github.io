@@ -4,21 +4,22 @@
   import AppCard from '../ui/AppCard.vue'
   import AppBadge from '../ui/AppBadge.vue'
 
-  const props = withDefaults(
-    defineProps<{
-      experience: Experience
-      floatAnimation?: string
-      index?: number
-      total?: number
-      timelineProgress?: number
-    }>(),
-    {
-      floatAnimation: '',
-      index: 0,
-      total: 3,
-      timelineProgress: 0,
-    },
-  )
+  interface Props {
+    experience: Experience
+    theme?: 'lime' | 'white' | 'emerald'
+    floatAnimation?: string
+    index?: number
+    total?: number
+    timelineProgress?: number
+  }
+
+  const props = withDefaults(defineProps<Props>(), {
+    theme: 'lime',
+    floatAnimation: '',
+    index: 0,
+    total: 3,
+    timelineProgress: 0,
+  })
 
   // Compute if the laser beam has reached this node
   const isReached = computed(() => {
@@ -32,49 +33,103 @@
     if (props.experience.isCurrent) return '● ACTIVE MISSION'
     return props.experience.statusBadge || 'MILESTONE'
   })
+
+  const themeConfig = computed(() => {
+    switch (props.theme) {
+      case 'white':
+        return {
+          activeCardClass: 'active-timeline-card-white',
+          activeBorderStroke: '#ffffff',
+          activeStrokeGlowClass: 'active-card-border-stroke-white',
+          connectorActive:
+            'bg-gradient-to-r from-white to-white/50 shadow-[0_0_12px_#ffffff] opacity-100',
+          connectorInactive: 'bg-white/15 opacity-60 group-hover:opacity-100',
+          nodeBorderActive: 'border-white shadow-[0_0_20px_rgba(255,255,255,0.9)] scale-110',
+          nodePing: 'bg-white shadow-[0_0_14px_#ffffff]',
+          nodeInnerDotActive: 'bg-white shadow-[0_0_12px_#ffffff]',
+          missionNumberClass: 'text-white drop-shadow-[0_0_8px_#ffffff]',
+          titleActive: 'glow-pulse-title-white text-white',
+          companyLinkClass: 'text-white',
+          badgeVariant: 'white' as const,
+          badgeGlowClass: 'glow-pulse-badge-white',
+          highlightStar: 'text-white',
+        }
+      case 'emerald':
+        return {
+          activeCardClass: 'active-timeline-card-emerald',
+          activeBorderStroke: '#34d399',
+          activeStrokeGlowClass: 'active-card-border-stroke-emerald',
+          connectorActive:
+            'bg-gradient-to-r from-emerald-400 to-emerald-400/50 shadow-[0_0_12px_#34d399] opacity-100',
+          connectorInactive: 'bg-emerald-400/15 opacity-60 group-hover:opacity-100',
+          nodeBorderActive: 'border-emerald-400 shadow-[0_0_20px_rgba(52,211,153,0.9)] scale-110',
+          nodePing: 'bg-emerald-400 shadow-[0_0_14px_#34d399]',
+          nodeInnerDotActive: 'bg-emerald-400 shadow-[0_0_12px_#34d399]',
+          missionNumberClass: 'text-emerald-400 drop-shadow-[0_0_8px_#34d399]',
+          titleActive: 'glow-pulse-title-emerald text-emerald-400',
+          companyLinkClass: 'text-emerald-400',
+          badgeVariant: 'emerald' as const,
+          badgeGlowClass: 'glow-pulse-badge-emerald',
+          highlightStar: 'text-emerald-400',
+        }
+      case 'lime':
+      default:
+        return {
+          activeCardClass: 'active-timeline-card-lime',
+          activeBorderStroke: '#e2f161',
+          activeStrokeGlowClass: 'active-card-border-stroke-lime',
+          connectorActive:
+            'bg-gradient-to-r from-lime-400 to-lime-400/50 shadow-[0_0_12px_#e2f161] opacity-100',
+          connectorInactive: 'bg-lime-400/15 opacity-60 group-hover:opacity-100',
+          nodeBorderActive: 'border-lime-400 shadow-[0_0_20px_rgba(226,241,97,0.9)] scale-110',
+          nodePing: 'bg-lime-400 shadow-[0_0_14px_#e2f161]',
+          nodeInnerDotActive: 'bg-lime-400 shadow-[0_0_12px_#e2f161]',
+          missionNumberClass: 'text-lime-400 drop-shadow-[0_0_8px_#e2f161]',
+          titleActive: 'glow-pulse-title-lime text-lime-400',
+          companyLinkClass: 'text-lime-400',
+          badgeVariant: 'lime' as const,
+          badgeGlowClass: 'glow-pulse-badge-lime',
+          highlightStar: 'text-lime-400',
+        }
+    }
+  })
 </script>
 
 <template>
   <div class="relative w-full group">
-    <!-- Horizontal Neon Connector Branch (Constant layout, GPU opacity/shadow transition) -->
+    <!-- Horizontal Neon Connector Branch (Themed) -->
     <div
       class="absolute top-7 -left-7 sm:-left-9 lg:-left-10 w-7 sm:w-9 lg:w-10 h-[2px] pointer-events-none transition-all duration-300 z-10"
-      :class="[
-        isReached
-          ? 'bg-gradient-to-r from-lime-400 to-lime-400/50 shadow-[0_0_12px_#e2f161] opacity-100'
-          : 'bg-lime-400/15 opacity-60 group-hover:opacity-100',
-      ]"
+      :class="[isReached ? themeConfig.connectorActive : themeConfig.connectorInactive]"
     />
 
-    <!-- Glowing Timeline Node Marker (Fixed dimensions, GPU transform & shadow only) -->
+    <!-- Glowing Timeline Node Marker (Themed) -->
     <div
       class="absolute top-4 -left-[40px] sm:-left-[49px] lg:-left-[53px] w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-dark-950 flex items-center justify-center z-20 transition-all duration-300 border border-lime-400/30"
       :class="[
-        isReached || experience.isCurrent
-          ? 'border-lime-400 shadow-[0_0_20px_rgba(226,241,97,0.9)] scale-110'
-          : 'opacity-70 scale-95',
+        isReached || experience.isCurrent ? themeConfig.nodeBorderActive : 'opacity-70 scale-95',
       ]"
     >
       <span v-if="experience.isCurrent" class="relative flex h-2.5 w-2.5 sm:h-3 sm:w-3">
         <span
-          class="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-75"
+          class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+          :class="themeConfig.nodePing"
         />
         <span
-          class="relative inline-flex rounded-full h-2.5 w-2.5 sm:h-3 sm:w-3 bg-lime-400 shadow-[0_0_14px_#e2f161]"
+          class="relative inline-flex rounded-full h-2.5 w-2.5 sm:h-3 sm:w-3"
+          :class="themeConfig.nodePing"
         />
       </span>
       <span
         v-else
         class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full transition-all duration-300"
         :class="[
-          isReached
-            ? 'bg-lime-400 shadow-[0_0_12px_#e2f161]'
-            : 'bg-slate-500 group-hover:bg-lime-400/70',
+          isReached ? themeConfig.nodeInnerDotActive : 'bg-slate-500 group-hover:opacity-100',
         ]"
       />
     </div>
 
-    <!-- Experience Content Card (Zero-CLS Architecture: fixed geometry, GPU-only glow & opacity) -->
+    <!-- Experience Content Card (Themed) -->
     <AppCard
       padding="md"
       rounded="2xl"
@@ -82,9 +137,11 @@
       :tilt="false"
       :float-animation="floatAnimation"
       class="select-none space-y-4 w-full relative overflow-hidden transition-[box-shadow,border-color,opacity] duration-300"
-      :class="[isReached ? 'active-timeline-card opacity-100' : 'opacity-85 hover:opacity-100']"
+      :class="[
+        isReached ? `${themeConfig.activeCardClass} opacity-100` : 'opacity-85 hover:opacity-100',
+      ]"
     >
-      <!-- Permanent SVG Neon Perimeter (Opacity toggled with GPU acceleration, 0 reflow) -->
+      <!-- Permanent SVG Neon Perimeter (Themed) -->
       <svg
         class="absolute inset-0 w-full h-full pointer-events-none z-10 overflow-visible rounded-2xl transition-opacity duration-300"
         :class="isReached ? 'opacity-100' : 'opacity-0'"
@@ -97,9 +154,10 @@
           height="calc(100% - 2px)"
           rx="15"
           fill="none"
-          stroke="#e2f161"
+          :stroke="themeConfig.activeBorderStroke"
           stroke-width="1.5"
           class="active-card-border-stroke"
+          :class="themeConfig.activeStrokeGlowClass"
         />
       </svg>
 
@@ -109,7 +167,8 @@
       >
         <div class="flex items-center gap-2">
           <span
-            class="text-lime-400 font-mono font-bold text-xs tracking-wider drop-shadow-[0_0_8px_#e2f161]"
+            class="font-mono font-bold text-xs tracking-wider"
+            :class="themeConfig.missionNumberClass"
           >
             {{ experience.missionNumber }}
           </span>
@@ -128,9 +187,9 @@
 
           <!-- Stable Illuminated Active Mission Badge -->
           <AppBadge
-            :variant="isReached || experience.isCurrent ? 'lime' : 'dark'"
+            :variant="isReached || experience.isCurrent ? themeConfig.badgeVariant : 'dark'"
             class="uppercase tracking-wider font-bold transition-all duration-300 shrink-0"
-            :class="isReached || experience.isCurrent ? 'glow-pulse-badge' : ''"
+            :class="isReached || experience.isCurrent ? themeConfig.badgeGlowClass : ''"
           >
             {{ badgeText }}
           </AppBadge>
@@ -143,7 +202,7 @@
           class="text-xl sm:text-2xl font-bold font-syne flex items-center gap-2 flex-wrap transition-colors duration-300"
           :class="
             isReached || experience.isCurrent
-              ? 'glow-pulse-title text-lime-400'
+              ? themeConfig.titleActive
               : 'text-white group-hover:text-lime-400'
           "
         >
@@ -154,12 +213,13 @@
             :href="experience.companyUrl"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-lime-400 hover:underline inline-flex items-center gap-1 font-bold"
+            class="hover:underline inline-flex items-center gap-1 font-bold"
+            :class="themeConfig.companyLinkClass"
           >
             {{ experience.company }}
             <span class="text-xs">&rarr;</span>
           </a>
-          <span v-else class="text-lime-400 font-bold">
+          <span v-else class="font-bold" :class="themeConfig.companyLinkClass">
             {{ experience.company }}
           </span>
         </h3>
@@ -171,9 +231,9 @@
           <span v-if="experience.department" class="text-slate-300 font-medium">
             {{ experience.department }}
           </span>
-          <span v-if="experience.department && experience.location" class="text-lime-400/40"
-            >|</span
-          >
+          <span v-if="experience.department && experience.location" class="text-lime-400/40">
+            |
+          </span>
           <span v-if="experience.location">{{ experience.location }}</span>
         </div>
       </div>
@@ -193,7 +253,7 @@
           :key="idx"
           class="flex items-start gap-2 leading-relaxed"
         >
-          <span class="text-lime-400 font-bold shrink-0 mt-0.5">✦</span>
+          <span class="font-bold shrink-0 mt-0.5" :class="themeConfig.highlightStar"> ✦ </span>
           <span>{{ highlight.replace(/^\+\s*/, '') }}</span>
         </li>
       </ul>
@@ -216,7 +276,7 @@
 </template>
 
 <style scoped lang="scss">
-  .active-timeline-card {
+  .active-timeline-card-lime {
     border-color: rgba(226, 241, 97, 0.85) !important;
     box-shadow:
       0 0 35px 3px rgba(226, 241, 97, 0.4),
@@ -224,12 +284,38 @@
       inset 0 0 20px 0 rgba(226, 241, 97, 0.12) !important;
   }
 
-  .active-card-border-stroke {
-    filter: drop-shadow(0 0 8px #e2f161) drop-shadow(0 0 16px rgba(226, 241, 97, 0.8));
-    animation: card-border-pulse 2.5s ease-in-out infinite alternate;
+  .active-timeline-card-white {
+    border-color: rgba(255, 255, 255, 0.85) !important;
+    box-shadow:
+      0 0 35px 3px rgba(255, 255, 255, 0.4),
+      0 12px 35px 0 rgba(0, 0, 0, 0.7),
+      inset 0 0 20px 0 rgba(255, 255, 255, 0.12) !important;
   }
 
-  @keyframes card-border-pulse {
+  .active-timeline-card-emerald {
+    border-color: rgba(52, 211, 153, 0.85) !important;
+    box-shadow:
+      0 0 35px 3px rgba(52, 211, 153, 0.4),
+      0 12px 35px 0 rgba(0, 0, 0, 0.7),
+      inset 0 0 20px 0 rgba(52, 211, 153, 0.12) !important;
+  }
+
+  .active-card-border-stroke-lime {
+    filter: drop-shadow(0 0 8px #e2f161) drop-shadow(0 0 16px rgba(226, 241, 97, 0.8));
+    animation: card-border-pulse-lime 2.5s ease-in-out infinite alternate;
+  }
+
+  .active-card-border-stroke-white {
+    filter: drop-shadow(0 0 8px #ffffff) drop-shadow(0 0 16px rgba(255, 255, 255, 0.8));
+    animation: card-border-pulse-white 2.5s ease-in-out infinite alternate;
+  }
+
+  .active-card-border-stroke-emerald {
+    filter: drop-shadow(0 0 8px #34d399) drop-shadow(0 0 16px rgba(52, 211, 153, 0.8));
+    animation: card-border-pulse-emerald 2.5s ease-in-out infinite alternate;
+  }
+
+  @keyframes card-border-pulse-lime {
     0% {
       stroke-opacity: 0.85;
       filter: drop-shadow(0 0 6px #e2f161) drop-shadow(0 0 12px rgba(226, 241, 97, 0.5));
@@ -240,11 +326,41 @@
     }
   }
 
-  .glow-pulse-title {
-    animation: title-glow-pulse 3s ease-in-out infinite alternate;
+  @keyframes card-border-pulse-white {
+    0% {
+      stroke-opacity: 0.85;
+      filter: drop-shadow(0 0 6px #ffffff) drop-shadow(0 0 12px rgba(255, 255, 255, 0.5));
+    }
+    100% {
+      stroke-opacity: 1;
+      filter: drop-shadow(0 0 12px #ffffff) drop-shadow(0 0 24px rgba(255, 255, 255, 0.95));
+    }
   }
 
-  @keyframes title-glow-pulse {
+  @keyframes card-border-pulse-emerald {
+    0% {
+      stroke-opacity: 0.85;
+      filter: drop-shadow(0 0 6px #34d399) drop-shadow(0 0 12px rgba(52, 211, 153, 0.5));
+    }
+    100% {
+      stroke-opacity: 1;
+      filter: drop-shadow(0 0 12px #34d399) drop-shadow(0 0 24px rgba(52, 211, 153, 0.95));
+    }
+  }
+
+  .glow-pulse-title-lime {
+    animation: title-glow-pulse-lime 3s ease-in-out infinite alternate;
+  }
+
+  .glow-pulse-title-white {
+    animation: title-glow-pulse-white 3s ease-in-out infinite alternate;
+  }
+
+  .glow-pulse-title-emerald {
+    animation: title-glow-pulse-emerald 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes title-glow-pulse-lime {
     0% {
       text-shadow: 0 0 10px rgba(226, 241, 97, 0.5);
       color: #e2f161;
@@ -257,21 +373,47 @@
     }
   }
 
-  .glow-pulse-badge {
+  @keyframes title-glow-pulse-white {
+    0% {
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      color: #ffffff;
+    }
+    100% {
+      text-shadow:
+        0 0 20px rgba(255, 255, 255, 0.9),
+        0 0 35px rgba(255, 255, 255, 0.5);
+      color: #f8fafc;
+    }
+  }
+
+  @keyframes title-glow-pulse-emerald {
+    0% {
+      text-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+      color: #34d399;
+    }
+    100% {
+      text-shadow:
+        0 0 20px rgba(52, 211, 153, 0.9),
+        0 0 35px rgba(52, 211, 153, 0.5);
+      color: #6ee7b7;
+    }
+  }
+
+  .glow-pulse-badge-lime {
     box-shadow:
       0 0 14px rgba(226, 241, 97, 0.8),
       0 0 26px rgba(226, 241, 97, 0.45) !important;
-    animation: badge-glow-pulse 2s ease-in-out infinite alternate;
   }
 
-  @keyframes badge-glow-pulse {
-    0% {
-      box-shadow: 0 0 8px rgba(226, 241, 97, 0.45);
-    }
-    100% {
-      box-shadow:
-        0 0 18px rgba(226, 241, 97, 0.85),
-        0 0 30px rgba(226, 241, 97, 0.55);
-    }
+  .glow-pulse-badge-white {
+    box-shadow:
+      0 0 14px rgba(255, 255, 255, 0.8),
+      0 0 26px rgba(255, 255, 255, 0.45) !important;
+  }
+
+  .glow-pulse-badge-emerald {
+    box-shadow:
+      0 0 14px rgba(52, 211, 153, 0.8),
+      0 0 26px rgba(52, 211, 153, 0.45) !important;
   }
 </style>

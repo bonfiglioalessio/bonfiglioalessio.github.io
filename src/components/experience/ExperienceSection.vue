@@ -9,6 +9,78 @@
   const { careerMissionLog } = portfolioData
   const { playClick } = useAudioSynth()
 
+  const missionThemes: ('lime' | 'white' | 'emerald')[] = ['lime', 'white', 'emerald']
+
+  function getMissionTheme(index: number): 'lime' | 'white' | 'emerald' {
+    return missionThemes[index % missionThemes.length]
+  }
+
+  function getMobileMissionBadgeClass(index: number) {
+    const theme = getMissionTheme(index)
+    switch (theme) {
+      case 'white':
+        return 'text-white bg-white/10 border-white/30'
+      case 'emerald':
+        return 'text-emerald-400 bg-emerald-400/10 border-emerald-400/30'
+      case 'lime':
+      default:
+        return 'text-lime-400 bg-lime-400/10 border-lime-400/30'
+    }
+  }
+
+  function getMobileBeaconBorderClass(idx: number, activeIdx: number) {
+    if (activeIdx < idx) return 'bg-dark-900 border-slate-700'
+    const theme = getMissionTheme(idx)
+    switch (theme) {
+      case 'white':
+        return 'bg-dark-950 border-white shadow-[0_0_12px_#ffffff]'
+      case 'emerald':
+        return 'bg-dark-950 border-emerald-400 shadow-[0_0_12px_#34d399]'
+      case 'lime':
+      default:
+        return 'bg-dark-950 border-lime-400 shadow-[0_0_12px_#e2f161]'
+    }
+  }
+
+  function getMobileBeaconDotClass(idx: number, activeIdx: number) {
+    if (activeIdx < idx) return 'bg-slate-700'
+    const theme = getMissionTheme(idx)
+    if (activeIdx === idx) {
+      switch (theme) {
+        case 'white':
+          return 'bg-white shadow-[0_0_8px_#ffffff]'
+        case 'emerald':
+          return 'bg-emerald-400 shadow-[0_0_8px_#34d399]'
+        case 'lime':
+        default:
+          return 'bg-lime-400 shadow-[0_0_8px_#e2f161]'
+      }
+    }
+    switch (theme) {
+      case 'white':
+        return 'bg-white/80'
+      case 'emerald':
+        return 'bg-emerald-400/80'
+      case 'lime':
+      default:
+        return 'bg-lime-400/80'
+    }
+  }
+
+  function getMobileBeaconTextClass(idx: number, activeIdx: number) {
+    if (activeIdx !== idx) return 'text-slate-500'
+    const theme = getMissionTheme(idx)
+    switch (theme) {
+      case 'white':
+        return 'text-white font-bold'
+      case 'emerald':
+        return 'text-emerald-400 font-bold'
+      case 'lime':
+      default:
+        return 'text-lime-400 font-bold'
+    }
+  }
+
   const floatPatterns = ['animate-float-slow', 'animate-float-delayed', 'animate-float-subtle']
 
   // Desktop vertical timeline scroll progress
@@ -118,7 +190,8 @@
         >
           <div class="flex items-center gap-2">
             <span
-              class="text-xs font-bold text-lime-400 px-2.5 py-1 rounded-lg bg-lime-400/10 border border-lime-400/30"
+              class="text-xs font-bold px-2.5 py-1 rounded-lg border transition-colors"
+              :class="getMobileMissionBadgeClass(activeMissionIndex)"
             >
               MISSION 0{{ activeMissionIndex + 1 }} / 0{{ careerMissionLog.length }}
             </span>
@@ -158,6 +231,7 @@
           >
             <ExperienceCard
               :experience="experience"
+              :theme="getMissionTheme(idx)"
               :index="idx"
               :total="careerMissionLog.length"
               :timeline-progress="100"
@@ -182,7 +256,7 @@
             }"
           />
 
-          <!-- Interactive Beacon Nodes along the Track -->
+          <!-- Interactive Beacon Nodes along the Track with Themed Colors -->
           <div class="relative flex items-center justify-between">
             <button
               v-for="(exp, idx) in careerMissionLog"
@@ -194,29 +268,19 @@
               <!-- Glowing Beacon Node Marker -->
               <div
                 class="w-5 h-5 rounded-full flex items-center justify-center border-2 transition-all duration-200"
-                :class="
-                  activeMissionIndex >= idx
-                    ? 'bg-dark-950 border-lime-400 shadow-[0_0_12px_#e2f161]'
-                    : 'bg-dark-900 border-slate-700'
-                "
+                :class="getMobileBeaconBorderClass(idx, activeMissionIndex)"
               >
                 <span
                   class="w-2 h-2 rounded-full transition-all duration-200"
-                  :class="
-                    activeMissionIndex === idx
-                      ? 'bg-lime-400 shadow-[0_0_8px_#e2f161]'
-                      : activeMissionIndex > idx
-                        ? 'bg-lime-400'
-                        : 'bg-slate-700'
-                  "
+                  :class="getMobileBeaconDotClass(idx, activeMissionIndex)"
                 />
               </div>
 
               <!-- Mission Tag & Company Name -->
               <div class="text-center font-mono">
                 <span
-                  class="text-[10px] font-bold block"
-                  :class="activeMissionIndex === idx ? 'text-lime-400' : 'text-slate-500'"
+                  class="text-[10px] block"
+                  :class="getMobileBeaconTextClass(idx, activeMissionIndex)"
                 >
                   {{ exp.missionNumber.replace('MISSION // ', 'M') }}
                 </span>
@@ -272,12 +336,13 @@
         />
       </div>
 
-      <!-- Experience Timeline Cards Attached Directly to Vertical Rail -->
+      <!-- Experience Timeline Cards Attached Directly to Vertical Rail with Themes -->
       <div class="space-y-8 sm:space-y-10">
         <ExperienceCard
           v-for="(experience, idx) in careerMissionLog"
           :key="experience.id"
           :experience="experience"
+          :theme="getMissionTheme(idx)"
           :index="idx"
           :total="careerMissionLog.length"
           :timeline-progress="scrollProgress"
