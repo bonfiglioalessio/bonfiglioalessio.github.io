@@ -3,6 +3,7 @@
 
   type BadgeVariant =
     | 'lime'
+    | 'white'
     | 'cyan'
     | 'amber'
     | 'pink'
@@ -36,6 +37,8 @@
 
   const variantClasses = computed(() => {
     switch (props.variant) {
+      case 'white':
+        return 'bg-white/10 text-white border-white/30'
       case 'lime':
       case 'core':
       case 'stack':
