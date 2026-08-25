@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import { ref } from 'vue'
+  import AppPreloader from './components/ui/AppPreloader.vue'
   import TopBar from './components/layout/TopBar.vue'
   import AppContainer from './components/layout/AppContainer.vue'
   import AppFooter from './components/layout/AppFooter.vue'
@@ -10,12 +12,21 @@
   import ContactSection from './components/contact/ContactSection.vue'
   import AudioHudControl from './components/ui/AudioHudControl.vue'
   import CyberCursor from './components/ui/CyberCursor.vue'
+
+  const isAppReady = ref(false)
+
+  function onPreloaderFinish() {
+    isAppReady.value = true
+  }
 </script>
 
 <template>
   <div
     class="min-h-screen bg-dark-950 text-slate-200 font-mono relative overflow-hidden flex flex-col justify-between"
   >
+    <!-- Initial Orbital Boot Preloader -->
+    <AppPreloader @finish="onPreloaderFinish" />
+
     <!-- Custom Cyber 60fps Precision Cursor -->
     <CyberCursor />
 
@@ -23,7 +34,7 @@
     <SpaceCanvas />
 
     <!-- Sticky/Fixed TopBar Header (Includes Top Marquee + Transparent Borderless Navbar) -->
-    <TopBar />
+    <TopBar :is-ready="isAppReady" />
 
     <!-- Ambient Atmospheric Glows -->
     <div
@@ -35,7 +46,7 @@
     <AppContainer size="default">
       <main class="pb-0">
         <!-- 00 Hero Section -->
-        <HeroSection />
+        <HeroSection :is-ready="isAppReady" />
 
         <!-- 01 Tech Constellation Section (Compact Seamless Flow) -->
         <TechConstellation />
