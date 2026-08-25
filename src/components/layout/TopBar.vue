@@ -3,6 +3,7 @@
   import { portfolioData } from '../../data/portfolio'
   import { useAudioSynth } from '../../composables/useAudioSynth'
   import AppContainer from './AppContainer.vue'
+  import AppButton from '../ui/AppButton.vue'
 
   const { profile } = portfolioData
   const { playClick } = useAudioSynth()
@@ -154,8 +155,8 @@
           <span class="text-lime-400 font-mono">/&gt;</span>
         </a>
 
-        <!-- Right Side: Desktop Navigation Links (with Scrollspy) + Distinctive CTA Button -->
-        <div class="flex items-center gap-2.5 sm:gap-3.5">
+        <!-- Right Side: Desktop Navigation Links (with Scrollspy) + Real Primary CTA Button -->
+        <div class="flex items-center gap-2.5 sm:gap-4">
           <!-- Desktop Navigation Links (Scrollspy Active Highlighting) -->
           <nav
             class="hidden md:flex items-center gap-1 text-slate-300 font-mono transition-all duration-300"
@@ -182,7 +183,7 @@
             </a>
           </nav>
 
-          <!-- Distinctive Solid CTA Button: Electric Cyan / High Contrast Action (Distinct from Scrollspy) -->
+          <!-- Real Primary CTA Button: Matches Hero primary button styling -->
           <transition
             enter-active-class="transition-all duration-300 ease-out"
             enter-from-class="opacity-0 translate-x-3 scale-95"
@@ -191,16 +192,17 @@
             leave-from-class="opacity-100 translate-x-0 scale-100"
             leave-to-class="opacity-0 translate-x-3 scale-95"
           >
-            <a
+            <AppButton
               v-if="!isHeroVisible"
+              variant="primary"
+              size="sm"
               href="#contact"
-              class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-sky-400 text-black font-mono text-[11px] font-black shadow-[0_0_15px_rgba(56,189,248,0.4)] hover:bg-white hover:text-black hover:shadow-[0_0_22px_rgba(255,255,255,0.7)] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer select-none shrink-0 group ml-1"
-              @click="playClick"
+              as="a"
+              class="ml-1 shrink-0 font-extrabold uppercase tracking-wider shadow-[0_0_18px_rgba(226,241,97,0.45)]"
             >
-              <span class="w-1.5 h-1.5 rounded-full bg-black inline-block animate-pulse" />
-              <span>contact_me</span>
-              <span class="text-xs group-hover:translate-x-0.5 transition-transform"> &rarr; </span>
-            </a>
+              <span>LET'S TALK</span>
+              <span class="text-xs">&rarr;</span>
+            </AppButton>
           </transition>
 
           <!-- Mobile Hamburger Toggle (Shrinks smoothly on scroll) -->
