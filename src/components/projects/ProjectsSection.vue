@@ -119,29 +119,29 @@
 <template>
   <section
     id="projects"
-    class="projects-space-sector w-screen relative left-1/2 -translate-x-1/2 py-20 sm:py-24 lg:py-28 overflow-hidden select-none transition-colors duration-1000 ease-out scroll-mt-20"
+    class="projects-space-sector w-screen relative left-1/2 -translate-x-1/2 py-8 sm:py-10 lg:py-12 overflow-hidden select-none transition-colors duration-1000 ease-out scroll-mt-20"
   >
     <!-- Cosmic Smoke / Cloud Nebula Transition Drift at Top -->
     <div
-      class="absolute -top-14 inset-x-0 h-48 bg-gradient-to-b from-transparent via-lime-500/10 to-transparent blur-3xl pointer-events-none"
+      class="absolute -top-10 inset-x-0 h-36 bg-gradient-to-b from-transparent via-lime-500/10 to-transparent blur-3xl pointer-events-none"
     />
     <div
-      class="absolute -top-20 left-1/4 -translate-x-1/2 w-[700px] h-[220px] rounded-full bg-lime-400/10 blur-[110px] pointer-events-none"
+      class="absolute -top-14 left-1/4 -translate-x-1/2 w-[700px] h-[180px] rounded-full bg-lime-400/10 blur-[90px] pointer-events-none"
     />
     <div
-      class="absolute -top-24 right-1/4 translate-x-1/2 w-[650px] h-[220px] rounded-full bg-cyan-500/10 blur-[120px] pointer-events-none"
+      class="absolute -top-16 right-1/4 translate-x-1/2 w-[650px] h-[180px] rounded-full bg-cyan-500/10 blur-[100px] pointer-events-none"
     />
 
     <!-- Deep Space Atmospheric Nebula Glows -->
     <div
-      class="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] rounded-full bg-lime-500/10 blur-[150px] pointer-events-none"
+      class="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full bg-lime-500/10 blur-[140px] pointer-events-none"
     />
     <div
-      class="absolute bottom-1/3 right-1/4 translate-x-1/2 translate-y-1/2 w-[700px] h-[450px] rounded-full bg-emerald-500/10 blur-[160px] pointer-events-none"
+      class="absolute bottom-1/3 right-1/4 translate-x-1/2 translate-y-1/2 w-[650px] h-[380px] rounded-full bg-emerald-500/10 blur-[150px] pointer-events-none"
     />
 
     <!-- Inner Content Stage (Aligned with Main Page Container Max-W-7xl) -->
-    <div class="w-full max-w-7xl mx-auto px-6 sm:px-8 relative z-10 space-y-8 sm:space-y-10">
+    <div class="w-full max-w-7xl mx-auto px-6 sm:px-8 relative z-10 space-y-6 sm:space-y-8">
       <!-- Section Header with Accent-Highlighted [+] inspect diff -->
       <SectionHeader section-number="02" title="Selected Work" status-badge="● 4 SELECTED PROJECTS">
         <template #description>
@@ -226,7 +226,7 @@
       </div>
 
       <!-- ================= DESKTOP VIEW: Staggered 2-Column Responsive Layout (>= lg) ================= -->
-      <div class="hidden lg:grid grid-cols-2 gap-6 lg:gap-10 pt-2 items-start">
+      <div class="hidden lg:grid grid-cols-2 gap-6 lg:gap-10 pt-1 items-start">
         <!-- Column 1: Projects #01 & #03 (Top Aligned with Respective Themes) -->
         <div class="space-y-6 lg:space-y-10 flex flex-col">
           <ProjectCard
@@ -261,27 +261,27 @@
       rgba(5, 13, 24, 0.92) 55%,
       rgba(2, 6, 16, 0.98) 100%
     );
-    // Smooth ethereal smoke/cloud feather mask at top and bottom edges
+    // Smooth compact feather mask
     mask-image: linear-gradient(
       to bottom,
       transparent 0%,
-      rgba(0, 0, 0, 0.3) 30px,
-      rgba(0, 0, 0, 0.8) 80px,
-      black 130px,
-      black calc(100% - 130px),
-      rgba(0, 0, 0, 0.8) calc(100% - 80px),
-      rgba(0, 0, 0, 0.3) calc(100% - 30px),
+      rgba(0, 0, 0, 0.3) 20px,
+      rgba(0, 0, 0, 0.85) 50px,
+      black 80px,
+      black calc(100% - 80px),
+      rgba(0, 0, 0, 0.85) calc(100% - 50px),
+      rgba(0, 0, 0, 0.3) calc(100% - 20px),
       transparent 100%
     );
     -webkit-mask-image: linear-gradient(
       to bottom,
       transparent 0%,
-      rgba(0, 0, 0, 0.3) 30px,
-      rgba(0, 0, 0, 0.8) 80px,
-      black 130px,
-      black calc(100% - 130px),
-      rgba(0, 0, 0, 0.8) calc(100% - 80px),
-      rgba(0, 0, 0, 0.3) calc(100% - 30px),
+      rgba(0, 0, 0, 0.3) 20px,
+      rgba(0, 0, 0, 0.85) 50px,
+      black 80px,
+      black calc(100% - 80px),
+      rgba(0, 0, 0, 0.85) calc(100% - 50px),
+      rgba(0, 0, 0, 0.3) calc(100% - 20px),
       transparent 100%
     );
   }

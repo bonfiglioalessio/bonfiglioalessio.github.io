@@ -37,16 +37,16 @@
         <!-- 00 Hero Section -->
         <HeroSection />
 
-        <!-- 01 Tech Constellation Section (Distinct Electric Sky Cyber-Lattice Domain) -->
-        <TechConstellation class="mt-8 sm:mt-12 lg:mt-16" />
+        <!-- 01 Tech Constellation Section (Compact Seamless Flow) -->
+        <TechConstellation />
 
-        <!-- 02 Selected Work Section -->
-        <ProjectsSection class="mt-8 sm:mt-12 lg:mt-16" />
+        <!-- 02 Selected Work Section (Compact Seamless Flow) -->
+        <ProjectsSection />
 
-        <!-- 03 Career Mission Log Section (Distinct Deep Telemetry Domain) -->
-        <ExperienceSection class="mt-8 sm:mt-12 lg:mt-16" />
+        <!-- 03 Career Mission Log Section (Compact Seamless Flow) -->
+        <ExperienceSection />
 
-        <!-- 04 Contact Open Channel Section (Connects directly with zero gap) -->
+        <!-- 04 Contact Open Channel Section -->
         <ContactSection />
       </main>
     </AppContainer>
