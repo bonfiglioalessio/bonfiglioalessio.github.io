@@ -262,7 +262,7 @@
       <!-- Main Display Headline (Monumental Fullscreen Typography with AI Agent Streaming & Zero CLS) -->
       <div class="relative">
         <!-- Invisible Ghost Placeholder: Locks exact layout dimensions & line wraps immediately -->
-        <h2
+        <div
           class="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold font-syne tracking-tight leading-[1.05] opacity-0 select-none pointer-events-none"
           aria-hidden="true"
         >
@@ -273,7 +273,7 @@
           >
             extraordinary.
           </span>
-        </h2>
+        </div>
 
         <!-- Active Streamed Overlay (Zero CLS, AI Token Stream) -->
         <h2
@@ -298,7 +298,7 @@
       </div>
 
       <!-- Subtitle Description -->
-      <p class="text-sm sm:text-base text-slate-300 font-mono leading-relaxed max-w-2xl pt-1">
+      <p class="text-sm sm:text-base text-slate-200 font-mono leading-relaxed max-w-2xl pt-1">
         Se cerchi un Frontend Engineer con solida esperienza in React/Vue che mette la passione per
         il codice e i dettagli visivi al primo posto, connettiamoci.
       </p>
@@ -322,7 +322,7 @@
             :class="
               isCopied
                 ? 'bg-lime-400 text-black border-lime-400 font-bold shadow-[0_0_12px_rgba(226,241,97,0.5)]'
-                : 'bg-lime-400/15 text-lime-400 hover:bg-lime-400/25 border-lime-400/30'
+                : 'bg-lime-400/15 text-lime-300 hover:bg-lime-400/25 border-lime-400/30'
             "
             @click="copyEmail"
           >
@@ -359,11 +359,11 @@
           :href="link.url"
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 font-mono text-xs sm:text-sm text-slate-400 hover:text-lime-400 transition-all duration-300 group cursor-pointer"
+          class="inline-flex items-center gap-2 font-mono text-xs sm:text-sm text-slate-300 hover:text-lime-400 transition-all duration-300 group cursor-pointer"
           @click="playClick"
         >
           <span
-            class="text-lime-400/80 group-hover:text-lime-400 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform font-bold"
+            class="text-lime-400 group-hover:text-lime-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform font-bold"
           >
             &#x2197;
           </span>
