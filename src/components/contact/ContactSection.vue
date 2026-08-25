@@ -9,7 +9,6 @@
   const isCopied = ref(false)
   const isEmerged = ref(false)
   const contactSectionRef = ref<HTMLElement | null>(null)
-  const contentRef = ref<HTMLElement | null>(null)
 
   // AI Agent Token Streaming Typewriter Engine
   const fullPart1 = "Let's build"
@@ -76,7 +75,7 @@
 
   let observer: IntersectionObserver | null = null
 
-  // Dedicated Magnetic Glide Engine to Center Contact Section Content Stage
+  // Dedicated Magnetic Glide Engine to Frame Contact Section
   let lastScrollY = typeof window !== 'undefined' ? window.scrollY : 0
   let isGliding = false
   let hasGlided = false
@@ -108,11 +107,9 @@
     hasGlided = true
 
     const startY = window.scrollY
-    const targetEl = contentRef.value || contactSectionRef.value
-    const rect = targetEl.getBoundingClientRect()
-    const targetY = Math.round(
-      rect.top + window.scrollY - Math.max(0, (window.innerHeight - targetEl.offsetHeight) / 2),
-    )
+    const rect = contactSectionRef.value.getBoundingClientRect()
+    // Align top of fullscreen contact section perfectly with viewport top for optimal full-frame composition
+    const targetY = Math.round(rect.top + window.scrollY)
     const distance = targetY - startY
 
     if (Math.abs(distance) < 8) {
@@ -243,9 +240,8 @@
       :class="isEmerged ? 'scale-110 opacity-100' : 'scale-75 opacity-0'"
     />
 
-    <!-- Central Content Stage (Precisely centered in viewport) -->
+    <!-- Central Content Stage -->
     <div
-      ref="contentRef"
       class="max-w-4xl w-full mx-auto space-y-8 sm:space-y-10 relative z-10 transition-all duration-1000 cubic-bezier(0.16, 1, 0.3, 1) origin-center text-left"
       :class="[
         isEmerged ? 'scale-100 opacity-100 translate-y-0' : 'scale-90 opacity-40 translate-y-8',
