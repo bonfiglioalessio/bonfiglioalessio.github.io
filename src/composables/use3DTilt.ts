@@ -29,6 +29,7 @@ export function use3DTilt(targetRef: Ref<HTMLElement | null>, options: TiltOptio
   const glareOpacity = ref(0)
 
   let isTouchDevice = false
+  let tiltRafId: number | null = null
 
   function handleMouseEnter() {
     if (disabled || isTouchDevice) return
@@ -39,24 +40,38 @@ export function use3DTilt(targetRef: Ref<HTMLElement | null>, options: TiltOptio
   function handleMouseMove(e: MouseEvent) {
     if (disabled || isTouchDevice || !targetRef.value) return
 
-    const rect = targetRef.value.getBoundingClientRect()
-    if (rect.width === 0 || rect.height === 0) return
+    if (tiltRafId !== null) return
 
-    const normX = (e.clientX - rect.left) / rect.width
-    const normY = (e.clientY - rect.top) / rect.height
+    const clientX = e.clientX
+    const clientY = e.clientY
 
-    // Calculate rotation angles
-    tiltX.value = (normY - 0.5) * -2 * maxTilt
-    tiltY.value = (normX - 0.5) * 2 * maxTilt
+    tiltRafId = requestAnimationFrame(() => {
+      tiltRafId = null
+      if (!targetRef.value || !isHovered.value) return
 
-    // Calculate glare coordinate
-    glareX.value = normX * 100
-    glareY.value = normY * 100
-    glareOpacity.value = maxGlare
+      const rect = targetRef.value.getBoundingClientRect()
+      if (rect.width === 0 || rect.height === 0) return
+
+      const normX = (clientX - rect.left) / rect.width
+      const normY = (clientY - rect.top) / rect.height
+
+      // Calculate rotation angles
+      tiltX.value = (normY - 0.5) * -2 * maxTilt
+      tiltY.value = (normX - 0.5) * 2 * maxTilt
+
+      // Calculate glare coordinate
+      glareX.value = normX * 100
+      glareY.value = normY * 100
+      glareOpacity.value = maxGlare
+    })
   }
 
   function handleMouseLeave() {
     if (disabled || isTouchDevice) return
+    if (tiltRafId !== null) {
+      cancelAnimationFrame(tiltRafId)
+      tiltRafId = null
+    }
     isHovered.value = false
     tiltX.value = 0
     tiltY.value = 0
@@ -113,6 +128,10 @@ export function use3DTilt(targetRef: Ref<HTMLElement | null>, options: TiltOptio
   })
 
   onUnmounted(() => {
+    if (tiltRafId !== null) {
+      cancelAnimationFrame(tiltRafId)
+      tiltRafId = null
+    }
     isHovered.value = false
   })
 
