@@ -142,11 +142,11 @@
 
     <!-- Left Solar Array Wing Assembly (Desktop - Positioned Higher with Radiant Cyan Glow on hover) -->
     <div
-      class="hidden lg:flex flex-col items-center justify-center absolute -left-12 xl:-left-14 top-[24%] -translate-y-1/2 z-0 pointer-events-none select-none transition-all duration-500 group-hover:scale-105 group-hover:-translate-x-1"
+      class="hidden lg:flex flex-col items-center justify-center absolute -left-9 xl:-left-11 top-[24%] -translate-y-1/2 z-0 pointer-events-none select-none transition-all duration-500 group-hover:scale-105 group-hover:-translate-x-1"
     >
       <!-- Solar Array Body (Deep space photovoltaic cells with cyan lattice grid) -->
       <div
-        class="w-9 xl:w-10 h-36 xl:h-40 rounded-xl solar-wing-surface border border-sky-400/40 group-hover:border-sky-400 shadow-[0_0_20px_rgba(56,189,248,0.25)] group-hover:shadow-[0_0_35px_rgba(56,189,248,0.65),0_0_70px_rgba(56,189,248,0.3)] flex flex-col justify-between p-1.5 relative overflow-hidden transition-all duration-300"
+        class="w-8 xl:w-9 h-32 xl:h-36 rounded-xl solar-wing-surface border border-sky-400/40 group-hover:border-sky-400 shadow-[0_0_20px_rgba(56,189,248,0.25)] group-hover:shadow-[0_0_35px_rgba(56,189,248,0.65),0_0_70px_rgba(56,189,248,0.3)] flex flex-col justify-between p-1.5 relative overflow-hidden transition-all duration-300"
       >
         <!-- Solar Bus Bar & Cell Dividers -->
         <div class="flex justify-between items-center w-full px-0.5">
@@ -187,22 +187,22 @@
 
       <!-- Metal Joint Arm to Satellite Body -->
       <div
-        class="w-4 h-1.5 bg-gradient-to-r from-sky-500/80 to-slate-700 group-hover:from-sky-400 group-hover:to-slate-600 border-y border-sky-400/40 group-hover:border-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.3)] group-hover:shadow-[0_0_15px_#38bdf8] absolute right-[-15px] top-1/2 -translate-y-1/2 transition-all duration-300"
+        class="w-3.5 h-1.5 bg-gradient-to-r from-sky-500/80 to-slate-700 group-hover:from-sky-400 group-hover:to-slate-600 border-y border-sky-400/40 group-hover:border-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.3)] group-hover:shadow-[0_0_15px_#38bdf8] absolute right-[-13px] top-1/2 -translate-y-1/2 transition-all duration-300"
       />
     </div>
 
     <!-- Right Solar Array Wing Assembly (Desktop - Positioned Lower with Radiant Cyan Glow on hover) -->
     <div
-      class="hidden lg:flex flex-col items-center justify-center absolute -right-12 xl:-right-14 top-[76%] -translate-y-1/2 z-0 pointer-events-none select-none transition-all duration-500 group-hover:scale-105 group-hover:translate-x-1"
+      class="hidden lg:flex flex-col items-center justify-center absolute -right-9 xl:-right-11 top-[76%] -translate-y-1/2 z-0 pointer-events-none select-none transition-all duration-500 group-hover:scale-105 group-hover:translate-x-1"
     >
       <!-- Metal Joint Arm to Satellite Body -->
       <div
-        class="w-4 h-1.5 bg-gradient-to-l from-sky-500/80 to-slate-700 group-hover:from-sky-400 group-hover:to-slate-600 border-y border-sky-400/40 group-hover:border-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.3)] group-hover:shadow-[0_0_15px_#38bdf8] absolute left-[-15px] top-1/2 -translate-y-1/2 transition-all duration-300"
+        class="w-3.5 h-1.5 bg-gradient-to-l from-sky-500/80 to-slate-700 group-hover:from-sky-400 group-hover:to-slate-600 border-y border-sky-400/40 group-hover:border-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.3)] group-hover:shadow-[0_0_15px_#38bdf8] absolute left-[-13px] top-1/2 -translate-y-1/2 transition-all duration-300"
       />
 
       <!-- Solar Array Body (Deep space photovoltaic cells with cyan lattice grid) -->
       <div
-        class="w-9 xl:w-10 h-36 xl:h-40 rounded-xl solar-wing-surface border border-sky-400/40 group-hover:border-sky-400 shadow-[0_0_20px_rgba(56,189,248,0.25)] group-hover:shadow-[0_0_35px_rgba(56,189,248,0.65),0_0_70px_rgba(56,189,248,0.3)] flex flex-col justify-between p-1.5 relative overflow-hidden transition-all duration-300"
+        class="w-8 xl:w-9 h-32 xl:h-36 rounded-xl solar-wing-surface border border-sky-400/40 group-hover:border-sky-400 shadow-[0_0_20px_rgba(56,189,248,0.25)] group-hover:shadow-[0_0_35px_rgba(56,189,248,0.65),0_0_70px_rgba(56,189,248,0.3)] flex flex-col justify-between p-1.5 relative overflow-hidden transition-all duration-300"
       >
         <!-- Solar Bus Bar & Cell Dividers -->
         <div class="flex justify-between items-center w-full px-0.5">
