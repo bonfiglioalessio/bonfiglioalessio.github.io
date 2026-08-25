@@ -15,6 +15,9 @@
     tilt?: boolean
     maxTilt?: number
     glare?: boolean
+    spotlight?: boolean
+    spotlightColor?: string
+    shine?: boolean
     floatAnimation?: string
   }
 
@@ -27,17 +30,51 @@
     tilt: false,
     maxTilt: 8,
     glare: true,
+    spotlight: true,
+    spotlightColor: 'rgba(226, 241, 97, 0.12)',
+    shine: true,
     floatAnimation: undefined,
   })
 
   const cardRef = ref<HTMLElement | null>(null)
+  const isHovered = ref(false)
+  const mousePos = ref({ x: 50, y: 50 })
 
-  const { transformStyle, glareStyle, handleMouseEnter, handleMouseMove, handleMouseLeave } =
-    use3DTilt(cardRef, {
-      maxTilt: props.maxTilt,
-      glare: props.glare,
-      disabled: !props.tilt,
-    })
+  const {
+    transformStyle,
+    glareStyle,
+    handleMouseEnter: tiltEnter,
+    handleMouseMove: tiltMove,
+    handleMouseLeave: tiltLeave,
+  } = use3DTilt(cardRef, {
+    maxTilt: props.maxTilt,
+    glare: props.glare,
+    disabled: !props.tilt,
+  })
+
+  function onMouseEnter(e: MouseEvent) {
+    isHovered.value = true
+    updateMouse(e)
+    tiltEnter()
+  }
+
+  function onMouseMove(e: MouseEvent) {
+    updateMouse(e)
+    tiltMove(e)
+  }
+
+  function onMouseLeave() {
+    isHovered.value = false
+    tiltLeave()
+  }
+
+  function updateMouse(e: MouseEvent) {
+    if (!cardRef.value) return
+    const rect = cardRef.value.getBoundingClientRect()
+    const x = ((e.clientX - rect.left) / rect.width) * 100
+    const y = ((e.clientY - rect.top) / rect.height) * 100
+    mousePos.value = { x, y }
+  }
 
   const paddingClasses = computed(() => {
     switch (props.padding) {
@@ -76,7 +113,7 @@
       :is="as"
       ref="cardRef"
       v-bind="$attrs"
-      class="space-floating-card relative overflow-hidden h-full"
+      class="space-floating-card relative overflow-hidden h-full group"
       :class="[
         paddingClasses,
         roundedClasses,
@@ -84,10 +121,28 @@
         interactive ? 'cursor-pointer' : '',
       ]"
       :style="transformStyle"
-      @mouseenter="handleMouseEnter"
-      @mousemove="handleMouseMove"
-      @mouseleave="handleMouseLeave"
+      @mouseenter="onMouseEnter"
+      @mousemove="onMouseMove"
+      @mouseleave="onMouseLeave"
     >
+      <!-- Cursor-Following Spotlight Glare -->
+      <div
+        v-if="spotlight"
+        class="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
+        :style="{
+          opacity: isHovered ? 1 : 0,
+          background: `radial-gradient(350px circle at ${mousePos.x}% ${mousePos.y}%, ${spotlightColor}, transparent 70%)`,
+        }"
+        aria-hidden="true"
+      />
+
+      <!-- Diagonal Shine Sweep Ribbon on Hover -->
+      <span
+        v-if="shine"
+        class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-25deg] w-[180%] z-0"
+        aria-hidden="true"
+      />
+
       <!-- Dynamic Holographic Glare Layer -->
       <div v-if="glare && tilt" :style="glareStyle" aria-hidden="true" />
 
@@ -102,7 +157,7 @@
     v-else
     ref="cardRef"
     v-bind="$attrs"
-    class="space-floating-card relative overflow-hidden"
+    class="space-floating-card relative overflow-hidden group"
     :class="[
       paddingClasses,
       roundedClasses,
@@ -110,10 +165,28 @@
       interactive ? 'cursor-pointer' : '',
     ]"
     :style="transformStyle"
-    @mouseenter="handleMouseEnter"
-    @mousemove="handleMouseMove"
-    @mouseleave="handleMouseLeave"
+    @mouseenter="onMouseEnter"
+    @mousemove="onMouseMove"
+    @mouseleave="onMouseLeave"
   >
+    <!-- Cursor-Following Spotlight Glare -->
+    <div
+      v-if="spotlight"
+      class="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
+      :style="{
+        opacity: isHovered ? 1 : 0,
+        background: `radial-gradient(350px circle at ${mousePos.x}% ${mousePos.y}%, ${spotlightColor}, transparent 70%)`,
+      }"
+      aria-hidden="true"
+    />
+
+    <!-- Diagonal Shine Sweep Ribbon on Hover -->
+    <span
+      v-if="shine"
+      class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-25deg] w-[180%] z-0"
+      aria-hidden="true"
+    />
+
     <!-- Dynamic Holographic Glare Layer -->
     <div v-if="glare && tilt" :style="glareStyle" aria-hidden="true" />
 
