@@ -224,11 +224,11 @@
             </a>
           </nav>
 
-          <!-- Dedicated Slot for Send Email CTA Button: 0px at top, smoothly expands when Selected Work is reached -->
+          <!-- Dedicated Slot for LET'S TALK CTA Button: 0px at top, smoothly expands when Selected Work is reached -->
           <div
             class="hidden md:flex items-center justify-end shrink-0 transition-all duration-300 ease-out overflow-hidden"
             :class="
-              isCtaVisible ? 'w-[136px] opacity-100 ml-2' : 'w-0 opacity-0 ml-0 pointer-events-none'
+              isCtaVisible ? 'w-[130px] opacity-100 ml-2' : 'w-0 opacity-0 ml-0 pointer-events-none'
             "
           >
             <AppButton
@@ -244,7 +244,7 @@
               "
               @click="playClick"
             >
-              <span>Send Email</span>
+              <span>LET'S TALK</span>
               <span class="text-xs">&rarr;</span>
             </AppButton>
           </div>
@@ -324,7 +324,7 @@
                 class="w-full py-2.5 px-4 rounded-xl bg-lime-400 text-black font-bold font-mono text-xs shadow-[0_0_15px_rgba(226,241,97,0.35)] flex items-center justify-center gap-2 cursor-pointer active:scale-95 transition-transform"
                 @click="playClick"
               >
-                <span>Send Email</span>
+                <span>LET'S TALK</span>
                 <span>&rarr;</span>
               </a>
             </div>
