@@ -255,7 +255,7 @@
             ref="inputRef"
             v-model="currentInput"
             type="text"
-            placeholder="type command (e.g. explore_work)..."
+            placeholder="type command (e.g. skills, cv, projects)..."
             autocomplete="off"
             autocorrect="off"
             autocapitalize="off"
@@ -321,23 +321,30 @@
           <button
             type="button"
             class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-lime-400/30 transition-all font-bold active:scale-95"
-            @click="runQuickAction('explore_work')"
+            @click="runQuickAction('skills')"
           >
-            &gt; explore_work
+            skills
           </button>
           <button
             type="button"
             class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-lime-400/30 transition-all font-bold active:scale-95"
-            @click="runQuickAction('contact_me')"
+            @click="runQuickAction('projects')"
           >
-            &gt; contact_me
+            projects
+          </button>
+          <button
+            type="button"
+            class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-lime-400/30 transition-all font-bold active:scale-95"
+            @click="runQuickAction('experience')"
+          >
+            experience
           </button>
           <button
             type="button"
             class="text-slate-300 hover:text-lime-400 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-slate-700 transition-all active:scale-95"
-            @click="runQuickAction('supernova')"
+            @click="runQuickAction('contact')"
           >
-            spark
+            contact
           </button>
           <button
             type="button"
@@ -345,6 +352,13 @@
             @click="runQuickAction('cv')"
           >
             cv.md
+          </button>
+          <button
+            type="button"
+            class="text-slate-300 hover:text-lime-400 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-slate-700 transition-all active:scale-95"
+            @click="runQuickAction('supernova')"
+          >
+            spark
           </button>
           <button
             type="button"

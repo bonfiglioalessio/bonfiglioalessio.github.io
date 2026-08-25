@@ -20,7 +20,7 @@ export function useCliEngine() {
         <div class="text-lime-400 font-mono flex items-center gap-1.5 flex-wrap">
           <span>&gt; Type</span>
           <span class="text-white font-bold bg-dark-900 px-1.5 py-0.2 rounded border border-lime-400/30">help</span>
-          <span>or click quick orbital telemetry actions below.</span>
+          <span>or click quick telemetry actions below.</span>
         </div>
       </div>`,
     },
@@ -32,18 +32,18 @@ export function useCliEngine() {
 
   const COMMAND_LIST = [
     'help',
-    'explore_work',
-    'contact_me',
     'skills',
     'experience',
     'projects',
+    'contact',
     'cv',
     'resume',
     'supernova',
-    'clear',
-    'audio',
+    'spark',
     'matrix',
+    'audio',
     'whoami',
+    'clear',
   ]
 
   function handleAutoComplete(input: string): string {
@@ -86,14 +86,6 @@ export function useCliEngine() {
     return currentInput.value
   }
 
-  function smoothScrollTo(id: string) {
-    if (typeof window === 'undefined') return
-    const el = document.getElementById(id)
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
-  }
-
   function executeCommand(rawCommand: string) {
     const trimmed = rawCommand.trim()
     if (!trimmed) return
@@ -119,14 +111,13 @@ export function useCliEngine() {
           id: `out-${Date.now()}`,
           type: 'output',
           html: `<div class="text-slate-300 font-mono text-[11px] leading-relaxed">
-            Available commands: <span class="text-lime-400 font-bold">explore_work</span>, <span class="text-lime-400 font-bold">contact_me</span>, <span class="text-lime-400 font-bold">skills</span>, <span class="text-lime-400 font-bold">experience</span>, <span class="text-lime-400 font-bold">cv</span>, <span class="text-lime-400 font-bold">supernova</span>, <span class="text-lime-400 font-bold">clear</span>
+            Available commands: <span class="text-lime-400 font-bold">skills</span>, <span class="text-lime-400 font-bold">projects</span>, <span class="text-lime-400 font-bold">experience</span>, <span class="text-lime-400 font-bold">contact</span>, <span class="text-lime-400 font-bold">cv</span>, <span class="text-lime-400 font-bold">supernova</span>, <span class="text-lime-400 font-bold">clear</span>
           </div>`,
         })
         break
 
       case 'skills':
       case 'stack':
-        smoothScrollTo('stack')
         entries.value.push({
           id: `out-${Date.now()}`,
           type: 'output',
@@ -143,7 +134,6 @@ export function useCliEngine() {
       case 'experience':
       case 'exp':
       case 'career':
-        smoothScrollTo('experience')
         entries.value.push({
           id: `out-${Date.now()}`,
           type: 'output',
@@ -160,13 +150,11 @@ export function useCliEngine() {
       case 'work':
       case 'explore':
       case 'explore_work':
-      case 'explore work':
-        smoothScrollTo('projects')
         entries.value.push({
           id: `out-${Date.now()}`,
           type: 'output',
           html: `<div class="space-y-1 text-[11px] font-mono text-slate-300">
-            <div class="text-lime-400 font-bold">🚀 NAVIGATING TO SELECTED WORK...</div>
+            <div class="text-lime-400 font-bold">🚀 SELECTED WORK &amp; EXPERIMENTS:</div>
             <div>01. <strong class="text-white">snorlax-todo</strong> &bull; Preact &amp; Redux (~8KB gzip)</div>
             <div>02. <strong class="text-white">weather-app</strong> &bull; Real-time OpenWeather radar</div>
             <div>03. <strong class="text-white">unique-photography</strong> &bull; Contentful GraphQL gallery</div>
@@ -177,18 +165,18 @@ export function useCliEngine() {
 
       case 'contact':
       case 'contact_me':
-      case 'contact me':
       case 'hire':
       case 'sudo hire':
-        smoothScrollTo('contact')
         playDiffToggle(true)
         entries.value.push({
           id: `out-${Date.now()}`,
           type: 'output',
           html: `<div class="p-2 rounded-lg bg-lime-400/10 border border-lime-400/40 text-slate-200 space-y-1 font-mono text-[11px]">
-            <div class="text-lime-400 font-bold">📬 [OPENING TRANSMISSION CHANNEL]</div>
+            <div class="text-lime-400 font-bold">📬 DIRECT TRANSMISSION CHANNEL:</div>
             <div>Alessio Bonfiglio &bull; Software Engineer @ iliad</div>
-            <div>Direct Mail: <a href="mailto:bonfi.alessio98@gmail.com" class="text-lime-300 underline font-bold">bonfi.alessio98@gmail.com</a></div>
+            <div>Email: <a href="mailto:bonfi.alessio98@gmail.com" class="text-lime-300 underline font-bold">bonfi.alessio98@gmail.com</a></div>
+            <div>GitHub: <a href="https://github.com/bonfiglioalessio" target="_blank" class="text-lime-300 underline">github.com/bonfiglioalessio</a></div>
+            <div>LinkedIn: <a href="https://www.linkedin.com/in/alessio-bonfiglio/" target="_blank" class="text-lime-300 underline">linkedin.com/in/alessio-bonfiglio</a></div>
           </div>`,
         })
         break
