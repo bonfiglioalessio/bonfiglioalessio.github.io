@@ -2,6 +2,7 @@
   import { nextTick, onMounted, ref, watch } from 'vue'
   import { useCliEngine } from '../../composables/useCliEngine'
   import { useAudioSynth } from '../../composables/useAudioSynth'
+  import { use3DTilt } from '../../composables/use3DTilt'
 
   type TabType = 'terminal' | 'config' | 'skills'
   const activeTab = ref<TabType>('terminal')
@@ -11,8 +12,20 @@
 
   const { playClick } = useAudioSynth()
 
+  const cockpitRef = ref<HTMLElement | null>(null)
   const terminalScrollRef = ref<HTMLDivElement | null>(null)
   const inputRef = ref<HTMLInputElement | null>(null)
+
+  // Gentle 3D Tilt for CLI Cockpit (Subtler than Selected Work cards: maxTilt 3.5 vs 8)
+  const { transformStyle, glareStyle, handleMouseEnter, handleMouseMove, handleMouseLeave } =
+    use3DTilt(cockpitRef, {
+      maxTilt: 3.5,
+      perspective: 1200,
+      scale: 1.01,
+      speed: 550,
+      glare: true,
+      maxGlare: 0.16,
+    })
 
   function setTab(tab: TabType) {
     playClick()
@@ -80,7 +93,7 @@
 
 <template>
   <div class="relative w-full max-w-md lg:max-w-lg">
-    <!-- Atmospheric Cosmic Glow Nebula Aura behind CLI (Matching Reference Design) -->
+    <!-- Atmospheric Cosmic Glow Nebula Aura behind CLI -->
     <div
       class="absolute -top-16 -right-16 w-80 h-80 bg-lime-400/25 rounded-full blur-3xl pointer-events-none z-0 animate-glow-pulse"
     />
@@ -88,12 +101,20 @@
       class="absolute -bottom-10 -left-10 w-64 h-64 bg-emerald-500/15 rounded-full blur-2xl pointer-events-none z-0"
     />
 
-    <!-- Main Cockpit Card Container (Fixed border & glow without hover-shift) -->
+    <!-- Main Cockpit Card Container with Gentle 3D Tilt & Subtle Dynamic Border -->
     <div
-      class="w-full h-[360px] sm:h-[410px] lg:h-[430px] p-3.5 sm:p-5 rounded-2xl bg-dark-900/80 backdrop-blur-xl border border-lime-400/35 flex flex-col justify-between select-none overflow-hidden relative z-10 shadow-[0_0_40px_rgba(226,241,97,0.2),0_0_90px_rgba(226,241,97,0.1)]"
+      ref="cockpitRef"
+      class="w-full h-[360px] sm:h-[410px] lg:h-[430px] p-3.5 sm:p-5 rounded-2xl bg-dark-900/80 backdrop-blur-xl border border-lime-400/30 hover:border-lime-400/60 flex flex-col justify-between select-none overflow-hidden relative z-10 shadow-[0_0_30px_rgba(226,241,97,0.18),0_0_70px_rgba(226,241,97,0.08)] hover:shadow-[0_0_45px_rgba(226,241,97,0.3),0_0_90px_rgba(226,241,97,0.15)] transition-all duration-300 group"
+      :style="transformStyle"
+      @mouseenter="handleMouseEnter"
+      @mousemove="handleMouseMove"
+      @mouseleave="handleMouseLeave"
     >
+      <!-- Dynamic Holographic Glare Sheen -->
+      <div :style="glareStyle" aria-hidden="true" />
+
       <!-- Window Header & Tab Navigation -->
-      <div class="space-y-3 shrink-0">
+      <div class="space-y-3 shrink-0 relative z-10">
         <!-- MacOS Controls & Window Title with Vivid Glows -->
         <div class="flex items-center justify-between border-b border-lime-400/15 pb-2.5 gap-2">
           <div class="flex items-center gap-2 shrink-0">
@@ -163,7 +184,7 @@
       <!-- Tab 1: Real Interactive Terminal Shell -->
       <div
         v-show="activeTab === 'terminal'"
-        class="flex flex-col justify-between flex-1 min-h-0 bg-dark-950/85 border border-lime-400/20 rounded-xl p-3 sm:p-4 my-2 font-mono text-[11px] sm:text-xs overflow-hidden shadow-inner cursor-text"
+        class="flex flex-col justify-between flex-1 min-h-0 bg-dark-950/85 border border-lime-400/20 rounded-xl p-3 sm:p-4 my-2 font-mono text-[11px] sm:text-xs overflow-hidden shadow-inner cursor-text relative z-10"
         @click="focusInput"
       >
         <!-- Scrolling Output Log -->
@@ -234,7 +255,7 @@
       <!-- Tab 2: Config Tab -->
       <div
         v-show="activeTab === 'config'"
-        class="flex-1 overflow-y-auto bg-dark-950/70 border border-lime-400/15 rounded-xl p-3 sm:p-4 my-2 font-mono text-[10px] sm:text-xs text-slate-300 leading-relaxed no-scrollbar"
+        class="flex-1 overflow-y-auto bg-dark-950/70 border border-lime-400/15 rounded-xl p-3 sm:p-4 my-2 font-mono text-[10px] sm:text-xs text-slate-300 leading-relaxed no-scrollbar relative z-10"
       >
         <pre
           class="whitespace-pre overflow-x-auto"
@@ -253,7 +274,7 @@
       <!-- Tab 3: Skills Tab -->
       <div
         v-show="activeTab === 'skills'"
-        class="flex-1 overflow-y-auto bg-dark-950/70 border border-lime-400/15 rounded-xl p-3 sm:p-4 my-2 font-mono text-[10px] sm:text-xs text-slate-300 leading-relaxed no-scrollbar"
+        class="flex-1 overflow-y-auto bg-dark-950/70 border border-lime-400/15 rounded-xl p-3 sm:p-4 my-2 font-mono text-[10px] sm:text-xs text-slate-300 leading-relaxed no-scrollbar relative z-10"
       >
         <pre class="whitespace-pre overflow-x-auto"><code>{
   <span class="text-lime-400">"core"</span>: [
@@ -271,7 +292,7 @@
 
       <!-- Footer Quick Action Chips: Exactly help, spark, sudo hire, clear -->
       <div
-        class="flex items-center justify-between gap-1.5 pt-1 text-[9px] sm:text-[10px] text-slate-400 font-mono shrink-0 border-t border-lime-400/10 overflow-x-auto no-scrollbar"
+        class="flex items-center justify-between gap-1.5 pt-1 text-[9px] sm:text-[10px] text-slate-400 font-mono shrink-0 border-t border-lime-400/10 overflow-x-auto no-scrollbar relative z-10"
       >
         <div class="flex items-center gap-1.5 shrink-0 whitespace-nowrap">
           <span class="text-slate-500">Quick:</span>
