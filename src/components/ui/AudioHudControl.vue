@@ -11,8 +11,8 @@
     class="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50 flex items-center gap-2.5 px-3.5 py-2 rounded-2xl bg-dark-950/90 backdrop-blur-md border transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.8)] cursor-pointer group select-none font-mono text-xs"
     :class="[
       isAudioEnabled
-        ? 'border-lime-400/40 shadow-[0_0_18px_rgba(226,241,97,0.2)] hover:border-lime-400 hover:shadow-[0_0_25px_rgba(226,241,97,0.4)]'
-        : 'border-slate-800 bg-dark-950/80 opacity-75 hover:opacity-100 hover:border-slate-700',
+        ? 'border-lime-400/40 shadow-[0_0_18px_rgba(226,241,97,0.2)] hover:border-lime-400 hover:shadow-[0_0_25px_rgba(226,241,97,0.4)] active:scale-95'
+        : 'border-slate-800 bg-dark-950/80 opacity-75 hover:opacity-100 hover:border-slate-700 active:scale-95',
     ]"
     :aria-label="isAudioEnabled ? 'Disattiva musica e SFX' : 'Attiva musica spaziale e SFX'"
     :title="
@@ -22,26 +22,38 @@
     "
     @click="toggleAudio"
   >
-    <!-- Animated Cyber Equalizer Waveform Indicator -->
-    <div class="flex items-end gap-[3px] h-3.5 w-3.5 shrink-0 justify-center">
+    <!-- 4-Band Multi-Spectrum Dynamic Cyber Equalizer -->
+    <div class="flex items-end gap-[2.5px] h-3.5 w-4 shrink-0 justify-center pb-0.5">
+      <!-- Band 1: Lime Yellow -->
       <span
         class="w-[2.5px] rounded-full transition-all duration-300"
         :class="[
           isAudioEnabled ? 'bg-lime-400 animate-eq-1 shadow-[0_0_6px_#e2f161]' : 'bg-slate-600 h-1',
         ]"
       />
+      <!-- Band 2: Pure White -->
+      <span
+        class="w-[2.5px] rounded-full transition-all duration-300"
+        :class="[
+          isAudioEnabled ? 'bg-white animate-eq-2 shadow-[0_0_6px_#ffffff]' : 'bg-slate-600 h-1.5',
+        ]"
+      />
+      <!-- Band 3: Emerald Mint -->
       <span
         class="w-[2.5px] rounded-full transition-all duration-300"
         :class="[
           isAudioEnabled
-            ? 'bg-lime-400 animate-eq-2 shadow-[0_0_6px_#e2f161]'
-            : 'bg-slate-600 h-1.5',
+            ? 'bg-emerald-400 animate-eq-3 shadow-[0_0_6px_#34d399]'
+            : 'bg-slate-600 h-1',
         ]"
       />
+      <!-- Band 4: Cyan Electric -->
       <span
         class="w-[2.5px] rounded-full transition-all duration-300"
         :class="[
-          isAudioEnabled ? 'bg-lime-400 animate-eq-3 shadow-[0_0_6px_#e2f161]' : 'bg-slate-600 h-1',
+          isAudioEnabled
+            ? 'bg-sky-400 animate-eq-4 shadow-[0_0_6px_#38bdf8]'
+            : 'bg-slate-600 h-1.5',
         ]"
       />
     </div>
@@ -70,7 +82,7 @@
       height: 3px;
     }
     50% {
-      height: 12px;
+      height: 13px;
     }
   }
 
@@ -90,19 +102,33 @@
       height: 5px;
     }
     50% {
-      height: 13px;
+      height: 12px;
+    }
+  }
+
+  @keyframes eq-pulse-4 {
+    0%,
+    100% {
+      height: 12px;
+    }
+    50% {
+      height: 3px;
     }
   }
 
   .animate-eq-1 {
-    animation: eq-pulse-1 0.9s ease-in-out infinite;
+    animation: eq-pulse-1 0.85s ease-in-out infinite;
   }
 
   .animate-eq-2 {
-    animation: eq-pulse-2 0.75s ease-in-out infinite 0.15s;
+    animation: eq-pulse-2 0.7s ease-in-out infinite 0.15s;
   }
 
   .animate-eq-3 {
-    animation: eq-pulse-3 1.1s ease-in-out infinite 0.3s;
+    animation: eq-pulse-3 1.05s ease-in-out infinite 0.3s;
+  }
+
+  .animate-eq-4 {
+    animation: eq-pulse-4 0.9s ease-in-out infinite 0.2s;
   }
 </style>
