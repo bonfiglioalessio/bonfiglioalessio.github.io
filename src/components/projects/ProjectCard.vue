@@ -9,11 +9,13 @@
     project: Project
     theme?: 'lime' | 'white' | 'emerald' | 'cyan'
     floatAnimation?: string
+    isTwinkling?: boolean
   }
 
   const props = withDefaults(defineProps<Props>(), {
     theme: 'lime',
     floatAnimation: '',
+    isTwinkling: false,
   })
 
   const emit = defineEmits<{
@@ -35,6 +37,10 @@
           badgeVariant: 'white' as const,
           numberClass: 'text-white drop-shadow-[0_0_12px_#ffffff]',
           titleClass: 'text-white group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.7)]',
+          stellarGlowClass: 'shadow-[0_0_35px_rgba(255,255,255,0.45)] ring-1 ring-white/60',
+          activeBorderStroke: '#ffffff',
+          activeStrokeGlowClass: 'active-card-border-stroke-white',
+          starColor: 'text-white',
           diffBtnDefault:
             'bg-dark-950/90 border-white/40 text-white hover:border-white hover:shadow-[0_0_10px_rgba(255,255,255,0.4)]',
           diffBorderClass: 'border-white/25 ring-white/20',
@@ -52,6 +58,10 @@
           badgeVariant: 'emerald' as const,
           numberClass: 'text-emerald-400 drop-shadow-[0_0_12px_#34d399]',
           titleClass: 'text-emerald-400 group-hover:drop-shadow-[0_0_12px_rgba(52,211,153,0.7)]',
+          stellarGlowClass: 'shadow-[0_0_35px_rgba(52,211,153,0.45)] ring-1 ring-emerald-400/60',
+          activeBorderStroke: '#34d399',
+          activeStrokeGlowClass: 'active-card-border-stroke-emerald',
+          starColor: 'text-emerald-400',
           diffBtnDefault:
             'bg-dark-950/90 border-emerald-400/40 text-emerald-400 hover:border-emerald-400 hover:shadow-[0_0_10px_rgba(52,211,153,0.4)]',
           diffBorderClass: 'border-emerald-400/25 ring-emerald-400/20',
@@ -69,6 +79,10 @@
           badgeVariant: 'cyan' as const,
           numberClass: 'text-sky-400 drop-shadow-[0_0_12px_#38bdf8]',
           titleClass: 'text-sky-400 group-hover:drop-shadow-[0_0_12px_rgba(56,189,248,0.7)]',
+          stellarGlowClass: 'shadow-[0_0_35px_rgba(56,189,248,0.45)] ring-1 ring-sky-400/60',
+          activeBorderStroke: '#38bdf8',
+          activeStrokeGlowClass: 'active-card-border-stroke-cyan',
+          starColor: 'text-sky-400',
           diffBtnDefault:
             'bg-dark-950/90 border-sky-400/40 text-sky-400 hover:border-sky-400 hover:shadow-[0_0_10px_rgba(56,189,248,0.4)]',
           diffBorderClass: 'border-sky-400/25 ring-sky-400/20',
@@ -87,6 +101,10 @@
           badgeVariant: 'lime' as const,
           numberClass: 'text-lime-400 drop-shadow-[0_0_12px_#e2f161]',
           titleClass: 'text-lime-400 group-hover:drop-shadow-[0_0_12px_rgba(226,241,97,0.7)]',
+          stellarGlowClass: 'shadow-[0_0_35px_rgba(226,241,97,0.45)] ring-1 ring-lime-400/60',
+          activeBorderStroke: '#e2f161',
+          activeStrokeGlowClass: 'active-card-border-stroke-lime',
+          starColor: 'text-lime-400',
           diffBtnDefault:
             'bg-dark-950/90 border-lime-400/40 text-lime-400 hover:border-lime-400 hover:shadow-[0_0_10px_rgba(226,241,97,0.4)]',
           diffBorderClass: 'border-lime-400/25 ring-lime-400/20',
@@ -110,10 +128,33 @@
     :hud-reticles="true"
     :tilt="true"
     :float-animation="floatAnimation"
-    class="flex flex-col justify-between group transition-all duration-300 select-none h-full"
+    class="flex flex-col justify-between group select-none h-full relative transition-all duration-300 ease-out backdrop-blur-xl opacity-100"
+    :class="[
+      isTwinkling ? `scale-[1.015] ${themeConfig.stellarGlowClass}` : 'group-hover:scale-[1.015]',
+    ]"
   >
-    <div class="space-y-4">
-      <!-- Card Top: Badge (Left) & Big Themed Project Number (Right) -->
+    <!-- SVG Stellar Perimeter Border on Twinkle / Hover -->
+    <svg
+      class="absolute inset-0 w-full h-full pointer-events-none z-10 overflow-visible rounded-2xl transition-opacity duration-300"
+      :class="isTwinkling ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect
+        x="1"
+        y="1"
+        width="calc(100% - 2px)"
+        height="calc(100% - 2px)"
+        rx="15"
+        fill="none"
+        :stroke="themeConfig.activeBorderStroke"
+        stroke-width="1.5"
+        class="active-card-border-stroke"
+        :class="themeConfig.activeStrokeGlowClass"
+      />
+    </svg>
+
+    <div class="space-y-4 relative z-20">
+      <!-- Card Top: Badge (Left) & Big Themed Project Number with Twinkle Star Marker (Right) -->
       <div class="flex items-center justify-between gap-2">
         <div class="flex items-center gap-2">
           <AppBadge :variant="themeConfig.badgeVariant" class="font-mono text-xs font-bold">
@@ -124,12 +165,26 @@
           </AppBadge>
         </div>
 
-        <span
-          class="font-syne font-black text-2xl sm:text-3xl tracking-tight"
-          :class="themeConfig.numberClass"
-        >
-          {{ project.projectNumber }}
-        </span>
+        <div class="flex items-center gap-1.5">
+          <!-- Twinkle Star Marker ✦ -->
+          <span
+            class="text-xs transition-all duration-500 select-none"
+            :class="[
+              themeConfig.starColor,
+              isTwinkling
+                ? 'opacity-100 scale-125 animate-ping'
+                : 'opacity-0 group-hover:opacity-100 group-hover:scale-110',
+            ]"
+          >
+            ✦
+          </span>
+          <span
+            class="font-syne font-black text-2xl sm:text-3xl tracking-tight transition-transform duration-500"
+            :class="[themeConfig.numberClass, isTwinkling ? 'scale-105' : '']"
+          >
+            {{ project.projectNumber }}
+          </span>
+        </div>
       </div>
 
       <!-- Title & [+] inspect diff Toggle Row -->
