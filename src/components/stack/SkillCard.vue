@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed } from 'vue'
+  import { computed, ref } from 'vue'
   import type { SkillItem } from '../../types/portfolio'
   import AppBadge from '../ui/AppBadge.vue'
 
@@ -14,11 +14,38 @@
     floatAnimation: '',
   })
 
+  const cardRef = ref<HTMLElement | null>(null)
+  const isHovered = ref(false)
+  const mousePos = ref({ x: 50, y: 50 })
+
+  function onMouseEnter(e: MouseEvent) {
+    isHovered.value = true
+    updateMouse(e)
+  }
+
+  function onMouseMove(e: MouseEvent) {
+    updateMouse(e)
+  }
+
+  function onMouseLeave() {
+    isHovered.value = false
+  }
+
+  function updateMouse(e: MouseEvent) {
+    if (!cardRef.value) return
+    const rect = cardRef.value.getBoundingClientRect()
+    const x = ((e.clientX - rect.left) / rect.width) * 100
+    const y = ((e.clientY - rect.top) / rect.height) * 100
+    mousePos.value = { x, y }
+  }
+
   const themeConfig = computed(() => {
     switch (props.theme) {
       case 'white':
         return {
           strokeColor: '#ffffff',
+          spotlightColor: 'rgba(255, 255, 255, 0.12)',
+          shineColor: 'via-white/25',
           reticleClass:
             'border-white/40 group-hover:border-white group-hover:shadow-[0_0_6px_#ffffff]',
           titleHoverClass: 'group-hover:text-white',
@@ -28,6 +55,8 @@
       case 'emerald':
         return {
           strokeColor: '#34d399',
+          spotlightColor: 'rgba(52, 211, 153, 0.14)',
+          shineColor: 'via-emerald-400/25',
           reticleClass:
             'border-emerald-400/40 group-hover:border-emerald-400 group-hover:shadow-[0_0_6px_#34d399]',
           titleHoverClass: 'group-hover:text-emerald-400',
@@ -37,6 +66,8 @@
       case 'cyan':
         return {
           strokeColor: '#38bdf8',
+          spotlightColor: 'rgba(56, 189, 248, 0.14)',
+          shineColor: 'via-sky-400/25',
           reticleClass:
             'border-sky-400/40 group-hover:border-sky-400 group-hover:shadow-[0_0_6px_#38bdf8]',
           titleHoverClass: 'group-hover:text-sky-400',
@@ -47,6 +78,8 @@
       default:
         return {
           strokeColor: '#e2f161',
+          spotlightColor: 'rgba(226, 241, 97, 0.14)',
+          shineColor: 'via-lime-400/25',
           reticleClass:
             'border-lime-400/40 group-hover:border-lime-400 group-hover:shadow-[0_0_6px_#e2f161]',
           titleHoverClass: 'group-hover:text-lime-400',
@@ -60,23 +93,44 @@
 <template>
   <div :class="floatAnimation" class="w-full">
     <div
+      ref="cardRef"
       class="skill-card space-floating-card has-hud-reticles p-4 sm:p-5 rounded-2xl flex items-center justify-between gap-3 group transition-all duration-300 hover:scale-[1.02] select-none cursor-default relative overflow-hidden h-full"
+      @mouseenter="onMouseEnter"
+      @mousemove="onMouseMove"
+      @mouseleave="onMouseLeave"
     >
+      <!-- Cursor-Following Spotlight Glare -->
+      <div
+        class="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
+        :style="{
+          opacity: isHovered ? 1 : 0,
+          background: `radial-gradient(280px circle at ${mousePos.x}% ${mousePos.y}%, ${themeConfig.spotlightColor}, transparent 70%)`,
+        }"
+        aria-hidden="true"
+      />
+
+      <!-- Diagonal Shine Sweep Ribbon on Hover -->
+      <span
+        class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-800 ease-out pointer-events-none bg-gradient-to-r from-transparent skew-x-[-25deg] w-[180%] z-0"
+        :class="themeConfig.shineColor"
+        aria-hidden="true"
+      />
+
       <!-- HUD Corner Reticles (Precision Themed Cyber Brackets) -->
       <span
-        class="absolute top-2 left-2 w-2 h-2 border-t border-l transition-all pointer-events-none"
+        class="absolute top-2 left-2 w-2 h-2 border-t border-l transition-all pointer-events-none z-10"
         :class="themeConfig.reticleClass"
       />
       <span
-        class="absolute top-2 right-2 w-2 h-2 border-t border-r transition-all pointer-events-none"
+        class="absolute top-2 right-2 w-2 h-2 border-t border-r transition-all pointer-events-none z-10"
         :class="themeConfig.reticleClass"
       />
       <span
-        class="absolute bottom-2 left-2 w-2 h-2 border-b border-l transition-all pointer-events-none"
+        class="absolute bottom-2 left-2 w-2 h-2 border-b border-l transition-all pointer-events-none z-10"
         :class="themeConfig.reticleClass"
       />
       <span
-        class="absolute bottom-2 right-2 w-2 h-2 border-b border-r transition-all pointer-events-none"
+        class="absolute bottom-2 right-2 w-2 h-2 border-b border-r transition-all pointer-events-none z-10"
         :class="themeConfig.reticleClass"
       />
 
