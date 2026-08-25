@@ -7,7 +7,7 @@
   import ProjectCard from './ProjectCard.vue'
   import ProjectPreviewModal from './ProjectPreviewModal.vue'
 
-  const { selectedWork } = usePortfolioData()
+  const { selectedWork, sections } = usePortfolioData()
   const { playClick } = useAudioSynth()
 
   const projectThemes: ('lime' | 'white' | 'emerald' | 'cyan')[] = [
@@ -216,24 +216,17 @@
 
     <!-- Inner Content Stage (Aligned with Main Page Container Max-W-7xl) -->
     <div class="w-full max-w-7xl mx-auto px-6 sm:px-8 relative z-10 space-y-8 sm:space-y-10">
-      <!-- Section Header with Accent-Highlighted [+] inspect diff -->
-      <SectionHeader section-number="02" title="Selected Work" status-badge="● 4 SELECTED PROJECTS">
-        <template #description>
-          Una selezione di side project ed esperimenti passati. Clicca su
-          <span
-            class="text-lime-400 font-bold bg-dark-950 px-2 py-0.5 rounded-md border border-lime-400/40 shadow-[0_0_8px_rgba(226,241,97,0.25)] inline-flex items-center gap-1 font-mono text-xs select-all"
-          >
-            [+] inspect diff
-          </span>
-          per i dettagli di codice o su
-          <span
-            class="text-lime-400 font-bold bg-dark-950 px-2 py-0.5 rounded-md border border-lime-400/40 shadow-[0_0_8px_rgba(226,241,97,0.25)] inline-flex items-center gap-1 font-mono text-xs select-all"
-          >
-            [⬡ PREVIEW]
-          </span>
-          per testare l'anteprima interattiva responsive.
-        </template>
-      </SectionHeader>
+      <!-- Section Header dynamically bound to sections.projects -->
+      <SectionHeader
+        :section-number="sections?.projects?.sectionNumber || '02'"
+        :title="sections?.projects?.title || 'Selected Work'"
+        :status-badge="
+          sections?.projects?.statusBadge || `● ${selectedWork.length} SELECTED PROJECTS`
+        "
+        :description="
+          sections?.projects?.description || 'Una selezione di side project ed esperimenti passati.'
+        "
+      />
 
       <!-- ================= MOBILE VIEW: Horizontal Swipe Carousel (< lg) ================= -->
       <div class="lg:hidden space-y-5 pt-1">
