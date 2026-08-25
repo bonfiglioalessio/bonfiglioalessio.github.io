@@ -144,18 +144,6 @@
           <span>Send Email</span>
           <span class="text-base">&rarr;</span>
         </a>
-
-        <!-- Download CV / Resume Button CTA -->
-        <a
-          href="https://bonfiglioalessio.github.io/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-dark-900 border border-white/30 text-white font-mono font-bold text-xs sm:text-sm hover:border-white hover:bg-white hover:text-black shadow-[0_0_15px_rgba(255,255,255,0.15)] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] hover:scale-105 active:scale-95 transition-all cursor-pointer shrink-0"
-          @click="playClick"
-        >
-          <span>CV / Resume [PDF]</span>
-          <span class="text-sm font-bold">&#x2197;</span>
-        </a>
       </div>
 
       <!-- Social Links Row -->
