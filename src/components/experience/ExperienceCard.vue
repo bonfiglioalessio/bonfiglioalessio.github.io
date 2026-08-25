@@ -96,7 +96,7 @@
 </script>
 
 <template>
-  <div class="relative w-full group">
+  <div class="relative w-full h-full group flex flex-col">
     <!-- Horizontal Neon Connector Branch (Desktop only >= lg) -->
     <div
       class="hidden lg:block absolute top-7 -left-7 sm:-left-9 lg:-left-10 w-7 sm:w-9 lg:w-10 h-[2px] pointer-events-none transition-all duration-300 z-10"
@@ -136,7 +136,7 @@
       :hud-reticles="true"
       :tilt="false"
       :float-animation="floatAnimation"
-      class="select-none space-y-4 w-full relative overflow-hidden transition-[box-shadow,border-color,opacity] duration-300"
+      class="select-none space-y-4 w-full h-full flex flex-col justify-between relative overflow-hidden transition-all duration-500 backdrop-blur-xl"
       :class="[
         isReached ? `${themeConfig.activeCardClass} opacity-100` : 'opacity-85 hover:opacity-100',
       ]"

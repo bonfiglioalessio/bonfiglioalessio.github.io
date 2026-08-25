@@ -136,7 +136,7 @@
     const container = mobileExperienceRef.value
     const scrollLeft = container.scrollLeft
     const cardWidth = container.children[0]?.clientWidth || 300
-    const gap = 24
+    const gap = 20
     const newIdx = Math.round(scrollLeft / (cardWidth + gap))
     if (newIdx >= 0 && newIdx < careerMissionLog.length && newIdx !== activeMissionIndex.value) {
       activeMissionIndex.value = newIdx
@@ -175,22 +175,20 @@
   <section
     id="experience"
     ref="experienceSectionRef"
-    class="career-space-sector w-screen relative left-1/2 -translate-x-1/2 py-8 sm:py-10 lg:py-12 overflow-hidden select-none transition-colors duration-1000 ease-out scroll-mt-20"
+    class="w-screen relative left-1/2 -translate-x-1/2 py-20 sm:py-24 lg:py-28 overflow-hidden select-none transition-colors duration-1000 ease-out scroll-mt-20"
   >
-    <!-- Cosmic Smoke / Cloud Nebula Transition Drift at Top -->
-    <div
-      class="absolute -top-10 inset-x-0 h-36 bg-gradient-to-b from-transparent via-emerald-500/10 to-transparent blur-3xl pointer-events-none"
-    />
-    <div
-      class="absolute -top-14 left-1/3 -translate-x-1/2 w-[700px] h-[180px] rounded-full bg-lime-400/12 blur-[90px] pointer-events-none"
-    />
+    <!-- Dedicated Ethereal Space Backdrop Layer (170px soft vertical cloud feather) -->
+    <div class="absolute -top-10 -bottom-10 inset-x-0 career-space-backdrop pointer-events-none" />
 
-    <!-- Deep Space Atmospheric Nebula Glows -->
+    <!-- Volumetric Cosmic Smoke / Cloud Nebulas -->
     <div
-      class="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full bg-cyan-500/10 blur-[140px] pointer-events-none"
+      class="absolute -top-10 inset-x-0 h-56 bg-gradient-to-b from-transparent via-emerald-500/10 to-transparent blur-3xl pointer-events-none"
     />
     <div
-      class="absolute bottom-1/3 right-1/4 translate-x-1/2 translate-y-1/2 w-[650px] h-[380px] rounded-full bg-emerald-500/10 blur-[150px] pointer-events-none"
+      class="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[450px] rounded-full bg-cyan-500/10 blur-[150px] pointer-events-none"
+    />
+    <div
+      class="absolute bottom-1/3 right-1/4 translate-x-1/2 translate-y-1/2 w-[700px] h-[400px] rounded-full bg-emerald-500/10 blur-[160px] pointer-events-none"
     />
 
     <!-- Inner Content Stage (Aligned with Main Page Container Max-W-7xl) -->
@@ -242,13 +240,13 @@
           <!-- Middle: Horizontal Swipeable Experience Cards with Scroll Snap (Edge-to-Edge bleed & unclipped vertical glow buffer) -->
           <div
             ref="mobileExperienceRef"
-            class="flex overflow-x-auto snap-x snap-mandatory gap-5 -mx-6 sm:-mx-8 px-6 sm:px-8 -my-3 pt-5 pb-7 no-scrollbar"
+            class="flex overflow-x-auto snap-x snap-mandatory gap-5 -mx-6 sm:-mx-8 px-6 sm:px-8 -my-4 pt-6 pb-8 no-scrollbar items-stretch"
             @scroll.passive="handleMobileScroll"
           >
             <div
               v-for="(experience, idx) in careerMissionLog"
               :key="experience.id"
-              class="w-[85vw] max-w-[340px] shrink-0 snap-center flex flex-col"
+              class="w-[85vw] max-w-[340px] shrink-0 snap-center flex flex-col h-full self-stretch"
             >
               <ExperienceCard
                 :experience="experience"
@@ -324,7 +322,7 @@
       <div class="hidden lg:block relative pl-7 sm:pl-9 lg:pl-10">
         <!-- Continuous Full-Height Left Vertical Rail Assembly (Clean, seamless straight rail from top to bottom) -->
         <div
-          class="absolute -top-8 sm:-top-10 lg:-top-12 -bottom-8 sm:-bottom-10 lg:-bottom-12 left-0 w-[2px] pointer-events-none"
+          class="absolute -top-20 sm:-top-24 lg:-top-28 -bottom-20 sm:-bottom-24 lg:-bottom-28 left-0 w-[2px] pointer-events-none"
         >
           <!-- Base Static Track Line spanning entire sector -->
           <div class="w-full h-full bg-lime-400/20 rounded-full" />
@@ -365,34 +363,38 @@
 </template>
 
 <style scoped lang="scss">
-  .career-space-sector {
+  .career-space-backdrop {
     background: radial-gradient(
       ellipse at 50% 30%,
       rgba(14, 32, 54, 0.75) 0%,
       rgba(7, 15, 28, 0.94) 55%,
       rgba(3, 7, 18, 0.98) 100%
     );
-    // Smooth compact feather mask
+    // Smooth generous 160px ethereal smoke/cloud feather mask
     mask-image: linear-gradient(
       to bottom,
       transparent 0%,
-      rgba(0, 0, 0, 0.3) 20px,
-      rgba(0, 0, 0, 0.85) 50px,
-      black 80px,
-      black calc(100% - 80px),
-      rgba(0, 0, 0, 0.85) calc(100% - 50px),
-      rgba(0, 0, 0, 0.3) calc(100% - 20px),
+      rgba(0, 0, 0, 0.05) 30px,
+      rgba(0, 0, 0, 0.3) 70px,
+      rgba(0, 0, 0, 0.75) 120px,
+      black 170px,
+      black calc(100% - 170px),
+      rgba(0, 0, 0, 0.75) calc(100% - 120px),
+      rgba(0, 0, 0, 0.3) calc(100% - 70px),
+      rgba(0, 0, 0, 0.05) calc(100% - 30px),
       transparent 100%
     );
     -webkit-mask-image: linear-gradient(
       to bottom,
       transparent 0%,
-      rgba(0, 0, 0, 0.3) 20px,
-      rgba(0, 0, 0, 0.85) 50px,
-      black 80px,
-      black calc(100% - 80px),
-      rgba(0, 0, 0, 0.85) calc(100% - 50px),
-      rgba(0, 0, 0, 0.3) calc(100% - 20px),
+      rgba(0, 0, 0, 0.05) 30px,
+      rgba(0, 0, 0, 0.3) 70px,
+      rgba(0, 0, 0, 0.75) 120px,
+      black 170px,
+      black calc(100% - 170px),
+      rgba(0, 0, 0, 0.75) calc(100% - 120px),
+      rgba(0, 0, 0, 0.3) calc(100% - 70px),
+      rgba(0, 0, 0, 0.05) calc(100% - 30px),
       transparent 100%
     );
   }

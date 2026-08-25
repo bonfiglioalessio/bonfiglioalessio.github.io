@@ -74,32 +74,29 @@
 <template>
   <section
     id="stack"
-    class="tech-constellation-sector w-screen relative left-1/2 -translate-x-1/2 py-8 sm:py-10 lg:py-12 overflow-hidden select-none transition-colors duration-1000 ease-out scroll-mt-20"
+    class="w-screen relative left-1/2 -translate-x-1/2 py-20 sm:py-24 lg:py-28 overflow-hidden select-none transition-colors duration-1000 ease-out scroll-mt-20"
   >
-    <!-- Cosmic Smoke / Cloud Nebula Transition Drift at Top (Hero to Stack) -->
+    <!-- Dedicated Ethereal Space Backdrop & Grid Layer (Generous 160px soft vertical cloud feather) -->
     <div
-      class="absolute -top-10 inset-x-0 h-36 bg-gradient-to-b from-transparent via-sky-500/12 to-transparent blur-3xl pointer-events-none"
-    />
-    <div
-      class="absolute -top-14 left-1/4 -translate-x-1/2 w-[750px] h-[180px] rounded-full bg-cyan-400/15 blur-[90px] pointer-events-none"
-    />
-    <div
-      class="absolute -top-16 right-1/4 translate-x-1/2 w-[650px] h-[180px] rounded-full bg-indigo-500/18 blur-[100px] pointer-events-none"
-    />
+      class="absolute -top-10 -bottom-10 inset-x-0 tech-constellation-backdrop pointer-events-none"
+    >
+      <!-- Subtle Cybernetic Constellation Background Lattice Grid inside masked backdrop -->
+      <div class="absolute inset-0 constellation-grid opacity-25" />
+    </div>
 
-    <!-- Distinct Constellation Atmospheric Nebulas (Electric Sky & Deep Indigo Aura) -->
+    <!-- Volumetric Cosmic Smoke / Cloud Nebulas -->
     <div
-      class="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full bg-sky-500/10 blur-[140px] pointer-events-none"
+      class="absolute -top-10 inset-x-0 h-56 bg-gradient-to-b from-transparent via-sky-500/10 to-transparent blur-3xl pointer-events-none"
     />
     <div
-      class="absolute bottom-1/3 right-1/4 translate-x-1/2 translate-y-1/2 w-[650px] h-[380px] rounded-full bg-indigo-500/10 blur-[150px] pointer-events-none"
+      class="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[450px] rounded-full bg-sky-500/12 blur-[150px] pointer-events-none"
     />
-
-    <!-- Subtle Cybernetic Constellation Background Lattice Grid -->
-    <div class="absolute inset-0 constellation-grid opacity-25 pointer-events-none" />
+    <div
+      class="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[750px] h-[400px] rounded-full bg-indigo-500/12 blur-[160px] pointer-events-none"
+    />
 
     <!-- Inner Content Stage (Aligned with Main Page Container Max-W-7xl) -->
-    <div class="w-full max-w-7xl mx-auto px-6 sm:px-8 relative z-10 space-y-6 sm:space-y-8">
+    <div class="w-full max-w-7xl mx-auto px-6 sm:px-8 relative z-10 space-y-8 sm:space-y-10">
       <!-- Section Header -->
       <SectionHeader
         section-number="01"
@@ -110,9 +107,9 @@
 
       <!-- ================= MOBILE VIEW: Category Filter + Vertical Columned Cards (< lg) ================= -->
       <div class="lg:hidden space-y-5 pt-1">
-        <!-- Category Filter Pills with Spectrum Colors -->
+        <!-- Category Filter Pills with Spectrum Colors (Edge-to-Edge) -->
         <div
-          class="flex items-center gap-2.5 overflow-x-auto no-scrollbar pb-1 -mx-4 px-4 sm:mx-0 sm:px-0"
+          class="flex items-center gap-2.5 overflow-x-auto no-scrollbar pb-1 -mx-6 sm:-mx-8 px-6 sm:px-8"
         >
           <button
             v-for="(cluster, idx) in allClusters"
@@ -163,7 +160,7 @@
       </div>
 
       <!-- ================= DESKTOP VIEW: Pristine 3-Column Engineering Grid (>= lg) ================= -->
-      <div class="hidden lg:block space-y-6 sm:space-y-8">
+      <div class="hidden lg:block space-y-8 sm:space-y-10">
         <!-- Top: 3-Column Core Engineering Clusters Grid with Spectrum Accents -->
         <div class="grid grid-cols-3 gap-6 pt-1">
           <div
@@ -228,34 +225,38 @@
 </template>
 
 <style scoped lang="scss">
-  .tech-constellation-sector {
+  .tech-constellation-backdrop {
     background: radial-gradient(
       ellipse at 50% 35%,
       rgba(8, 26, 48, 0.78) 0%,
       rgba(4, 13, 26, 0.94) 55%,
       rgba(2, 6, 16, 0.98) 100%
     );
-    // Smooth compact feather mask
+    // Smooth generous 160px ethereal smoke/cloud feather mask
     mask-image: linear-gradient(
       to bottom,
       transparent 0%,
-      rgba(0, 0, 0, 0.3) 20px,
-      rgba(0, 0, 0, 0.85) 50px,
-      black 80px,
-      black calc(100% - 80px),
-      rgba(0, 0, 0, 0.85) calc(100% - 50px),
-      rgba(0, 0, 0, 0.3) calc(100% - 20px),
+      rgba(0, 0, 0, 0.05) 30px,
+      rgba(0, 0, 0, 0.3) 70px,
+      rgba(0, 0, 0, 0.75) 120px,
+      black 170px,
+      black calc(100% - 170px),
+      rgba(0, 0, 0, 0.75) calc(100% - 120px),
+      rgba(0, 0, 0, 0.3) calc(100% - 70px),
+      rgba(0, 0, 0, 0.05) calc(100% - 30px),
       transparent 100%
     );
     -webkit-mask-image: linear-gradient(
       to bottom,
       transparent 0%,
-      rgba(0, 0, 0, 0.3) 20px,
-      rgba(0, 0, 0, 0.85) 50px,
-      black 80px,
-      black calc(100% - 80px),
-      rgba(0, 0, 0, 0.85) calc(100% - 50px),
-      rgba(0, 0, 0, 0.3) calc(100% - 20px),
+      rgba(0, 0, 0, 0.05) 30px,
+      rgba(0, 0, 0, 0.3) 70px,
+      rgba(0, 0, 0, 0.75) 120px,
+      black 170px,
+      black calc(100% - 170px),
+      rgba(0, 0, 0, 0.75) calc(100% - 120px),
+      rgba(0, 0, 0, 0.3) calc(100% - 70px),
+      rgba(0, 0, 0, 0.05) calc(100% - 30px),
       transparent 100%
     );
   }

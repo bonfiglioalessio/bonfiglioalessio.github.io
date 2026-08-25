@@ -92,7 +92,7 @@
     const container = mobileCarouselRef.value
     const scrollLeft = container.scrollLeft
     const cardWidth = container.children[0]?.clientWidth || 300
-    const gap = 24
+    const gap = 20
     const newIdx = Math.round(scrollLeft / (cardWidth + gap))
     if (newIdx >= 0 && newIdx < selectedWork.length && newIdx !== activeProjectIndex.value) {
       activeProjectIndex.value = newIdx
@@ -119,29 +119,26 @@
 <template>
   <section
     id="projects"
-    class="projects-space-sector w-screen relative left-1/2 -translate-x-1/2 py-8 sm:py-10 lg:py-12 overflow-hidden select-none transition-colors duration-1000 ease-out scroll-mt-20"
+    class="w-screen relative left-1/2 -translate-x-1/2 py-20 sm:py-24 lg:py-28 overflow-hidden select-none transition-colors duration-1000 ease-out scroll-mt-20"
   >
-    <!-- Cosmic Smoke / Cloud Nebula Transition Drift at Top -->
+    <!-- Dedicated Ethereal Space Backdrop Layer (170px soft vertical cloud feather) -->
     <div
-      class="absolute -top-10 inset-x-0 h-36 bg-gradient-to-b from-transparent via-lime-500/10 to-transparent blur-3xl pointer-events-none"
-    />
-    <div
-      class="absolute -top-14 left-1/4 -translate-x-1/2 w-[700px] h-[180px] rounded-full bg-lime-400/10 blur-[90px] pointer-events-none"
-    />
-    <div
-      class="absolute -top-16 right-1/4 translate-x-1/2 w-[650px] h-[180px] rounded-full bg-cyan-500/10 blur-[100px] pointer-events-none"
+      class="absolute -top-10 -bottom-10 inset-x-0 projects-space-backdrop pointer-events-none"
     />
 
-    <!-- Deep Space Atmospheric Nebula Glows -->
+    <!-- Volumetric Cosmic Smoke / Cloud Nebulas -->
     <div
-      class="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full bg-lime-500/10 blur-[140px] pointer-events-none"
+      class="absolute -top-10 inset-x-0 h-56 bg-gradient-to-b from-transparent via-lime-500/10 to-transparent blur-3xl pointer-events-none"
     />
     <div
-      class="absolute bottom-1/3 right-1/4 translate-x-1/2 translate-y-1/2 w-[650px] h-[380px] rounded-full bg-emerald-500/10 blur-[150px] pointer-events-none"
+      class="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[450px] rounded-full bg-lime-500/10 blur-[150px] pointer-events-none"
+    />
+    <div
+      class="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[700px] h-[400px] rounded-full bg-emerald-500/10 blur-[160px] pointer-events-none"
     />
 
     <!-- Inner Content Stage (Aligned with Main Page Container Max-W-7xl) -->
-    <div class="w-full max-w-7xl mx-auto px-6 sm:px-8 relative z-10 space-y-6 sm:space-y-8">
+    <div class="w-full max-w-7xl mx-auto px-6 sm:px-8 relative z-10 space-y-8 sm:space-y-10">
       <!-- Section Header with Accent-Highlighted [+] inspect diff -->
       <SectionHeader section-number="02" title="Selected Work" status-badge="● 4 SELECTED PROJECTS">
         <template #description>
@@ -191,16 +188,16 @@
           </div>
         </div>
 
-        <!-- Horizontal Swipeable Project Cards Carousel with Themed Colors (Edge-to-Edge bleed & unclipped vertical glow buffer) -->
+        <!-- Horizontal Swipeable Project Cards Carousel with Themed Colors (Edge-to-Edge & unclipped vertical glow buffer) -->
         <div
           ref="mobileCarouselRef"
-          class="flex overflow-x-auto snap-x snap-mandatory gap-5 -mx-6 sm:-mx-8 px-6 sm:px-8 -my-3 pt-5 pb-7 no-scrollbar"
+          class="flex overflow-x-auto snap-x snap-mandatory gap-5 -mx-6 sm:-mx-8 px-6 sm:px-8 -my-4 pt-6 pb-8 no-scrollbar items-stretch"
           @scroll.passive="handleCarouselScroll"
         >
           <div
             v-for="(project, idx) in selectedWork"
             :key="project.id"
-            class="w-[85vw] max-w-[340px] shrink-0 snap-center flex flex-col"
+            class="w-[85vw] max-w-[340px] shrink-0 snap-center flex flex-col h-full self-stretch"
           >
             <ProjectCard :project="project" :theme="getProjectTheme(idx)" />
           </div>
@@ -254,34 +251,38 @@
 </template>
 
 <style scoped lang="scss">
-  .projects-space-sector {
+  .projects-space-backdrop {
     background: radial-gradient(
       ellipse at 50% 30%,
       rgba(10, 26, 42, 0.72) 0%,
       rgba(5, 13, 24, 0.92) 55%,
       rgba(2, 6, 16, 0.98) 100%
     );
-    // Smooth compact feather mask
+    // Smooth generous 160px ethereal smoke/cloud feather mask
     mask-image: linear-gradient(
       to bottom,
       transparent 0%,
-      rgba(0, 0, 0, 0.3) 20px,
-      rgba(0, 0, 0, 0.85) 50px,
-      black 80px,
-      black calc(100% - 80px),
-      rgba(0, 0, 0, 0.85) calc(100% - 50px),
-      rgba(0, 0, 0, 0.3) calc(100% - 20px),
+      rgba(0, 0, 0, 0.05) 30px,
+      rgba(0, 0, 0, 0.3) 70px,
+      rgba(0, 0, 0, 0.75) 120px,
+      black 170px,
+      black calc(100% - 170px),
+      rgba(0, 0, 0, 0.75) calc(100% - 120px),
+      rgba(0, 0, 0, 0.3) calc(100% - 70px),
+      rgba(0, 0, 0, 0.05) calc(100% - 30px),
       transparent 100%
     );
     -webkit-mask-image: linear-gradient(
       to bottom,
       transparent 0%,
-      rgba(0, 0, 0, 0.3) 20px,
-      rgba(0, 0, 0, 0.85) 50px,
-      black 80px,
-      black calc(100% - 80px),
-      rgba(0, 0, 0, 0.85) calc(100% - 50px),
-      rgba(0, 0, 0, 0.3) calc(100% - 20px),
+      rgba(0, 0, 0, 0.05) 30px,
+      rgba(0, 0, 0, 0.3) 70px,
+      rgba(0, 0, 0, 0.75) 120px,
+      black 170px,
+      black calc(100% - 170px),
+      rgba(0, 0, 0, 0.75) calc(100% - 120px),
+      rgba(0, 0, 0, 0.3) calc(100% - 70px),
+      rgba(0, 0, 0, 0.05) calc(100% - 30px),
       transparent 100%
     );
   }
