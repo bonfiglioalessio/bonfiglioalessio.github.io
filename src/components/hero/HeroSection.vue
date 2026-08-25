@@ -163,7 +163,7 @@
       </div>
     </div>
 
-    <!-- Bottom Center Orbital Scroll Flight Prompt -->
+    <!-- Bottom Center Orbital Scroll Flight Prompt (Borderless Clean Typography) -->
     <div
       class="pt-6 sm:pt-8 flex justify-center w-full select-none transition-all duration-700 delay-700 ease-out"
       :class="
@@ -172,7 +172,7 @@
     >
       <a
         href="#stack"
-        class="group inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-dark-950/80 border border-lime-400/20 hover:border-lime-400/50 text-[11px] font-mono text-slate-400 hover:text-lime-400 transition-all shadow-[0_0_20px_rgba(0,0,0,0.6)] backdrop-blur-md cursor-pointer hover:scale-105 active:scale-95"
+        class="group inline-flex items-center gap-2 text-[11px] font-mono text-slate-400 hover:text-lime-400 transition-all cursor-pointer hover:scale-105 active:scale-95"
       >
         <span class="w-1.5 h-1.5 rounded-full bg-lime-400 animate-ping inline-block" />
         <span class="tracking-wider uppercase font-semibold">SCROLL TO ENTER CONSTELLATION</span>
