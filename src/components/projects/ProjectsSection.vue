@@ -191,10 +191,10 @@
           </div>
         </div>
 
-        <!-- Horizontal Swipeable Project Cards Carousel with Themed Colors (Edge-to-Edge bleed) -->
+        <!-- Horizontal Swipeable Project Cards Carousel with Themed Colors (Edge-to-Edge bleed & unclipped vertical glow buffer) -->
         <div
           ref="mobileCarouselRef"
-          class="flex overflow-x-auto snap-x snap-mandatory gap-5 -mx-6 sm:-mx-8 px-6 sm:px-8 pt-3 pb-5 no-scrollbar"
+          class="flex overflow-x-auto snap-x snap-mandatory gap-5 -mx-6 sm:-mx-8 px-6 sm:px-8 -my-3 pt-5 pb-7 no-scrollbar"
           @scroll.passive="handleCarouselScroll"
         >
           <div

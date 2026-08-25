@@ -239,10 +239,10 @@
             </div>
           </div>
 
-          <!-- Middle: Horizontal Swipeable Experience Cards with Scroll Snap (Edge-to-Edge bleed) -->
+          <!-- Middle: Horizontal Swipeable Experience Cards with Scroll Snap (Edge-to-Edge bleed & unclipped vertical glow buffer) -->
           <div
             ref="mobileExperienceRef"
-            class="flex overflow-x-auto snap-x snap-mandatory gap-5 -mx-6 sm:-mx-8 px-6 sm:px-8 pt-3 pb-4 no-scrollbar"
+            class="flex overflow-x-auto snap-x snap-mandatory gap-5 -mx-6 sm:-mx-8 px-6 sm:px-8 -my-3 pt-5 pb-7 no-scrollbar"
             @scroll.passive="handleMobileScroll"
           >
             <div
