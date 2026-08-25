@@ -196,12 +196,12 @@
                 :class="themeConfig.nodeDotClass"
               />
             </span>
-            <h4
+            <h3
               class="font-bold text-sm sm:text-base text-white transition-colors font-mono leading-tight truncate"
               :class="themeConfig.titleHoverClass"
             >
               {{ skill.name }}
-            </h4>
+            </h3>
           </div>
           <p
             class="text-[11px] sm:text-xs text-slate-400 font-mono leading-snug pt-0.5 break-words"
