@@ -1,10 +1,10 @@
 <script setup lang="ts">
-  import { nextTick, onMounted, ref, watch } from 'vue'
+  import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
   import { useCliEngine } from '../../composables/useCliEngine'
   import { useAudioSynth } from '../../composables/useAudioSynth'
   import { use3DTilt } from '../../composables/use3DTilt'
 
-  type TabType = 'terminal' | 'config' | 'skills'
+  type TabType = 'terminal' | 'config'
   const activeTab = ref<TabType>('terminal')
 
   const { entries, currentInput, executeCommand, handleAutoComplete, navigateHistory } =
@@ -15,6 +15,7 @@
   const cockpitRef = ref<HTMLElement | null>(null)
   const terminalScrollRef = ref<HTMLDivElement | null>(null)
   const inputRef = ref<HTMLInputElement | null>(null)
+  let terminalObserver: MutationObserver | null = null
 
   // Gentle 3D Tilt for Satellite Cockpit
   const { transformStyle, handleMouseEnter, handleMouseMove, handleMouseLeave } = use3DTilt(
@@ -46,16 +47,18 @@
   function scrollToBottom() {
     nextTick(() => {
       if (terminalScrollRef.value) {
-        terminalScrollRef.value.scrollTop = terminalScrollRef.value.scrollHeight
+        terminalScrollRef.value.scrollTop = terminalScrollRef.value.scrollHeight + 1000
       }
     })
   }
 
+  // Deep watcher to trigger auto-scroll whenever entries or their contents change
   watch(
-    () => entries.value.length,
+    entries,
     () => {
       scrollToBottom()
     },
+    { deep: true, flush: 'post' },
   )
 
   function handleFormSubmit() {
@@ -89,6 +92,27 @@
 
   onMounted(() => {
     scrollToBottom()
+
+    // MutationObserver guarantees automatic scroll to bottom on every DOM & typewriter text update
+    if (terminalScrollRef.value) {
+      terminalObserver = new MutationObserver(() => {
+        if (terminalScrollRef.value) {
+          terminalScrollRef.value.scrollTop = terminalScrollRef.value.scrollHeight + 1000
+        }
+      })
+      terminalObserver.observe(terminalScrollRef.value, {
+        childList: true,
+        subtree: true,
+        characterData: true,
+      })
+    }
+  })
+
+  onUnmounted(() => {
+    if (terminalObserver) {
+      terminalObserver.disconnect()
+      terminalObserver = null
+    }
   })
 </script>
 
@@ -279,39 +303,42 @@
 
       <!-- Satellite Header & Tab Navigation -->
       <div class="space-y-3 shrink-0 relative z-10">
-        <!-- MacOS Controls & Satellite Antenna Identifier with Vivid Glows -->
-        <div class="flex items-center justify-between border-b border-lime-400/15 pb-2.5 gap-2">
-          <!-- Left: macOS Traffic Lights -->
-          <div class="flex items-center gap-2 shrink-0">
-            <span
-              class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-rose-500 shadow-[0_0_10px_#f43f5e] inline-block"
-            />
-            <span
-              class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-amber-500 shadow-[0_0_10px_#f59e0b] inline-block"
-            />
-            <span
-              class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981] inline-block"
-            />
-          </div>
+        <!-- MacOS Controls & Satellite Title (Left) + Live Telemetry Status (Right) -->
+        <div class="flex items-center justify-between border-b border-lime-400/15 pb-2.5 font-mono">
+          <!-- Left: macOS Traffic Lights + Satellite Identity -->
+          <div class="flex items-center gap-2.5 sm:gap-3 shrink-0">
+            <div class="flex items-center gap-1.5 sm:gap-2">
+              <span
+                class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-rose-500 shadow-[0_0_10px_#f43f5e] inline-block"
+              />
+              <span
+                class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-amber-500 shadow-[0_0_10px_#f59e0b] inline-block"
+              />
+              <span
+                class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981] inline-block"
+              />
+            </div>
 
-          <!-- Center: Satellite Identity -->
-          <div
-            class="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-slate-300 font-mono truncate"
-          >
-            <span
-              class="text-lime-400 font-bold drop-shadow-[0_0_8px_#e2f161] flex items-center gap-1"
-            >
-              🛰️ satellite.sh
-            </span>
-            <span class="truncate text-slate-400">bonfiglio@orbital-node</span>
+            <div class="flex items-center gap-1.5 select-none">
+              <span class="text-xs">🛰️</span>
+              <span
+                class="text-[11px] sm:text-xs font-bold text-lime-400 tracking-wide drop-shadow-[0_0_8px_#e2f161]"
+              >
+                satellite.sh
+              </span>
+            </div>
           </div>
 
           <!-- Right: Live Telemetry Status -->
-          <div class="flex items-center gap-1.5 text-[10px] font-mono text-emerald-400 shrink-0">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span class="hidden sm:inline">SYNCHRONIZED</span>
-            <span class="text-lime-400/40">|</span>
-            <span class="text-slate-400">60FPS</span>
+          <div
+            class="flex items-center gap-1.5 text-[10px] font-mono text-emerald-400 shrink-0 select-none"
+          >
+            <span
+              class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse"
+            />
+            <span class="font-bold tracking-tight">SYNCHRONIZED</span>
+            <span class="text-lime-400/30">|</span>
+            <span class="text-slate-400 font-mono">120HZ</span>
           </div>
         </div>
 
@@ -340,18 +367,6 @@
             @click="setTab('config')"
           >
             alessio.config.ts
-          </button>
-          <button
-            type="button"
-            class="text-[10px] sm:text-[11px] font-mono px-3 py-1 rounded-lg transition-all cursor-pointer shrink-0 whitespace-nowrap"
-            :class="
-              activeTab === 'skills'
-                ? 'bg-lime-400/10 text-lime-400 border border-lime-400 shadow-[0_0_12px_rgba(226,241,97,0.45)] font-bold'
-                : 'bg-transparent text-slate-400 hover:text-slate-200 border border-transparent hover:border-lime-400/20'
-            "
-            @click="setTab('skills')"
-          >
-            skills.json
           </button>
         </div>
       </div>
@@ -388,8 +403,14 @@
               {{ entry.text }}
             </div>
 
-            <!-- HTML Output -->
-            <div v-else-if="entry.html" class="leading-snug font-mono" v-html="entry.html" />
+            <!-- HTML Output with progressive typewriter cursor -->
+            <div v-else-if="entry.html" class="leading-snug font-mono flex items-baseline gap-1">
+              <div v-html="entry.html" />
+              <span
+                v-if="entry.isStreaming"
+                class="inline-block w-1.5 h-3 bg-lime-400 animate-pulse shrink-0 ml-0.5"
+              />
+            </div>
 
             <!-- Plain Output -->
             <div v-else class="text-slate-300 leading-snug font-mono">
@@ -408,7 +429,7 @@
             ref="inputRef"
             v-model="currentInput"
             type="text"
-            placeholder="type command (e.g. skills, cv, projects)..."
+            placeholder="type command (e.g. skills, projects, experience, contact)..."
             autocomplete="off"
             autocorrect="off"
             autocapitalize="off"
@@ -442,27 +463,8 @@
   origin: <span class="text-lime-300">"Sanremo, IT ('98)"</span>,
   experience: <span class="text-emerald-400">"6+ Years in Production"</span>,
   coreStack: [<span class="text-emerald-400">"Vue 3"</span>, <span class="text-emerald-400">"TypeScript"</span>, <span class="text-emerald-400">"React"</span>, <span class="text-emerald-400">"Next.js"</span>, <span class="text-emerald-400">"Tailwind"</span>],
-  focus: <span class="text-lime-400">"60fps Pixel-Perfect &amp; AI-Augmented Workflows"</span>
+  focus: <span class="text-lime-400">"120Hz Pixel-Perfect &amp; AI-Augmented Workflows"</span>
 };</code></pre>
-      </div>
-
-      <!-- Tab 3: Skills Tab -->
-      <div
-        v-show="activeTab === 'skills'"
-        class="flex-1 overflow-y-auto bg-dark-950/70 border border-lime-400/15 rounded-2xl p-3 sm:p-4 my-2 font-mono text-[10px] sm:text-xs text-slate-300 leading-relaxed no-scrollbar relative z-10"
-      >
-        <pre class="whitespace-pre overflow-x-auto"><code>{
-  <span class="text-lime-400">"core"</span>: [
-    <span class="text-lime-300">"Vue 3"</span>, <span class="text-lime-300">"TypeScript"</span>, <span class="text-lime-300">"React"</span>, <span class="text-lime-300">"Next.js"</span>, <span class="text-lime-300">"Angular"</span>
-  ],
-  <span class="text-lime-400">"styling"</span>: [
-    <span class="text-lime-300">"TailwindCSS"</span>, <span class="text-lime-300">"SCSS"</span>, <span class="text-lime-300">"Design Systems"</span>
-  ],
-  <span class="text-lime-400">"aiEngineering"</span>: [
-    <span class="text-lime-300">"Agentic Workflows"</span>, <span class="text-lime-300">"Multi-Agent Prompting"</span>, <span class="text-lime-300">"LLM Tooling"</span>
-  ],
-  <span class="text-lime-400">"performance"</span>: <span class="text-emerald-400">"High Concurrency &amp; Low Latency UI"</span>
-}</code></pre>
       </div>
 
       <!-- Footer Quick Action Chips: Interactive Orbital Telemetry Actions -->
@@ -501,27 +503,12 @@
           </button>
           <button
             type="button"
-            class="text-slate-300 hover:text-lime-400 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-slate-700 transition-all active:scale-95"
-            @click="runQuickAction('cv')"
-          >
-            cv.md
-          </button>
-          <button
-            type="button"
-            class="text-slate-300 hover:text-lime-400 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-slate-700 transition-all active:scale-95"
-            @click="runQuickAction('supernova')"
-          >
-            spark
-          </button>
-          <button
-            type="button"
             class="text-slate-500 hover:text-slate-300 cursor-pointer bg-dark-950 px-1.5 py-0.5 rounded-md border border-slate-800 transition-all active:scale-95"
             @click="runQuickAction('clear')"
           >
             clear
           </button>
         </div>
-        <span class="text-slate-500 shrink-0 hidden sm:inline">orbital.zsh</span>
       </div>
     </div>
   </div>
