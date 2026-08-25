@@ -236,20 +236,24 @@
 
         <!-- Constellation Pagination Indicator Track & Capsule Pills -->
         <div class="flex flex-col items-center justify-center gap-2 pt-2 select-none">
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-1">
             <button
               v-for="(cluster, idx) in allClusters"
               :key="cluster.clusterNumber"
               type="button"
-              class="h-1.5 rounded-full transition-all duration-300 cursor-pointer"
-              :class="
-                activeClusterIndex === idx
-                  ? getPaginationActiveClass(cluster.clusterNumber)
-                  : 'w-2 bg-slate-700 hover:bg-slate-500'
-              "
+              class="w-6 h-6 flex items-center justify-center cursor-pointer focus:outline-none"
               :aria-label="`Go to constellation ${cluster.clusterNumber}`"
               @click="selectCluster(idx)"
-            />
+            >
+              <span
+                class="h-1.5 rounded-full transition-all duration-300 pointer-events-none"
+                :class="
+                  activeClusterIndex === idx
+                    ? getPaginationActiveClass(cluster.clusterNumber)
+                    : 'w-2 bg-slate-700 hover:bg-slate-500'
+                "
+              />
+            </button>
           </div>
           <span class="text-[9px] font-mono text-slate-500 uppercase tracking-wider">
             SECTOR {{ activeClusterIndex + 1 }} OF 4 // SWIPE TO EXPLORE
