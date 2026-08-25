@@ -141,21 +141,35 @@
 
 <template>
   <header
-    class="fixed top-0 inset-x-0 z-50 transition-all duration-500 ease-out shrink-0 bg-transparent border-none shadow-none"
+    class="fixed top-0 inset-x-0 z-50 transition-all duration-500 ease-out shrink-0"
     :class="[
       isContactVisible
         ? '-translate-y-full opacity-0 pointer-events-none'
         : 'translate-y-0 opacity-100',
+      isScrolled
+        ? 'bg-dark-950/40 backdrop-blur-md border-b border-lime-400/10 shadow-[0_8px_32px_rgba(0,0,0,0.6)]'
+        : 'bg-transparent border-b border-transparent shadow-none',
     ]"
   >
-    <!-- Topmost Marquee Ticker: Transparent & Borderless -->
-    <MarqueeTicker />
+    <!-- Topmost Marquee Ticker: Disappears on scroll with smooth transition -->
+    <transition
+      enter-active-class="transition-all duration-300 ease-out"
+      enter-from-class="-translate-y-full opacity-0 max-h-0"
+      enter-to-class="translate-y-0 opacity-100 max-h-10"
+      leave-active-class="transition-all duration-300 ease-in"
+      leave-from-class="translate-y-0 opacity-100 max-h-10"
+      leave-to-class="-translate-y-full opacity-0 max-h-0"
+    >
+      <div v-show="!isScrolled" class="overflow-hidden transition-all duration-300">
+        <MarqueeTicker />
+      </div>
+    </transition>
 
-    <!-- Navbar Container: Transparent & Borderless -->
+    <!-- Navbar Container -->
     <AppContainer size="default">
       <div
         class="flex items-center justify-between transition-all duration-300 ease-out"
-        :class="isScrolled ? 'h-11 sm:h-12' : 'h-14 sm:h-16'"
+        :class="isScrolled ? 'h-12 min-h-[3rem]' : 'h-14 sm:h-16'"
       >
         <!-- Brand Logo -->
         <a
