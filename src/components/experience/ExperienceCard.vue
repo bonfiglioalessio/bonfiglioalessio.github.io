@@ -42,8 +42,7 @@
       case 'white':
         return {
           activeCardClass: 'active-timeline-card-white',
-          activeBorderStroke: '#ffffff',
-          activeStrokeGlowClass: 'active-card-border-stroke-white',
+          spotlightColor: 'rgba(255, 255, 255, 0.12)',
           connectorActive:
             'bg-gradient-to-r from-white to-white/50 shadow-[0_0_12px_#ffffff] opacity-100',
           connectorInactive: 'bg-white/15 opacity-60 group-hover:opacity-100',
@@ -60,8 +59,7 @@
       case 'emerald':
         return {
           activeCardClass: 'active-timeline-card-emerald',
-          activeBorderStroke: '#34d399',
-          activeStrokeGlowClass: 'active-card-border-stroke-emerald',
+          spotlightColor: 'rgba(52, 211, 153, 0.14)',
           connectorActive:
             'bg-gradient-to-r from-emerald-400 to-emerald-400/50 shadow-[0_0_12px_#34d399] opacity-100',
           connectorInactive: 'bg-emerald-400/15 opacity-60 group-hover:opacity-100',
@@ -79,8 +77,7 @@
       default:
         return {
           activeCardClass: 'active-timeline-card-lime',
-          activeBorderStroke: '#e2f161',
-          activeStrokeGlowClass: 'active-card-border-stroke-lime',
+          spotlightColor: 'rgba(226, 241, 97, 0.14)',
           connectorActive:
             'bg-gradient-to-r from-lime-400 to-lime-400/50 shadow-[0_0_12px_#e2f161] opacity-100',
           connectorInactive: 'bg-lime-400/15 opacity-60 group-hover:opacity-100',
@@ -144,34 +141,17 @@
       rounded="2xl"
       :hud-reticles="true"
       :tilt="false"
+      :spotlight="true"
+      :spotlight-color="themeConfig.spotlightColor"
+      :shine="true"
       :float-animation="floatAnimation"
       class="select-none space-y-4 w-full h-full flex flex-col justify-between relative overflow-hidden transition-all duration-500 backdrop-blur-xl"
       :class="[
         isFocused
-          ? `${themeConfig.activeCardClass} opacity-100 scale-100 shadow-[0_0_35px_rgba(0,0,0,0.6)]`
+          ? `${themeConfig.activeCardClass} opacity-100 scale-100`
           : 'opacity-35 scale-[0.985] blur-[0.2px] hover:opacity-100 hover:scale-100 hover:blur-none',
       ]"
     >
-      <!-- Permanent SVG Neon Perimeter (Themed) -->
-      <svg
-        class="absolute inset-0 w-full h-full pointer-events-none z-10 overflow-visible rounded-2xl transition-opacity duration-300"
-        :class="isFocused ? 'opacity-100' : 'opacity-0'"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <rect
-          x="1"
-          y="1"
-          width="calc(100% - 2px)"
-          height="calc(100% - 2px)"
-          rx="15"
-          fill="none"
-          :stroke="themeConfig.activeBorderStroke"
-          stroke-width="1.5"
-          class="active-card-border-stroke"
-          :class="themeConfig.activeStrokeGlowClass"
-        />
-      </svg>
-
       <!-- Header: Mission Number, Period & Stable Badge Slot -->
       <div
         class="flex items-center justify-between gap-2 border-b border-lime-400/10 pb-3 flex-wrap relative z-20"
