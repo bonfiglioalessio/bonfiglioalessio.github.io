@@ -1,14 +1,20 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { computed, ref } from 'vue'
   import type { Project } from '../../types/portfolio'
   import { useAudioSynth } from '../../composables/useAudioSynth'
   import AppCard from '../ui/AppCard.vue'
   import AppBadge from '../ui/AppBadge.vue'
 
-  defineProps<{
+  interface Props {
     project: Project
+    theme?: 'lime' | 'white' | 'emerald' | 'cyan'
     floatAnimation?: string
-  }>()
+  }
+
+  const props = withDefaults(defineProps<Props>(), {
+    theme: 'lime',
+    floatAnimation: '',
+  })
 
   const { playDiffToggle, playClick } = useAudioSynth()
   const isDiffOpen = ref(false)
@@ -17,6 +23,72 @@
     isDiffOpen.value = !isDiffOpen.value
     playDiffToggle(isDiffOpen.value)
   }
+
+  const themeConfig = computed(() => {
+    switch (props.theme) {
+      case 'white':
+        return {
+          badgeVariant: 'white' as const,
+          numberClass: 'text-white drop-shadow-[0_0_12px_#ffffff]',
+          titleClass: 'text-white group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.7)]',
+          diffBtnDefault:
+            'bg-dark-950/90 border-white/40 text-white hover:border-white hover:shadow-[0_0_10px_rgba(255,255,255,0.4)]',
+          diffBorderClass: 'border-white/25 ring-white/20',
+          diffDividerClass: 'bg-white/15',
+          bulletClass: 'text-white/60',
+          visitBtnClass:
+            'bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.35)] hover:shadow-[0_0_25px_rgba(255,255,255,0.65)]',
+          activeSessionText: 'text-white',
+          activeSessionPing: 'bg-white',
+        }
+      case 'emerald':
+        return {
+          badgeVariant: 'emerald' as const,
+          numberClass: 'text-emerald-400 drop-shadow-[0_0_12px_#34d399]',
+          titleClass: 'text-emerald-400 group-hover:drop-shadow-[0_0_12px_rgba(52,211,153,0.7)]',
+          diffBtnDefault:
+            'bg-dark-950/90 border-emerald-400/40 text-emerald-400 hover:border-emerald-400 hover:shadow-[0_0_10px_rgba(52,211,153,0.4)]',
+          diffBorderClass: 'border-emerald-400/25 ring-emerald-400/20',
+          diffDividerClass: 'bg-emerald-400/15',
+          bulletClass: 'text-emerald-400/60',
+          visitBtnClass:
+            'bg-emerald-400 text-black shadow-[0_0_15px_rgba(52,211,153,0.35)] hover:shadow-[0_0_25px_rgba(52,211,153,0.65)]',
+          activeSessionText: 'text-emerald-400',
+          activeSessionPing: 'bg-emerald-400',
+        }
+      case 'cyan':
+        return {
+          badgeVariant: 'cyan' as const,
+          numberClass: 'text-sky-400 drop-shadow-[0_0_12px_#38bdf8]',
+          titleClass: 'text-sky-400 group-hover:drop-shadow-[0_0_12px_rgba(56,189,248,0.7)]',
+          diffBtnDefault:
+            'bg-dark-950/90 border-sky-400/40 text-sky-400 hover:border-sky-400 hover:shadow-[0_0_10px_rgba(56,189,248,0.4)]',
+          diffBorderClass: 'border-sky-400/25 ring-sky-400/20',
+          diffDividerClass: 'bg-sky-400/15',
+          bulletClass: 'text-sky-400/60',
+          visitBtnClass:
+            'bg-sky-400 text-black shadow-[0_0_15px_rgba(56,189,248,0.35)] hover:shadow-[0_0_25px_rgba(56,189,248,0.65)]',
+          activeSessionText: 'text-sky-400',
+          activeSessionPing: 'bg-sky-400',
+        }
+      case 'lime':
+      default:
+        return {
+          badgeVariant: 'lime' as const,
+          numberClass: 'text-lime-400 drop-shadow-[0_0_12px_#e2f161]',
+          titleClass: 'text-lime-400 group-hover:drop-shadow-[0_0_12px_rgba(226,241,97,0.7)]',
+          diffBtnDefault:
+            'bg-dark-950/90 border-lime-400/40 text-lime-400 hover:border-lime-400 hover:shadow-[0_0_10px_rgba(226,241,97,0.4)]',
+          diffBorderClass: 'border-lime-400/25 ring-lime-400/20',
+          diffDividerClass: 'bg-lime-400/15',
+          bulletClass: 'text-lime-400/60',
+          visitBtnClass:
+            'bg-lime-400 text-black shadow-[0_0_15px_rgba(226,241,97,0.35)] hover:shadow-[0_0_25px_rgba(226,241,97,0.65)]',
+          activeSessionText: 'text-lime-400',
+          activeSessionPing: 'bg-lime-400',
+        }
+    }
+  })
 </script>
 
 <template>
@@ -29,10 +101,10 @@
     class="flex flex-col justify-between group transition-all duration-300 select-none h-full"
   >
     <div class="space-y-4">
-      <!-- Card Top: Badge (Left) & Big Project Number (Right) -->
+      <!-- Card Top: Badge (Left) & Big Themed Project Number (Right) -->
       <div class="flex items-center justify-between gap-2">
         <div class="flex items-center gap-2">
-          <AppBadge variant="lime" class="font-mono text-xs font-bold">
+          <AppBadge :variant="themeConfig.badgeVariant" class="font-mono text-xs font-bold">
             {{ project.badge }}
           </AppBadge>
           <AppBadge v-if="project.typeBadge" variant="dark" class="font-mono text-xs">
@@ -41,7 +113,8 @@
         </div>
 
         <span
-          class="text-lime-400 font-syne font-black text-2xl sm:text-3xl tracking-tight drop-shadow-[0_0_12px_#e2f161]"
+          class="font-syne font-black text-2xl sm:text-3xl tracking-tight"
+          :class="themeConfig.numberClass"
         >
           {{ project.projectNumber }}
         </span>
@@ -50,7 +123,8 @@
       <!-- Title & [+] inspect diff Toggle Row -->
       <div class="flex items-center justify-between gap-3 pt-1 flex-wrap">
         <h3
-          class="text-2xl sm:text-3xl font-extrabold font-syne text-lime-400 group-hover:drop-shadow-[0_0_12px_rgba(226,241,97,0.7)] transition-all"
+          class="text-2xl sm:text-3xl font-extrabold font-syne transition-all"
+          :class="themeConfig.titleClass"
         >
           {{ project.title }}
         </h3>
@@ -63,7 +137,7 @@
           :class="
             isDiffOpen
               ? 'bg-dark-950 border-rose-500/60 text-rose-400 shadow-[0_0_12px_rgba(244,63,94,0.3)]'
-              : 'bg-dark-950/90 border-lime-400/40 text-lime-400 hover:border-lime-400 hover:shadow-[0_0_10px_rgba(226,241,97,0.4)]'
+              : themeConfig.diffBtnDefault
           "
           @click="toggleDiff"
         >
@@ -80,7 +154,8 @@
       <!-- Terminal Git Diff Box (Only visible when Inspect Diff is open) -->
       <div
         v-if="project.diff && isDiffOpen"
-        class="bg-dark-950/95 border border-lime-400/25 rounded-2xl p-4 font-mono text-[11px] sm:text-xs space-y-3 shadow-inner ring-1 ring-lime-400/20 transition-all duration-300 animate-in fade-in zoom-in-95"
+        class="bg-dark-950/95 border rounded-2xl p-4 font-mono text-[11px] sm:text-xs space-y-3 shadow-inner ring-1 transition-all duration-300 animate-in fade-in zoom-in-95"
+        :class="themeConfig.diffBorderClass"
       >
         <!-- Git Diff Command & Add/Del Counts Header -->
         <div class="flex items-start justify-between gap-4 text-slate-400 leading-snug">
@@ -96,7 +171,7 @@
         </div>
 
         <!-- Divider Line -->
-        <div class="h-px bg-lime-400/15 w-full" />
+        <div class="h-px w-full" :class="themeConfig.diffDividerClass" />
 
         <!-- Diff Highlights -->
         <div class="space-y-2 text-emerald-400/95 leading-relaxed text-[11px] sm:text-xs">
@@ -106,7 +181,9 @@
             class="flex items-start gap-2"
           >
             <span class="text-emerald-400 font-bold shrink-0">&plus;</span>
-            <span class="text-emerald-300/90">{{ line.replace(/^\+\s*/, '') }}</span>
+            <span class="text-emerald-300/90">
+              {{ line.replace(/^\+\s*/, '') }}
+            </span>
           </div>
         </div>
       </div>
@@ -120,7 +197,13 @@
       <div class="flex items-center gap-2 flex-wrap font-mono text-xs font-bold text-slate-300">
         <template v-for="(tech, tIdx) in project.stack" :key="tech">
           <span>{{ tech }}</span>
-          <span v-if="tIdx < project.stack.length - 1" class="text-lime-400/60 font-bold">•</span>
+          <span
+            v-if="tIdx < project.stack.length - 1"
+            class="font-bold"
+            :class="themeConfig.bulletClass"
+          >
+            •
+          </span>
         </template>
       </div>
 
@@ -131,7 +214,8 @@
           :href="project.liveUrl"
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-lime-400 text-black font-mono font-bold text-xs shadow-[0_0_15px_rgba(226,241,97,0.35)] hover:shadow-[0_0_25px_rgba(226,241,97,0.65)] hover:scale-105 active:scale-95 transition-all cursor-pointer"
+          class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl font-mono font-bold text-xs hover:scale-105 active:scale-95 transition-all cursor-pointer"
+          :class="themeConfig.visitBtnClass"
           @click="playClick"
         >
           <span>VISIT</span>
@@ -140,9 +224,13 @@
 
         <div
           v-else-if="project.isCurrentSite"
-          class="flex items-center gap-1.5 font-mono text-[11px] text-lime-400 font-bold"
+          class="flex items-center gap-1.5 font-mono text-[11px] font-bold"
+          :class="themeConfig.activeSessionText"
         >
-          <span class="w-2 h-2 rounded-full bg-lime-400 animate-ping inline-block" />
+          <span
+            class="w-2 h-2 rounded-full animate-ping inline-block"
+            :class="themeConfig.activeSessionPing"
+          />
           <span>ACTIVE SESSION</span>
         </div>
 

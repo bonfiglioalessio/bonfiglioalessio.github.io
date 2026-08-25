@@ -9,6 +9,48 @@
   const { selectedWork } = portfolioData
   const { playClick } = useAudioSynth()
 
+  const projectThemes: ('lime' | 'white' | 'emerald' | 'cyan')[] = [
+    'lime',
+    'white',
+    'emerald',
+    'cyan',
+  ]
+
+  function getProjectTheme(index: number): 'lime' | 'white' | 'emerald' | 'cyan' {
+    return projectThemes[index % projectThemes.length]
+  }
+
+  function getMobileProjectBadgeClass(index: number) {
+    const theme = getProjectTheme(index)
+    switch (theme) {
+      case 'white':
+        return 'text-white bg-white/10 border-white/30'
+      case 'emerald':
+        return 'text-emerald-400 bg-emerald-400/10 border-emerald-400/30'
+      case 'cyan':
+        return 'text-sky-400 bg-sky-400/10 border-sky-400/30'
+      case 'lime':
+      default:
+        return 'text-lime-400 bg-lime-400/10 border-lime-400/30'
+    }
+  }
+
+  function getMobilePaginationDotClass(index: number, isActive: boolean) {
+    if (!isActive) return 'w-1.5 bg-slate-700 hover:bg-slate-500'
+    const theme = getProjectTheme(index)
+    switch (theme) {
+      case 'white':
+        return 'w-5 bg-white shadow-[0_0_8px_#ffffff]'
+      case 'emerald':
+        return 'w-5 bg-emerald-400 shadow-[0_0_8px_#34d399]'
+      case 'cyan':
+        return 'w-5 bg-sky-400 shadow-[0_0_8px_#38bdf8]'
+      case 'lime':
+      default:
+        return 'w-5 bg-lime-400 shadow-[0_0_8px_#e2f161]'
+    }
+  }
+
   const floatPatterns = [
     'animate-float-slow',
     'animate-float-delayed',
@@ -16,9 +58,17 @@
     'animate-float-delayed',
   ]
 
-  // Split projects into two columns for the staggered desktop layout
-  const leftProjects = computed(() => selectedWork.filter((_, idx) => idx % 2 === 0))
-  const rightProjects = computed(() => selectedWork.filter((_, idx) => idx % 2 === 1))
+  // Split projects into two columns for the staggered desktop layout with original global indices
+  const leftProjects = computed(() =>
+    selectedWork
+      .map((p, originalIndex) => ({ project: p, originalIndex }))
+      .filter((_, idx) => idx % 2 === 0),
+  )
+  const rightProjects = computed(() =>
+    selectedWork
+      .map((p, originalIndex) => ({ project: p, originalIndex }))
+      .filter((_, idx) => idx % 2 === 1),
+  )
 
   // Mobile carousel tracking
   const mobileCarouselRef = ref<HTMLDivElement | null>(null)
@@ -91,7 +141,8 @@
         >
           <div class="flex items-center gap-2">
             <span
-              class="text-xs font-bold text-lime-400 px-2.5 py-1 rounded-lg bg-lime-400/10 border border-lime-400/30"
+              class="text-xs font-bold px-2.5 py-1 rounded-lg border transition-colors"
+              :class="getMobileProjectBadgeClass(activeProjectIndex)"
             >
               PROJECT 0{{ activeProjectIndex + 1 }} / 0{{ selectedWork.length }}
             </span>
@@ -118,22 +169,22 @@
           </div>
         </div>
 
-        <!-- Horizontal Swipeable Project Cards Carousel with CSS Scroll Snap (Ample Headroom to Prevent Clipping) -->
+        <!-- Horizontal Swipeable Project Cards Carousel with Themed Colors -->
         <div
           ref="mobileCarouselRef"
           class="flex overflow-x-auto snap-x snap-mandatory gap-6 -mx-4 px-4 sm:mx-0 sm:px-0 pt-4 pb-6 no-scrollbar"
           @scroll.passive="handleCarouselScroll"
         >
           <div
-            v-for="project in selectedWork"
+            v-for="(project, idx) in selectedWork"
             :key="project.id"
             class="w-[84vw] max-w-[350px] shrink-0 snap-center flex flex-col"
           >
-            <ProjectCard :project="project" />
+            <ProjectCard :project="project" :theme="getProjectTheme(idx)" />
           </div>
         </div>
 
-        <!-- Mobile Pagination Dots & Swipe Hint -->
+        <!-- Mobile Pagination Dots & Swipe Hint with Spectrum Colors -->
         <div
           class="flex items-center justify-between text-[11px] font-mono text-slate-400 px-1 pt-1"
         >
@@ -145,11 +196,7 @@
               type="button"
               :aria-label="`Jump to project ${dotIdx + 1}`"
               class="h-1.5 rounded-full transition-all duration-200 cursor-pointer focus:outline-none"
-              :class="
-                dotIdx === activeProjectIndex
-                  ? 'w-5 bg-lime-400 shadow-[0_0_8px_#e2f161]'
-                  : 'w-1.5 bg-slate-700 hover:bg-slate-500'
-              "
+              :class="getMobilePaginationDotClass(dotIdx, dotIdx === activeProjectIndex)"
               @click="scrollToProject(dotIdx)"
             />
           </div>
@@ -158,22 +205,24 @@
 
       <!-- ================= DESKTOP VIEW: Staggered 2-Column Responsive Layout (>= lg) ================= -->
       <div class="hidden lg:grid grid-cols-2 gap-6 lg:gap-10 pt-2 items-start">
-        <!-- Column 1: Projects #01 & #03 (Top Aligned) -->
+        <!-- Column 1: Projects #01 & #03 (Top Aligned with Respective Themes) -->
         <div class="space-y-6 lg:space-y-10 flex flex-col">
           <ProjectCard
-            v-for="(project, idx) in leftProjects"
+            v-for="({ project, originalIndex }, idx) in leftProjects"
             :key="project.id"
             :project="project"
+            :theme="getProjectTheme(originalIndex)"
             :float-animation="floatPatterns[(idx * 2) % floatPatterns.length]"
           />
         </div>
 
-        <!-- Column 2: Projects #02 & #04 (Staggered Offset on Desktop) -->
+        <!-- Column 2: Projects #02 & #04 (Staggered Offset on Desktop with Respective Themes) -->
         <div class="space-y-6 lg:space-y-10 lg:mt-16 flex flex-col">
           <ProjectCard
-            v-for="(project, idx) in rightProjects"
+            v-for="({ project, originalIndex }, idx) in rightProjects"
             :key="project.id"
             :project="project"
+            :theme="getProjectTheme(originalIndex)"
             :float-animation="floatPatterns[(idx * 2 + 1) % floatPatterns.length]"
           />
         </div>
