@@ -20,10 +20,10 @@
   const { transformStyle, handleMouseEnter, handleMouseMove, handleMouseLeave } = use3DTilt(
     cockpitRef,
     {
-      maxTilt: 3.5,
+      maxTilt: 3,
       perspective: 1200,
       scale: 1.01,
-      speed: 550,
+      speed: 600,
       glare: false,
     },
   )
@@ -93,39 +93,161 @@
 </script>
 
 <template>
-  <div class="relative w-full max-w-md lg:max-w-xl">
+  <div class="relative w-full max-w-md lg:max-w-xl orbital-satellite-assembly">
     <!-- Atmospheric Cosmic Glow Nebula Aura behind Satellite -->
     <div
-      class="absolute -top-16 -right-16 w-80 h-80 bg-lime-400/25 rounded-full blur-3xl pointer-events-none z-0 animate-glow-pulse"
+      class="absolute -top-16 -right-16 w-80 h-80 bg-lime-400/20 rounded-full blur-3xl pointer-events-none z-0 animate-glow-pulse"
     />
     <div
-      class="absolute -bottom-10 -left-10 w-64 h-64 bg-emerald-500/15 rounded-full blur-2xl pointer-events-none z-0"
+      class="absolute -bottom-10 -left-10 w-64 h-64 bg-cyan-500/15 rounded-full blur-2xl pointer-events-none z-0"
     />
 
-    <!-- Top Floating Satellite Badge -->
+    <!-- Orbital Trajectory Ring Background -->
     <div
-      class="absolute -top-3.5 left-6 z-20 hidden sm:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-dark-950/90 border border-lime-400/30 text-[10px] font-mono text-lime-400 shadow-[0_0_15px_rgba(226,241,97,0.25)] select-none backdrop-blur-md"
+      class="absolute -inset-10 border border-dashed border-sky-400/15 rounded-full pointer-events-none opacity-40 animate-spin-slow"
+    />
+
+    <!-- ================= SATELLITE HARDWARE ATTACHMENTS ================= -->
+
+    <!-- Top Communication Antenna Mast & Pulsing Transponder Beacon -->
+    <div
+      class="absolute -top-10 right-14 flex flex-col items-center pointer-events-none z-20 select-none"
     >
-      <span class="relative flex h-2 w-2">
+      <!-- Glowing Transponder Beacon -->
+      <span class="relative flex h-3 w-3">
         <span
-          class="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-75"
+          class="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-80"
         />
-        <span class="relative inline-flex rounded-full h-2 w-2 bg-lime-400" />
+        <span
+          class="relative inline-flex rounded-full h-3 w-3 bg-lime-400 shadow-[0_0_10px_#e2f161]"
+        />
       </span>
-      <span class="font-bold">ORBITAL NODE // #06</span>
-      <span class="text-slate-500">|</span>
-      <span class="text-slate-300">450KM GEO</span>
+      <!-- Antenna Rod Mast -->
+      <div
+        class="w-0.5 h-7 bg-gradient-to-t from-slate-600 via-slate-400 to-lime-400 shadow-[0_0_6px_rgba(226,241,97,0.5)]"
+      />
+      <!-- Antenna Dish Base Mount -->
+      <div class="w-3.5 h-1.5 bg-slate-700 rounded-t-sm border-t border-lime-400/40" />
     </div>
 
-    <!-- Main Satellite Cockpit Container with Gentle 3D Tilt -->
+    <!-- Left Solar Array Wing Assembly (Desktop) -->
+    <div
+      class="hidden lg:flex flex-col items-center justify-center absolute -left-14 xl:-left-16 top-1/2 -translate-y-1/2 z-0 pointer-events-none select-none transition-transform duration-500 group-hover:scale-105"
+    >
+      <!-- Solar Array Body (Deep space photovoltaic cells with cyan lattice grid) -->
+      <div
+        class="w-10 xl:w-12 h-44 xl:h-48 rounded-xl solar-wing-surface border border-sky-400/40 shadow-[0_0_20px_rgba(56,189,248,0.25)] flex flex-col justify-between p-1.5 relative overflow-hidden"
+      >
+        <!-- Solar Bus Bar & Cell Dividers -->
+        <div class="flex justify-between items-center w-full px-0.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8]" />
+          <span class="text-[7px] font-mono text-sky-400/80 tracking-tighter">PV-A1</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8]" />
+        </div>
+
+        <!-- Vertical Solar Telemetry Line -->
+        <div class="h-full w-px bg-sky-400/30 mx-auto my-1" />
+
+        <!-- Vertical Text Label -->
+        <div
+          class="text-[8px] font-mono text-sky-300 font-bold -rotate-90 origin-center whitespace-nowrap tracking-widest uppercase select-none opacity-80"
+        >
+          SOLAR ARRAY // α
+        </div>
+
+        <div class="h-full w-px bg-sky-400/30 mx-auto my-1" />
+
+        <div class="flex justify-between items-center w-full px-0.5">
+          <span class="w-1 h-1 rounded-full bg-sky-400/60" />
+          <span class="text-[7px] font-mono text-sky-400/60">450W</span>
+          <span class="w-1 h-1 rounded-full bg-sky-400/60" />
+        </div>
+      </div>
+
+      <!-- Metal Joint Arm to Satellite Body -->
+      <div
+        class="w-5 h-1.5 bg-gradient-to-r from-sky-500/80 to-slate-700 border-y border-sky-400/40 shadow-[0_0_8px_rgba(56,189,248,0.3)] absolute right-[-18px] top-1/2 -translate-y-1/2"
+      />
+    </div>
+
+    <!-- Right Solar Array Wing Assembly (Desktop) -->
+    <div
+      class="hidden lg:flex flex-col items-center justify-center absolute -right-14 xl:-right-16 top-1/2 -translate-y-1/2 z-0 pointer-events-none select-none transition-transform duration-500 group-hover:scale-105"
+    >
+      <!-- Metal Joint Arm to Satellite Body -->
+      <div
+        class="w-5 h-1.5 bg-gradient-to-l from-sky-500/80 to-slate-700 border-y border-sky-400/40 shadow-[0_0_8px_rgba(56,189,248,0.3)] absolute left-[-18px] top-1/2 -translate-y-1/2"
+      />
+
+      <!-- Solar Array Body (Deep space photovoltaic cells with cyan lattice grid) -->
+      <div
+        class="w-10 xl:w-12 h-44 xl:h-48 rounded-xl solar-wing-surface border border-sky-400/40 shadow-[0_0_20px_rgba(56,189,248,0.25)] flex flex-col justify-between p-1.5 relative overflow-hidden"
+      >
+        <!-- Solar Bus Bar & Cell Dividers -->
+        <div class="flex justify-between items-center w-full px-0.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8]" />
+          <span class="text-[7px] font-mono text-sky-400/80 tracking-tighter">PV-B2</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8]" />
+        </div>
+
+        <div class="h-full w-px bg-sky-400/30 mx-auto my-1" />
+
+        <!-- Vertical Text Label -->
+        <div
+          class="text-[8px] font-mono text-sky-300 font-bold rotate-90 origin-center whitespace-nowrap tracking-widest uppercase select-none opacity-80"
+        >
+          SOLAR ARRAY // β
+        </div>
+
+        <div class="h-full w-px bg-sky-400/30 mx-auto my-1" />
+
+        <div class="flex justify-between items-center w-full px-0.5">
+          <span class="w-1 h-1 rounded-full bg-sky-400/60" />
+          <span class="text-[7px] font-mono text-sky-400/60">PWR 100%</span>
+          <span class="w-1 h-1 rounded-full bg-sky-400/60" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Ion Plasma Thrusters (Bottom Corner Jets) -->
+    <div
+      class="absolute -bottom-3 left-12 w-4 h-6 bg-gradient-to-b from-cyan-400 via-sky-400/60 to-transparent blur-[2px] opacity-80 pointer-events-none ion-thruster-jet"
+    />
+    <div
+      class="absolute -bottom-3 right-12 w-4 h-6 bg-gradient-to-b from-cyan-400 via-sky-400/60 to-transparent blur-[2px] opacity-80 pointer-events-none ion-thruster-jet"
+    />
+
+    <!-- ================= MAIN SATELLITE COCKPIT CONTAINER ================= -->
     <div
       ref="cockpitRef"
-      class="w-full h-[370px] sm:h-[420px] lg:h-[440px] p-3.5 sm:p-5 rounded-3xl bg-dark-900/85 backdrop-blur-2xl border border-lime-400/30 hover:border-lime-400/60 flex flex-col justify-between select-none overflow-hidden relative z-10 shadow-[0_0_35px_rgba(226,241,97,0.18),0_0_80px_rgba(0,0,0,0.8)] hover:shadow-[0_0_50px_rgba(226,241,97,0.3),0_0_100px_rgba(226,241,97,0.15)] transition-all duration-300 group"
+      class="w-full h-[370px] sm:h-[420px] lg:h-[440px] p-3.5 sm:p-5 rounded-3xl bg-dark-900/90 backdrop-blur-2xl border border-lime-400/35 hover:border-lime-400/70 flex flex-col justify-between select-none overflow-hidden relative z-10 shadow-[0_0_35px_rgba(226,241,97,0.18),0_0_80px_rgba(0,0,0,0.85)] hover:shadow-[0_0_55px_rgba(226,241,97,0.35),0_0_100px_rgba(226,241,97,0.15)] transition-all duration-300 group"
       :style="transformStyle"
       @mouseenter="handleMouseEnter"
       @mousemove="handleMouseMove"
       @mouseleave="handleMouseLeave"
     >
+      <!-- Satellite Corner Reticles -->
+      <div
+        class="absolute top-2.5 left-2.5 text-[8px] font-mono text-lime-400/40 pointer-events-none select-none"
+      >
+        ┌
+      </div>
+      <div
+        class="absolute top-2.5 right-2.5 text-[8px] font-mono text-lime-400/40 pointer-events-none select-none"
+      >
+        ┐
+      </div>
+      <div
+        class="absolute bottom-2.5 left-2.5 text-[8px] font-mono text-lime-400/40 pointer-events-none select-none"
+      >
+        └
+      </div>
+      <div
+        class="absolute bottom-2.5 right-2.5 text-[8px] font-mono text-lime-400/40 pointer-events-none select-none"
+      >
+        ┘
+      </div>
+
       <!-- Satellite Header & Tab Navigation -->
       <div class="space-y-3 shrink-0 relative z-10">
         <!-- MacOS Controls & Satellite Antenna Identifier with Vivid Glows -->
@@ -143,7 +265,7 @@
             />
           </div>
 
-          <!-- Center: Satellite Node ID -->
+          <!-- Center: Satellite Identity -->
           <div
             class="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-slate-300 font-mono truncate"
           >
@@ -152,13 +274,15 @@
             >
               🛰️ satellite.sh
             </span>
-            <span class="truncate text-slate-300">bonfiglio@orbital-ide</span>
+            <span class="truncate text-slate-400">bonfiglio@orbital-node</span>
           </div>
 
-          <!-- Right: Live Signal Status Beacon -->
-          <div class="hidden sm:flex items-center gap-1.5 text-[10px] font-mono text-emerald-400">
+          <!-- Right: Live Telemetry Status -->
+          <div class="flex items-center gap-1.5 text-[10px] font-mono text-emerald-400 shrink-0">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span>SYNCHRONIZED</span>
+            <span class="hidden sm:inline">SYNCHRONIZED</span>
+            <span class="text-lime-400/40">|</span>
+            <span class="text-slate-400">60FPS</span>
           </div>
         </div>
 
@@ -230,7 +354,7 @@
               <span v-else>{{ entry.text }}</span>
             </div>
 
-            <!-- Error Message (Rose matching reference screenshot) -->
+            <!-- Error Message -->
             <div v-else-if="entry.type === 'error'" class="text-rose-400 leading-snug font-mono">
               {{ entry.text }}
             </div>
@@ -373,3 +497,48 @@
     </div>
   </div>
 </template>
+
+<style scoped lang="scss">
+  /* Smooth Zero-Gravity Orbital Satellite Floating */
+  .orbital-satellite-assembly {
+    animation: satellite-orbital-drift 7.5s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  @keyframes satellite-orbital-drift {
+    0% {
+      transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+    50% {
+      transform: translate3d(0, -14px, 0) rotate(0.8deg);
+    }
+    100% {
+      transform: translate3d(0, 4px, 0) rotate(-0.5deg);
+    }
+  }
+
+  /* Photovoltaic Solar Array Wing Pattern */
+  .solar-wing-surface {
+    background: linear-gradient(135deg, #091a30 0%, #030b18 100%);
+    background-image:
+      linear-gradient(to right, rgba(56, 189, 248, 0.12) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(56, 189, 248, 0.12) 1px, transparent 1px);
+    background-size: 10px 14px;
+  }
+
+  /* Ion Plasma Thruster Pulse */
+  .ion-thruster-jet {
+    animation: thruster-flare 2.5s ease-in-out infinite alternate;
+  }
+
+  @keyframes thruster-flare {
+    0% {
+      opacity: 0.4;
+      transform: scaleY(0.8);
+    }
+    100% {
+      opacity: 0.95;
+      transform: scaleY(1.3);
+    }
+  }
+</style>
