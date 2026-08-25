@@ -1,7 +1,6 @@
 <script setup lang="ts">
   import { onMounted, ref } from 'vue'
   import { portfolioData } from '../../data/portfolio'
-  import AppButton from '../ui/AppButton.vue'
   import HeroCockpit from './HeroCockpit.vue'
   import StatCounterCard from './StatCounterCard.vue'
 
@@ -70,11 +69,13 @@
 
 <template>
   <section
-    class="min-h-screen flex items-center pt-24 sm:pt-28 lg:pt-32 pb-6 sm:pb-10 lg:pb-14 relative z-10 w-full"
+    class="min-h-screen flex flex-col justify-between pt-24 sm:pt-28 lg:pt-32 pb-8 sm:pb-12 relative z-10 w-full"
   >
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center w-full">
-      <!-- Left Column: Bio, Headline, Stats & CTA with Staggered Entrance Reveal -->
-      <div class="lg:col-span-7 space-y-4 sm:space-y-5 lg:space-y-6">
+    <div
+      class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-center w-full flex-1"
+    >
+      <!-- Left Column: Bio, Headline, Stats with Staggered Entrance Reveal -->
+      <div class="lg:col-span-7 space-y-5 sm:space-y-6 lg:space-y-7">
         <!-- Status & Company Badge Pill (Hidden on Mobile) -->
         <div
           class="hidden sm:inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full space-floating-card text-xs font-mono select-none transition-all duration-700 ease-out"
@@ -159,7 +160,7 @@
 
         <!-- Metric Stat Counters (Grid 3 Columns with Counter Animation & Delayed Entrance) -->
         <div
-          class="grid grid-cols-3 gap-2 sm:gap-4 py-2 transition-all duration-700 delay-450 ease-out"
+          class="grid grid-cols-3 gap-2.5 sm:gap-4 pt-1 transition-all duration-700 delay-450 ease-out"
           :class="
             isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'
           "
@@ -177,40 +178,31 @@
             :float-animation="statAnimClasses[idx % statAnimClasses.length]"
           />
         </div>
-
-        <!-- Call to Action Buttons (Stacked on Mobile, Row on Desktop) -->
-        <div
-          class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1 w-full sm:w-auto transition-all duration-700 delay-600 ease-out"
-          :class="
-            isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'
-          "
-        >
-          <AppButton
-            variant="primary"
-            size="lg"
-            href="#projects"
-            as="a"
-            class="w-full sm:w-auto text-center"
-          >
-            <span>EXPLORE WORK</span>
-            <span class="text-sm">&rarr;</span>
-          </AppButton>
-          <AppButton
-            variant="outline"
-            size="lg"
-            href="#contact"
-            as="a"
-            class="w-full sm:w-auto text-center"
-          >
-            <span>$ contact_me</span>
-          </AppButton>
-        </div>
       </div>
 
-      <!-- Right Column: Interactive Cockpit -->
+      <!-- Right Column: Interactive Orbital Satellite Cockpit -->
       <div class="lg:col-span-5 flex justify-center lg:justify-end">
         <HeroCockpit />
       </div>
+    </div>
+
+    <!-- Bottom Center Orbital Scroll Flight Prompt -->
+    <div
+      class="pt-6 sm:pt-8 flex justify-center w-full select-none transition-all duration-700 delay-700 ease-out"
+      :class="
+        isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'
+      "
+    >
+      <a
+        href="#stack"
+        class="group inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-dark-950/80 border border-lime-400/20 hover:border-lime-400/50 text-[11px] font-mono text-slate-400 hover:text-lime-400 transition-all shadow-[0_0_20px_rgba(0,0,0,0.6)] backdrop-blur-md cursor-pointer hover:scale-105 active:scale-95"
+      >
+        <span class="w-1.5 h-1.5 rounded-full bg-lime-400 animate-ping inline-block" />
+        <span class="tracking-wider uppercase font-semibold">SCROLL TO ENTER CONSTELLATION</span>
+        <span class="text-lime-400 font-bold group-hover:translate-y-0.5 transition-transform"
+          >&darr;</span
+        >
+      </a>
     </div>
   </section>
 </template>

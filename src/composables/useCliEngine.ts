@@ -16,11 +16,11 @@ export function useCliEngine() {
       id: 'init-1',
       type: 'system',
       html: `<div class="space-y-0.5">
-        <div class="text-slate-400 font-mono">// Interactive CLI environment ready.</div>
+        <div class="text-slate-400 font-mono">// Orbital Satellite Station v1.0 connected.</div>
         <div class="text-lime-400 font-mono flex items-center gap-1.5 flex-wrap">
           <span>&gt; Type</span>
           <span class="text-white font-bold bg-dark-900 px-1.5 py-0.2 rounded border border-lime-400/30">help</span>
-          <span>for commands or click quick actions below.</span>
+          <span>or click quick orbital telemetry actions below.</span>
         </div>
       </div>`,
     },
@@ -32,16 +32,18 @@ export function useCliEngine() {
 
   const COMMAND_LIST = [
     'help',
+    'explore_work',
+    'contact_me',
     'skills',
     'experience',
     'projects',
-    'spark',
-    'sudo hire',
+    'cv',
+    'resume',
+    'supernova',
     'clear',
     'audio',
     'matrix',
     'whoami',
-    'contact',
   ]
 
   function handleAutoComplete(input: string): string {
@@ -84,6 +86,14 @@ export function useCliEngine() {
     return currentInput.value
   }
 
+  function smoothScrollTo(id: string) {
+    if (typeof window === 'undefined') return
+    const el = document.getElementById(id)
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }
+
   function executeCommand(rawCommand: string) {
     const trimmed = rawCommand.trim()
     if (!trimmed) return
@@ -109,18 +119,19 @@ export function useCliEngine() {
           id: `out-${Date.now()}`,
           type: 'output',
           html: `<div class="text-slate-300 font-mono text-[11px] leading-relaxed">
-            Available commands: <span class="text-lime-400 font-bold">skills</span>, <span class="text-lime-400 font-bold">experience</span>, <span class="text-lime-400 font-bold">projects</span>, <span class="text-lime-400 font-bold">spark</span>, <span class="text-lime-400 font-bold">sudo hire</span>, <span class="text-lime-400 font-bold">clear</span>
+            Available commands: <span class="text-lime-400 font-bold">explore_work</span>, <span class="text-lime-400 font-bold">contact_me</span>, <span class="text-lime-400 font-bold">skills</span>, <span class="text-lime-400 font-bold">experience</span>, <span class="text-lime-400 font-bold">cv</span>, <span class="text-lime-400 font-bold">supernova</span>, <span class="text-lime-400 font-bold">clear</span>
           </div>`,
         })
         break
 
       case 'skills':
       case 'stack':
+        smoothScrollTo('stack')
         entries.value.push({
           id: `out-${Date.now()}`,
           type: 'output',
           html: `<div class="space-y-1 text-[11px] font-mono text-slate-300">
-            <div class="text-lime-400 font-bold">⚡ TECHNICAL SKILLS:</div>
+            <div class="text-lime-400 font-bold">⚡ TECHNICAL SKILLS CONSTELLATION:</div>
             <div>&bull; <strong class="text-slate-200">Core:</strong> Vue 3, React, TypeScript, Next.js, Angular</div>
             <div>&bull; <strong class="text-slate-200">Styling &amp; Motion:</strong> TailwindCSS, SCSS, Canvas 3D</div>
             <div>&bull; <strong class="text-slate-200">AI Engineering:</strong> Agentic Workflows, Multi-Agent Prompts, LLM Tools</div>
@@ -132,6 +143,7 @@ export function useCliEngine() {
       case 'experience':
       case 'exp':
       case 'career':
+        smoothScrollTo('experience')
         entries.value.push({
           id: `out-${Date.now()}`,
           type: 'output',
@@ -146,44 +158,54 @@ export function useCliEngine() {
 
       case 'projects':
       case 'work':
+      case 'explore':
+      case 'explore_work':
+      case 'explore work':
+        smoothScrollTo('projects')
         entries.value.push({
           id: `out-${Date.now()}`,
           type: 'output',
           html: `<div class="space-y-1 text-[11px] font-mono text-slate-300">
-            <div class="text-lime-400 font-bold">🚀 SELECTED WORK:</div>
-            <div>01. <strong class="text-white">snorlax-toodo</strong> &bull; Task manager with Pinia &amp; Tailwind</div>
-            <div>02. <strong class="text-white">weather-app</strong> &bull; Real-time OpenWeather dashboard</div>
-            <div>03. <strong class="text-white">unique-photography</strong> &bull; Curated Unsplash visual showcase</div>
-            <div>04. <strong class="text-white">bonfiglio.dev</strong> &bull; Interactive 60fps portfolio with Web Audio</div>
+            <div class="text-lime-400 font-bold">🚀 NAVIGATING TO SELECTED WORK...</div>
+            <div>01. <strong class="text-white">snorlax-todo</strong> &bull; Preact &amp; Redux (~8KB gzip)</div>
+            <div>02. <strong class="text-white">weather-app</strong> &bull; Real-time OpenWeather radar</div>
+            <div>03. <strong class="text-white">unique-photography</strong> &bull; Contentful GraphQL gallery</div>
+            <div>04. <strong class="text-white">bonfiglio.dev</strong> &bull; 60fps interactive space portfolio</div>
           </div>`,
         })
         break
 
       case 'contact':
-        entries.value.push({
-          id: `out-${Date.now()}`,
-          type: 'output',
-          html: `<div class="space-y-1 text-slate-300 font-mono text-[11px]">
-            <div class="text-lime-400 font-bold">📬 DIRECT COMMUNICATIONS:</div>
-            <div>&bull; Email: <a href="mailto:bonfi.alessio98@gmail.com" class="text-lime-300 underline font-bold">bonfi.alessio98@gmail.com</a></div>
-            <div>&bull; GitHub: <a href="https://github.com/bonfiglioalessio" target="_blank" class="text-lime-300 underline">github.com/bonfiglioalessio</a></div>
-            <div>&bull; LinkedIn: <a href="https://www.linkedin.com/in/alessio-bonfiglio/" target="_blank" class="text-lime-300 underline">linkedin.com/in/alessio-bonfiglio</a></div>
-          </div>`,
-        })
-        break
-
-      case 'sudo hire':
+      case 'contact_me':
+      case 'contact me':
       case 'hire':
+      case 'sudo hire':
+        smoothScrollTo('contact')
         playDiffToggle(true)
         entries.value.push({
           id: `out-${Date.now()}`,
           type: 'output',
           html: `<div class="p-2 rounded-lg bg-lime-400/10 border border-lime-400/40 text-slate-200 space-y-1 font-mono text-[11px]">
-            <div class="text-lime-400 font-bold">🚀 [ROOT ACCESS GRANTED]</div>
-            <div>Alessio Bonfiglio is available for Senior Frontend &amp; AI Engineering missions.</div>
-            <div class="pt-0.5">
-              Direct Transmission: <a href="mailto:bonfi.alessio98@gmail.com?subject=Collaboration%20Opportunity" class="text-lime-300 underline font-bold">bonfi.alessio98@gmail.com</a>
-            </div>
+            <div class="text-lime-400 font-bold">📬 [OPENING TRANSMISSION CHANNEL]</div>
+            <div>Alessio Bonfiglio &bull; Software Engineer @ iliad</div>
+            <div>Direct Mail: <a href="mailto:bonfi.alessio98@gmail.com" class="text-lime-300 underline font-bold">bonfi.alessio98@gmail.com</a></div>
+          </div>`,
+        })
+        break
+
+      case 'cv':
+      case 'resume':
+      case 'cat cv.md':
+      case 'cat resume.md':
+        entries.value.push({
+          id: `out-${Date.now()}`,
+          type: 'output',
+          html: `<div class="space-y-1 text-[11px] font-mono text-slate-300 border-l-2 border-lime-400 pl-2 my-1">
+            <div class="text-lime-400 font-bold">📄 ALESSIO BONFIGLIO // CURRICULUM VITAE</div>
+            <div>&bull; <strong class="text-white">Role:</strong> Senior Frontend Engineer &amp; UI Architect</div>
+            <div>&bull; <strong class="text-white">Experience:</strong> 6+ Years in Production (iliad, Mondadori Media)</div>
+            <div>&bull; <strong class="text-white">Location:</strong> Milano &amp; Remote</div>
+            <div>&bull; <strong class="text-white">Stack:</strong> Vue 3, React, TypeScript, Next, Tailwind, AI Workflows</div>
           </div>`,
         })
         break
@@ -241,14 +263,7 @@ export function useCliEngine() {
           {
             id: `init-${Date.now()}`,
             type: 'system',
-            html: `<div class="space-y-0.5">
-              <div class="text-slate-400 font-mono">// Interactive CLI environment ready.</div>
-              <div class="text-lime-400 font-mono flex items-center gap-1.5 flex-wrap">
-                <span>&gt; Type</span>
-                <span class="text-white font-bold bg-dark-900 px-1.5 py-0.2 rounded border border-lime-400/30">help</span>
-                <span>for commands or click quick actions below.</span>
-              </div>
-            </div>`,
+            html: '<div class="text-slate-400 font-mono">// Terminal cleared. Satellite online. Type <span class="text-lime-400 font-bold">help</span>.</div>',
           },
         ]
         break
@@ -257,7 +272,7 @@ export function useCliEngine() {
         entries.value.push({
           id: `err-${Date.now()}`,
           type: 'error',
-          text: `Command not found: '${trimmed}'. Type 'help' for available commands.`,
+          text: `zsh: command not found: ${trimmed}. Type 'help' for available commands.`,
         })
         break
     }

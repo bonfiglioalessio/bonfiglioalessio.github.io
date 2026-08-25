@@ -16,7 +16,7 @@
   const terminalScrollRef = ref<HTMLDivElement | null>(null)
   const inputRef = ref<HTMLInputElement | null>(null)
 
-  // Gentle 3D Tilt for CLI Cockpit (Subtle tilt without internal glare wash)
+  // Gentle 3D Tilt for Satellite Cockpit
   const { transformStyle, handleMouseEnter, handleMouseMove, handleMouseLeave } = use3DTilt(
     cockpitRef,
     {
@@ -93,8 +93,8 @@
 </script>
 
 <template>
-  <div class="relative w-full max-w-md lg:max-w-lg">
-    <!-- Atmospheric Cosmic Glow Nebula Aura behind CLI -->
+  <div class="relative w-full max-w-md lg:max-w-xl">
+    <!-- Atmospheric Cosmic Glow Nebula Aura behind Satellite -->
     <div
       class="absolute -top-16 -right-16 w-80 h-80 bg-lime-400/25 rounded-full blur-3xl pointer-events-none z-0 animate-glow-pulse"
     />
@@ -102,19 +102,35 @@
       class="absolute -bottom-10 -left-10 w-64 h-64 bg-emerald-500/15 rounded-full blur-2xl pointer-events-none z-0"
     />
 
-    <!-- Main Cockpit Card Container with Gentle 3D Tilt & Subtle Clean Border -->
+    <!-- Top Floating Satellite Badge -->
+    <div
+      class="absolute -top-3.5 left-6 z-20 hidden sm:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-dark-950/90 border border-lime-400/30 text-[10px] font-mono text-lime-400 shadow-[0_0_15px_rgba(226,241,97,0.25)] select-none backdrop-blur-md"
+    >
+      <span class="relative flex h-2 w-2">
+        <span
+          class="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-75"
+        />
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-lime-400" />
+      </span>
+      <span class="font-bold">ORBITAL NODE // #06</span>
+      <span class="text-slate-500">|</span>
+      <span class="text-slate-300">450KM GEO</span>
+    </div>
+
+    <!-- Main Satellite Cockpit Container with Gentle 3D Tilt -->
     <div
       ref="cockpitRef"
-      class="w-full h-[360px] sm:h-[410px] lg:h-[430px] p-3.5 sm:p-5 rounded-2xl bg-dark-900/80 backdrop-blur-xl border border-lime-400/30 hover:border-lime-400/60 flex flex-col justify-between select-none overflow-hidden relative z-10 shadow-[0_0_30px_rgba(226,241,97,0.18),0_0_70px_rgba(226,241,97,0.08)] hover:shadow-[0_0_45px_rgba(226,241,97,0.3),0_0_90px_rgba(226,241,97,0.15)] transition-all duration-300 group"
+      class="w-full h-[370px] sm:h-[420px] lg:h-[440px] p-3.5 sm:p-5 rounded-3xl bg-dark-900/85 backdrop-blur-2xl border border-lime-400/30 hover:border-lime-400/60 flex flex-col justify-between select-none overflow-hidden relative z-10 shadow-[0_0_35px_rgba(226,241,97,0.18),0_0_80px_rgba(0,0,0,0.8)] hover:shadow-[0_0_50px_rgba(226,241,97,0.3),0_0_100px_rgba(226,241,97,0.15)] transition-all duration-300 group"
       :style="transformStyle"
       @mouseenter="handleMouseEnter"
       @mousemove="handleMouseMove"
       @mouseleave="handleMouseLeave"
     >
-      <!-- Window Header & Tab Navigation -->
+      <!-- Satellite Header & Tab Navigation -->
       <div class="space-y-3 shrink-0 relative z-10">
-        <!-- MacOS Controls & Window Title with Vivid Glows -->
+        <!-- MacOS Controls & Satellite Antenna Identifier with Vivid Glows -->
         <div class="flex items-center justify-between border-b border-lime-400/15 pb-2.5 gap-2">
+          <!-- Left: macOS Traffic Lights -->
           <div class="flex items-center gap-2 shrink-0">
             <span
               class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-rose-500 shadow-[0_0_10px_#f43f5e] inline-block"
@@ -126,15 +142,23 @@
               class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981] inline-block"
             />
           </div>
+
+          <!-- Center: Satellite Node ID -->
           <div
             class="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-slate-300 font-mono truncate"
           >
             <span
               class="text-lime-400 font-bold drop-shadow-[0_0_8px_#e2f161] flex items-center gap-1"
             >
-              ⚡ zsh
+              🛰️ satellite.sh
             </span>
-            <span class="truncate text-slate-300">bonfiglio@node-ide</span>
+            <span class="truncate text-slate-300">bonfiglio@orbital-ide</span>
+          </div>
+
+          <!-- Right: Live Signal Status Beacon -->
+          <div class="hidden sm:flex items-center gap-1.5 text-[10px] font-mono text-emerald-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span>SYNCHRONIZED</span>
           </div>
         </div>
 
@@ -182,7 +206,7 @@
       <!-- Tab 1: Real Interactive Terminal Shell -->
       <div
         v-show="activeTab === 'terminal'"
-        class="flex flex-col justify-between flex-1 min-h-0 bg-dark-950/85 border border-lime-400/20 rounded-xl p-3 sm:p-4 my-2 font-mono text-[11px] sm:text-xs overflow-hidden shadow-inner cursor-text relative z-10"
+        class="flex flex-col justify-between flex-1 min-h-0 bg-dark-950/90 border border-lime-400/20 rounded-2xl p-3 sm:p-4 my-2 font-mono text-[11px] sm:text-xs overflow-hidden shadow-inner cursor-text relative z-10"
         @click="focusInput"
       >
         <!-- Scrolling Output Log -->
@@ -231,7 +255,7 @@
             ref="inputRef"
             v-model="currentInput"
             type="text"
-            placeholder="type command..."
+            placeholder="type command (e.g. explore_work)..."
             autocomplete="off"
             autocorrect="off"
             autocapitalize="off"
@@ -253,7 +277,7 @@
       <!-- Tab 2: Config Tab -->
       <div
         v-show="activeTab === 'config'"
-        class="flex-1 overflow-y-auto bg-dark-950/70 border border-lime-400/15 rounded-xl p-3 sm:p-4 my-2 font-mono text-[10px] sm:text-xs text-slate-300 leading-relaxed no-scrollbar relative z-10"
+        class="flex-1 overflow-y-auto bg-dark-950/70 border border-lime-400/15 rounded-2xl p-3 sm:p-4 my-2 font-mono text-[10px] sm:text-xs text-slate-300 leading-relaxed no-scrollbar relative z-10"
       >
         <pre
           class="whitespace-pre overflow-x-auto"
@@ -272,7 +296,7 @@
       <!-- Tab 3: Skills Tab -->
       <div
         v-show="activeTab === 'skills'"
-        class="flex-1 overflow-y-auto bg-dark-950/70 border border-lime-400/15 rounded-xl p-3 sm:p-4 my-2 font-mono text-[10px] sm:text-xs text-slate-300 leading-relaxed no-scrollbar relative z-10"
+        class="flex-1 overflow-y-auto bg-dark-950/70 border border-lime-400/15 rounded-2xl p-3 sm:p-4 my-2 font-mono text-[10px] sm:text-xs text-slate-300 leading-relaxed no-scrollbar relative z-10"
       >
         <pre class="whitespace-pre overflow-x-auto"><code>{
   <span class="text-lime-400">"core"</span>: [
@@ -288,42 +312,49 @@
 }</code></pre>
       </div>
 
-      <!-- Footer Quick Action Chips: Exactly help, spark, sudo hire, clear -->
+      <!-- Footer Quick Action Chips: Interactive Orbital Telemetry Actions -->
       <div
-        class="flex items-center justify-between gap-1.5 pt-1 text-[9px] sm:text-[10px] text-slate-400 font-mono shrink-0 border-t border-lime-400/10 overflow-x-auto no-scrollbar relative z-10"
+        class="flex items-center justify-between gap-1.5 pt-1.5 text-[9px] sm:text-[10px] text-slate-400 font-mono shrink-0 border-t border-lime-400/15 overflow-x-auto no-scrollbar relative z-10"
       >
         <div class="flex items-center gap-1.5 shrink-0 whitespace-nowrap">
-          <span class="text-slate-500">Quick:</span>
+          <span class="text-slate-500 font-bold">Quick:</span>
           <button
             type="button"
-            class="text-lime-400/80 hover:text-lime-300 hover:underline cursor-pointer bg-dark-950 px-2 py-0.5 rounded border border-lime-400/20"
-            @click="runQuickAction('help')"
+            class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-lime-400/30 transition-all font-bold active:scale-95"
+            @click="runQuickAction('explore_work')"
           >
-            help
+            &gt; explore_work
           </button>
           <button
             type="button"
-            class="text-lime-400/80 hover:text-lime-300 hover:underline cursor-pointer bg-dark-950 px-2 py-0.5 rounded border border-lime-400/20"
-            @click="runQuickAction('spark')"
+            class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-lime-400/30 transition-all font-bold active:scale-95"
+            @click="runQuickAction('contact_me')"
+          >
+            &gt; contact_me
+          </button>
+          <button
+            type="button"
+            class="text-slate-300 hover:text-lime-400 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-slate-700 transition-all active:scale-95"
+            @click="runQuickAction('supernova')"
           >
             spark
           </button>
           <button
             type="button"
-            class="text-lime-400/80 hover:text-lime-300 hover:underline cursor-pointer bg-dark-950 px-2 py-0.5 rounded border border-lime-400/20"
-            @click="runQuickAction('sudo hire')"
+            class="text-slate-300 hover:text-lime-400 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-slate-700 transition-all active:scale-95"
+            @click="runQuickAction('cv')"
           >
-            sudo hire
+            cv.md
           </button>
           <button
             type="button"
-            class="text-slate-400 hover:text-slate-200 hover:underline cursor-pointer bg-dark-950 px-2 py-0.5 rounded border border-slate-800"
+            class="text-slate-500 hover:text-slate-300 cursor-pointer bg-dark-950 px-1.5 py-0.5 rounded-md border border-slate-800 transition-all active:scale-95"
             @click="runQuickAction('clear')"
           >
             clear
           </button>
         </div>
-        <span class="text-slate-500 shrink-0">zsh</span>
+        <span class="text-slate-500 shrink-0 hidden sm:inline">orbital.zsh</span>
       </div>
     </div>
   </div>
