@@ -1,9 +1,12 @@
 <script setup lang="ts">
   import { onMounted, onUnmounted, ref } from 'vue'
+  import { usePortfolioData } from '../../composables/usePortfolioData'
 
   const emit = defineEmits<{
     (e: 'finish'): void
   }>()
+
+  const { fetchPortfolioData } = usePortfolioData()
 
   const progress = ref(0)
   const isExiting = ref(false)
@@ -72,6 +75,9 @@
   }
 
   onMounted(() => {
+    // Asynchronously fetch latest remote copy in background during boot
+    fetchPortfolioData()
+
     // Respect reduced motion
     if (
       typeof window !== 'undefined' &&
