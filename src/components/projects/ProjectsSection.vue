@@ -1,13 +1,13 @@
 <script setup lang="ts">
   import { computed, onMounted, onUnmounted, ref } from 'vue'
   import type { Project } from '../../types/portfolio'
-  import { portfolioData } from '../../data/portfolio'
+  import { usePortfolioData } from '../../composables/usePortfolioData'
   import { useAudioSynth } from '../../composables/useAudioSynth'
   import SectionHeader from '../ui/SectionHeader.vue'
   import ProjectCard from './ProjectCard.vue'
   import ProjectPreviewModal from './ProjectPreviewModal.vue'
 
-  const { selectedWork } = portfolioData
+  const { selectedWork } = usePortfolioData()
   const { playClick } = useAudioSynth()
 
   const projectThemes: ('lime' | 'white' | 'emerald' | 'cyan')[] = [
@@ -61,12 +61,12 @@
 
   // Split projects into two columns for the staggered desktop layout with original global indices
   const leftProjects = computed(() =>
-    selectedWork
+    selectedWork.value
       .map((p, originalIndex) => ({ project: p, originalIndex }))
       .filter((_, idx) => idx % 2 === 0),
   )
   const rightProjects = computed(() =>
-    selectedWork
+    selectedWork.value
       .map((p, originalIndex) => ({ project: p, originalIndex }))
       .filter((_, idx) => idx % 2 === 1),
   )
@@ -96,7 +96,7 @@
     const cardWidth = container.children[0]?.clientWidth || 300
     const gap = 20
     const newIdx = Math.round(scrollLeft / (cardWidth + gap))
-    if (newIdx >= 0 && newIdx < selectedWork.length && newIdx !== activeProjectIndex.value) {
+    if (newIdx >= 0 && newIdx < selectedWork.value.length && newIdx !== activeProjectIndex.value) {
       activeProjectIndex.value = newIdx
     }
   }
@@ -105,12 +105,12 @@
     if (activeProjectIndex.value > 0) {
       scrollToProject(activeProjectIndex.value - 1)
     } else {
-      scrollToProject(selectedWork.length - 1)
+      scrollToProject(selectedWork.value.length - 1)
     }
   }
 
   function nextProject() {
-    if (activeProjectIndex.value < selectedWork.length - 1) {
+    if (activeProjectIndex.value < selectedWork.value.length - 1) {
       scrollToProject(activeProjectIndex.value + 1)
     } else {
       scrollToProject(0)
@@ -139,9 +139,9 @@
     const delay = Math.floor(Math.random() * 150) + 100
     twinkleTimer = setTimeout(() => {
       // Pick next project (switching between projects)
-      let randomIndex = Math.floor(Math.random() * selectedWork.length)
-      if (selectedWork.length > 1 && randomIndex === activeTwinkleIndex.value) {
-        randomIndex = (randomIndex + 1) % selectedWork.length
+      let randomIndex = Math.floor(Math.random() * selectedWork.value.length)
+      if (selectedWork.value.length > 1 && randomIndex === activeTwinkleIndex.value) {
+        randomIndex = (randomIndex + 1) % selectedWork.value.length
       }
       activeTwinkleIndex.value = randomIndex
 
@@ -149,8 +149,8 @@
       setTimeout(() => {
         if (activeTwinkleIndex.value === randomIndex) {
           activeTwinkleIndex.value = null
+          scheduleNextTwinkle()
         }
-        scheduleNextTwinkle()
       }, 450)
     }, delay)
   }
