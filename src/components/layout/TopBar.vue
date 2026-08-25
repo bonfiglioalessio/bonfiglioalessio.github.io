@@ -34,6 +34,37 @@
     isMobileMenuOpen.value = false
   }
 
+  function scrollToContactCenter() {
+    const contactEl = document.getElementById('contact')
+    if (contactEl) {
+      const targetY = Math.round(
+        contactEl.getBoundingClientRect().top +
+          window.scrollY -
+          Math.max(0, (window.innerHeight - contactEl.offsetHeight) / 2),
+      )
+      window.scrollTo({
+        top: Math.max(0, targetY),
+        behavior: 'smooth',
+      })
+    }
+  }
+
+  function handleNavClick(e: MouseEvent, href: string) {
+    playClick()
+    if (href === '#contact') {
+      e.preventDefault()
+      scrollToContactCenter()
+    }
+  }
+
+  function handleMobileNavClick(e: MouseEvent, href: string) {
+    closeMobileMenu()
+    if (href === '#contact') {
+      e.preventDefault()
+      scrollToContactCenter()
+    }
+  }
+
   function handleScroll() {
     if (typeof window !== 'undefined') {
       isScrolled.value = window.scrollY > 25
@@ -173,7 +204,7 @@
                   ? 'bg-lime-400/15 text-lime-400 border border-lime-400/35 shadow-[0_0_12px_rgba(226,241,97,0.25)] font-bold'
                   : 'text-slate-300 hover:text-lime-400 hover:bg-dark-900/50',
               ]"
-              @click="playClick"
+              @click="(e) => handleNavClick(e, link.href)"
             >
               <span
                 v-if="activeSectionId === link.href"
@@ -199,6 +230,7 @@
               href="#contact"
               as="a"
               class="ml-1 shrink-0 font-extrabold uppercase tracking-wider shadow-[0_0_18px_rgba(226,241,97,0.45)]"
+              @click="(e: MouseEvent) => handleNavClick(e, '#contact')"
             >
               <span>LET'S TALK</span>
               <span class="text-xs">&rarr;</span>
@@ -263,7 +295,7 @@
                   ? 'bg-lime-400/20 text-lime-400 border border-lime-400/30 shadow-[0_0_12px_rgba(226,241,97,0.2)] font-bold'
                   : 'text-slate-300 hover:text-lime-400 hover:bg-dark-900/80 active:bg-dark-900',
               ]"
-              @click="closeMobileMenu"
+              @click="(e) => handleMobileNavClick(e, link.href)"
             >
               <span>{{ link.label }}</span>
               <span
