@@ -119,19 +119,19 @@
 <template>
   <section
     id="projects"
-    class="w-screen relative left-1/2 -translate-x-1/2 py-20 sm:py-24 lg:py-28 overflow-hidden select-none transition-colors duration-1000 ease-out scroll-mt-20"
+    class="w-screen relative left-1/2 -translate-x-1/2 pt-20 sm:pt-24 lg:pt-28 pb-10 sm:pb-14 lg:pb-16 overflow-hidden select-none transition-colors duration-1000 ease-out scroll-mt-20"
   >
-    <!-- Dedicated Ethereal Space Backdrop Layer (170px soft vertical cloud feather) -->
+    <!-- Dedicated Ethereal Radial Space Backdrop Layer -->
+    <div class="absolute inset-0 projects-space-backdrop pointer-events-none" />
+
+    <!-- Ultra-Smooth Cloud Smoke Fog Overlay at Top (Seamless Transition from Stack into Work) -->
     <div
-      class="absolute -top-10 -bottom-10 inset-x-0 projects-space-backdrop pointer-events-none"
+      class="absolute top-0 inset-x-0 h-48 bg-gradient-to-b from-dark-950 via-dark-950/70 to-transparent pointer-events-none z-1"
     />
 
-    <!-- Volumetric Cosmic Smoke / Cloud Nebulas -->
+    <!-- Volumetric Cosmic Nebulas (Direct seamless flow into Career Log at bottom) -->
     <div
-      class="absolute -top-10 inset-x-0 h-56 bg-gradient-to-b from-transparent via-lime-500/10 to-transparent blur-3xl pointer-events-none"
-    />
-    <div
-      class="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[450px] rounded-full bg-lime-500/10 blur-[150px] pointer-events-none"
+      class="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[450px] rounded-full bg-lime-500/10 blur-[150px] pointer-events-none"
     />
     <div
       class="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[700px] h-[400px] rounded-full bg-emerald-500/10 blur-[160px] pointer-events-none"
@@ -253,36 +253,9 @@
 <style scoped lang="scss">
   .projects-space-backdrop {
     background: radial-gradient(
-      ellipse at 50% 30%,
-      rgba(10, 26, 42, 0.72) 0%,
-      rgba(5, 13, 24, 0.92) 55%,
-      rgba(2, 6, 16, 0.98) 100%
-    );
-    // Smooth generous 160px ethereal smoke/cloud feather mask
-    mask-image: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(0, 0, 0, 0.05) 30px,
-      rgba(0, 0, 0, 0.3) 70px,
-      rgba(0, 0, 0, 0.75) 120px,
-      black 170px,
-      black calc(100% - 170px),
-      rgba(0, 0, 0, 0.75) calc(100% - 120px),
-      rgba(0, 0, 0, 0.3) calc(100% - 70px),
-      rgba(0, 0, 0, 0.05) calc(100% - 30px),
-      transparent 100%
-    );
-    -webkit-mask-image: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(0, 0, 0, 0.05) 30px,
-      rgba(0, 0, 0, 0.3) 70px,
-      rgba(0, 0, 0, 0.75) 120px,
-      black 170px,
-      black calc(100% - 170px),
-      rgba(0, 0, 0, 0.75) calc(100% - 120px),
-      rgba(0, 0, 0, 0.3) calc(100% - 70px),
-      rgba(0, 0, 0, 0.05) calc(100% - 30px),
+      ellipse 90% 70% at 50% 50%,
+      rgba(10, 26, 42, 0.82) 0%,
+      rgba(5, 13, 24, 0.94) 55%,
       transparent 100%
     );
   }

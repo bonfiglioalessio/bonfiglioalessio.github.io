@@ -76,23 +76,26 @@
     id="stack"
     class="w-screen relative left-1/2 -translate-x-1/2 py-20 sm:py-24 lg:py-28 overflow-hidden select-none transition-colors duration-1000 ease-out scroll-mt-20"
   >
-    <!-- Dedicated Ethereal Space Backdrop & Grid Layer (Generous 160px soft vertical cloud feather) -->
-    <div
-      class="absolute -top-10 -bottom-10 inset-x-0 tech-constellation-backdrop pointer-events-none"
-    >
-      <!-- Subtle Cybernetic Constellation Background Lattice Grid inside masked backdrop -->
+    <!-- Dedicated Ethereal Radial Space Backdrop Layer -->
+    <div class="absolute inset-0 tech-constellation-backdrop pointer-events-none">
+      <!-- Subtle Cybernetic Constellation Background Lattice Grid -->
       <div class="absolute inset-0 constellation-grid opacity-25" />
     </div>
 
-    <!-- Volumetric Cosmic Smoke / Cloud Nebulas -->
+    <!-- Ultra-Smooth Cloud Smoke Fog Overlays at Top & Bottom (Zero hard lines) -->
     <div
-      class="absolute -top-10 inset-x-0 h-56 bg-gradient-to-b from-transparent via-sky-500/10 to-transparent blur-3xl pointer-events-none"
+      class="absolute top-0 inset-x-0 h-48 bg-gradient-to-b from-dark-950 via-dark-950/70 to-transparent pointer-events-none z-1"
     />
     <div
-      class="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[450px] rounded-full bg-sky-500/12 blur-[150px] pointer-events-none"
+      class="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-dark-950 via-dark-950/70 to-transparent pointer-events-none z-1"
+    />
+
+    <!-- Volumetric Cosmic Nebulas (Electric Sky & Indigo) -->
+    <div
+      class="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] rounded-full bg-sky-500/10 blur-[160px] pointer-events-none"
     />
     <div
-      class="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[750px] h-[400px] rounded-full bg-indigo-500/12 blur-[160px] pointer-events-none"
+      class="absolute bottom-1/3 right-1/4 translate-x-1/2 translate-y-1/2 w-[750px] h-[450px] rounded-full bg-indigo-500/10 blur-[170px] pointer-events-none"
     />
 
     <!-- Inner Content Stage (Aligned with Main Page Container Max-W-7xl) -->
@@ -227,36 +230,9 @@
 <style scoped lang="scss">
   .tech-constellation-backdrop {
     background: radial-gradient(
-      ellipse at 50% 35%,
-      rgba(8, 26, 48, 0.78) 0%,
-      rgba(4, 13, 26, 0.94) 55%,
-      rgba(2, 6, 16, 0.98) 100%
-    );
-    // Smooth generous 160px ethereal smoke/cloud feather mask
-    mask-image: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(0, 0, 0, 0.05) 30px,
-      rgba(0, 0, 0, 0.3) 70px,
-      rgba(0, 0, 0, 0.75) 120px,
-      black 170px,
-      black calc(100% - 170px),
-      rgba(0, 0, 0, 0.75) calc(100% - 120px),
-      rgba(0, 0, 0, 0.3) calc(100% - 70px),
-      rgba(0, 0, 0, 0.05) calc(100% - 30px),
-      transparent 100%
-    );
-    -webkit-mask-image: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(0, 0, 0, 0.05) 30px,
-      rgba(0, 0, 0, 0.3) 70px,
-      rgba(0, 0, 0, 0.75) 120px,
-      black 170px,
-      black calc(100% - 170px),
-      rgba(0, 0, 0, 0.75) calc(100% - 120px),
-      rgba(0, 0, 0, 0.3) calc(100% - 70px),
-      rgba(0, 0, 0, 0.05) calc(100% - 30px),
+      ellipse 90% 70% at 50% 50%,
+      rgba(8, 26, 48, 0.88) 0%,
+      rgba(4, 13, 26, 0.95) 55%,
       transparent 100%
     );
   }
@@ -266,7 +242,7 @@
       linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
     background-size: 48px 48px;
-    mask-image: radial-gradient(ellipse at 50% 50%, black 40%, transparent 80%);
-    -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 40%, transparent 80%);
+    mask-image: radial-gradient(ellipse at 50% 50%, black 35%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 35%, transparent 75%);
   }
 </style>

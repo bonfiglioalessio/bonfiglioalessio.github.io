@@ -175,15 +175,12 @@
   <section
     id="experience"
     ref="experienceSectionRef"
-    class="w-screen relative left-1/2 -translate-x-1/2 py-20 sm:py-24 lg:py-28 overflow-hidden select-none transition-colors duration-1000 ease-out scroll-mt-20"
+    class="w-screen relative left-1/2 -translate-x-1/2 pt-10 sm:pt-14 lg:pt-16 pb-16 sm:pb-20 lg:pb-24 overflow-hidden select-none transition-colors duration-1000 ease-out scroll-mt-20"
   >
-    <!-- Dedicated Ethereal Space Backdrop Layer (170px soft vertical cloud feather) -->
-    <div class="absolute -top-10 -bottom-10 inset-x-0 career-space-backdrop pointer-events-none" />
+    <!-- Dedicated Ethereal Space Backdrop Layer (Direct continuous flow from Selected Work with zero fog division) -->
+    <div class="absolute inset-0 career-space-backdrop pointer-events-none" />
 
-    <!-- Volumetric Cosmic Smoke / Cloud Nebulas -->
-    <div
-      class="absolute -top-10 inset-x-0 h-56 bg-gradient-to-b from-transparent via-emerald-500/10 to-transparent blur-3xl pointer-events-none"
-    />
+    <!-- Volumetric Cosmic Nebulas -->
     <div
       class="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[450px] rounded-full bg-cyan-500/10 blur-[150px] pointer-events-none"
     />
@@ -322,7 +319,7 @@
       <div class="hidden lg:block relative pl-7 sm:pl-9 lg:pl-10">
         <!-- Continuous Full-Height Left Vertical Rail Assembly (Clean, seamless straight rail from top to bottom) -->
         <div
-          class="absolute -top-20 sm:-top-24 lg:-top-28 -bottom-20 sm:-bottom-24 lg:-bottom-28 left-0 w-[2px] pointer-events-none"
+          class="absolute -top-12 sm:-top-16 lg:-top-20 -bottom-16 sm:-bottom-20 lg:-bottom-24 left-0 w-[2px] pointer-events-none"
         >
           <!-- Base Static Track Line spanning entire sector -->
           <div class="w-full h-full bg-lime-400/20 rounded-full" />
@@ -365,37 +362,10 @@
 <style scoped lang="scss">
   .career-space-backdrop {
     background: radial-gradient(
-      ellipse at 50% 30%,
-      rgba(14, 32, 54, 0.75) 0%,
-      rgba(7, 15, 28, 0.94) 55%,
+      ellipse at 50% 50%,
+      rgba(14, 32, 54, 0.8) 0%,
+      rgba(7, 15, 28, 0.95) 55%,
       rgba(3, 7, 18, 0.98) 100%
-    );
-    // Smooth generous 160px ethereal smoke/cloud feather mask
-    mask-image: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(0, 0, 0, 0.05) 30px,
-      rgba(0, 0, 0, 0.3) 70px,
-      rgba(0, 0, 0, 0.75) 120px,
-      black 170px,
-      black calc(100% - 170px),
-      rgba(0, 0, 0, 0.75) calc(100% - 120px),
-      rgba(0, 0, 0, 0.3) calc(100% - 70px),
-      rgba(0, 0, 0, 0.05) calc(100% - 30px),
-      transparent 100%
-    );
-    -webkit-mask-image: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(0, 0, 0, 0.05) 30px,
-      rgba(0, 0, 0, 0.3) 70px,
-      rgba(0, 0, 0, 0.75) 120px,
-      black 170px,
-      black calc(100% - 170px),
-      rgba(0, 0, 0, 0.75) calc(100% - 120px),
-      rgba(0, 0, 0, 0.3) calc(100% - 70px),
-      rgba(0, 0, 0, 0.05) calc(100% - 30px),
-      transparent 100%
     );
   }
 </style>
