@@ -11,6 +11,7 @@
     index?: number
     total?: number
     timelineProgress?: number
+    isFocused?: boolean
   }
 
   const props = withDefaults(defineProps<Props>(), {
@@ -19,10 +20,12 @@
     index: 0,
     total: 3,
     timelineProgress: 0,
+    isFocused: true,
   })
 
   // Compute if the laser beam has reached this node
   const isReached = computed(() => {
+    if (props.isFocused) return true
     if (props.timelineProgress === 0) return Boolean(props.experience.isCurrent)
     const activationThreshold = props.total > 1 ? (props.index / (props.total - 1)) * 65 + 25 : 30
     return props.timelineProgress >= activationThreshold
@@ -100,14 +103,20 @@
     <!-- Horizontal Neon Connector Branch (Desktop only >= lg) -->
     <div
       class="hidden lg:block absolute top-7 -left-7 sm:-left-9 lg:-left-10 w-7 sm:w-9 lg:w-10 h-[2px] pointer-events-none transition-all duration-300 z-10"
-      :class="[isReached ? themeConfig.connectorActive : themeConfig.connectorInactive]"
+      :class="[
+        isFocused || isReached ? themeConfig.connectorActive : themeConfig.connectorInactive,
+      ]"
     />
 
     <!-- Glowing Timeline Node Marker (Desktop only >= lg) -->
     <div
       class="hidden lg:flex absolute top-4 -left-[40px] sm:-left-[49px] lg:-left-[53px] w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-dark-950 items-center justify-center z-20 transition-all duration-300 border border-lime-400/30"
       :class="[
-        isReached || experience.isCurrent ? themeConfig.nodeBorderActive : 'opacity-70 scale-95',
+        isFocused
+          ? themeConfig.nodeBorderActive
+          : isReached || experience.isCurrent
+            ? 'opacity-85 scale-100'
+            : 'opacity-40 scale-90',
       ]"
     >
       <span v-if="experience.isCurrent" class="relative flex h-2.5 w-2.5 sm:h-3 sm:w-3">
@@ -124,12 +133,12 @@
         v-else
         class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full transition-all duration-300"
         :class="[
-          isReached ? themeConfig.nodeInnerDotActive : 'bg-slate-500 group-hover:opacity-100',
+          isFocused ? themeConfig.nodeInnerDotActive : isReached ? 'bg-slate-400' : 'bg-slate-600',
         ]"
       />
     </div>
 
-    <!-- Experience Content Card (Themed) -->
+    <!-- Experience Content Card (Themed & Focus-Aware Dimming) -->
     <AppCard
       padding="md"
       rounded="2xl"
@@ -138,13 +147,15 @@
       :float-animation="floatAnimation"
       class="select-none space-y-4 w-full h-full flex flex-col justify-between relative overflow-hidden transition-all duration-500 backdrop-blur-xl"
       :class="[
-        isReached ? `${themeConfig.activeCardClass} opacity-100` : 'opacity-85 hover:opacity-100',
+        isFocused
+          ? `${themeConfig.activeCardClass} opacity-100 scale-100 shadow-[0_0_35px_rgba(0,0,0,0.6)]`
+          : 'opacity-35 scale-[0.985] blur-[0.2px] hover:opacity-100 hover:scale-100 hover:blur-none',
       ]"
     >
       <!-- Permanent SVG Neon Perimeter (Themed) -->
       <svg
         class="absolute inset-0 w-full h-full pointer-events-none z-10 overflow-visible rounded-2xl transition-opacity duration-300"
-        :class="isReached ? 'opacity-100' : 'opacity-0'"
+        :class="isFocused ? 'opacity-100' : 'opacity-0'"
         xmlns="http://www.w3.org/2000/svg"
       >
         <rect
