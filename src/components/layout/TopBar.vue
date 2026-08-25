@@ -9,8 +9,12 @@
   const isMobileMenuOpen = ref(false)
   const isScrolled = ref(false)
   const isHeroVisible = ref(true)
+  const isContactVisible = ref(false)
+  const activeSectionId = ref('')
 
   let heroObserver: IntersectionObserver | null = null
+  let contactObserver: IntersectionObserver | null = null
+  const sectionObservers: IntersectionObserver[] = []
 
   const navLinks = [
     { href: '#stack', label: './stack' },
@@ -32,6 +36,16 @@
   function handleScroll() {
     if (typeof window !== 'undefined') {
       isScrolled.value = window.scrollY > 25
+      if (window.scrollY < 200) {
+        activeSectionId.value = ''
+      }
+
+      // Exact check for contact section visibility to auto-hide navbar
+      const contactEl = document.getElementById('contact')
+      if (contactEl) {
+        const rect = contactEl.getBoundingClientRect()
+        isContactVisible.value = rect.top <= window.innerHeight * 0.7 && rect.bottom >= 50
+      }
     }
   }
 
@@ -53,6 +67,42 @@
       )
       heroObserver.observe(heroEl)
     }
+
+    // Observe Contact section to auto-hide navbar when contact section is in view
+    const contactEl = document.getElementById('contact')
+    if (contactEl && 'IntersectionObserver' in window) {
+      contactObserver = new IntersectionObserver(
+        ([entry]) => {
+          isContactVisible.value = entry.isIntersecting
+        },
+        {
+          threshold: 0.05,
+          rootMargin: '0px 0px -50px 0px',
+        },
+      )
+      contactObserver.observe(contactEl)
+    }
+
+    // Scrollspy: Observe individual sections to highlight active nav link
+    const sectionIds = ['stack', 'projects', 'experience', 'contact']
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el && 'IntersectionObserver' in window) {
+        const obs = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              activeSectionId.value = '#' + id
+            }
+          },
+          {
+            threshold: 0.15,
+            rootMargin: '-80px 0px -45% 0px',
+          },
+        )
+        obs.observe(el)
+        sectionObservers.push(obs)
+      }
+    })
   })
 
   onUnmounted(() => {
@@ -61,17 +111,26 @@
       heroObserver.disconnect()
       heroObserver = null
     }
+    if (contactObserver) {
+      contactObserver.disconnect()
+      contactObserver = null
+    }
+    sectionObservers.forEach((obs) => obs.disconnect())
+    sectionObservers.length = 0
   })
 </script>
 
 <template>
   <header
-    class="fixed top-0 inset-x-0 z-50 transition-all duration-300 ease-out shrink-0"
-    :class="
+    class="fixed top-0 inset-x-0 z-50 transition-all duration-500 ease-out shrink-0"
+    :class="[
+      isContactVisible
+        ? '-translate-y-full opacity-0 pointer-events-none'
+        : 'translate-y-0 opacity-100',
       isScrolled
         ? 'h-12 min-h-[3rem] bg-dark-950/35 backdrop-blur-md border-b border-lime-400/10 shadow-[0_8px_32px_rgba(0,0,0,0.6)]'
-        : 'h-16 min-h-[4rem] bg-dark-950/85 backdrop-blur-xl border-b border-lime-400/15'
-    "
+        : 'h-16 min-h-[4rem] bg-dark-950/85 backdrop-blur-xl border-b border-lime-400/15',
+    ]"
   >
     <AppContainer size="default">
       <div
@@ -95,9 +154,9 @@
           <span class="text-lime-400 font-mono">/&gt;</span>
         </a>
 
-        <!-- Right Side: Desktop Navigation Links + Sticky Contact CTA (To the Right of the List) -->
-        <div class="flex items-center gap-2.5 sm:gap-3">
-          <!-- Desktop Navigation Links (Shrinks smoothly on scroll) -->
+        <!-- Right Side: Desktop Navigation Links (with Scrollspy) + Sticky Contact CTA -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Desktop Navigation Links (Scrollspy Active Highlighting) -->
           <nav
             class="hidden md:flex items-center gap-1 text-slate-300 font-mono transition-all duration-300"
             :class="isScrolled ? 'text-[11px]' : 'text-xs'"
@@ -106,10 +165,19 @@
               v-for="link in navLinks"
               :key="link.href"
               :href="link.href"
-              class="inline-flex items-center justify-center hover:text-lime-400 transition-all duration-200 drop-shadow-[0_0_8px_rgba(226,241,97,0.3)] rounded-lg hover:bg-dark-900/50"
-              :class="isScrolled ? 'h-8 px-2.5' : 'h-10 px-3'"
+              class="inline-flex items-center justify-center transition-all duration-200 rounded-lg select-none"
+              :class="[
+                isScrolled ? 'h-8 px-2.5' : 'h-10 px-3',
+                activeSectionId === link.href
+                  ? 'bg-lime-400/15 text-lime-400 border border-lime-400/35 shadow-[0_0_12px_rgba(226,241,97,0.25)] font-bold'
+                  : 'text-slate-300 hover:text-lime-400 hover:bg-dark-900/50',
+              ]"
               @click="playClick"
             >
+              <span
+                v-if="activeSectionId === link.href"
+                class="w-1.5 h-1.5 rounded-full bg-lime-400 mr-1.5 animate-pulse"
+              />
               {{ link.label }}
             </a>
           </nav>
@@ -168,7 +236,7 @@
       </div>
     </AppContainer>
 
-    <!-- Mobile Dropdown Navigation (Absolute Overlay) -->
+    <!-- Mobile Dropdown Navigation (Absolute Overlay with Scrollspy) -->
     <transition
       enter-active-class="transition-all duration-200 ease-out"
       enter-from-class="opacity-0 -translate-y-2"
@@ -188,10 +256,21 @@
               v-for="link in navLinks"
               :key="link.href"
               :href="link.href"
-              class="flex items-center h-10 px-4 text-slate-300 hover:text-lime-400 transition-colors rounded-lg hover:bg-dark-900/80 active:bg-dark-900 font-semibold"
+              class="flex items-center justify-between h-10 px-4 transition-colors rounded-lg font-semibold"
+              :class="[
+                activeSectionId === link.href
+                  ? 'bg-lime-400/20 text-lime-400 border border-lime-400/30 shadow-[0_0_12px_rgba(226,241,97,0.2)] font-bold'
+                  : 'text-slate-300 hover:text-lime-400 hover:bg-dark-900/80 active:bg-dark-900',
+              ]"
               @click="closeMobileMenu"
             >
-              {{ link.label }}
+              <span>{{ link.label }}</span>
+              <span
+                v-if="activeSectionId === link.href"
+                class="text-[10px] text-lime-400 font-mono"
+              >
+                ● ACTIVE
+              </span>
             </a>
           </div>
         </AppContainer>
