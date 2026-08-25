@@ -5,7 +5,7 @@
   import SectionHeader from '../ui/SectionHeader.vue'
   import ExperienceCard from './ExperienceCard.vue'
 
-  const { careerMissionLog } = usePortfolioData()
+  const { careerMissionLog, sections } = usePortfolioData()
   const { playClick } = useAudioSynth()
 
   const missionThemes: ('lime' | 'white' | 'emerald')[] = ['lime', 'white', 'emerald']
@@ -216,10 +216,13 @@
       <!-- ================= MOBILE VIEW: Horizontal Swipe Deck (< lg) ================= -->
       <div class="lg:hidden space-y-5">
         <SectionHeader
-          section-number="03"
-          title="Career Mission Log"
-          status-badge="● 6+ YEARS IN PRODUCTION"
-          description="Il percorso professionale tra grandi realtà enterprise, sistemi ad alto traffico e ingegneria frontend."
+          :section-number="sections?.experience?.sectionNumber || '03'"
+          :title="sections?.experience?.title || 'Career Mission Log'"
+          :status-badge="sections?.experience?.statusBadge || '● 6+ YEARS IN PRODUCTION'"
+          :description="
+            sections?.experience?.description ||
+            'Il percorso professionale tra grandi realtà enterprise, sistemi ad alto traffico e ingegneria frontend.'
+          "
         />
 
         <div class="space-y-4 pt-1">
@@ -358,10 +361,13 @@
         <!-- Section Header (Aligned cleanly to the right of the continuous rail) -->
         <div class="pb-8 sm:pb-10">
           <SectionHeader
-            section-number="03"
-            title="Career Mission Log"
-            status-badge="● 6+ YEARS IN PRODUCTION"
-            description="Il percorso professionale tra grandi realtà enterprise, sistemi ad alto traffico e ingegneria frontend."
+            :section-number="sections?.experience?.sectionNumber || '03'"
+            :title="sections?.experience?.title || 'Career Mission Log'"
+            :status-badge="sections?.experience?.statusBadge || '● 6+ YEARS IN PRODUCTION'"
+            :description="
+              sections?.experience?.description ||
+              'Il percorso professionale tra grandi realtà enterprise, sistemi ad alto traffico e ingegneria frontend.'
+            "
           />
         </div>
 
