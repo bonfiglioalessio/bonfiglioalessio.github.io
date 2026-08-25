@@ -36,6 +36,36 @@ export const portfolioData: PortfolioData = {
       },
     ],
   },
+  sections: {
+    stack: {
+      sectionNumber: '01',
+      title: 'Technical Constellation',
+      statusBadge: '● 4 CORE DOMAINS',
+      description:
+        'Stack primario e strumenti adoperati quotidianamente in produzione. Ogni modulo rappresenta un cluster specializzato.',
+    },
+    projects: {
+      sectionNumber: '02',
+      title: 'Selected Work',
+      statusBadge: '● 4 SELECTED PROJECTS',
+      description:
+        'Una selezione di side project ed esperimenti passati. Clicca su [+] inspect diff per visualizzare architettura e dettagli di codice.',
+    },
+    experience: {
+      sectionNumber: '03',
+      title: 'Career Mission Log',
+      statusBadge: '● 3 MILESTONES',
+      description:
+        'Percorso professionale e milestone di produzione in ambito telco e media publishing.',
+    },
+    contact: {
+      sectionNumber: '04',
+      title: 'Direct Transmission',
+      statusBadge: '● DIRECT DISPATCH',
+      description:
+        'Canale di contatto diretto per collaborazioni, architetture UI ad alte prestazioni e nuove opportunità.',
+    },
+  },
   marqueeItems: [
     'FRONTEND DEVELOPER',
     'ILIAD & MONDADORI MEDIA',
