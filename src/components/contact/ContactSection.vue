@@ -75,7 +75,7 @@
 
   let observer: IntersectionObserver | null = null
 
-  // Dedicated Magnetic Glide Engine to Frame Contact Section
+  // Dedicated Magnetic Glide Engine to Perfectly Center Contact Section
   let lastScrollY = typeof window !== 'undefined' ? window.scrollY : 0
   let isGliding = false
   let hasGlided = false
@@ -108,8 +108,11 @@
 
     const startY = window.scrollY
     const rect = contactSectionRef.value.getBoundingClientRect()
-    // Align top of fullscreen contact section perfectly with viewport top for optimal full-frame composition
-    const targetY = Math.round(rect.top + window.scrollY)
+    const sectionHeight = contactSectionRef.value.offsetHeight
+    // Exact vertical centering so all elements from top header to bottom social links fit inside viewport
+    const targetY = Math.round(
+      rect.top + window.scrollY - Math.max(0, (window.innerHeight - sectionHeight) / 2),
+    )
     const distance = targetY - startY
 
     if (Math.abs(distance) < 8) {
@@ -221,7 +224,7 @@
   <section
     id="contact"
     ref="contactSectionRef"
-    class="fullscreen-contact-section w-screen relative left-1/2 -translate-x-1/2 min-h-[90vh] lg:min-h-screen pt-20 sm:pt-28 lg:pt-36 pb-16 sm:pb-24 px-6 sm:px-12 lg:px-20 flex flex-col justify-center items-center select-none overflow-hidden transition-colors duration-1000 ease-out"
+    class="fullscreen-contact-section w-screen relative left-1/2 -translate-x-1/2 min-h-screen py-10 sm:py-14 lg:py-16 px-6 sm:px-12 lg:px-20 flex flex-col justify-center items-center select-none overflow-hidden transition-colors duration-1000 ease-out"
     :class="[isEmerged ? 'bg-emerged' : 'bg-submerged']"
   >
     <!-- Top Glowing Cyber Horizon Divider -->
@@ -242,7 +245,7 @@
 
     <!-- Central Content Stage -->
     <div
-      class="max-w-4xl w-full mx-auto space-y-8 sm:space-y-10 relative z-10 transition-all duration-1000 cubic-bezier(0.16, 1, 0.3, 1) origin-center text-left"
+      class="max-w-4xl w-full mx-auto space-y-6 sm:space-y-8 relative z-10 transition-all duration-1000 cubic-bezier(0.16, 1, 0.3, 1) origin-center text-left"
       :class="[
         isEmerged ? 'scale-100 opacity-100 translate-y-0' : 'scale-90 opacity-40 translate-y-8',
       ]"
@@ -295,13 +298,13 @@
       </div>
 
       <!-- Subtitle Description -->
-      <p class="text-sm sm:text-base text-slate-300 font-mono leading-relaxed max-w-2xl pt-2">
+      <p class="text-sm sm:text-base text-slate-300 font-mono leading-relaxed max-w-2xl pt-1">
         Se cerchi un Frontend Engineer con solida esperienza in React/Vue che mette la passione per
         il codice e i dettagli visivi al primo posto, connettiamoci.
       </p>
 
       <!-- Action Interaction Row -->
-      <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 pt-4 flex-wrap">
+      <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 pt-2 flex-wrap">
         <!-- Copy Email Pill Box -->
         <div
           class="relative bg-dark-900/90 border border-lime-400/30 rounded-2xl px-5 py-3 sm:py-3.5 flex items-center justify-between gap-4 shadow-[0_0_20px_rgba(0,0,0,0.6)] min-w-0"
@@ -339,7 +342,7 @@
       </div>
 
       <!-- Social Links Row -->
-      <div class="flex items-center gap-8 sm:gap-12 pt-6 flex-wrap">
+      <div class="flex items-center gap-8 sm:gap-12 pt-4 flex-wrap">
         <a
           v-for="link in socialLinks.filter((l) => !l.isMailto)"
           :key="link.platform"

@@ -39,7 +39,11 @@
     }
     const contactEl = document.getElementById('contact')
     if (contactEl) {
-      const targetY = Math.round(contactEl.getBoundingClientRect().top + window.scrollY)
+      const targetY = Math.round(
+        contactEl.getBoundingClientRect().top +
+          window.scrollY -
+          Math.max(0, (window.innerHeight - contactEl.offsetHeight) / 2),
+      )
       window.scrollTo({
         top: Math.max(0, targetY),
         behavior: 'smooth',
