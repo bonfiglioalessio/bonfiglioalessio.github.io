@@ -69,22 +69,22 @@
 
 <template>
   <section
-    class="min-h-screen flex flex-col justify-between pt-24 sm:pt-28 lg:pt-32 pb-8 sm:pb-12 relative z-10 w-full"
+    class="min-h-screen flex flex-col justify-between pt-28 sm:pt-32 lg:pt-36 pb-8 sm:pb-12 lg:pb-14 relative z-10 w-full"
   >
     <div
       class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-center w-full flex-1"
     >
-      <!-- Left Column: Bio, Headline, Stats with Staggered Entrance Reveal -->
-      <div class="lg:col-span-7 space-y-5 sm:space-y-6 lg:space-y-7">
+      <!-- Left Column: Bio, Headline, Stats with Generous Spacing -->
+      <div class="lg:col-span-7 space-y-6 sm:space-y-7 lg:space-y-8">
         <!-- Level Indicator & Main Display Headline (Zero-Gravity Floating) -->
         <div
-          class="space-y-2 transition-all duration-700 delay-150 ease-out"
+          class="space-y-2.5 transition-all duration-700 delay-150 ease-out"
           :class="
             isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'
           "
         >
           <p
-            class="text-[11px] sm:text-xs text-lime-400 font-mono tracking-widest uppercase flex items-center gap-2 drop-shadow-[0_0_8px_rgba(226,241,97,0.5)] select-none"
+            class="text-xs sm:text-sm text-lime-400 font-mono tracking-widest uppercase flex items-center gap-2 drop-shadow-[0_0_8px_rgba(226,241,97,0.5)] select-none"
           >
             <span>&gt;_ LEVEL 06 DEVELOPER</span>
             <span class="h-px w-10 sm:w-12 bg-lime-400/60 shadow-[0_0_8px_#e2f161]" />
@@ -94,7 +94,7 @@
           <div class="relative">
             <!-- Invisible Ghost Placeholder: Locks exact layout dimensions & line wraps immediately -->
             <h1
-              class="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-display tracking-tight leading-[1.08] sm:leading-[1.05] opacity-0 select-none pointer-events-none"
+              class="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-display tracking-tight leading-[1.12] sm:leading-[1.05] opacity-0 select-none pointer-events-none"
               aria-hidden="true"
             >
               <span class="inline-block">Turning complex logic into</span>
@@ -104,7 +104,7 @@
 
             <!-- Active Streamed Overlay (Perfect match, zero displacement of bio/stats) -->
             <h1
-              class="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-display text-white tracking-tight leading-[1.08] sm:leading-[1.05] absolute inset-0"
+              class="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-display text-white tracking-tight leading-[1.12] sm:leading-[1.05] absolute inset-0"
             >
               <span class="inline-block animate-float-slow">
                 {{ displayedPart1 }}
@@ -127,7 +127,7 @@
 
         <!-- Narrative Bio -->
         <p
-          class="text-xs sm:text-sm text-slate-300 font-mono leading-relaxed max-w-xl drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] transition-all duration-700 delay-300 ease-out"
+          class="text-sm sm:text-base text-slate-300 font-mono leading-relaxed max-w-xl drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] transition-all duration-700 delay-300 ease-out"
           :class="
             isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'
           "
@@ -157,15 +157,15 @@
         </div>
       </div>
 
-      <!-- Right Column: Interactive Orbital Satellite Cockpit -->
-      <div class="lg:col-span-5 flex justify-center lg:justify-end">
+      <!-- Right Column: Interactive Orbital Satellite Cockpit (Half-peeking on Mobile) -->
+      <div class="lg:col-span-5 flex justify-center lg:justify-end mt-4 lg:mt-0">
         <HeroCockpit />
       </div>
     </div>
 
-    <!-- Bottom Center Orbital Scroll Flight Prompt (Borderless Clean Typography) -->
+    <!-- Bottom Center Orbital Scroll Flight Prompt (Desktop Only, hidden on Mobile) -->
     <div
-      class="pt-6 sm:pt-8 flex justify-center w-full select-none transition-all duration-700 delay-700 ease-out"
+      class="hidden lg:flex pt-6 sm:pt-8 justify-center w-full select-none transition-all duration-700 delay-700 ease-out"
       :class="
         isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'
       "

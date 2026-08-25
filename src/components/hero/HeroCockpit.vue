@@ -109,9 +109,9 @@
 
     <!-- ================= SATELLITE HARDWARE ATTACHMENTS ================= -->
 
-    <!-- Top Communication Antenna Mast & Pulsing Transponder Beacon -->
+    <!-- Top Communication Antenna Mast & Pulsing Transponder Beacon (Desktop Only) -->
     <div
-      class="absolute -top-10 right-14 flex flex-col items-center pointer-events-none z-20 select-none"
+      class="hidden lg:flex absolute -top-10 right-14 flex-col items-center pointer-events-none z-20 select-none"
     >
       <!-- Glowing Transponder Beacon -->
       <span class="relative flex h-3 w-3">
