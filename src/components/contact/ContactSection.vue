@@ -318,7 +318,7 @@
 
           <button
             type="button"
-            class="px-3 py-1.5 text-xs font-mono rounded-lg border transition-all cursor-pointer shrink-0"
+            class="relative overflow-hidden group/btn px-3 py-1.5 text-xs font-mono rounded-lg border transition-all cursor-pointer shrink-0"
             :class="
               isCopied
                 ? 'bg-lime-400 text-black border-lime-400 font-bold shadow-[0_0_12px_rgba(226,241,97,0.5)]'
@@ -326,18 +326,28 @@
             "
             @click="copyEmail"
           >
-            {{ isCopied ? 'COPIED!' : 'COPY' }}
+            <span
+              class="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out pointer-events-none bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-25deg] w-[180%]"
+            />
+            <span class="relative z-10 font-bold">
+              {{ isCopied ? 'COPIED!' : 'COPY' }}
+            </span>
           </button>
         </div>
 
-        <!-- Direct Email Button CTA -->
+        <!-- Direct Email Button CTA with Starlight Shine -->
         <a
           :href="`mailto:${emailAddress}`"
-          class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl bg-lime-400 text-black font-mono font-bold text-xs sm:text-sm shadow-[0_0_25px_rgba(226,241,97,0.4)] hover:shadow-[0_0_40px_rgba(226,241,97,0.8)] hover:scale-105 active:scale-95 transition-all cursor-pointer shrink-0"
+          class="relative overflow-hidden group/btn inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl bg-lime-400 text-black font-mono font-bold text-xs sm:text-sm shadow-[0_0_25px_rgba(226,241,97,0.4)] hover:shadow-[0_0_40px_rgba(226,241,97,0.8)] hover:scale-105 active:scale-95 transition-all cursor-pointer shrink-0"
           @click="playClick"
         >
-          <span>Send Email</span>
-          <span class="text-base">&rarr;</span>
+          <span
+            class="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out pointer-events-none bg-gradient-to-r from-transparent via-white/50 to-transparent skew-x-[-25deg] w-[180%]"
+          />
+          <span class="relative z-10 inline-flex items-center gap-2">
+            <span>Send Email</span>
+            <span class="text-base">&rarr;</span>
+          </span>
         </a>
       </div>
 
