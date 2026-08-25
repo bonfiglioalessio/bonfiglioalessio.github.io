@@ -1,9 +1,9 @@
 <script setup lang="ts">
   import { onMounted, onUnmounted, ref } from 'vue'
-  import { portfolioData } from '../../data/portfolio'
+  import { usePortfolioData } from '../../composables/usePortfolioData'
   import { useAudioSynth } from '../../composables/useAudioSynth'
 
-  const { socialLinks } = portfolioData
+  const { socialLinks } = usePortfolioData()
   const { playClick, playDiffToggle } = useAudioSynth()
   const emailAddress = 'bonfi.alessio98@gmail.com'
   const isCopied = ref(false)
