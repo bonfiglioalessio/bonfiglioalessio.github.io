@@ -20,7 +20,7 @@
     (e: 'preview', project: Project): void
   }>()
 
-  const { playDiffToggle, playClick } = useAudioSynth()
+  const { playDiffToggle } = useAudioSynth()
   const isDiffOpen = ref(false)
 
   function toggleDiff() {
@@ -42,8 +42,6 @@
           bulletClass: 'text-white/60',
           previewBtnClass:
             'border-white/30 text-white hover:bg-white hover:text-black hover:shadow-[0_0_15px_rgba(255,255,255,0.4)]',
-          visitBtnClass:
-            'bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.35)] hover:shadow-[0_0_25px_rgba(255,255,255,0.65)]',
           activeSessionText: 'text-white',
           activeSessionPing: 'bg-white',
         }
@@ -59,8 +57,6 @@
           bulletClass: 'text-emerald-400/60',
           previewBtnClass:
             'border-emerald-400/30 text-emerald-400 hover:bg-emerald-400 hover:text-black hover:shadow-[0_0_15px_rgba(52,211,153,0.4)]',
-          visitBtnClass:
-            'bg-emerald-400 text-black shadow-[0_0_15px_rgba(52,211,153,0.35)] hover:shadow-[0_0_25px_rgba(52,211,153,0.65)]',
           activeSessionText: 'text-emerald-400',
           activeSessionPing: 'bg-emerald-400',
         }
@@ -76,8 +72,6 @@
           bulletClass: 'text-sky-400/60',
           previewBtnClass:
             'border-sky-400/30 text-sky-400 hover:bg-sky-400 hover:text-black hover:shadow-[0_0_15px_rgba(56,189,248,0.4)]',
-          visitBtnClass:
-            'bg-sky-400 text-black shadow-[0_0_15px_rgba(56,189,248,0.35)] hover:shadow-[0_0_25px_rgba(56,189,248,0.65)]',
           activeSessionText: 'text-sky-400',
           activeSessionPing: 'bg-sky-400',
         }
@@ -94,8 +88,6 @@
           bulletClass: 'text-lime-400/60',
           previewBtnClass:
             'border-lime-400/30 text-lime-400 hover:bg-lime-400 hover:text-black hover:shadow-[0_0_15px_rgba(226,241,97,0.4)]',
-          visitBtnClass:
-            'bg-lime-400 text-black shadow-[0_0_15px_rgba(226,241,97,0.35)] hover:shadow-[0_0_25px_rgba(226,241,97,0.65)]',
           activeSessionText: 'text-lime-400',
           activeSessionPing: 'bg-lime-400',
         }
@@ -201,7 +193,7 @@
       </div>
     </div>
 
-    <!-- Action Footer: Stack bullet list & Launch Button -->
+    <!-- Action Footer: Stack bullet list & Preview Action Trigger -->
     <div
       class="pt-5 mt-4 border-t border-lime-400/10 flex items-center justify-between gap-4 flex-wrap"
     >
@@ -224,7 +216,7 @@
         <!-- Preview Lightbox Trigger -->
         <button
           type="button"
-          class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl font-mono font-bold text-xs bg-dark-950/90 border transition-all cursor-pointer active:scale-95"
+          class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-mono font-bold text-xs bg-dark-950/90 border transition-all cursor-pointer active:scale-95"
           :class="themeConfig.previewBtnClass"
           @click="emit('preview', project)"
         >
@@ -232,22 +224,10 @@
           <span>PREVIEW</span>
         </button>
 
-        <a
-          v-if="project.liveUrl"
-          :href="project.liveUrl"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-mono font-bold text-xs hover:scale-105 active:scale-95 transition-all cursor-pointer"
-          :class="themeConfig.visitBtnClass"
-          @click="playClick"
-        >
-          <span>VISIT</span>
-          <span class="text-sm">&rarr;</span>
-        </a>
-
+        <!-- Active Session Indicator Badge (for bonfiglio.dev) -->
         <div
-          v-else-if="project.isCurrentSite"
-          class="flex items-center gap-1.5 font-mono text-[11px] font-bold"
+          v-if="project.isCurrentSite"
+          class="flex items-center gap-1.5 font-mono text-[11px] font-bold pl-1"
           :class="themeConfig.activeSessionText"
         >
           <span
@@ -256,8 +236,6 @@
           />
           <span>ACTIVE SESSION</span>
         </div>
-
-        <div v-else class="text-[11px] font-mono text-slate-400">PROD DEPLOYED</div>
       </div>
     </div>
   </AppCard>

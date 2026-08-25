@@ -182,14 +182,24 @@
               </div>
             </div>
 
-            <!-- Center: URL Bar Mockup -->
+            <!-- Center: URL Bar Mockup with Clickable External Link -->
             <div
               class="hidden md:flex items-center gap-2 px-3.5 py-1 rounded-xl bg-dark-950 border border-lime-400/20 font-mono text-xs text-slate-300 max-w-md w-full justify-between"
             >
               <div class="flex items-center gap-2 truncate">
                 <span class="text-lime-400 text-[10px]">🔒</span>
-                <span class="text-slate-400 truncate">
-                  {{ project.liveUrl || 'https://bonfiglio.dev/active-session' }}
+                <a
+                  v-if="project.liveUrl"
+                  :href="project.liveUrl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-slate-300 hover:text-lime-400 truncate hover:underline transition-colors flex items-center gap-1"
+                >
+                  <span class="truncate">{{ project.liveUrl }}</span>
+                  <span class="text-[10px] text-lime-400">↗</span>
+                </a>
+                <span v-else class="text-slate-400 truncate">
+                  https://bonfiglio.dev/active-session
                 </span>
               </div>
 
@@ -387,8 +397,8 @@
                 class="px-4 py-1.5 rounded-xl bg-lime-400 text-black font-bold shadow-[0_0_15px_rgba(226,241,97,0.35)] hover:shadow-[0_0_25px_rgba(226,241,97,0.65)] hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer"
                 @click="playClick"
               >
-                <span>OPEN IN NEW TAB</span>
-                <span>↗</span>
+                <span>VISIT LIVE SITE</span>
+                <span class="text-sm">&rarr;</span>
               </a>
             </div>
           </div>
