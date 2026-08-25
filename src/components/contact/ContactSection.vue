@@ -80,6 +80,8 @@
   let isGliding = false
   let hasGlided = false
   let snapFrameId: number | null = null
+  let isNavClickActive = false
+  let navClickTimeoutId: ReturnType<typeof setTimeout> | null = null
 
   function cancelGlide() {
     if (snapFrameId !== null) {
@@ -87,6 +89,16 @@
       snapFrameId = null
     }
     isGliding = false
+  }
+
+  function handleNavDirectScroll() {
+    isNavClickActive = true
+    hasGlided = true
+    cancelGlide()
+    if (navClickTimeoutId) clearTimeout(navClickTimeoutId)
+    navClickTimeoutId = setTimeout(() => {
+      isNavClickActive = false
+    }, 1600)
   }
 
   function glideToCenter() {
@@ -131,7 +143,7 @@
   }
 
   function handleScroll() {
-    if (typeof window === 'undefined' || !contactSectionRef.value) return
+    if (typeof window === 'undefined' || !contactSectionRef.value || isNavClickActive) return
     const currentScrollY = window.scrollY
     const isScrollingDown = currentScrollY > lastScrollY
     const isScrollingUp = currentScrollY < lastScrollY
@@ -150,7 +162,7 @@
       cancelGlide()
     }
 
-    // Trigger magnetic glide when scrolling down and contact top is in the entry zone
+    // Trigger magnetic glide only during manual downward scroll when contact is approached
     if (
       isScrollingDown &&
       !isGliding &&
@@ -194,6 +206,7 @@
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('nav-direct-scroll-contact', handleNavDirectScroll)
   })
 
   onUnmounted(() => {
@@ -201,7 +214,9 @@
       observer.disconnect()
     }
     window.removeEventListener('scroll', handleScroll)
+    window.removeEventListener('nav-direct-scroll-contact', handleNavDirectScroll)
     cancelGlide()
+    if (navClickTimeoutId) clearTimeout(navClickTimeoutId)
   })
 </script>
 

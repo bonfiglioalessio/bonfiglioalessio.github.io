@@ -35,6 +35,9 @@
   }
 
   function scrollToContactCenter() {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('nav-direct-scroll-contact'))
+    }
     const contactEl = document.getElementById('contact')
     if (contactEl) {
       const targetY = Math.round(
