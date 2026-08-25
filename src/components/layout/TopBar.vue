@@ -273,33 +273,37 @@
             </AppButton>
           </div>
 
-          <!-- Mobile Hamburger Toggle -->
+          <!-- Mobile Hamburger / Close Toggle Button (Pixel-Perfect Symmetrical X) -->
           <button
             type="button"
-            class="md:hidden rounded-lg text-slate-300 hover:text-lime-400 hover:bg-dark-900/80 border border-lime-400/20 flex flex-col items-center justify-center transition-all duration-300 cursor-pointer select-none shrink-0"
-            :class="isScrolled ? 'w-8 h-8 min-w-[32px] gap-1' : 'w-10 h-10 min-w-[40px] gap-1.5'"
+            class="md:hidden relative rounded-xl text-slate-200 hover:text-lime-400 bg-dark-900/60 hover:bg-dark-900/90 border border-lime-400/20 flex items-center justify-center transition-all duration-300 cursor-pointer select-none shrink-0"
+            :class="isScrolled ? 'w-8 h-8 min-w-[32px]' : 'w-10 h-10 min-w-[40px]'"
             :aria-expanded="isMobileMenuOpen"
             aria-label="Toggle navigation menu"
             @click="toggleMobileMenu"
           >
-            <span
-              class="h-0.5 bg-current transition-all duration-200"
-              :class="[
-                isScrolled ? 'w-4' : 'w-5',
-                isMobileMenuOpen ? 'rotate-45 translate-y-1.5' : '',
-              ]"
-            />
-            <span
-              class="h-0.5 bg-current transition-all duration-200"
-              :class="[isScrolled ? 'w-4' : 'w-5', isMobileMenuOpen ? 'opacity-0' : 'opacity-100']"
-            />
-            <span
-              class="h-0.5 bg-current transition-all duration-200"
-              :class="[
-                isScrolled ? 'w-4' : 'w-5',
-                isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : '',
-              ]"
-            />
+            <div class="relative w-5 h-4 flex flex-col justify-between items-center">
+              <span
+                class="w-5 h-0.5 bg-current rounded-full transition-all duration-300 origin-center"
+                :class="
+                  isMobileMenuOpen
+                    ? 'absolute top-[7px] rotate-45 text-lime-400 shadow-[0_0_8px_#e2f161]'
+                    : ''
+                "
+              />
+              <span
+                class="w-5 h-0.5 bg-current rounded-full transition-all duration-200"
+                :class="isMobileMenuOpen ? 'opacity-0 scale-x-0' : 'opacity-100'"
+              />
+              <span
+                class="w-5 h-0.5 bg-current rounded-full transition-all duration-300 origin-center"
+                :class="
+                  isMobileMenuOpen
+                    ? 'absolute top-[7px] -rotate-45 text-lime-400 shadow-[0_0_8px_#e2f161]'
+                    : ''
+                "
+              />
+            </div>
           </button>
         </div>
       </div>

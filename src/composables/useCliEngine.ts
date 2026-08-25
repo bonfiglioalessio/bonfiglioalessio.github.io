@@ -106,25 +106,30 @@ export function useCliEngine() {
     }
 
     // Interactive progressive typewriter line streaming
-    const entry: CliEntry = {
+    entries.value.push({
       id: entryId,
       type,
       html: `<div class="${wrapperClass}">${lines[0] || ''}</div>`,
       isStreaming: true,
-    }
-    entries.value.push(entry)
+    })
 
     let currentLine = 1
     const interval = setInterval(() => {
+      const liveEntry = entries.value.find((e) => e.id === entryId)
+      if (!liveEntry) {
+        clearInterval(interval)
+        return
+      }
+
       if (currentLine < lines.length) {
         const displayed = lines.slice(0, currentLine + 1).join('')
-        entry.html = `<div class="${wrapperClass}">${displayed}</div>`
+        liveEntry.html = `<div class="${wrapperClass}">${displayed}</div>`
         currentLine++
       } else {
-        entry.isStreaming = false
+        liveEntry.isStreaming = false
         clearInterval(interval)
       }
-    }, 60)
+    }, 45)
   }
 
   function executeCommand(rawCommand: string) {

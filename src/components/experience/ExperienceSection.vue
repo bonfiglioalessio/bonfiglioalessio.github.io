@@ -150,20 +150,25 @@
     }
   }
 
+  let mobileScrollRafId: number | null = null
   function handleMobileScroll() {
-    if (!mobileExperienceRef.value) return
-    const container = mobileExperienceRef.value
-    const scrollLeft = container.scrollLeft
-    const cardWidth = container.children[0]?.clientWidth || 300
-    const gap = 20
-    const newIdx = Math.round(scrollLeft / (cardWidth + gap))
-    if (
-      newIdx >= 0 &&
-      newIdx < careerMissionLog.value.length &&
-      newIdx !== activeMissionIndex.value
-    ) {
-      activeMissionIndex.value = newIdx
-    }
+    if (!mobileExperienceRef.value || mobileScrollRafId) return
+    mobileScrollRafId = window.requestAnimationFrame(() => {
+      mobileScrollRafId = null
+      if (!mobileExperienceRef.value) return
+      const container = mobileExperienceRef.value
+      const scrollLeft = container.scrollLeft
+      const cardWidth = container.children[0]?.clientWidth || 300
+      const gap = 20
+      const newIdx = Math.round(scrollLeft / (cardWidth + gap))
+      if (
+        newIdx >= 0 &&
+        newIdx < careerMissionLog.value.length &&
+        newIdx !== activeMissionIndex.value
+      ) {
+        activeMissionIndex.value = newIdx
+      }
+    })
   }
 
   function prevMission() {
@@ -189,6 +194,9 @@
   })
 
   onUnmounted(() => {
+    if (mobileScrollRafId) {
+      cancelAnimationFrame(mobileScrollRafId)
+    }
     window.removeEventListener('scroll', handleScroll)
     window.removeEventListener('resize', handleScroll)
   })
@@ -203,12 +211,12 @@
     <!-- Dedicated Ethereal Space Backdrop Layer (Direct continuous flow from Selected Work with zero fog division) -->
     <div class="absolute inset-0 career-space-backdrop pointer-events-none" />
 
-    <!-- Volumetric Cosmic Nebulas -->
+    <!-- Volumetric Cosmic Nebulas (Hidden on small mobile screens to ensure 120 FPS swiping) -->
     <div
-      class="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[450px] rounded-full bg-cyan-500/10 blur-[150px] pointer-events-none"
+      class="hidden sm:block absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[450px] rounded-full bg-cyan-500/10 blur-[150px] pointer-events-none"
     />
     <div
-      class="absolute bottom-1/3 right-1/4 translate-x-1/2 translate-y-1/2 w-[700px] h-[400px] rounded-full bg-emerald-500/10 blur-[160px] pointer-events-none"
+      class="hidden sm:block absolute bottom-1/3 right-1/4 translate-x-1/2 translate-y-1/2 w-[700px] h-[400px] rounded-full bg-emerald-500/10 blur-[160px] pointer-events-none"
     />
 
     <!-- Inner Content Stage (Aligned with Main Page Container Max-W-7xl) -->
