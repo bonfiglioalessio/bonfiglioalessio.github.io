@@ -2,7 +2,6 @@
   import { computed, ref } from 'vue'
   import { portfolioData } from '../../data/portfolio'
   import { useAudioSynth } from '../../composables/useAudioSynth'
-  import SectionWrapper from '../layout/SectionWrapper.vue'
   import SectionHeader from '../ui/SectionHeader.vue'
   import ProjectCard from './ProjectCard.vue'
 
@@ -118,8 +117,31 @@
 </script>
 
 <template>
-  <SectionWrapper id="projects" spacing="default">
-    <div class="space-y-8 sm:space-y-10">
+  <section
+    id="projects"
+    class="projects-space-sector w-screen relative left-1/2 -translate-x-1/2 py-20 sm:py-24 lg:py-28 overflow-hidden select-none transition-colors duration-1000 ease-out scroll-mt-20"
+  >
+    <!-- Cosmic Smoke / Cloud Nebula Transition Drift at Top -->
+    <div
+      class="absolute -top-14 inset-x-0 h-48 bg-gradient-to-b from-transparent via-lime-500/10 to-transparent blur-3xl pointer-events-none"
+    />
+    <div
+      class="absolute -top-20 left-1/4 -translate-x-1/2 w-[700px] h-[220px] rounded-full bg-lime-400/10 blur-[110px] pointer-events-none"
+    />
+    <div
+      class="absolute -top-24 right-1/4 translate-x-1/2 w-[650px] h-[220px] rounded-full bg-cyan-500/10 blur-[120px] pointer-events-none"
+    />
+
+    <!-- Deep Space Atmospheric Nebula Glows -->
+    <div
+      class="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] rounded-full bg-lime-500/10 blur-[150px] pointer-events-none"
+    />
+    <div
+      class="absolute bottom-1/3 right-1/4 translate-x-1/2 translate-y-1/2 w-[700px] h-[450px] rounded-full bg-emerald-500/10 blur-[160px] pointer-events-none"
+    />
+
+    <!-- Inner Content Stage (Aligned with Main Page Container Max-W-7xl) -->
+    <div class="w-full max-w-7xl mx-auto px-6 sm:px-8 relative z-10 space-y-8 sm:space-y-10">
       <!-- Section Header with Accent-Highlighted [+] inspect diff -->
       <SectionHeader section-number="02" title="Selected Work" status-badge="● 4 SELECTED PROJECTS">
         <template #description>
@@ -228,5 +250,39 @@
         </div>
       </div>
     </div>
-  </SectionWrapper>
+  </section>
 </template>
+
+<style scoped lang="scss">
+  .projects-space-sector {
+    background: radial-gradient(
+      ellipse at 50% 30%,
+      rgba(10, 26, 42, 0.72) 0%,
+      rgba(5, 13, 24, 0.92) 55%,
+      rgba(2, 6, 16, 0.98) 100%
+    );
+    // Smooth ethereal smoke/cloud feather mask at top and bottom edges
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.3) 30px,
+      rgba(0, 0, 0, 0.8) 80px,
+      black 130px,
+      black calc(100% - 130px),
+      rgba(0, 0, 0, 0.8) calc(100% - 80px),
+      rgba(0, 0, 0, 0.3) calc(100% - 30px),
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.3) 30px,
+      rgba(0, 0, 0, 0.8) 80px,
+      black 130px,
+      black calc(100% - 130px),
+      rgba(0, 0, 0, 0.8) calc(100% - 80px),
+      rgba(0, 0, 0, 0.3) calc(100% - 30px),
+      transparent 100%
+    );
+  }
+</style>

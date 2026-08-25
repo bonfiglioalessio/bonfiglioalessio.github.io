@@ -175,24 +175,22 @@
   <section
     id="experience"
     ref="experienceSectionRef"
-    class="career-space-sector w-screen relative left-1/2 -translate-x-1/2 py-16 sm:py-20 lg:py-24 overflow-hidden select-none transition-colors duration-1000 ease-out scroll-mt-20"
+    class="career-space-sector w-screen relative left-1/2 -translate-x-1/2 py-20 sm:py-24 lg:py-28 overflow-hidden select-none transition-colors duration-1000 ease-out scroll-mt-20"
   >
-    <!-- Top Glowing Cyber Horizon Divider Line -->
+    <!-- Cosmic Smoke / Cloud Nebula Transition Drift at Top -->
     <div
-      class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-lime-400/50 to-transparent shadow-[0_0_14px_#e2f161]"
+      class="absolute -top-14 inset-x-0 h-48 bg-gradient-to-b from-transparent via-emerald-500/10 to-transparent blur-3xl pointer-events-none"
     />
-
-    <!-- Bottom Glowing Cyber Horizon Divider Line -->
     <div
-      class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent shadow-[0_0_14px_#34d399]"
+      class="absolute -top-20 left-1/3 -translate-x-1/2 w-[700px] h-[220px] rounded-full bg-lime-400/12 blur-[110px] pointer-events-none"
     />
 
     <!-- Deep Space Atmospheric Nebula Glows -->
     <div
-      class="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[420px] rounded-full bg-cyan-500/10 blur-[130px] pointer-events-none"
+      class="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[450px] rounded-full bg-cyan-500/10 blur-[140px] pointer-events-none"
     />
     <div
-      class="absolute bottom-1/3 right-1/4 translate-x-1/2 translate-y-1/2 w-[650px] h-[380px] rounded-full bg-emerald-500/10 blur-[140px] pointer-events-none"
+      class="absolute bottom-1/3 right-1/4 translate-x-1/2 translate-y-1/2 w-[700px] h-[400px] rounded-full bg-emerald-500/10 blur-[150px] pointer-events-none"
     />
 
     <!-- Inner Content Stage (Aligned with Main Page Container Max-W-7xl) -->
@@ -326,7 +324,7 @@
       <div class="hidden lg:block relative pl-7 sm:pl-9 lg:pl-10">
         <!-- Continuous Full-Height Left Vertical Rail Assembly (Clean, seamless straight rail from top to bottom) -->
         <div
-          class="absolute -top-16 sm:-top-20 lg:-top-24 -bottom-16 sm:-bottom-20 lg:-bottom-24 left-0 w-[2px] pointer-events-none"
+          class="absolute -top-20 sm:-top-24 lg:-top-28 -bottom-20 sm:-bottom-24 lg:-bottom-28 left-0 w-[2px] pointer-events-none"
         >
           <!-- Base Static Track Line spanning entire sector -->
           <div class="w-full h-full bg-lime-400/20 rounded-full" />
@@ -374,8 +372,28 @@
       rgba(7, 15, 28, 0.94) 55%,
       rgba(3, 7, 18, 0.98) 100%
     );
-    box-shadow:
-      inset 0 30px 60px -25px rgba(0, 0, 0, 0.9),
-      inset 0 -30px 60px -25px rgba(0, 0, 0, 0.9);
+    // Smooth ethereal smoke/cloud feather mask at top and bottom edges (Zero hard line cuts!)
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.3) 30px,
+      rgba(0, 0, 0, 0.8) 80px,
+      black 130px,
+      black calc(100% - 130px),
+      rgba(0, 0, 0, 0.8) calc(100% - 80px),
+      rgba(0, 0, 0, 0.3) calc(100% - 30px),
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.3) 30px,
+      rgba(0, 0, 0, 0.8) 80px,
+      black 130px,
+      black calc(100% - 130px),
+      rgba(0, 0, 0, 0.8) calc(100% - 80px),
+      rgba(0, 0, 0, 0.3) calc(100% - 30px),
+      transparent 100%
+    );
   }
 </style>
