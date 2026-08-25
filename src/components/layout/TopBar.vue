@@ -218,8 +218,13 @@
             </a>
           </nav>
 
-          <!-- Dedicated Stationary Slot for Primary CTA Button (Zero Layout Shift) -->
-          <div class="hidden md:flex items-center justify-end w-[130px] shrink-0">
+          <!-- Dedicated Slot for Primary CTA Button: 0px at top, smoothly expands when Selected Work is reached -->
+          <div
+            class="hidden md:flex items-center justify-end shrink-0 transition-all duration-300 ease-out overflow-hidden"
+            :class="
+              isCtaVisible ? 'w-[130px] opacity-100 ml-2' : 'w-0 opacity-0 ml-0 pointer-events-none'
+            "
+          >
             <AppButton
               variant="primary"
               size="sm"
