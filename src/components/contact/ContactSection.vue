@@ -1,8 +1,10 @@
 <script setup lang="ts">
   import { onMounted, onUnmounted, ref } from 'vue'
   import { portfolioData } from '../../data/portfolio'
+  import { useAudioSynth } from '../../composables/useAudioSynth'
 
   const { socialLinks } = portfolioData
+  const { playClick, playDiffToggle } = useAudioSynth()
   const emailAddress = 'bonfi.alessio98@gmail.com'
   const isCopied = ref(false)
   const isEmerged = ref(false)
@@ -13,6 +15,7 @@
   async function copyEmail() {
     try {
       await navigator.clipboard.writeText(emailAddress)
+      playDiffToggle(true)
       isCopied.value = true
       setTimeout(() => {
         isCopied.value = false
@@ -113,7 +116,9 @@
         >
           <div class="flex items-center gap-2.5 min-w-0 font-mono text-xs sm:text-sm">
             <span class="text-lime-400 font-bold">$ copy:</span>
-            <span class="text-slate-100 truncate select-all font-mono">{{ emailAddress }}</span>
+            <span class="text-slate-100 truncate select-all font-mono">
+              {{ emailAddress }}
+            </span>
           </div>
 
           <button
@@ -134,9 +139,22 @@
         <a
           :href="`mailto:${emailAddress}`"
           class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl bg-lime-400 text-black font-mono font-bold text-xs sm:text-sm shadow-[0_0_25px_rgba(226,241,97,0.4)] hover:shadow-[0_0_40px_rgba(226,241,97,0.8)] hover:scale-105 active:scale-95 transition-all cursor-pointer shrink-0"
+          @click="playClick"
         >
           <span>Send Email</span>
           <span class="text-base">&rarr;</span>
+        </a>
+
+        <!-- Download CV / Resume Button CTA -->
+        <a
+          href="https://bonfiglioalessio.github.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-dark-900 border border-white/30 text-white font-mono font-bold text-xs sm:text-sm hover:border-white hover:bg-white hover:text-black shadow-[0_0_15px_rgba(255,255,255,0.15)] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] hover:scale-105 active:scale-95 transition-all cursor-pointer shrink-0"
+          @click="playClick"
+        >
+          <span>CV / Resume [PDF]</span>
+          <span class="text-sm font-bold">&#x2197;</span>
         </a>
       </div>
 
@@ -149,11 +167,13 @@
           target="_blank"
           rel="noopener noreferrer"
           class="inline-flex items-center gap-2 font-mono text-xs sm:text-sm text-slate-400 hover:text-lime-400 transition-all duration-300 group cursor-pointer"
+          @click="playClick"
         >
           <span
             class="text-lime-400/80 group-hover:text-lime-400 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform font-bold"
-            >&#x2197;</span
           >
+            &#x2197;
+          </span>
           <span class="font-bold">{{ link.platform }}</span>
         </a>
       </div>
