@@ -63,6 +63,7 @@
   })
 
   const statAnimClasses = ['animate-float-slow', 'animate-float-delayed', 'animate-float-subtle']
+  const statThemes: ('lime' | 'white' | 'emerald')[] = ['lime', 'white', 'emerald']
 </script>
 
 <template>
@@ -168,6 +169,7 @@
             :prefix="stat.prefix"
             :suffix="stat.suffix"
             :label="stat.label"
+            :theme="statThemes[idx] || 'lime'"
             :delay="idx * 950 + 400"
             :duration="900"
             :float-animation="statAnimClasses[idx % statAnimClasses.length]"
