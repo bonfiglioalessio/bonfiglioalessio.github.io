@@ -93,7 +93,15 @@
 </script>
 
 <template>
-  <div class="relative w-full max-w-md lg:max-w-xl orbital-satellite-assembly group">
+  <div
+    ref="cockpitRef"
+    class="relative w-full max-w-md lg:max-w-xl orbital-satellite-assembly group"
+    :style="transformStyle"
+    style="transform-style: preserve-3d"
+    @mouseenter="handleMouseEnter"
+    @mousemove="handleMouseMove"
+    @mouseleave="handleMouseLeave"
+  >
     <!-- Atmospheric Cosmic Glow Nebula Aura behind Satellite (Intensifies on hover) -->
     <div
       class="absolute -top-16 -right-16 w-80 h-80 bg-lime-400/20 group-hover:bg-lime-400/35 rounded-full blur-3xl pointer-events-none z-0 animate-glow-pulse transition-all duration-500"
@@ -245,12 +253,7 @@
 
     <!-- ================= MAIN SATELLITE COCKPIT CONTAINER ================= -->
     <div
-      ref="cockpitRef"
-      class="w-full h-[370px] sm:h-[420px] lg:h-[440px] p-3.5 sm:p-5 rounded-3xl bg-dark-900/90 backdrop-blur-2xl border border-lime-400/35 hover:border-lime-400/70 flex flex-col justify-between select-none overflow-hidden relative z-10 shadow-[0_0_35px_rgba(226,241,97,0.18),0_0_80px_rgba(0,0,0,0.85)] hover:shadow-[0_0_55px_rgba(226,241,97,0.35),0_0_100px_rgba(226,241,97,0.15)] transition-all duration-300 group"
-      :style="transformStyle"
-      @mouseenter="handleMouseEnter"
-      @mousemove="handleMouseMove"
-      @mouseleave="handleMouseLeave"
+      class="w-full h-[370px] sm:h-[420px] lg:h-[440px] p-3.5 sm:p-5 rounded-3xl bg-dark-900/90 backdrop-blur-2xl border border-lime-400/35 group-hover:border-lime-400/70 flex flex-col justify-between select-none overflow-hidden relative z-10 shadow-[0_0_35px_rgba(226,241,97,0.18),0_0_80px_rgba(0,0,0,0.85)] group-hover:shadow-[0_0_55px_rgba(226,241,97,0.35),0_0_100px_rgba(226,241,97,0.15)] transition-all duration-300"
     >
       <!-- Satellite Corner Reticles -->
       <div
