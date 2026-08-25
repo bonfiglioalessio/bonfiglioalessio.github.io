@@ -130,14 +130,21 @@
     isPreviewOpen.value = false
   }
 
-  // Stellar Twinkling / Cosmic Starlight Engine for Project Cards (Continuous rapid starlight)
+  // Stellar Twinkling / Cosmic Starlight Engine for Project Cards (Active ONLY when section is in viewport)
+  const projectsSectionRef = ref<HTMLElement | null>(null)
   const activeTwinkleIndex = ref<number | null>(null)
   let twinkleTimer: ReturnType<typeof setTimeout> | null = null
+  let sectionObserver: IntersectionObserver | null = null
+  let isSectionInView = false
 
   function scheduleNextTwinkle() {
-    // Ultra rapid interval: 100ms - 250ms
-    const delay = Math.floor(Math.random() * 150) + 100
+    if (!isSectionInView) return
+    if (twinkleTimer) clearTimeout(twinkleTimer)
+
+    // Smooth interval: 180ms - 350ms
+    const delay = Math.floor(Math.random() * 170) + 180
     twinkleTimer = setTimeout(() => {
+      if (!isSectionInView) return
       // Pick next project (switching between projects)
       let randomIndex = Math.floor(Math.random() * selectedWork.value.length)
       if (selectedWork.value.length > 1 && randomIndex === activeTwinkleIndex.value) {
@@ -149,24 +156,46 @@
       setTimeout(() => {
         if (activeTwinkleIndex.value === randomIndex) {
           activeTwinkleIndex.value = null
-          scheduleNextTwinkle()
+          if (isSectionInView) {
+            scheduleNextTwinkle()
+          }
         }
       }, 450)
     }, delay)
   }
 
   onMounted(() => {
-    scheduleNextTwinkle()
+    if (projectsSectionRef.value && 'IntersectionObserver' in window) {
+      sectionObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (entry && entry.isIntersecting) {
+            isSectionInView = true
+            scheduleNextTwinkle()
+          } else {
+            isSectionInView = false
+            activeTwinkleIndex.value = null
+            if (twinkleTimer) clearTimeout(twinkleTimer)
+          }
+        },
+        { threshold: 0.05 },
+      )
+      sectionObserver.observe(projectsSectionRef.value)
+    } else {
+      isSectionInView = true
+      scheduleNextTwinkle()
+    }
   })
 
   onUnmounted(() => {
     if (twinkleTimer) clearTimeout(twinkleTimer)
+    if (sectionObserver) sectionObserver.disconnect()
   })
 </script>
 
 <template>
   <section
     id="projects"
+    ref="projectsSectionRef"
     class="w-screen relative left-1/2 -translate-x-1/2 pt-20 sm:pt-24 lg:pt-28 pb-10 sm:pb-14 lg:pb-16 overflow-hidden select-none transition-colors duration-1000 ease-out scroll-mt-20"
   >
     <!-- Dedicated Ethereal Radial Space Backdrop Layer -->
