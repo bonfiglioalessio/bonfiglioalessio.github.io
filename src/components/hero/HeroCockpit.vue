@@ -130,13 +130,13 @@
       <div class="w-3.5 h-1.5 bg-slate-700 rounded-t-sm border-t border-lime-400/40" />
     </div>
 
-    <!-- Left Solar Array Wing Assembly (Desktop) -->
+    <!-- Left Solar Array Wing Assembly (Desktop - Positioned Higher to avoid headline text) -->
     <div
-      class="hidden lg:flex flex-col items-center justify-center absolute -left-14 xl:-left-16 top-1/2 -translate-y-1/2 z-0 pointer-events-none select-none transition-transform duration-500 group-hover:scale-105"
+      class="hidden lg:flex flex-col items-center justify-center absolute -left-12 xl:-left-14 top-[24%] -translate-y-1/2 z-0 pointer-events-none select-none transition-transform duration-500 group-hover:scale-105"
     >
       <!-- Solar Array Body (Deep space photovoltaic cells with cyan lattice grid) -->
       <div
-        class="w-10 xl:w-12 h-44 xl:h-48 rounded-xl solar-wing-surface border border-sky-400/40 shadow-[0_0_20px_rgba(56,189,248,0.25)] flex flex-col justify-between p-1.5 relative overflow-hidden"
+        class="w-9 xl:w-10 h-36 xl:h-40 rounded-xl solar-wing-surface border border-sky-400/40 shadow-[0_0_20px_rgba(56,189,248,0.25)] flex flex-col justify-between p-1.5 relative overflow-hidden"
       >
         <!-- Solar Bus Bar & Cell Dividers -->
         <div class="flex justify-between items-center w-full px-0.5">
@@ -150,7 +150,7 @@
 
         <!-- Vertical Text Label -->
         <div
-          class="text-[8px] font-mono text-sky-300 font-bold -rotate-90 origin-center whitespace-nowrap tracking-widest uppercase select-none opacity-80"
+          class="text-[7px] font-mono text-sky-300 font-bold -rotate-90 origin-center whitespace-nowrap tracking-widest uppercase select-none opacity-80"
         >
           SOLAR ARRAY // α
         </div>
@@ -166,22 +166,22 @@
 
       <!-- Metal Joint Arm to Satellite Body -->
       <div
-        class="w-5 h-1.5 bg-gradient-to-r from-sky-500/80 to-slate-700 border-y border-sky-400/40 shadow-[0_0_8px_rgba(56,189,248,0.3)] absolute right-[-18px] top-1/2 -translate-y-1/2"
+        class="w-4 h-1.5 bg-gradient-to-r from-sky-500/80 to-slate-700 border-y border-sky-400/40 shadow-[0_0_8px_rgba(56,189,248,0.3)] absolute right-[-15px] top-1/2 -translate-y-1/2"
       />
     </div>
 
-    <!-- Right Solar Array Wing Assembly (Desktop) -->
+    <!-- Right Solar Array Wing Assembly (Desktop - Positioned Lower for Aerospace Asymmetry) -->
     <div
-      class="hidden lg:flex flex-col items-center justify-center absolute -right-14 xl:-right-16 top-1/2 -translate-y-1/2 z-0 pointer-events-none select-none transition-transform duration-500 group-hover:scale-105"
+      class="hidden lg:flex flex-col items-center justify-center absolute -right-12 xl:-right-14 top-[76%] -translate-y-1/2 z-0 pointer-events-none select-none transition-transform duration-500 group-hover:scale-105"
     >
       <!-- Metal Joint Arm to Satellite Body -->
       <div
-        class="w-5 h-1.5 bg-gradient-to-l from-sky-500/80 to-slate-700 border-y border-sky-400/40 shadow-[0_0_8px_rgba(56,189,248,0.3)] absolute left-[-18px] top-1/2 -translate-y-1/2"
+        class="w-4 h-1.5 bg-gradient-to-l from-sky-500/80 to-slate-700 border-y border-sky-400/40 shadow-[0_0_8px_rgba(56,189,248,0.3)] absolute left-[-15px] top-1/2 -translate-y-1/2"
       />
 
       <!-- Solar Array Body (Deep space photovoltaic cells with cyan lattice grid) -->
       <div
-        class="w-10 xl:w-12 h-44 xl:h-48 rounded-xl solar-wing-surface border border-sky-400/40 shadow-[0_0_20px_rgba(56,189,248,0.25)] flex flex-col justify-between p-1.5 relative overflow-hidden"
+        class="w-9 xl:w-10 h-36 xl:h-40 rounded-xl solar-wing-surface border border-sky-400/40 shadow-[0_0_20px_rgba(56,189,248,0.25)] flex flex-col justify-between p-1.5 relative overflow-hidden"
       >
         <!-- Solar Bus Bar & Cell Dividers -->
         <div class="flex justify-between items-center w-full px-0.5">
@@ -194,7 +194,7 @@
 
         <!-- Vertical Text Label -->
         <div
-          class="text-[8px] font-mono text-sky-300 font-bold rotate-90 origin-center whitespace-nowrap tracking-widest uppercase select-none opacity-80"
+          class="text-[7px] font-mono text-sky-300 font-bold rotate-90 origin-center whitespace-nowrap tracking-widest uppercase select-none opacity-80"
         >
           SOLAR ARRAY // β
         </div>
