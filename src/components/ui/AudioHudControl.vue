@@ -14,7 +14,11 @@
         ? 'border-lime-400/40 shadow-[0_0_18px_rgba(226,241,97,0.2)] hover:border-lime-400 hover:shadow-[0_0_25px_rgba(226,241,97,0.4)] active:scale-95'
         : 'border-slate-800 bg-dark-950/80 opacity-75 hover:opacity-100 hover:border-slate-700 active:scale-95',
     ]"
-    :aria-label="isAudioEnabled ? 'Disattiva musica e SFX' : 'Attiva musica spaziale e SFX'"
+    :aria-label="
+      isAudioEnabled
+        ? 'AUDIO: [PLAYING] - Disattiva musica e SFX'
+        : 'AUDIO: [MUTED] - Attiva musica spaziale e SFX'
+    "
     :title="
       isAudioEnabled
         ? 'AUDIO: Attivo (Musica Spaziale & SFX - Click per mutare)'
