@@ -33,20 +33,20 @@
 
     <!-- Main Content Container -->
     <AppContainer size="default">
-      <main class="space-y-6 sm:space-y-10 lg:space-y-14 pb-4">
+      <main class="pb-0">
         <!-- 00 Hero Section -->
         <HeroSection />
 
-        <!-- 01 Tech Constellation Section -->
-        <TechConstellation />
+        <!-- 01 Tech Constellation Section (Distinct Electric Sky Cyber-Lattice Domain) -->
+        <TechConstellation class="mt-8 sm:mt-12 lg:mt-16" />
 
         <!-- 02 Selected Work Section -->
-        <ProjectsSection />
+        <ProjectsSection class="mt-8 sm:mt-12 lg:mt-16" />
 
-        <!-- 03 Career Mission Log Section -->
-        <ExperienceSection />
+        <!-- 03 Career Mission Log Section (Distinct Deep Telemetry Domain) -->
+        <ExperienceSection class="mt-8 sm:mt-12 lg:mt-16" />
 
-        <!-- 04 Contact Open Channel Section -->
+        <!-- 04 Contact Open Channel Section (Connects directly with zero gap) -->
         <ContactSection />
       </main>
     </AppContainer>

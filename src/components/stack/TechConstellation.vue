@@ -2,7 +2,6 @@
   import { computed, ref } from 'vue'
   import { portfolioData } from '../../data/portfolio'
   import { useAudioSynth } from '../../composables/useAudioSynth'
-  import SectionWrapper from '../layout/SectionWrapper.vue'
   import SectionHeader from '../ui/SectionHeader.vue'
   import SkillCard from './SkillCard.vue'
 
@@ -73,8 +72,33 @@
 </script>
 
 <template>
-  <SectionWrapper id="stack" spacing="default">
-    <div class="space-y-8">
+  <section
+    id="stack"
+    class="tech-constellation-sector w-screen relative left-1/2 -translate-x-1/2 py-16 sm:py-20 lg:py-24 overflow-hidden select-none transition-colors duration-1000 ease-out scroll-mt-20"
+  >
+    <!-- Top Glowing Electric Cyan Cyber Horizon Divider -->
+    <div
+      class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-sky-400/50 to-transparent shadow-[0_0_14px_#38bdf8]"
+    />
+
+    <!-- Bottom Glowing Sky/Lime Horizon Divider -->
+    <div
+      class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-sky-400/30 to-transparent shadow-[0_0_12px_#38bdf8]"
+    />
+
+    <!-- Distinct Constellation Atmospheric Nebulas (Electric Sky & Deep Indigo Aura) -->
+    <div
+      class="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[450px] rounded-full bg-sky-500/12 blur-[140px] pointer-events-none"
+    />
+    <div
+      class="absolute bottom-1/3 right-1/4 translate-x-1/2 translate-y-1/2 w-[650px] h-[400px] rounded-full bg-indigo-500/10 blur-[150px] pointer-events-none"
+    />
+
+    <!-- Subtle Cybernetic Constellation Background Lattice Grid -->
+    <div class="absolute inset-0 constellation-grid opacity-30 pointer-events-none" />
+
+    <!-- Inner Content Stage (Aligned with Main Page Container Max-W-7xl) -->
+    <div class="w-full max-w-7xl mx-auto px-6 sm:px-8 relative z-10 space-y-8">
       <!-- Section Header -->
       <SectionHeader
         section-number="01"
@@ -199,5 +223,29 @@
         </div>
       </div>
     </div>
-  </SectionWrapper>
+  </section>
 </template>
+
+<style scoped lang="scss">
+  .tech-constellation-sector {
+    // Unique Electric Sky & Deep Indigo Cyber-Lattice background
+    background: radial-gradient(
+      ellipse at 50% 25%,
+      rgba(8, 26, 48, 0.78) 0%,
+      rgba(4, 13, 26, 0.94) 55%,
+      rgba(2, 6, 16, 0.98) 100%
+    );
+    box-shadow:
+      inset 0 30px 60px -25px rgba(0, 0, 0, 0.9),
+      inset 0 -30px 60px -25px rgba(0, 0, 0, 0.9);
+  }
+
+  .constellation-grid {
+    background-image:
+      linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at 50% 50%, black 40%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 40%, transparent 80%);
+  }
+</style>
