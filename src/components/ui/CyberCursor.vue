@@ -1,26 +1,32 @@
 <script setup lang="ts">
   import { onMounted, onUnmounted, ref } from 'vue'
 
-  const mouseX = ref(-100)
-  const mouseY = ref(-100)
-  const ringX = ref(-100)
-  const ringY = ref(-100)
-
   const isVisible = ref(false)
   const isHovered = ref(false)
   const isMouseDown = ref(false)
   const isEnabled = ref(false)
 
+  const dotRef = ref<HTMLDivElement | null>(null)
+  const ringRef = ref<HTMLDivElement | null>(null)
+
+  let mouseX = -100
+  let mouseY = -100
+  let ringX = -100
+  let ringY = -100
   let animFrameId: number | null = null
 
   function onMouseMove(e: MouseEvent) {
-    mouseX.value = e.clientX
-    mouseY.value = e.clientY
+    mouseX = e.clientX
+    mouseY = e.clientY
 
     if (!isVisible.value) {
       isVisible.value = true
-      ringX.value = e.clientX
-      ringY.value = e.clientY
+      ringX = e.clientX
+      ringY = e.clientY
+    }
+
+    if (dotRef.value) {
+      dotRef.value.style.transform = `translate3d(${mouseX - 4}px, ${mouseY - 4}px, 0) scale(${isHovered.value ? 1.25 : 1})`
     }
 
     // Check if hovering over clickable element
@@ -50,10 +56,12 @@
   }
 
   function renderLoop() {
-    if (isVisible.value) {
-      // Linear interpolation (LERP 0.16) for silky 60fps smooth outer ring follower
-      ringX.value += (mouseX.value - ringX.value) * 0.16
-      ringY.value += (mouseY.value - ringY.value) * 0.16
+    if (isVisible.value && ringRef.value) {
+      // Linear interpolation (LERP 0.16) for silky 60/120fps smooth follower with zero Vue reactivity cost
+      ringX += (mouseX - ringX) * 0.16
+      ringY += (mouseY - ringY) * 0.16
+      const offset = isHovered.value ? 28 : 16
+      ringRef.value.style.transform = `translate3d(${ringX - offset}px, ${ringY - offset}px, 0)`
     }
     animFrameId = requestAnimationFrame(renderLoop)
   }
@@ -92,16 +100,15 @@
     class="cyber-cursor-root pointer-events-none fixed inset-0 z-[9999] overflow-hidden select-none"
     :class="{ 'opacity-0': !isVisible, 'opacity-100': isVisible }"
   >
-    <!-- Instant Center Dot (Direct Mouse Position) -->
+    <!-- Instant Center Dot (Direct DOM Hardware Transform) -->
     <div
+      ref="dotRef"
       class="fixed top-0 left-0 w-2 h-2 rounded-full bg-[#e2f161] shadow-[0_0_8px_#e2f161] transition-transform duration-100 ease-out will-change-transform pointer-events-none"
-      :style="{
-        transform: `translate3d(${mouseX - 4}px, ${mouseY - 4}px, 0) scale(${isHovered ? 1.25 : 1})`,
-      }"
     />
 
-    <!-- Smooth Concentric Ring / Expanding Glowing Disc on Hover (LERP Follower) -->
+    <!-- Smooth Concentric Ring / Expanding Glowing Disc on Hover (LERP Direct Hardware Transform) -->
     <div
+      ref="ringRef"
       class="fixed top-0 left-0 rounded-full border border-[#e2f161] transition-all duration-300 ease-out will-change-transform pointer-events-none flex items-center justify-center"
       :class="[
         isHovered
@@ -109,9 +116,6 @@
           : 'w-8 h-8 bg-transparent shadow-[0_0_12px_rgba(226,241,97,0.35)] border border-[#e2f161]',
         isMouseDown ? 'scale-90' : 'scale-100',
       ]"
-      :style="{
-        transform: `translate3d(${ringX - (isHovered ? 28 : 16)}px, ${ringY - (isHovered ? 28 : 16)}px, 0)`,
-      }"
     />
   </div>
 </template>
