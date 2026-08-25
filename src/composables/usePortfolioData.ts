@@ -21,6 +21,7 @@ const isError = ref(false)
  */
 export function usePortfolioData() {
   const profile = computed<Profile>(() => portfolioState.value.profile)
+  const sections = computed(() => portfolioState.value.sections)
   const marqueeItems = computed<string[]>(() => portfolioState.value.marqueeItems)
   const skillsConstellation = computed<SkillCluster[]>(
     () => portfolioState.value.skillsConstellation,
@@ -83,6 +84,7 @@ export function usePortfolioData() {
   return {
     portfolioData: portfolioState,
     profile,
+    sections,
     marqueeItems,
     skillsConstellation,
     selectedWork,
