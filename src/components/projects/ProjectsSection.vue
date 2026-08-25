@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed, ref } from 'vue'
+  import { computed, onMounted, onUnmounted, ref } from 'vue'
   import type { Project } from '../../types/portfolio'
   import { portfolioData } from '../../data/portfolio'
   import { useAudioSynth } from '../../composables/useAudioSynth'
@@ -129,6 +129,39 @@
   function closePreview() {
     isPreviewOpen.value = false
   }
+
+  // Stellar Twinkling / Cosmic Starlight Engine for Project Cards (Continuous rapid starlight)
+  const activeTwinkleIndex = ref<number | null>(null)
+  let twinkleTimer: ReturnType<typeof setTimeout> | null = null
+
+  function scheduleNextTwinkle() {
+    // Ultra rapid interval: 100ms - 250ms
+    const delay = Math.floor(Math.random() * 150) + 100
+    twinkleTimer = setTimeout(() => {
+      // Pick next project (switching between projects)
+      let randomIndex = Math.floor(Math.random() * selectedWork.length)
+      if (selectedWork.length > 1 && randomIndex === activeTwinkleIndex.value) {
+        randomIndex = (randomIndex + 1) % selectedWork.length
+      }
+      activeTwinkleIndex.value = randomIndex
+
+      // Quick flare duration ~450ms
+      setTimeout(() => {
+        if (activeTwinkleIndex.value === randomIndex) {
+          activeTwinkleIndex.value = null
+        }
+        scheduleNextTwinkle()
+      }, 450)
+    }, delay)
+  }
+
+  onMounted(() => {
+    scheduleNextTwinkle()
+  })
+
+  onUnmounted(() => {
+    if (twinkleTimer) clearTimeout(twinkleTimer)
+  })
 </script>
 
 <template>
@@ -220,7 +253,12 @@
             :key="project.id"
             class="w-[85vw] max-w-[340px] shrink-0 snap-center flex flex-col h-full self-stretch"
           >
-            <ProjectCard :project="project" :theme="getProjectTheme(idx)" @preview="openPreview" />
+            <ProjectCard
+              :project="project"
+              :theme="getProjectTheme(idx)"
+              :is-twinkling="activeTwinkleIndex === idx"
+              @preview="openPreview"
+            />
           </div>
         </div>
 
@@ -252,6 +290,7 @@
             :key="project.id"
             :project="project"
             :theme="getProjectTheme(originalIndex)"
+            :is-twinkling="activeTwinkleIndex === originalIndex"
             :float-animation="floatPatterns[(idx * 2) % floatPatterns.length]"
             @preview="openPreview"
           />
@@ -264,6 +303,7 @@
             :key="project.id"
             :project="project"
             :theme="getProjectTheme(originalIndex)"
+            :is-twinkling="activeTwinkleIndex === originalIndex"
             :float-animation="floatPatterns[(idx * 2 + 1) % floatPatterns.length]"
             @preview="openPreview"
           />
