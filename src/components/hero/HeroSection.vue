@@ -69,13 +69,13 @@
 
 <template>
   <section
-    class="min-h-screen flex items-center pt-28 sm:pt-32 lg:pt-24 pb-8 sm:pb-12 lg:pb-10 relative z-10 w-full"
+    class="min-h-screen lg:h-screen lg:max-h-screen flex flex-col justify-between pt-28 sm:pt-32 lg:pt-24 xl:pt-26 pb-6 sm:pb-8 lg:pb-3 relative z-10 w-full lg:overflow-hidden"
   >
     <div
-      class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-8 xl:gap-12 items-center w-full my-auto"
+      class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-8 xl:gap-12 items-center w-full my-auto flex-1"
     >
       <!-- Left Column: Bio, Headline, Stats with Balanced Spacing -->
-      <div class="lg:col-span-7 space-y-5 sm:space-y-7 lg:space-y-4 xl:space-y-6">
+      <div class="lg:col-span-7 space-y-5 sm:space-y-7 lg:space-y-4 xl:space-y-5">
         <!-- Level Indicator & Main Display Headline (Zero-Gravity Floating) -->
         <div
           class="space-y-2 sm:space-y-2.5 lg:space-y-2 transition-all duration-700 delay-150 ease-out"
@@ -163,6 +163,25 @@
       >
         <HeroCockpit />
       </div>
+    </div>
+
+    <!-- Bottom Center Orbital Scroll Flight Prompt (Desktop: Perfectly fitted at bottom of 100vh) -->
+    <div
+      class="hidden lg:flex pt-1 pb-1 justify-center w-full select-none transition-all duration-700 delay-700 ease-out shrink-0"
+      :class="
+        isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'
+      "
+    >
+      <a
+        href="#stack"
+        class="group inline-flex items-center gap-2 text-[11px] font-mono text-slate-400 hover:text-lime-400 transition-all cursor-pointer hover:scale-105 active:scale-95"
+      >
+        <span class="w-1.5 h-1.5 rounded-full bg-lime-400 animate-ping inline-block" />
+        <span class="tracking-wider uppercase font-semibold">SCROLL TO ENTER CONSTELLATION</span>
+        <span class="text-lime-400 font-bold group-hover:translate-y-0.5 transition-transform"
+          >&darr;</span
+        >
+      </a>
     </div>
   </section>
 </template>
