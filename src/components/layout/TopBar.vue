@@ -5,6 +5,14 @@
   import AppButton from '../ui/AppButton.vue'
   import MarqueeTicker from './MarqueeTicker.vue'
 
+  interface Props {
+    isReady?: boolean
+  }
+
+  const props = withDefaults(defineProps<Props>(), {
+    isReady: true,
+  })
+
   const { profile } = portfolioData
   const { playClick } = useAudioSynth()
   const isMobileMenuOpen = ref(false)
@@ -141,11 +149,13 @@
 
 <template>
   <header
-    class="fixed top-0 inset-x-0 z-50 transition-all duration-500 ease-out shrink-0"
+    class="fixed top-0 inset-x-0 z-50 transition-all duration-700 ease-out shrink-0"
     :class="[
-      isContactVisible
+      !props.isReady
         ? '-translate-y-full opacity-0 pointer-events-none'
-        : 'translate-y-0 opacity-100',
+        : isContactVisible
+          ? '-translate-y-full opacity-0 pointer-events-none'
+          : 'translate-y-0 opacity-100',
       isScrolled
         ? 'bg-dark-950/40 backdrop-blur-md border-b border-lime-400/10 shadow-[0_8px_32px_rgba(0,0,0,0.6)]'
         : 'bg-transparent border-b border-transparent shadow-none',
