@@ -9,11 +9,10 @@
   const { playClick } = useAudioSynth()
   const isMobileMenuOpen = ref(false)
   const isScrolled = ref(false)
-  const isHeroVisible = ref(true)
+  const isCtaVisible = ref(false)
   const isContactVisible = ref(false)
   const activeSectionId = ref('')
 
-  let heroObserver: IntersectionObserver | null = null
   let contactObserver: IntersectionObserver | null = null
   const sectionObservers: IntersectionObserver[] = []
 
@@ -71,6 +70,13 @@
         activeSectionId.value = ''
       }
 
+      // Show LET'S TALK CTA button ONLY starting from Selected Work (#projects) section
+      const projectsEl = document.getElementById('projects')
+      if (projectsEl) {
+        const rect = projectsEl.getBoundingClientRect()
+        isCtaVisible.value = rect.top <= window.innerHeight * 0.75
+      }
+
       // Exact check for contact section visibility to auto-hide navbar
       const contactEl = document.getElementById('contact')
       if (contactEl) {
@@ -83,21 +89,6 @@
   onMounted(() => {
     handleScroll()
     window.addEventListener('scroll', handleScroll, { passive: true })
-
-    // Observe Hero section to show Contact CTA in navbar ONLY when Hero disappears
-    const heroEl = document.querySelector('section')
-    if (heroEl && 'IntersectionObserver' in window) {
-      heroObserver = new IntersectionObserver(
-        ([entry]) => {
-          isHeroVisible.value = entry.isIntersecting
-        },
-        {
-          threshold: 0.15,
-          rootMargin: '-60px 0px 0px 0px',
-        },
-      )
-      heroObserver.observe(heroEl)
-    }
 
     // Observe Contact section to auto-hide navbar when contact section is in view
     const contactEl = document.getElementById('contact')
@@ -138,10 +129,6 @@
 
   onUnmounted(() => {
     window.removeEventListener('scroll', handleScroll)
-    if (heroObserver) {
-      heroObserver.disconnect()
-      heroObserver = null
-    }
     if (contactObserver) {
       contactObserver.disconnect()
       contactObserver = null
@@ -213,7 +200,7 @@
             </a>
           </nav>
 
-          <!-- Real Primary CTA Button: Matches Hero primary button styling -->
+          <!-- Real Primary CTA Button: Appears starting from Selected Work (#projects) section -->
           <transition
             enter-active-class="transition-all duration-300 ease-out"
             enter-from-class="opacity-0 translate-x-3 scale-95"
@@ -223,7 +210,7 @@
             leave-to-class="opacity-0 translate-x-3 scale-95"
           >
             <AppButton
-              v-if="!isHeroVisible"
+              v-if="isCtaVisible"
               variant="primary"
               size="sm"
               href="#contact"
