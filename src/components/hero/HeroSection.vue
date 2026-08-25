@@ -172,8 +172,8 @@
             :suffix="stat.suffix"
             :label="stat.label"
             :theme="statThemes[idx] || 'lime'"
-            :delay="idx * 950 + 400"
-            :duration="900"
+            :delay="idx * 220 + 80"
+            :duration="800"
             :float-animation="statAnimClasses[idx % statAnimClasses.length]"
           />
         </div>

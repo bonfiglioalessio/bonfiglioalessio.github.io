@@ -29,6 +29,7 @@
   const isLoaded = ref(false)
   let animFrameId: number | null = null
   let timeoutId: ReturnType<typeof setTimeout> | null = null
+  let hasTriggered = false
 
   // Theming definitions matching headline gradient
   const themeConfig = computed(() => {
@@ -101,13 +102,32 @@
     animFrameId = requestAnimationFrame(step)
   }
 
+  function handleScrollTrigger() {
+    if (hasTriggered) return
+    if (typeof window !== 'undefined' && window.scrollY > 40) {
+      hasTriggered = true
+      window.removeEventListener('scroll', handleScrollTrigger)
+      timeoutId = setTimeout(() => {
+        runCounterAnimation()
+      }, props.delay)
+    }
+  }
+
   onMounted(() => {
-    timeoutId = setTimeout(() => {
-      runCounterAnimation()
-    }, props.delay)
+    // If page is already scrolled on mount (e.g. refresh), trigger immediately with delay
+    if (typeof window !== 'undefined' && window.scrollY > 40) {
+      hasTriggered = true
+      timeoutId = setTimeout(() => {
+        runCounterAnimation()
+      }, props.delay)
+    } else {
+      // Wait for user to start scrolling
+      window.addEventListener('scroll', handleScrollTrigger, { passive: true })
+    }
   })
 
   onUnmounted(() => {
+    window.removeEventListener('scroll', handleScrollTrigger)
     if (animFrameId !== null) {
       cancelAnimationFrame(animFrameId)
     }
