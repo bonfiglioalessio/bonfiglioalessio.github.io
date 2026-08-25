@@ -1,8 +1,16 @@
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue'
+  import { onMounted, ref, watch } from 'vue'
   import { portfolioData } from '../../data/portfolio'
   import HeroCockpit from './HeroCockpit.vue'
   import StatCounterCard from './StatCounterCard.vue'
+
+  interface Props {
+    isReady?: boolean
+  }
+
+  const props = withDefaults(defineProps<Props>(), {
+    isReady: false,
+  })
 
   const { profile } = portfolioData
 
@@ -15,8 +23,14 @@
   const displayedPart1 = ref('')
   const displayedPart2 = ref('')
   const isTypingComplete = ref(false)
+  const isStatsVisible = ref(false)
+
+  let isStreamingActive = false
 
   async function startAiStreaming() {
+    if (isStreamingActive) return
+    isStreamingActive = true
+
     if (
       typeof window !== 'undefined' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -24,43 +38,61 @@
       displayedPart1.value = fullPart1
       displayedPart2.value = fullPart2
       isTypingComplete.value = true
+      isStatsVisible.value = true
       return
     }
 
-    // Brief initial delay before agent generation starts
-    await new Promise((r) => setTimeout(r, 200))
+    displayedPart1.value = ''
+    displayedPart2.value = ''
+    isTypingComplete.value = false
 
-    // Stream Part 1 (1 to 3 chars chunking)
-    let idx1 = 0
-    while (idx1 < fullPart1.length) {
-      const chunkSize = Math.min(Math.floor(Math.random() * 3) + 1, fullPart1.length - idx1)
-      displayedPart1.value = fullPart1.slice(0, idx1 + chunkSize)
-      idx1 += chunkSize
-      const delay = Math.floor(Math.random() * 25) + 25 // 25ms - 50ms
+    // Brief smooth overlap with preloader fade-out (80ms)
+    await new Promise((r) => setTimeout(r, 80))
+
+    // Stream Part 1 character by character for ultimate smoothness
+    for (let i = 1; i <= fullPart1.length; i++) {
+      displayedPart1.value = fullPart1.slice(0, i)
+      const delay = Math.floor(Math.random() * 12) + 16 // 16ms - 28ms
       await new Promise((r) => setTimeout(r, delay))
     }
 
-    await new Promise((r) => setTimeout(r, 90))
+    await new Promise((r) => setTimeout(r, 80))
 
-    // Stream Part 2 (1 to 3 chars chunking)
-    let idx2 = 0
-    while (idx2 < fullPart2.length) {
-      const chunkSize = Math.min(Math.floor(Math.random() * 3) + 1, fullPart2.length - idx2)
-      displayedPart2.value = fullPart2.slice(0, idx2 + chunkSize)
-      idx2 += chunkSize
-      const delay = Math.floor(Math.random() * 30) + 30 // 30ms - 60ms
+    // Stream Part 2 character by character
+    for (let i = 1; i <= fullPart2.length; i++) {
+      displayedPart2.value = fullPart2.slice(0, i)
+      const delay = Math.floor(Math.random() * 14) + 18 // 18ms - 32ms
       await new Promise((r) => setTimeout(r, delay))
     }
 
     isTypingComplete.value = true
+
+    // Trigger stat counters and badges right as headline completes
+    setTimeout(() => {
+      isStatsVisible.value = true
+    }, 60)
   }
 
+  function triggerEntrance() {
+    if (isLoaded.value) return
+    isLoaded.value = true
+    startAiStreaming()
+  }
+
+  watch(
+    () => props.isReady,
+    (ready) => {
+      if (ready) {
+        triggerEntrance()
+      }
+    },
+    { immediate: true },
+  )
+
   onMounted(() => {
-    // Trigger cinematic entrance reveal on mount
-    requestAnimationFrame(() => {
-      isLoaded.value = true
-      startAiStreaming()
-    })
+    if (props.isReady) {
+      triggerEntrance()
+    }
   })
 
   const statAnimClasses = ['animate-float-slow', 'animate-float-delayed', 'animate-float-subtle']
@@ -78,7 +110,7 @@
       <div class="lg:col-span-7 space-y-5 sm:space-y-7 lg:space-y-4 xl:space-y-5">
         <!-- Level Indicator & Main Display Headline (Zero-Gravity Floating) -->
         <div
-          class="space-y-2 sm:space-y-2.5 lg:space-y-2 transition-all duration-700 delay-150 ease-out"
+          class="space-y-2 sm:space-y-2.5 lg:space-y-2 transition-all duration-700 ease-out"
           :class="
             isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'
           "
@@ -90,44 +122,45 @@
             <span class="h-px w-10 sm:w-12 bg-lime-400/60 shadow-[0_0_8px_#e2f161]" />
           </p>
 
-          <!-- AI Agent Chunk-Streamed Headline (Zero CLS with Ghost Height Lock) -->
+          <!-- AI Streamed Headline with Invisible Ghost Layout Lock (0.00 CLS) -->
           <div class="relative">
-            <!-- Invisible Ghost Placeholder: Locks exact layout dimensions & line wraps immediately -->
+            <!-- Invisible Ghost Anchor: Locks exact 2-line width & height immediately in DOM flow -->
             <h1
-              class="text-4xl sm:text-6xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-extrabold font-display tracking-tight leading-[1.10] sm:leading-[1.05] opacity-0 select-none pointer-events-none"
+              class="text-4xl sm:text-6xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-extrabold font-display tracking-tight leading-[1.10] sm:leading-[1.05] invisible pointer-events-none select-none"
               aria-hidden="true"
             >
-              <span class="inline-block">Turning complex logic into</span>
+              <span class="inline">Turning complex logic into</span>
               <br class="hidden sm:inline" />
-              <span class="inline-block">insane frontend UI.</span>
+              <span class="inline">insane frontend UI.</span>
             </h1>
 
-            <!-- Active Streamed Overlay (Perfect match, zero displacement of bio/stats) -->
+            <!-- Active Typed Overlay: Absolute inset-0, fills pre-allocated space with zero shift -->
             <h1
-              class="text-4xl sm:text-6xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-extrabold font-display text-white tracking-tight leading-[1.10] sm:leading-[1.05] absolute inset-0"
+              class="text-4xl sm:text-6xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-extrabold font-display tracking-tight leading-[1.10] sm:leading-[1.05] absolute inset-0"
+              :class="isTypingComplete ? 'animate-float-slow' : ''"
             >
-              <span class="inline-block animate-float-slow">
+              <span class="text-white inline">
                 {{ displayedPart1 }}
               </span>
-              <br v-if="displayedPart1.length >= fullPart1.length" class="hidden sm:inline" />
+              <br class="hidden sm:inline" />
               <span
                 v-if="displayedPart2"
-                class="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 via-lime-300 to-emerald-400 drop-shadow-[0_0_35px_rgba(204,255,0,0.45)] inline-block animate-float-delayed"
+                class="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 via-lime-300 to-emerald-400 drop-shadow-[0_0_35px_rgba(204,255,0,0.45)] inline"
               >
                 {{ displayedPart2 }}
               </span>
-              <!-- AI Streaming Token Caret (Attached to current text stream) -->
+              <!-- AI Streaming Token Caret -->
               <span
                 v-if="!isTypingComplete"
-                class="inline-block w-[3px] sm:w-[4px] h-[0.7em] align-baseline ml-1 bg-lime-400 shadow-[0_0_10px_#e2f161] rounded-sm animate-pulse"
+                class="inline-block w-[3px] sm:w-[4px] h-[0.75em] align-baseline ml-1 bg-lime-400 shadow-[0_0_10px_#e2f161] rounded-sm animate-pulse"
               />
             </h1>
           </div>
         </div>
 
-        <!-- Narrative Bio -->
+        <!-- Narrative Bio (Smoothly reveals as part of the hero composition) -->
         <p
-          class="text-sm sm:text-base lg:text-xs xl:text-sm text-slate-300 font-mono leading-relaxed max-w-xl drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] transition-all duration-700 delay-300 ease-out"
+          class="text-sm sm:text-base lg:text-xs xl:text-sm text-slate-300 font-mono leading-relaxed max-w-xl drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] transition-all duration-700 delay-150 ease-out"
           :class="
             isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'
           "
@@ -137,9 +170,11 @@
 
         <!-- Metric Stat Counters (Grid 3 Columns with Counter Animation & Delayed Entrance) -->
         <div
-          class="grid grid-cols-3 gap-2.5 sm:gap-4 lg:gap-3 xl:gap-4 pt-1 transition-all duration-700 delay-450 ease-out"
+          class="grid grid-cols-3 gap-2.5 sm:gap-4 lg:gap-3 xl:gap-4 pt-1 transition-all duration-700 ease-out"
           :class="
-            isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'
+            isStatsVisible
+              ? 'opacity-100 translate-y-0'
+              : 'opacity-0 translate-y-6 pointer-events-none'
           "
         >
           <StatCounterCard
@@ -150,26 +185,28 @@
             :suffix="stat.suffix"
             :label="stat.label"
             :theme="statThemes[idx] || 'lime'"
-            :delay="idx * 200 + 350"
-            :duration="800"
+            :active="isStatsVisible"
+            :delay="idx * 120"
+            :duration="750"
             :float-animation="statAnimClasses[idx % statAnimClasses.length]"
           />
         </div>
       </div>
 
-      <!-- Right Column: Interactive Orbital Satellite Cockpit (Comfortable right padding for solar array) -->
+      <!-- Right Column: Interactive Orbital Satellite Cockpit -->
       <div
-        class="lg:col-span-5 flex justify-center lg:justify-end -mt-2 sm:mt-1 lg:mt-0 relative z-0"
+        class="lg:col-span-5 flex justify-center lg:justify-end -mt-2 sm:mt-1 lg:mt-0 relative z-0 transition-all duration-700 delay-150 ease-out"
+        :class="isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'"
       >
         <HeroCockpit />
       </div>
     </div>
 
-    <!-- Bottom Center Orbital Scroll Flight Prompt (Desktop: Perfectly fitted at bottom of 100vh) -->
+    <!-- Bottom Center Orbital Scroll Flight Prompt -->
     <div
-      class="hidden lg:flex pt-1 pb-1 justify-center w-full select-none transition-all duration-700 delay-700 ease-out shrink-0"
+      class="hidden lg:flex pt-1 pb-1 justify-center w-full select-none transition-all duration-700 ease-out shrink-0"
       :class="
-        isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'
+        isStatsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'
       "
     >
       <a
