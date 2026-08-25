@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { onMounted, onUnmounted, ref } from 'vue'
-  import { portfolioData } from '../../data/portfolio'
+  import { usePortfolioData } from '../../composables/usePortfolioData'
   import { useAudioSynth } from '../../composables/useAudioSynth'
   import AppButton from '../ui/AppButton.vue'
   import MarqueeTicker from './MarqueeTicker.vue'
@@ -13,7 +13,7 @@
     isReady: true,
   })
 
-  const { profile } = portfolioData
+  const { profile } = usePortfolioData()
   const { playClick } = useAudioSynth()
   const isMobileMenuOpen = ref(false)
   const isScrolled = ref(false)

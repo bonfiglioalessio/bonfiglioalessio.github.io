@@ -1,7 +1,7 @@
 <script setup lang="ts">
-  import { portfolioData } from '../../data/portfolio'
+  import { usePortfolioData } from '../../composables/usePortfolioData'
 
-  const { marqueeItems } = portfolioData
+  const { marqueeItems } = usePortfolioData()
 
   const colorPalettes = [
     {
