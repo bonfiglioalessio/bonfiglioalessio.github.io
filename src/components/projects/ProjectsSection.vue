@@ -89,16 +89,25 @@
     }
   }
 
+  let carouselScrollRafId: number | null = null
   function handleCarouselScroll() {
-    if (!mobileCarouselRef.value) return
-    const container = mobileCarouselRef.value
-    const scrollLeft = container.scrollLeft
-    const cardWidth = container.children[0]?.clientWidth || 300
-    const gap = 20
-    const newIdx = Math.round(scrollLeft / (cardWidth + gap))
-    if (newIdx >= 0 && newIdx < selectedWork.value.length && newIdx !== activeProjectIndex.value) {
-      activeProjectIndex.value = newIdx
-    }
+    if (!mobileCarouselRef.value || carouselScrollRafId) return
+    carouselScrollRafId = window.requestAnimationFrame(() => {
+      carouselScrollRafId = null
+      if (!mobileCarouselRef.value) return
+      const container = mobileCarouselRef.value
+      const scrollLeft = container.scrollLeft
+      const cardWidth = container.children[0]?.clientWidth || 300
+      const gap = 20
+      const newIdx = Math.round(scrollLeft / (cardWidth + gap))
+      if (
+        newIdx >= 0 &&
+        newIdx < selectedWork.value.length &&
+        newIdx !== activeProjectIndex.value
+      ) {
+        activeProjectIndex.value = newIdx
+      }
+    })
   }
 
   function prevProject() {
@@ -187,6 +196,7 @@
   })
 
   onUnmounted(() => {
+    if (carouselScrollRafId) cancelAnimationFrame(carouselScrollRafId)
     if (twinkleTimer) clearTimeout(twinkleTimer)
     if (sectionObserver) sectionObserver.disconnect()
   })
@@ -289,16 +299,20 @@
           class="flex items-center justify-between text-[11px] font-mono text-slate-400 px-1 pt-1"
         >
           <span class="text-slate-500 font-bold">&larr; SWIPE PROJECTS &rarr;</span>
-          <div class="flex items-center gap-1.5">
+          <div class="flex items-center gap-0.5">
             <button
               v-for="(_, dotIdx) in selectedWork"
               :key="dotIdx"
               type="button"
               :aria-label="`Jump to project ${dotIdx + 1}`"
-              class="h-1.5 rounded-full transition-all duration-200 cursor-pointer focus:outline-none"
-              :class="getMobilePaginationDotClass(dotIdx, dotIdx === activeProjectIndex)"
+              class="w-6 h-6 flex items-center justify-center cursor-pointer focus:outline-none"
               @click="scrollToProject(dotIdx)"
-            />
+            >
+              <span
+                class="h-1.5 rounded-full transition-all duration-200 pointer-events-none"
+                :class="getMobilePaginationDotClass(dotIdx, dotIdx === activeProjectIndex)"
+              />
+            </button>
           </div>
         </div>
       </div>
