@@ -164,10 +164,10 @@
       </div>
     </transition>
 
-    <!-- Navbar Container with Horizontal & Vertical Padding Morphing on Scroll -->
+    <!-- Navbar Container: Exact same padding as page container at top (px-6 sm:px-8), tighter padding on scroll (px-2 sm:px-4) -->
     <div
       class="w-full mx-auto max-w-7xl transition-all duration-300 ease-out"
-      :class="isScrolled ? 'px-4 sm:px-6 lg:px-8' : 'px-6 sm:px-10 lg:px-14'"
+      :class="isScrolled ? 'px-2 sm:px-4' : 'px-6 sm:px-8'"
     >
       <div
         class="flex items-center justify-between transition-all duration-300 ease-out"
