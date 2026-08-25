@@ -112,8 +112,23 @@ export interface SocialLink {
   isMailto?: boolean
 }
 
+export interface SectionHeaderData {
+  sectionNumber: string
+  title: string
+  statusBadge?: string
+  description: string
+}
+
+export interface SectionsData {
+  stack: SectionHeaderData
+  projects: SectionHeaderData
+  experience: SectionHeaderData
+  contact: SectionHeaderData
+}
+
 export interface PortfolioData {
   profile: Profile
+  sections?: SectionsData
   skillsConstellation: SkillCluster[]
   selectedWork: Project[]
   careerMissionLog: Experience[]
