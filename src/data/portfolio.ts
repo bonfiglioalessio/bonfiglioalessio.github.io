@@ -10,7 +10,7 @@ export const portfolioData: PortfolioData = {
     currentCompany: 'iliad',
     companyUrl: 'https://www.iliad.it/',
     location: 'Milano & Remote',
-    level: '>_ LEVEL 06 DEVELOPER',
+    level: '>_ FRONTEND ENGINEER & UI ARCHITECT',
     bio: "Nato a Sanremo ('98) con la fissa per il codice dal liceo artistico multimediale. Oggi sviluppo interfacce critiche ad altissimo traffico tra iliad e Mondadori Media. 6+ anni sul campo e la stessa fame di spingere ogni singolo rendering al limite.",
     stats: [
       {
