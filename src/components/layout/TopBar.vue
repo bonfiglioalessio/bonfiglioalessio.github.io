@@ -190,9 +190,9 @@
           <span class="text-lime-400 font-mono">/&gt;</span>
         </a>
 
-        <!-- Right Side: Desktop Navigation Links (with Scrollspy) + Real Primary CTA Button -->
-        <div class="flex items-center gap-2.5 sm:gap-4">
-          <!-- Desktop Navigation Links (Scrollspy Active Highlighting without background/borders) -->
+        <!-- Right Side: Desktop Navigation Links + Dedicated Stationary CTA Slot -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Desktop Navigation Links (Stationary & 100% Zero-Shift) -->
           <nav
             class="hidden md:flex items-center gap-1 text-slate-300 font-mono transition-all duration-300"
             :class="isScrolled ? 'text-[11px]' : 'text-xs'"
@@ -218,21 +218,19 @@
             </a>
           </nav>
 
-          <!-- Real Primary CTA Button: Zero-CLS Smooth Animated Expansion starting from Selected Work (#projects) section -->
-          <div
-            class="transition-all duration-300 ease-out overflow-hidden flex items-center shrink-0"
-            :class="
-              isCtaVisible
-                ? 'max-w-[150px] opacity-100 ml-1.5 pointer-events-auto'
-                : 'max-w-0 opacity-0 ml-0 pointer-events-none'
-            "
-          >
+          <!-- Dedicated Stationary Slot for Primary CTA Button (Zero Layout Shift) -->
+          <div class="hidden md:flex items-center justify-end w-[130px] shrink-0">
             <AppButton
               variant="primary"
               size="sm"
               href="#contact"
               as="a"
-              class="whitespace-nowrap font-extrabold uppercase tracking-wider shadow-[0_0_18px_rgba(226,241,97,0.45)] shrink-0"
+              class="whitespace-nowrap font-extrabold uppercase tracking-wider shadow-[0_0_18px_rgba(226,241,97,0.45)] shrink-0 transition-all duration-300"
+              :class="
+                isCtaVisible
+                  ? 'opacity-100 scale-100 pointer-events-auto'
+                  : 'opacity-0 scale-95 pointer-events-none'
+              "
               @click="(e: MouseEvent) => handleNavClick(e, '#contact')"
             >
               <span>LET'S TALK</span>
