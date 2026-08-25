@@ -1,11 +1,11 @@
 <script setup lang="ts">
   import { onMounted, onUnmounted, ref } from 'vue'
-  import { portfolioData } from '../../data/portfolio'
+  import { usePortfolioData } from '../../composables/usePortfolioData'
   import { useAudioSynth } from '../../composables/useAudioSynth'
   import SectionHeader from '../ui/SectionHeader.vue'
   import ExperienceCard from './ExperienceCard.vue'
 
-  const { careerMissionLog } = portfolioData
+  const { careerMissionLog } = usePortfolioData()
   const { playClick } = useAudioSynth()
 
   const missionThemes: ('lime' | 'white' | 'emerald')[] = ['lime', 'white', 'emerald']
@@ -157,7 +157,11 @@
     const cardWidth = container.children[0]?.clientWidth || 300
     const gap = 20
     const newIdx = Math.round(scrollLeft / (cardWidth + gap))
-    if (newIdx >= 0 && newIdx < careerMissionLog.length && newIdx !== activeMissionIndex.value) {
+    if (
+      newIdx >= 0 &&
+      newIdx < careerMissionLog.value.length &&
+      newIdx !== activeMissionIndex.value
+    ) {
       activeMissionIndex.value = newIdx
     }
   }
@@ -166,12 +170,12 @@
     if (activeMissionIndex.value > 0) {
       scrollToMission(activeMissionIndex.value - 1)
     } else {
-      scrollToMission(careerMissionLog.length - 1)
+      scrollToMission(careerMissionLog.value.length - 1)
     }
   }
 
   function nextMission() {
-    if (activeMissionIndex.value < careerMissionLog.length - 1) {
+    if (activeMissionIndex.value < careerMissionLog.value.length - 1) {
       scrollToMission(activeMissionIndex.value + 1)
     } else {
       scrollToMission(0)
