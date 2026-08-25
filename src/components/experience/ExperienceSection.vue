@@ -82,8 +82,10 @@
 
   const floatPatterns = ['animate-float-slow', 'animate-float-delayed', 'animate-float-subtle']
 
-  // Continuous Desktop Timeline Progress (Top-to-Bottom)
+  // Continuous Desktop Timeline Progress & Dynamic Card Focus on Scroll
   const experienceSectionRef = ref<HTMLElement | null>(null)
+  const desktopCardElements = ref<HTMLElement[]>([])
+  const focusedCardIndex = ref(0)
   const scrollProgress = ref(0) // 0 to 100%
   let ticking = false
 
@@ -103,6 +105,23 @@
       scrollProgress.value = rawProgress * 100
     }
 
+    // Determine actively focused mission card on desktop based on focal center line
+    const focalCenterY = windowHeight * 0.48
+    let closestIndex = 0
+    let minDistance = Infinity
+
+    desktopCardElements.value.forEach((cardEl, idx) => {
+      if (!cardEl) return
+      const cardRect = cardEl.getBoundingClientRect()
+      const cardCenter = cardRect.top + cardRect.height / 2
+      const dist = Math.abs(cardCenter - focalCenterY)
+      if (dist < minDistance) {
+        minDistance = dist
+        closestIndex = idx
+      }
+    })
+
+    focusedCardIndex.value = closestIndex
     ticking = false
   }
 
@@ -251,6 +270,7 @@
                 :index="idx"
                 :total="careerMissionLog.length"
                 :timeline-progress="100"
+                :is-focused="activeMissionIndex === idx"
               />
             </div>
           </div>
@@ -341,18 +361,27 @@
           />
         </div>
 
-        <!-- Experience Timeline Cards Attached Directly to Vertical Rail with Themed Colors -->
+        <!-- Experience Timeline Cards Attached Directly to Vertical Rail with Themed Colors & Focus-Aware Dimming -->
         <div class="space-y-8 sm:space-y-10">
-          <ExperienceCard
+          <div
             v-for="(experience, idx) in careerMissionLog"
             :key="experience.id"
-            :experience="experience"
-            :theme="getMissionTheme(idx)"
-            :index="idx"
-            :total="careerMissionLog.length"
-            :timeline-progress="scrollProgress"
-            :float-animation="floatPatterns[idx % floatPatterns.length]"
-          />
+            :ref="
+              (el) => {
+                if (el) desktopCardElements[idx] = el as HTMLElement
+              }
+            "
+          >
+            <ExperienceCard
+              :experience="experience"
+              :theme="getMissionTheme(idx)"
+              :index="idx"
+              :total="careerMissionLog.length"
+              :timeline-progress="scrollProgress"
+              :is-focused="focusedCardIndex === idx"
+              :float-animation="floatPatterns[idx % floatPatterns.length]"
+            />
+          </div>
         </div>
       </div>
     </div>
