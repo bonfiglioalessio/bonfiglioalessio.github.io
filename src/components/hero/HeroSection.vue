@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { onMounted, ref, watch } from 'vue'
-  import { portfolioData } from '../../data/portfolio'
+  import { computed, onMounted, ref, watch } from 'vue'
+  import { usePortfolioData } from '../../composables/usePortfolioData'
   import HeroCockpit from './HeroCockpit.vue'
   import StatCounterCard from './StatCounterCard.vue'
 
@@ -12,13 +12,28 @@
     isReady: false,
   })
 
-  const { profile } = portfolioData
+  const { profile } = usePortfolioData()
 
   const isLoaded = ref(false)
 
-  // AI Agent Token Streaming Typewriter Engine
-  const fullPart1 = 'Turning complex logic into'
-  const fullPart2 = 'insane frontend UI.'
+  // Dynamically parse headline parts from profile.headline
+  const headlineParts = computed(() => {
+    const raw = profile.value.headline || 'Turning complex logic into insane frontend UI.'
+    if (raw.includes('\n')) {
+      const [p1, ...p2] = raw.split('\n')
+      return { part1: p1 || '', part2: p2.join(' ') }
+    }
+    if (raw.includes('into ')) {
+      const idx = raw.indexOf('into ') + 5
+      return { part1: raw.slice(0, idx).trim(), part2: raw.slice(idx).trim() }
+    }
+    const words = raw.split(' ')
+    const mid = Math.ceil(words.length / 2)
+    return {
+      part1: words.slice(0, mid).join(' '),
+      part2: words.slice(mid).join(' '),
+    }
+  })
 
   const displayedPart1 = ref('')
   const displayedPart2 = ref('')
@@ -31,12 +46,15 @@
     if (isStreamingActive) return
     isStreamingActive = true
 
+    const part1 = headlineParts.value.part1
+    const part2 = headlineParts.value.part2
+
     if (
       typeof window !== 'undefined' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches
     ) {
-      displayedPart1.value = fullPart1
-      displayedPart2.value = fullPart2
+      displayedPart1.value = part1
+      displayedPart2.value = part2
       isTypingComplete.value = true
       isStatsVisible.value = true
       return
@@ -50,8 +68,8 @@
     await new Promise((r) => setTimeout(r, 80))
 
     // Stream Part 1 character by character for ultimate smoothness
-    for (let i = 1; i <= fullPart1.length; i++) {
-      displayedPart1.value = fullPart1.slice(0, i)
+    for (let i = 1; i <= part1.length; i++) {
+      displayedPart1.value = part1.slice(0, i)
       const delay = Math.floor(Math.random() * 12) + 16 // 16ms - 28ms
       await new Promise((r) => setTimeout(r, delay))
     }
@@ -59,8 +77,8 @@
     await new Promise((r) => setTimeout(r, 80))
 
     // Stream Part 2 character by character
-    for (let i = 1; i <= fullPart2.length; i++) {
-      displayedPart2.value = fullPart2.slice(0, i)
+    for (let i = 1; i <= part2.length; i++) {
+      displayedPart2.value = part2.slice(0, i)
       const delay = Math.floor(Math.random() * 14) + 18 // 18ms - 32ms
       await new Promise((r) => setTimeout(r, delay))
     }
@@ -118,20 +136,20 @@
           <p
             class="text-xs sm:text-xs lg:text-[11px] xl:text-xs text-lime-400 font-mono tracking-widest uppercase flex items-center gap-2 drop-shadow-[0_0_8px_rgba(226,241,97,0.5)] select-none"
           >
-            <span>&gt;_ LEVEL 06 DEVELOPER</span>
+            <span>{{ profile.level || '&gt;_ LEVEL 06 DEVELOPER' }}</span>
             <span class="h-px w-10 sm:w-12 bg-lime-400/60 shadow-[0_0_8px_#e2f161]" />
           </p>
 
           <!-- AI Streamed Headline with Invisible Ghost Layout Lock (0.00 CLS) -->
           <div class="relative">
-            <!-- Invisible Ghost Anchor: Locks exact 2-line width & height immediately in DOM flow -->
+            <!-- Invisible Ghost Anchor: Locks exact width & height immediately in DOM flow -->
             <h1
               class="text-4xl sm:text-6xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-extrabold font-display tracking-tight leading-[1.10] sm:leading-[1.05] invisible pointer-events-none select-none"
               aria-hidden="true"
             >
-              <span class="inline">Turning complex logic into</span>
+              <span class="inline">{{ headlineParts.part1 }}</span>
               <br class="hidden sm:inline" />
-              <span class="inline">insane frontend UI.</span>
+              <span class="inline">{{ headlineParts.part2 }}</span>
             </h1>
 
             <!-- Active Typed Overlay: Absolute inset-0, fills pre-allocated space with zero shift -->
