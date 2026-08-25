@@ -218,28 +218,27 @@
             </a>
           </nav>
 
-          <!-- Real Primary CTA Button: Appears starting from Selected Work (#projects) section -->
-          <transition
-            enter-active-class="transition-all duration-300 ease-out"
-            enter-from-class="opacity-0 translate-x-3 scale-95"
-            enter-to-class="opacity-100 translate-x-0 scale-100"
-            leave-active-class="transition-all duration-200 ease-in"
-            leave-from-class="opacity-100 translate-x-0 scale-100"
-            leave-to-class="opacity-0 translate-x-3 scale-95"
+          <!-- Real Primary CTA Button: Zero-CLS Smooth Animated Expansion starting from Selected Work (#projects) section -->
+          <div
+            class="transition-all duration-300 ease-out overflow-hidden flex items-center shrink-0"
+            :class="
+              isCtaVisible
+                ? 'max-w-[150px] opacity-100 ml-1.5 pointer-events-auto'
+                : 'max-w-0 opacity-0 ml-0 pointer-events-none'
+            "
           >
             <AppButton
-              v-if="isCtaVisible"
               variant="primary"
               size="sm"
               href="#contact"
               as="a"
-              class="ml-1 shrink-0 font-extrabold uppercase tracking-wider shadow-[0_0_18px_rgba(226,241,97,0.45)]"
+              class="whitespace-nowrap font-extrabold uppercase tracking-wider shadow-[0_0_18px_rgba(226,241,97,0.45)] shrink-0"
               @click="(e: MouseEvent) => handleNavClick(e, '#contact')"
             >
               <span>LET'S TALK</span>
               <span class="text-xs">&rarr;</span>
             </AppButton>
-          </transition>
+          </div>
 
           <!-- Mobile Hamburger Toggle -->
           <button
