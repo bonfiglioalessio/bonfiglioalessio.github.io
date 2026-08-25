@@ -23,6 +23,7 @@
             'border-white/40 group-hover:border-white group-hover:shadow-[0_0_6px_#ffffff]',
           titleHoverClass: 'group-hover:text-white',
           glowClass: 'skill-glow-white',
+          nodeDotClass: 'bg-white shadow-[0_0_8px_#ffffff]',
         }
       case 'emerald':
         return {
@@ -31,6 +32,7 @@
             'border-emerald-400/40 group-hover:border-emerald-400 group-hover:shadow-[0_0_6px_#34d399]',
           titleHoverClass: 'group-hover:text-emerald-400',
           glowClass: 'skill-glow-emerald',
+          nodeDotClass: 'bg-emerald-400 shadow-[0_0_8px_#34d399]',
         }
       case 'cyan':
         return {
@@ -39,6 +41,7 @@
             'border-sky-400/40 group-hover:border-sky-400 group-hover:shadow-[0_0_6px_#38bdf8]',
           titleHoverClass: 'group-hover:text-sky-400',
           glowClass: 'skill-glow-cyan',
+          nodeDotClass: 'bg-sky-400 shadow-[0_0_8px_#38bdf8]',
         }
       case 'lime':
       default:
@@ -48,6 +51,7 @@
             'border-lime-400/40 group-hover:border-lime-400 group-hover:shadow-[0_0_6px_#e2f161]',
           titleHoverClass: 'group-hover:text-lime-400',
           glowClass: 'skill-glow-lime',
+          nodeDotClass: 'bg-lime-400 shadow-[0_0_8px_#e2f161]',
         }
     }
   })
@@ -124,14 +128,27 @@
           />
         </div>
 
-        <!-- Skill Titles -->
+        <!-- Skill Titles with Constellation Node Socket -->
         <div class="min-w-0 flex-1">
-          <h4
-            class="font-bold text-sm sm:text-base text-white transition-colors font-mono leading-tight"
-            :class="themeConfig.titleHoverClass"
-          >
-            {{ skill.name }}
-          </h4>
+          <div class="flex items-center gap-2">
+            <!-- Constellation Node Socket (Pings only on hover) -->
+            <span class="relative flex h-1.5 w-1.5 shrink-0">
+              <span
+                class="hidden group-hover:inline-flex animate-ping absolute h-full w-full rounded-full opacity-75"
+                :class="themeConfig.nodeDotClass"
+              />
+              <span
+                class="relative inline-flex rounded-full h-1.5 w-1.5 opacity-35 group-hover:opacity-100 group-hover:scale-125 transition-all duration-300"
+                :class="themeConfig.nodeDotClass"
+              />
+            </span>
+            <h4
+              class="font-bold text-sm sm:text-base text-white transition-colors font-mono leading-tight truncate"
+              :class="themeConfig.titleHoverClass"
+            >
+              {{ skill.name }}
+            </h4>
+          </div>
           <p
             class="text-[11px] sm:text-xs text-slate-400 font-mono leading-snug pt-0.5 break-words"
           >
