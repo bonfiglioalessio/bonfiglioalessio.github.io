@@ -93,128 +93,154 @@
 </script>
 
 <template>
-  <div class="relative w-full max-w-md lg:max-w-xl orbital-satellite-assembly">
-    <!-- Atmospheric Cosmic Glow Nebula Aura behind Satellite -->
+  <div class="relative w-full max-w-md lg:max-w-xl orbital-satellite-assembly group">
+    <!-- Atmospheric Cosmic Glow Nebula Aura behind Satellite (Intensifies on hover) -->
     <div
-      class="absolute -top-16 -right-16 w-80 h-80 bg-lime-400/20 rounded-full blur-3xl pointer-events-none z-0 animate-glow-pulse"
+      class="absolute -top-16 -right-16 w-80 h-80 bg-lime-400/20 group-hover:bg-lime-400/35 rounded-full blur-3xl pointer-events-none z-0 animate-glow-pulse transition-all duration-500"
     />
     <div
-      class="absolute -bottom-10 -left-10 w-64 h-64 bg-cyan-500/15 rounded-full blur-2xl pointer-events-none z-0"
+      class="absolute -bottom-10 -left-10 w-64 h-64 bg-cyan-500/15 group-hover:bg-cyan-500/30 rounded-full blur-2xl pointer-events-none z-0 transition-all duration-500"
     />
 
     <!-- Orbital Trajectory Ring Background -->
     <div
-      class="absolute -inset-10 border border-dashed border-sky-400/15 rounded-full pointer-events-none opacity-40 animate-spin-slow"
+      class="absolute -inset-10 border border-dashed border-sky-400/15 group-hover:border-sky-400/40 rounded-full pointer-events-none opacity-40 group-hover:opacity-80 animate-spin-slow transition-all duration-500"
     />
 
     <!-- ================= SATELLITE HARDWARE ATTACHMENTS ================= -->
 
-    <!-- Top Communication Antenna Mast & Pulsing Transponder Beacon (Desktop Only) -->
+    <!-- Top Communication Antenna Mast & Pulsing Transponder Beacon (Glows on hover) -->
     <div
-      class="hidden lg:flex absolute -top-10 right-14 flex-col items-center pointer-events-none z-20 select-none"
+      class="flex absolute -top-9 sm:-top-10 right-8 sm:right-14 flex-col items-center pointer-events-none z-0 select-none transition-transform duration-500 group-hover:-translate-y-1"
     >
       <!-- Glowing Transponder Beacon -->
-      <span class="relative flex h-3 w-3">
+      <span class="relative flex h-2.5 sm:h-3 w-2.5 sm:w-3">
         <span
           class="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-80"
         />
         <span
-          class="relative inline-flex rounded-full h-3 w-3 bg-lime-400 shadow-[0_0_10px_#e2f161]"
+          class="relative inline-flex rounded-full h-2.5 sm:h-3 w-2.5 sm:w-3 bg-lime-400 shadow-[0_0_10px_#e2f161] group-hover:shadow-[0_0_20px_#e2f161,0_0_40px_#e2f161] transition-shadow duration-300"
         />
       </span>
       <!-- Antenna Rod Mast -->
       <div
-        class="w-0.5 h-7 bg-gradient-to-t from-slate-600 via-slate-400 to-lime-400 shadow-[0_0_6px_rgba(226,241,97,0.5)]"
+        class="w-0.5 h-6 sm:h-7 bg-gradient-to-t from-slate-600 via-slate-400 to-lime-400 shadow-[0_0_6px_rgba(226,241,97,0.5)] group-hover:shadow-[0_0_12px_#e2f161] group-hover:via-lime-300 transition-all duration-300"
       />
       <!-- Antenna Dish Base Mount -->
-      <div class="w-3.5 h-1.5 bg-slate-700 rounded-t-sm border-t border-lime-400/40" />
+      <div
+        class="w-3 sm:w-3.5 h-1 sm:h-1.5 bg-slate-700 rounded-t-sm border-t border-lime-400/40 group-hover:border-lime-400 group-hover:shadow-[0_0_8px_#e2f161] transition-all duration-300"
+      />
     </div>
 
-    <!-- Left Solar Array Wing Assembly (Desktop - Positioned Higher to avoid headline text) -->
+    <!-- Left Solar Array Wing Assembly (Desktop - Positioned Higher with Radiant Cyan Glow on hover) -->
     <div
-      class="hidden lg:flex flex-col items-center justify-center absolute -left-12 xl:-left-14 top-[24%] -translate-y-1/2 z-0 pointer-events-none select-none transition-transform duration-500 group-hover:scale-105"
+      class="hidden lg:flex flex-col items-center justify-center absolute -left-12 xl:-left-14 top-[24%] -translate-y-1/2 z-0 pointer-events-none select-none transition-all duration-500 group-hover:scale-105 group-hover:-translate-x-1"
     >
       <!-- Solar Array Body (Deep space photovoltaic cells with cyan lattice grid) -->
       <div
-        class="w-9 xl:w-10 h-36 xl:h-40 rounded-xl solar-wing-surface border border-sky-400/40 shadow-[0_0_20px_rgba(56,189,248,0.25)] flex flex-col justify-between p-1.5 relative overflow-hidden"
+        class="w-9 xl:w-10 h-36 xl:h-40 rounded-xl solar-wing-surface border border-sky-400/40 group-hover:border-sky-400 shadow-[0_0_20px_rgba(56,189,248,0.25)] group-hover:shadow-[0_0_35px_rgba(56,189,248,0.65),0_0_70px_rgba(56,189,248,0.3)] flex flex-col justify-between p-1.5 relative overflow-hidden transition-all duration-300"
       >
         <!-- Solar Bus Bar & Cell Dividers -->
         <div class="flex justify-between items-center w-full px-0.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8]" />
-          <span class="text-[7px] font-mono text-sky-400/80 tracking-tighter">PV-A1</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8]" />
+          <span
+            class="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8] group-hover:shadow-[0_0_10px_#38bdf8]"
+          />
+          <span
+            class="text-[7px] font-mono text-sky-400/80 group-hover:text-sky-300 tracking-tighter transition-colors"
+            >PV-A1</span
+          >
+          <span
+            class="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8] group-hover:shadow-[0_0_10px_#38bdf8]"
+          />
         </div>
 
         <!-- Vertical Solar Telemetry Line -->
-        <div class="h-full w-px bg-sky-400/30 mx-auto my-1" />
+        <div
+          class="h-full w-px bg-sky-400/30 group-hover:bg-sky-400/60 mx-auto my-1 transition-colors"
+        />
 
         <!-- Vertical Text Label -->
         <div
-          class="text-[7px] font-mono text-sky-300 font-bold -rotate-90 origin-center whitespace-nowrap tracking-widest uppercase select-none opacity-80"
+          class="text-[7px] font-mono text-sky-300 font-bold -rotate-90 origin-center whitespace-nowrap tracking-widest uppercase select-none opacity-80 group-hover:opacity-100 group-hover:text-white group-hover:drop-shadow-[0_0_8px_#38bdf8] transition-all"
         >
           SOLAR ARRAY // α
         </div>
 
-        <div class="h-full w-px bg-sky-400/30 mx-auto my-1" />
+        <div
+          class="h-full w-px bg-sky-400/30 group-hover:bg-sky-400/60 mx-auto my-1 transition-colors"
+        />
 
         <div class="flex justify-between items-center w-full px-0.5">
-          <span class="w-1 h-1 rounded-full bg-sky-400/60" />
-          <span class="text-[7px] font-mono text-sky-400/60">450W</span>
-          <span class="w-1 h-1 rounded-full bg-sky-400/60" />
+          <span class="w-1 h-1 rounded-full bg-sky-400/60 group-hover:bg-sky-300" />
+          <span class="text-[7px] font-mono text-sky-400/60 group-hover:text-sky-300">450W</span>
+          <span class="w-1 h-1 rounded-full bg-sky-400/60 group-hover:bg-sky-300" />
         </div>
       </div>
 
       <!-- Metal Joint Arm to Satellite Body -->
       <div
-        class="w-4 h-1.5 bg-gradient-to-r from-sky-500/80 to-slate-700 border-y border-sky-400/40 shadow-[0_0_8px_rgba(56,189,248,0.3)] absolute right-[-15px] top-1/2 -translate-y-1/2"
+        class="w-4 h-1.5 bg-gradient-to-r from-sky-500/80 to-slate-700 group-hover:from-sky-400 group-hover:to-slate-600 border-y border-sky-400/40 group-hover:border-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.3)] group-hover:shadow-[0_0_15px_#38bdf8] absolute right-[-15px] top-1/2 -translate-y-1/2 transition-all duration-300"
       />
     </div>
 
-    <!-- Right Solar Array Wing Assembly (Desktop - Positioned Lower for Aerospace Asymmetry) -->
+    <!-- Right Solar Array Wing Assembly (Desktop - Positioned Lower with Radiant Cyan Glow on hover) -->
     <div
-      class="hidden lg:flex flex-col items-center justify-center absolute -right-12 xl:-right-14 top-[76%] -translate-y-1/2 z-0 pointer-events-none select-none transition-transform duration-500 group-hover:scale-105"
+      class="hidden lg:flex flex-col items-center justify-center absolute -right-12 xl:-right-14 top-[76%] -translate-y-1/2 z-0 pointer-events-none select-none transition-all duration-500 group-hover:scale-105 group-hover:translate-x-1"
     >
       <!-- Metal Joint Arm to Satellite Body -->
       <div
-        class="w-4 h-1.5 bg-gradient-to-l from-sky-500/80 to-slate-700 border-y border-sky-400/40 shadow-[0_0_8px_rgba(56,189,248,0.3)] absolute left-[-15px] top-1/2 -translate-y-1/2"
+        class="w-4 h-1.5 bg-gradient-to-l from-sky-500/80 to-slate-700 group-hover:from-sky-400 group-hover:to-slate-600 border-y border-sky-400/40 group-hover:border-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.3)] group-hover:shadow-[0_0_15px_#38bdf8] absolute left-[-15px] top-1/2 -translate-y-1/2 transition-all duration-300"
       />
 
       <!-- Solar Array Body (Deep space photovoltaic cells with cyan lattice grid) -->
       <div
-        class="w-9 xl:w-10 h-36 xl:h-40 rounded-xl solar-wing-surface border border-sky-400/40 shadow-[0_0_20px_rgba(56,189,248,0.25)] flex flex-col justify-between p-1.5 relative overflow-hidden"
+        class="w-9 xl:w-10 h-36 xl:h-40 rounded-xl solar-wing-surface border border-sky-400/40 group-hover:border-sky-400 shadow-[0_0_20px_rgba(56,189,248,0.25)] group-hover:shadow-[0_0_35px_rgba(56,189,248,0.65),0_0_70px_rgba(56,189,248,0.3)] flex flex-col justify-between p-1.5 relative overflow-hidden transition-all duration-300"
       >
         <!-- Solar Bus Bar & Cell Dividers -->
         <div class="flex justify-between items-center w-full px-0.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8]" />
-          <span class="text-[7px] font-mono text-sky-400/80 tracking-tighter">PV-B2</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8]" />
+          <span
+            class="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8] group-hover:shadow-[0_0_10px_#38bdf8]"
+          />
+          <span
+            class="text-[7px] font-mono text-sky-400/80 group-hover:text-sky-300 tracking-tighter transition-colors"
+            >PV-B2</span
+          >
+          <span
+            class="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8] group-hover:shadow-[0_0_10px_#38bdf8]"
+          />
         </div>
 
-        <div class="h-full w-px bg-sky-400/30 mx-auto my-1" />
+        <div
+          class="h-full w-px bg-sky-400/30 group-hover:bg-sky-400/60 mx-auto my-1 transition-colors"
+        />
 
         <!-- Vertical Text Label -->
         <div
-          class="text-[7px] font-mono text-sky-300 font-bold rotate-90 origin-center whitespace-nowrap tracking-widest uppercase select-none opacity-80"
+          class="text-[7px] font-mono text-sky-300 font-bold rotate-90 origin-center whitespace-nowrap tracking-widest uppercase select-none opacity-80 group-hover:opacity-100 group-hover:text-white group-hover:drop-shadow-[0_0_8px_#38bdf8] transition-all"
         >
           SOLAR ARRAY // β
         </div>
 
-        <div class="h-full w-px bg-sky-400/30 mx-auto my-1" />
+        <div
+          class="h-full w-px bg-sky-400/30 group-hover:bg-sky-400/60 mx-auto my-1 transition-colors"
+        />
 
         <div class="flex justify-between items-center w-full px-0.5">
-          <span class="w-1 h-1 rounded-full bg-sky-400/60" />
-          <span class="text-[7px] font-mono text-sky-400/60">PWR 100%</span>
-          <span class="w-1 h-1 rounded-full bg-sky-400/60" />
+          <span class="w-1 h-1 rounded-full bg-sky-400/60 group-hover:bg-sky-300" />
+          <span class="text-[7px] font-mono text-sky-400/60 group-hover:text-sky-300"
+            >PWR 100%</span
+          >
+          <span class="w-1 h-1 rounded-full bg-sky-400/60 group-hover:bg-sky-300" />
         </div>
       </div>
     </div>
 
-    <!-- Ion Plasma Thrusters (Bottom Corner Jets) -->
+    <!-- Ion Plasma Thrusters (Bottom Corner Jets - Flare on hover) -->
     <div
-      class="absolute -bottom-3 left-12 w-4 h-6 bg-gradient-to-b from-cyan-400 via-sky-400/60 to-transparent blur-[2px] opacity-80 pointer-events-none ion-thruster-jet"
+      class="absolute -bottom-3 left-12 w-4 h-6 bg-gradient-to-b from-cyan-400 via-sky-400/60 to-transparent blur-[2px] opacity-80 group-hover:opacity-100 group-hover:scale-125 pointer-events-none ion-thruster-jet transition-all duration-300"
     />
     <div
-      class="absolute -bottom-3 right-12 w-4 h-6 bg-gradient-to-b from-cyan-400 via-sky-400/60 to-transparent blur-[2px] opacity-80 pointer-events-none ion-thruster-jet"
+      class="absolute -bottom-3 right-12 w-4 h-6 bg-gradient-to-b from-cyan-400 via-sky-400/60 to-transparent blur-[2px] opacity-80 group-hover:opacity-100 group-hover:scale-125 pointer-events-none ion-thruster-jet transition-all duration-300"
     />
 
     <!-- ================= MAIN SATELLITE COCKPIT CONTAINER ================= -->

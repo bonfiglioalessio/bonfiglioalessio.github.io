@@ -157,8 +157,10 @@
         </div>
       </div>
 
-      <!-- Right Column: Interactive Orbital Satellite Cockpit (Half-peeking on Mobile) -->
-      <div class="lg:col-span-5 flex justify-center lg:justify-end mt-8 sm:mt-10 lg:mt-0">
+      <!-- Right Column: Interactive Orbital Satellite Cockpit (Layered underneath stat cards on mobile) -->
+      <div
+        class="lg:col-span-5 flex justify-center lg:justify-end -mt-2 sm:mt-1 lg:mt-0 relative z-0"
+      >
         <HeroCockpit />
       </div>
     </div>
