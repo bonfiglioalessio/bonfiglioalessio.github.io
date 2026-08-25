@@ -200,7 +200,7 @@
         <button
           v-if="project.diff"
           type="button"
-          class="px-2.5 py-1 text-xs font-mono rounded-lg border transition-all cursor-pointer flex items-center gap-1.5 shrink-0"
+          class="relative overflow-hidden group/btn px-2.5 py-1 text-xs font-mono rounded-lg border transition-all cursor-pointer flex items-center gap-1.5 shrink-0 select-none active:scale-95"
           :class="
             isDiffOpen
               ? 'bg-dark-950 border-rose-500/60 text-rose-400 shadow-[0_0_12px_rgba(244,63,94,0.3)]'
@@ -208,8 +208,13 @@
           "
           @click="toggleDiff"
         >
-          <span class="font-bold">{{ isDiffOpen ? '[-]' : '[+]' }}</span>
-          <span>{{ isDiffOpen ? 'close diff' : 'inspect diff' }}</span>
+          <span
+            class="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out pointer-events-none bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-25deg] w-[180%]"
+          />
+          <span class="relative z-10 flex items-center gap-1.5">
+            <span class="font-bold">{{ isDiffOpen ? '[-]' : '[+]' }}</span>
+            <span>{{ isDiffOpen ? 'close diff' : 'inspect diff' }}</span>
+          </span>
         </button>
       </div>
 
@@ -276,15 +281,20 @@
 
       <!-- Action Buttons -->
       <div class="flex items-center gap-2 shrink-0">
-        <!-- Desktop: Preview Lightbox Trigger (Hidden on Mobile) -->
+        <!-- Desktop: Preview Lightbox Trigger (Hidden on Mobile) with Shine -->
         <button
           type="button"
-          class="hidden md:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-mono font-bold text-xs bg-dark-950/90 border transition-all cursor-pointer active:scale-95"
+          class="relative overflow-hidden group/btn hidden md:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-mono font-bold text-xs bg-dark-950/90 border transition-all cursor-pointer active:scale-95"
           :class="themeConfig.previewBtnClass"
           @click="emit('preview', project)"
         >
-          <span class="text-[10px]">⬡</span>
-          <span>PREVIEW</span>
+          <span
+            class="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out pointer-events-none bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-25deg] w-[180%]"
+          />
+          <span class="relative z-10 flex items-center gap-1.5">
+            <span class="text-[10px]">⬡</span>
+            <span>PREVIEW</span>
+          </span>
         </button>
 
         <!-- Mobile: Direct Visit Link Button (Hidden on Desktop) -->
