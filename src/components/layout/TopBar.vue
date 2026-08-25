@@ -14,7 +14,6 @@
   const activeSectionId = ref('')
 
   let contactObserver: IntersectionObserver | null = null
-  const sectionObservers: IntersectionObserver[] = []
 
   const emailUrl = 'mailto:bonfi.alessio98@gmail.com'
 
@@ -72,9 +71,6 @@
   function handleScroll() {
     if (typeof window !== 'undefined') {
       isScrolled.value = window.scrollY > 25
-      if (window.scrollY < 200) {
-        activeSectionId.value = ''
-      }
 
       // Show LET'S TALK CTA button ONLY starting from Selected Work (#projects) section
       const projectsEl = document.getElementById('projects')
@@ -88,6 +84,28 @@
       if (contactEl) {
         const rect = contactEl.getBoundingClientRect()
         isContactVisible.value = rect.top <= window.innerHeight * 0.7 && rect.bottom >= 50
+      }
+
+      // Precise Real-Time Scrollspy: Active section detection
+      if (window.scrollY < 180) {
+        activeSectionId.value = ''
+      } else {
+        const sectionIds = ['stack', 'projects', 'experience', 'contact']
+        const focalY = window.innerHeight * 0.38
+        let currentActive = ''
+        for (const id of sectionIds) {
+          const el = document.getElementById(id)
+          if (el) {
+            const rect = el.getBoundingClientRect()
+            if (rect.top <= focalY && rect.bottom > focalY) {
+              currentActive = '#' + id
+              break
+            }
+          }
+        }
+        if (currentActive) {
+          activeSectionId.value = currentActive
+        }
       }
     }
   }
@@ -110,27 +128,6 @@
       )
       contactObserver.observe(contactEl)
     }
-
-    // Scrollspy: Observe individual sections to highlight active nav link
-    const sectionIds = ['stack', 'projects', 'experience', 'contact']
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id)
-      if (el && 'IntersectionObserver' in window) {
-        const obs = new IntersectionObserver(
-          ([entry]) => {
-            if (entry.isIntersecting) {
-              activeSectionId.value = '#' + id
-            }
-          },
-          {
-            threshold: 0.15,
-            rootMargin: '-80px 0px -45% 0px',
-          },
-        )
-        obs.observe(el)
-        sectionObservers.push(obs)
-      }
-    })
   })
 
   onUnmounted(() => {
@@ -139,8 +136,6 @@
       contactObserver.disconnect()
       contactObserver = null
     }
-    sectionObservers.forEach((obs) => obs.disconnect())
-    sectionObservers.length = 0
   })
 </script>
 
@@ -226,9 +221,11 @@
 
           <!-- Dedicated Slot for LET'S TALK CTA Button: 0px at top, smoothly expands when Selected Work is reached -->
           <div
-            class="hidden md:flex items-center justify-end shrink-0 transition-all duration-300 ease-out overflow-hidden"
+            class="hidden md:flex items-center justify-end shrink-0 transition-all duration-300 ease-out py-1"
             :class="
-              isCtaVisible ? 'w-[130px] opacity-100 ml-2' : 'w-0 opacity-0 ml-0 pointer-events-none'
+              isCtaVisible
+                ? 'w-[136px] opacity-100 ml-2 overflow-visible'
+                : 'w-0 opacity-0 ml-0 pointer-events-none overflow-hidden'
             "
           >
             <AppButton
