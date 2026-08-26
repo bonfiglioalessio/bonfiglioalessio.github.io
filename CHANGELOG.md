@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/bonfiglioalessio/bonfiglioalessio.github.io/compare/v1.0.1...v1.1.0) (2026-08-26)
+
+### 🚀 Features & Interactive Modules
+
+* **cockpit:** interactive macOS traffic lights with Self-Destruct crash sequence, minimize HUD dock, and fullscreen terminal overlay
+* **audio:** procedural Web Audio API SFX synthesizer (`playCrashExplosion`, `playMinimizeGlide`, `playMaximizeWarp`, `playRebootSequence`)
+* **animation:** sci-fi quantum warp-in re-entry animation for emergency satellite reboot and HUD restore
+* **preview:** technical project index and URL bar in live preview modal header
+* **data:** centralized contact and footer telemetry data structures with dynamic reactive bindings
+* **seo:** high-resolution 1200x630 OpenGraph card and meta tags
+* **experience:** clickable markdown link parser for education & career highlights
+* **cli:** enhanced interactive terminal commands (`status`, `whoami`, `matrix`, `help`, `projects`) with typewriter streaming
+
+---
+
 ## [1.0.1](https://github.com/bonfiglioalessio/bonfiglioalessio.github.io/compare/v1.0.0...v1.0.1) (2026-08-26)
 
 ### 🐛 Bug Fixes
