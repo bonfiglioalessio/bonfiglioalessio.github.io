@@ -93,6 +93,14 @@
         }
     }
   })
+
+  function formatHighlight(text: string): string {
+    const clean = text.replace(/^\+\s*/, '')
+    return clean.replace(
+      /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+      '<a href="$2" target="_blank" rel="noopener noreferrer" class="underline text-lime-300 hover:text-white transition-colors inline-flex items-center gap-0.5 font-semibold">$1 ↗</a>',
+    )
+  }
 </script>
 
 <template>
@@ -245,7 +253,7 @@
           class="flex items-start gap-2 leading-relaxed"
         >
           <span class="font-bold shrink-0 mt-0.5" :class="themeConfig.highlightStar"> ✦ </span>
-          <span>{{ highlight.replace(/^\+\s*/, '') }}</span>
+          <span v-html="formatHighlight(highlight)" />
         </li>
       </ul>
 
