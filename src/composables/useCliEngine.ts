@@ -39,10 +39,11 @@ export function useCliEngine() {
     'experience',
     'projects',
     'contact',
+    'status',
+    'whoami',
     'supernova',
     'matrix',
     'audio',
-    'whoami',
     'clear',
   ]
 
@@ -158,12 +159,12 @@ export function useCliEngine() {
             <div class="text-lime-400 font-bold">AVAILABLE TELEMETRY COMMANDS:</div>
             <div>&bull; <strong class="text-white">skills</strong> / <strong class="text-white">stack</strong> — Technical skill constellation</div>
             <div>&bull; <strong class="text-white">projects</strong> / <strong class="text-white">work</strong> — Selected works &amp; code diffs</div>
-            <div>&bull; <strong class="text-white">experience</strong> / <strong class="text-white">career</strong> — Career mission log &amp; milestones</div>
+            <div>&bull; <strong class="text-white">experience</strong> / <strong class="text-white">career</strong> — Career missions (iliad, Mondadori Media, Foundations)</div>
+            <div>&bull; <strong class="text-white">status</strong> — View orbital station telemetry &amp; live mission status</div>
+            <div>&bull; <strong class="text-white">whoami</strong> — View developer identity credentials</div>
             <div>&bull; <strong class="text-white">contact</strong> / <strong class="text-white">hire</strong> — Direct transmission channel &amp; email</div>
             <div>&bull; <strong class="text-white">supernova</strong> — Trigger cosmic particle storm</div>
             <div>&bull; <strong class="text-white">audio</strong> / <strong class="text-white">mute</strong> — Toggle Web Audio FX synthesizer</div>
-            <div>&bull; <strong class="text-white">status</strong> — View orbital station telemetry</div>
-            <div>&bull; <strong class="text-white">whoami</strong> — View developer identity credentials</div>
             <div>&bull; <strong class="text-white">clear</strong> — Clear terminal window log</div>
           </div>`,
         })
@@ -211,6 +212,20 @@ export function useCliEngine() {
         break
       }
 
+      case 'status':
+        pushStreamedOutput([
+          `<div class="space-y-1 text-[11px] font-mono text-slate-300">
+            <div class="text-lime-400 font-bold">🛰️ SATELLITE TELEMETRY STATUS:</div>
+            <div>&bull; <span class="text-slate-400">Base:</span> Milano, IT <span class="text-slate-500">(from Sanremo '98)</span></div>
+            <div>&bull; <span class="text-slate-400">Mission:</span> Software Engineering @ <strong class="text-white">iliad</strong></div>
+            <div>&bull; <span class="text-slate-400">Experience:</span> 6+ Years in Production</div>
+            <div>&bull; <span class="text-slate-400">Core Stack:</span> Vue 3, TypeScript, Angular, React, SCSS, PHP</div>
+            <div>&bull; <span class="text-slate-400">Engine:</span> 60fps Web Audio Synth + 3D Canvas</div>
+            <div>&bull; <span class="text-slate-400">Status:</span> 🟢 OPTIMAL / Live</div>
+          </div>`,
+        ])
+        break
+
       case 'contact':
       case 'contact_me':
       case 'hire':
@@ -248,8 +263,8 @@ export function useCliEngine() {
         pushStreamedOutput(
           [
             `<div>01000001 01101100 01100101 01110011 01110011 01101001 01101111</div>`,
-            `<div>&gt; SYSTEM BREACH: 120Hz high-frequency rendering unlocked.</div>`,
-            `<div>&gt; AGENTIC PIPELINE: Multi-agent synchronized.</div>`,
+            `<div>&gt; ENTERPRISE REFACTORING: Legacy technical debt reduced. Clean architecture active.</div>`,
+            `<div>&gt; AGENTIC PIPELINE: Multi-agent pair-programming synchronized.</div>`,
           ],
           'font-mono text-emerald-400 text-[10px] leading-tight space-y-0.5 animate-pulse',
           'matrix',
@@ -267,8 +282,11 @@ export function useCliEngine() {
 
       case 'whoami':
         pushStreamedOutput([
-          `<div class="text-slate-200 font-mono text-[11px]">
-            <span class="text-lime-400 font-bold">${portfolioData.value.profile.name.toLowerCase().replace(' ', '.')}</span> (${portfolioData.value.profile.role} @ ${portfolioData.value.profile.currentCompany})
+          `<div class="space-y-1 text-[11px] font-mono text-slate-300">
+            <div>&gt; USER: <span class="text-lime-400 font-bold">${portfolioData.value.profile.name}</span> <span class="text-slate-400">('98 @ Milano)</span></div>
+            <div>&gt; ROLE: <span class="text-white">${portfolioData.value.profile.role}</span> @ <strong class="text-lime-300">${portfolioData.value.profile.currentCompany}</strong></div>
+            <div>&gt; FOCUS: <span class="text-slate-300">Enterprise Code Modernization, Scalable Architecture &amp; Creative Lab</span></div>
+            <div>&gt; BACKGROUND: <span class="text-slate-400">Origins in Sanremo ➔ Comics Torino (30/30) • Delpho • Liceo Artistico</span></div>
           </div>`,
         ])
         break
