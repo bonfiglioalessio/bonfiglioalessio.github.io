@@ -2,12 +2,15 @@
   import { ref } from 'vue'
   import AppContainer from './AppContainer.vue'
   import { useScrollReveal } from '../../composables/useScrollReveal'
+  import { usePortfolioData } from '../../composables/usePortfolioData'
 
   const footerRef = ref<HTMLElement | null>(null)
   useScrollReveal(footerRef, {
     threshold: 0.1,
     rootMargin: '0px 0px -20px 0px',
   })
+
+  const { footer } = usePortfolioData()
 
   function scrollToTop() {
     window.scrollTo({
@@ -30,15 +33,15 @@
             class="flex items-center justify-center sm:justify-start gap-2 font-mono text-xs text-slate-300 font-bold flex-wrap"
           >
             <span class="w-2 h-2 rounded-full bg-lime-400 shadow-[0_0_8px_#e2f161]" />
-            <span class="text-lime-400">SYS_STATUS: OPTIMAL</span>
+            <span class="text-lime-400">{{ footer?.statusText || 'SYS_STATUS: OPTIMAL' }}</span>
             <span class="text-lime-400/40">|</span>
-            <span class="text-slate-400">LATENCY: &lt;1ms</span>
+            <span class="text-slate-400">{{ footer?.latencyText || 'LATENCY: <1ms' }}</span>
             <span class="text-lime-400/40">|</span>
-            <span class="text-slate-400">60FPS ENGINE</span>
+            <span class="text-slate-400">{{ footer?.engineText || '60FPS ENGINE' }}</span>
           </div>
 
           <p class="text-[11px] font-mono text-slate-400">
-            &copy; {{ new Date().getFullYear() }} ALESSIO BONFIGLIO // HUMAN-DIRECTED AI ENGINEERING
+            &copy; {{ new Date().getFullYear() }} {{ footer?.attribution || 'ALESSIO BONFIGLIO // HUMAN-DIRECTED AI ENGINEERING' }}
           </p>
         </div>
 
@@ -51,7 +54,7 @@
           <span class="text-lime-400 group-hover:-translate-y-0.5 transition-transform"
             >&uarr;</span
           >
-          <span>BACK_TO_TOP</span>
+          <span>{{ footer?.backToTopText || 'BACK_TO_TOP' }}</span>
         </button>
       </div>
     </AppContainer>
