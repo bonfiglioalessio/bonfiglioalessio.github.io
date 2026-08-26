@@ -149,37 +149,14 @@
           <div
             class="px-4 py-3 bg-dark-900/90 border-b border-lime-400/15 flex items-center justify-between gap-3 shrink-0"
           >
-            <!-- Left: macOS Traffic Lights & Project Identifier -->
-            <div class="flex items-center gap-3">
-              <div class="flex items-center gap-1.5">
-                <button
-                  type="button"
-                  aria-label="Close preview"
-                  class="w-3 h-3 rounded-full bg-rose-500 hover:bg-rose-400 cursor-pointer transition-transform active:scale-90 shadow-[0_0_8px_rgba(244,63,94,0.5)]"
-                  @click="handleClose"
-                />
-                <button
-                  type="button"
-                  aria-label="Toggle device mode"
-                  class="w-3 h-3 rounded-full bg-amber-500 hover:bg-amber-400 cursor-pointer transition-transform active:scale-90 shadow-[0_0_8px_rgba(245,158,11,0.5)]"
-                  @click="setDevice(activeDevice === 'desktop' ? 'mobile' : 'desktop')"
-                />
-                <button
-                  type="button"
-                  aria-label="Reload demo frame"
-                  class="w-3 h-3 rounded-full bg-emerald-500 hover:bg-emerald-400 cursor-pointer transition-transform active:scale-90 shadow-[0_0_8px_rgba(16,185,129,0.5)]"
-                  @click="reloadIframe"
-                />
-              </div>
-
-              <div class="hidden sm:flex items-center gap-2 pl-2 border-l border-slate-700">
-                <span class="text-lime-400 font-mono font-bold text-xs">
-                  {{ project.projectNumber }} //
-                </span>
-                <span class="text-white font-syne font-bold text-sm truncate max-w-[180px]">
-                  {{ project.title }}
-                </span>
-              </div>
+            <!-- Left: Project Number & Title Identity -->
+            <div class="flex items-center gap-2 font-mono text-xs sm:text-sm shrink-0">
+              <span class="text-lime-400 font-bold tracking-wider">
+                {{ project.projectNumber }} //
+              </span>
+              <span class="text-white font-bold tracking-wide">
+                {{ project.title }}
+              </span>
             </div>
 
             <!-- Center: URL Bar Mockup with Clickable External Link -->
@@ -265,10 +242,11 @@
               <button
                 type="button"
                 aria-label="Close Lightbox"
-                class="px-2.5 py-1 rounded-xl bg-dark-950 border border-lime-400/30 text-slate-300 hover:text-lime-400 hover:border-lime-400 text-xs font-bold transition-all cursor-pointer"
+                class="px-2.5 py-1 rounded-xl bg-dark-950 border border-lime-400/30 text-slate-300 hover:text-lime-400 hover:border-lime-400 text-xs font-bold transition-all cursor-pointer flex items-center gap-1 active:scale-95"
                 @click="handleClose"
               >
-                ✕ <span class="hidden sm:inline text-[10px] text-slate-500">ESC</span>
+                <span class="text-[11px]">✕</span>
+                <span class="text-[10px] text-slate-400 font-mono">ESC</span>
               </button>
             </div>
           </div>
