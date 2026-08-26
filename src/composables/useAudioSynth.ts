@@ -467,6 +467,187 @@ export function useAudioSynth() {
     }
   }
 
+  // 7. Satellite Crash & Self-Destruct Explosion (Glitch + Rumble + Alarm)
+  function playCrashExplosion() {
+    if (!isAudioEnabled.value) return
+    const ctx = getAudioContext()
+    if (!ctx || !sfxGain) return
+
+    try {
+      const now = ctx.currentTime
+
+      // A. Deep Rumble & Sub Drop
+      const osc = ctx.createOscillator()
+      const gain = ctx.createGain()
+      const filter = ctx.createBiquadFilter()
+
+      filter.type = 'lowpass'
+      filter.frequency.setValueAtTime(450, now)
+      filter.frequency.exponentialRampToValueAtTime(30, now + 0.9)
+
+      osc.type = 'sawtooth'
+      osc.frequency.setValueAtTime(140, now)
+      osc.frequency.exponentialRampToValueAtTime(25, now + 0.9)
+
+      gain.gain.setValueAtTime(0.4, now)
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.9)
+
+      osc.connect(filter)
+      filter.connect(gain)
+      gain.connect(sfxGain)
+
+      osc.start(now)
+      osc.stop(now + 0.92)
+
+      // B. White Noise Explosion Impact Burst
+      const bufferSize = Math.floor(ctx.sampleRate * 0.45)
+      const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate)
+      const output = noiseBuffer.getChannelData(0)
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.12))
+      }
+
+      const whiteNoise = ctx.createBufferSource()
+      whiteNoise.buffer = noiseBuffer
+      const noiseFilter = ctx.createBiquadFilter()
+      noiseFilter.type = 'bandpass'
+      noiseFilter.frequency.setValueAtTime(600, now)
+      noiseFilter.Q.setValueAtTime(1.5, now)
+
+      const noiseGain = ctx.createGain()
+      noiseGain.gain.setValueAtTime(0.35, now)
+      noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.45)
+
+      whiteNoise.connect(noiseFilter)
+      noiseFilter.connect(noiseGain)
+      noiseGain.connect(sfxGain)
+
+      whiteNoise.start(now)
+
+      // C. Alarm Beep sequence (2 pulses)
+      ;[0.3, 0.55].forEach((offset) => {
+        if (!ctx || !sfxGain) return
+        const beepOsc = ctx.createOscillator()
+        const beepGain = ctx.createGain()
+        beepOsc.type = 'square'
+        beepOsc.frequency.setValueAtTime(950, now + offset)
+
+        beepGain.gain.setValueAtTime(0.12, now + offset)
+        beepGain.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.12)
+
+        beepOsc.connect(beepGain)
+        beepGain.connect(sfxGain)
+
+        beepOsc.start(now + offset)
+        beepOsc.stop(now + offset + 0.13)
+      })
+    } catch {
+      // Audio fallback
+    }
+  }
+
+  // 8. Minimize Warp Glide (Descending sweep down into HUD)
+  function playMinimizeGlide() {
+    if (!isAudioEnabled.value) return
+    const ctx = getAudioContext()
+    if (!ctx || !sfxGain) return
+
+    try {
+      const now = ctx.currentTime
+      const osc = ctx.createOscillator()
+      const gain = ctx.createGain()
+      const filter = ctx.createBiquadFilter()
+
+      filter.type = 'lowpass'
+      filter.frequency.setValueAtTime(2400, now)
+      filter.frequency.exponentialRampToValueAtTime(280, now + 0.35)
+
+      osc.type = 'sine'
+      osc.frequency.setValueAtTime(980, now)
+      osc.frequency.exponentialRampToValueAtTime(160, now + 0.35)
+
+      gain.gain.setValueAtTime(0.24, now)
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.35)
+
+      osc.connect(filter)
+      filter.connect(gain)
+      gain.connect(sfxGain)
+
+      osc.start(now)
+      osc.stop(now + 0.36)
+    } catch {
+      // Audio fallback
+    }
+  }
+
+  // 9. Maximize Fullscreen Warp (Ascending cosmic sweep)
+  function playMaximizeWarp() {
+    if (!isAudioEnabled.value) return
+    const ctx = getAudioContext()
+    if (!ctx || !sfxGain) return
+
+    try {
+      const now = ctx.currentTime
+      const osc = ctx.createOscillator()
+      const gain = ctx.createGain()
+      const filter = ctx.createBiquadFilter()
+
+      filter.type = 'bandpass'
+      filter.frequency.setValueAtTime(350, now)
+      filter.frequency.exponentialRampToValueAtTime(3200, now + 0.4)
+      filter.Q.setValueAtTime(2.5, now)
+
+      osc.type = 'sawtooth'
+      osc.frequency.setValueAtTime(220, now)
+      osc.frequency.exponentialRampToValueAtTime(1320, now + 0.4)
+
+      gain.gain.setValueAtTime(0.18, now)
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.4)
+
+      osc.connect(filter)
+      filter.connect(gain)
+      gain.connect(sfxGain)
+
+      osc.start(now)
+      osc.stop(now + 0.42)
+    } catch {
+      // Audio fallback
+    }
+  }
+
+  // 10. Satellite Reboot Sequence Chime (Reconstructed into Orbit)
+  function playRebootSequence() {
+    if (!isAudioEnabled.value) return
+    const ctx = getAudioContext()
+    if (!ctx || !sfxGain) return
+
+    try {
+      const now = ctx.currentTime
+      const notes = [440, 554.37, 659.25, 880, 1108.73] // A Major Arpeggio
+
+      notes.forEach((freq, idx) => {
+        if (!ctx || !sfxGain) return
+        const noteTime = now + idx * 0.07
+        const osc = ctx.createOscillator()
+        const gain = ctx.createGain()
+
+        osc.type = 'triangle'
+        osc.frequency.setValueAtTime(freq, noteTime)
+
+        gain.gain.setValueAtTime(0.2, noteTime)
+        gain.gain.exponentialRampToValueAtTime(0.0001, noteTime + 0.25)
+
+        osc.connect(gain)
+        gain.connect(sfxGain)
+
+        osc.start(noteTime)
+        osc.stop(noteTime + 0.26)
+      })
+    } catch {
+      // Audio fallback
+    }
+  }
+
   return {
     isAudioEnabled,
     toggleAudio,
@@ -479,5 +660,9 @@ export function useAudioSynth() {
     playClick,
     playSupernova,
     playDiffToggle,
+    playCrashExplosion,
+    playMinimizeGlide,
+    playMaximizeWarp,
+    playRebootSequence,
   }
 }
