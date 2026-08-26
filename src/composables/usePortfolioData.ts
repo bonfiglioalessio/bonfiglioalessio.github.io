@@ -29,6 +29,8 @@ export function usePortfolioData() {
   const selectedWork = computed<Project[]>(() => portfolioState.value.selectedWork)
   const careerMissionLog = computed<Experience[]>(() => portfolioState.value.careerMissionLog)
   const socialLinks = computed<SocialLink[]>(() => portfolioState.value.socialLinks)
+  const contact = computed(() => portfolioState.value.contact)
+  const footer = computed(() => portfolioState.value.footer)
 
   /**
    * Fetches the latest copy from a remote URL (e.g. GitHub Raw, CDN, or /data/portfolio.json).
@@ -90,6 +92,8 @@ export function usePortfolioData() {
     selectedWork,
     careerMissionLog,
     socialLinks,
+    contact,
+    footer,
     isLoading,
     isLoaded,
     isError,
