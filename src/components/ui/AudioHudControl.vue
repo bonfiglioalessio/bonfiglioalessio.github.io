@@ -13,9 +13,7 @@
     class="fixed right-5 sm:right-6 z-50 flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl bg-dark-950/95 backdrop-blur-2xl border transition-all duration-300 shadow-[0_4px_25px_rgba(0,0,0,0.85)] cursor-pointer group select-none font-mono text-xs active:scale-95"
     :class="[
       isCockpitMinimized ? 'bottom-[88px] sm:bottom-[96px]' : 'bottom-5 sm:bottom-6',
-      isAudioEnabled
-        ? 'border-lime-400/50 shadow-[0_0_20px_rgba(226,241,97,0.25)] hover:border-lime-400 hover:shadow-[0_0_30px_rgba(226,241,97,0.45)]'
-        : 'border-lime-400/30 hover:border-lime-400 shadow-[0_0_12px_rgba(226,241,97,0.12)] hover:shadow-[0_0_22px_rgba(226,241,97,0.35)]',
+      'border-lime-400/50 hover:border-lime-400 shadow-[0_0_20px_rgba(226,241,97,0.25)] hover:shadow-[0_0_30px_rgba(226,241,97,0.45)]',
     ]"
     :aria-label="
       isAudioEnabled
