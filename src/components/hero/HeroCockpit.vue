@@ -432,19 +432,19 @@
       <!-- Tab 2: Config Tab -->
       <div
         v-show="activeTab === 'config'"
-        class="flex-1 overflow-y-auto bg-dark-950/70 border border-lime-400/15 rounded-2xl p-3 sm:p-4 my-2 font-mono text-[10px] sm:text-xs text-slate-300 leading-relaxed no-scrollbar relative z-10"
+        class="flex-1 overflow-hidden bg-dark-950/70 border border-lime-400/15 rounded-2xl p-3 sm:p-4 my-2 font-mono text-[10px] sm:text-[11px] lg:text-xs text-slate-300 leading-relaxed relative z-10 flex flex-col justify-center"
       >
         <pre
-          class="whitespace-pre overflow-x-auto"
+          class="whitespace-pre-wrap break-words overflow-hidden"
         ><code><span class="text-lime-400 font-bold">export const</span> engineer = {
   name: <span class="text-lime-300">"Alessio Bonfiglio"</span>,
-  role: <span class="text-lime-300">"Frontend Engineer"</span>,
+  role: <span class="text-lime-300">"Frontend Engineer &amp; UI Architect"</span>,
   currentCompany: <span class="text-white font-bold">"iliad"</span>,
-  exCompany: <span class="text-white font-bold">"AdKaora Mondadori Media"</span>,
-  origin: <span class="text-lime-300">"Sanremo, IT ('98)"</span>,
+  exCompany: <span class="text-white font-bold">"AdKaora (Mondadori Media)"</span>,
+  base: <span class="text-lime-300">"Milano, IT (from Sanremo '98)"</span>,
   experience: <span class="text-emerald-400">"6+ Years in Production"</span>,
-  coreStack: [<span class="text-emerald-400">"Vue 3"</span>, <span class="text-emerald-400">"TypeScript"</span>, <span class="text-emerald-400">"React"</span>, <span class="text-emerald-400">"Next.js"</span>, <span class="text-emerald-400">"Tailwind"</span>],
-  focus: <span class="text-lime-400">"120Hz Pixel-Perfect &amp; AI-Augmented Workflows"</span>
+  stack: [<span class="text-emerald-400">"Vue 3"</span>, <span class="text-emerald-400">"TypeScript"</span>, <span class="text-emerald-400">"Angular"</span>, <span class="text-emerald-400">"React"</span>, <span class="text-emerald-400">"SCSS"</span>, <span class="text-emerald-400">"PHP"</span>],
+  focus: <span class="text-lime-400">"Enterprise Refactoring &amp; Clean Architecture"</span>
 };</code></pre>
       </div>
 
