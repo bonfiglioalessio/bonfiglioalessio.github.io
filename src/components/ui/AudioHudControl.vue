@@ -1,15 +1,18 @@
 <script setup lang="ts">
   import { useAudioSynth } from '../../composables/useAudioSynth'
+  import { useCockpitState } from '../../composables/useCockpitState'
 
   const { isAudioEnabled, toggleAudio } = useAudioSynth()
+  const { isCockpitMinimized } = useCockpitState()
 </script>
 
 <template>
   <!-- Fixed HUD Audio & Space Ambient Music Control in Bottom Right -->
   <button
     type="button"
-    class="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50 flex items-center gap-2.5 px-3.5 py-2 rounded-2xl bg-dark-950/90 backdrop-blur-md border transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.8)] cursor-pointer group select-none font-mono text-xs"
+    class="fixed right-5 sm:right-6 z-50 flex items-center gap-2.5 px-3.5 py-2 rounded-2xl bg-dark-950/90 backdrop-blur-md border transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.8)] cursor-pointer group select-none font-mono text-xs"
     :class="[
+      isCockpitMinimized ? 'bottom-[72px] sm:bottom-[78px]' : 'bottom-5 sm:bottom-6',
       isAudioEnabled
         ? 'border-lime-400/40 shadow-[0_0_18px_rgba(226,241,97,0.2)] hover:border-lime-400 hover:shadow-[0_0_25px_rgba(226,241,97,0.4)] active:scale-95'
         : 'border-slate-800 bg-dark-950/80 opacity-75 hover:opacity-100 hover:border-slate-700 active:scale-95',

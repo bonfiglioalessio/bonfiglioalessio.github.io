@@ -205,7 +205,7 @@ export function useCliEngine() {
           `<div class="text-lime-400 font-bold tracking-wide">🚀 SELECTED WORK &amp; EXPERIMENTS:</div>`,
           ...portfolioData.value.selectedWork.map(
             (p, idx) =>
-              `<div>0${idx + 1}. <strong class="text-white">${p.title}</strong> &bull; ${p.description.slice(0, 52)}... <span class="text-slate-400">(${p.stack.join(', ')})</span></div>`,
+              `<div class="py-0.5">0${idx + 1}. <strong class="text-white">${p.title}</strong> &bull; ${p.description} <span class="text-slate-400">(${p.stack.join(', ')})</span></div>`,
           ),
         ]
         pushStreamedOutput(projectLines)
