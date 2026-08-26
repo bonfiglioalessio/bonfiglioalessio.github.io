@@ -139,7 +139,7 @@
       <!-- Diagonal Shine Sweep Ribbon on Hover -->
       <span
         v-if="shine"
-        class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-25deg] w-[180%] z-0"
+        class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none bg-gradient-to-r from-transparent via-white/6 to-transparent skew-x-[-25deg] w-[180%] z-0"
         aria-hidden="true"
       />
 
