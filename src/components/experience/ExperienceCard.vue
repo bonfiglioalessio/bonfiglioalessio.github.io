@@ -143,7 +143,7 @@
       :tilt="false"
       :spotlight="true"
       :spotlight-color="themeConfig.spotlightColor"
-      :shine="true"
+      :shine="false"
       :float-animation="floatAnimation"
       class="select-none space-y-4 w-full h-full flex flex-col justify-between relative overflow-hidden transition-opacity duration-300 bg-dark-900/95 lg:bg-dark-900/80 lg:backdrop-blur-xl transform-gpu"
       :class="[
@@ -268,74 +268,71 @@
 
 <style scoped lang="scss">
   .active-timeline-card-lime {
-    border-color: rgba(226, 241, 97, 0.85) !important;
+    border-color: rgba(226, 241, 97, 0.8) !important;
     box-shadow:
-      0 0 35px 3px rgba(226, 241, 97, 0.4),
-      0 12px 35px 0 rgba(0, 0, 0, 0.7),
-      inset 0 0 20px 0 rgba(226, 241, 97, 0.12) !important;
+      0 0 25px rgba(226, 241, 97, 0.25),
+      0 12px 35px rgba(0, 0, 0, 0.7) !important;
   }
 
   .active-timeline-card-white {
-    border-color: rgba(255, 255, 255, 0.85) !important;
+    border-color: rgba(224, 242, 254, 0.8) !important;
     box-shadow:
-      0 0 35px 3px rgba(255, 255, 255, 0.4),
-      0 12px 35px 0 rgba(0, 0, 0, 0.7),
-      inset 0 0 20px 0 rgba(255, 255, 255, 0.12) !important;
+      0 0 25px rgba(186, 230, 253, 0.2),
+      0 12px 35px rgba(0, 0, 0, 0.7) !important;
   }
 
   .active-timeline-card-emerald {
-    border-color: rgba(52, 211, 153, 0.85) !important;
+    border-color: rgba(52, 211, 153, 0.8) !important;
     box-shadow:
-      0 0 35px 3px rgba(52, 211, 153, 0.4),
-      0 12px 35px 0 rgba(0, 0, 0, 0.7),
-      inset 0 0 20px 0 rgba(52, 211, 153, 0.12) !important;
+      0 0 25px rgba(52, 211, 153, 0.25),
+      0 12px 35px rgba(0, 0, 0, 0.7) !important;
   }
 
   .active-card-border-stroke-lime {
-    filter: drop-shadow(0 0 8px #e2f161) drop-shadow(0 0 16px rgba(226, 241, 97, 0.8));
+    filter: drop-shadow(0 0 6px #e2f161);
     animation: card-border-pulse-lime 2.5s ease-in-out infinite alternate;
   }
 
   .active-card-border-stroke-white {
-    filter: drop-shadow(0 0 8px #ffffff) drop-shadow(0 0 16px rgba(255, 255, 255, 0.8));
+    filter: drop-shadow(0 0 6px #bae6fd);
     animation: card-border-pulse-white 2.5s ease-in-out infinite alternate;
   }
 
   .active-card-border-stroke-emerald {
-    filter: drop-shadow(0 0 8px #34d399) drop-shadow(0 0 16px rgba(52, 211, 153, 0.8));
+    filter: drop-shadow(0 0 6px #34d399);
     animation: card-border-pulse-emerald 2.5s ease-in-out infinite alternate;
   }
 
   @keyframes card-border-pulse-lime {
     0% {
       stroke-opacity: 0.85;
-      filter: drop-shadow(0 0 6px #e2f161) drop-shadow(0 0 12px rgba(226, 241, 97, 0.5));
+      filter: drop-shadow(0 0 4px #e2f161);
     }
     100% {
       stroke-opacity: 1;
-      filter: drop-shadow(0 0 12px #e2f161) drop-shadow(0 0 24px rgba(226, 241, 97, 0.95));
+      filter: drop-shadow(0 0 8px #e2f161);
     }
   }
 
   @keyframes card-border-pulse-white {
     0% {
       stroke-opacity: 0.85;
-      filter: drop-shadow(0 0 6px #ffffff) drop-shadow(0 0 12px rgba(255, 255, 255, 0.5));
+      filter: drop-shadow(0 0 4px #bae6fd);
     }
     100% {
       stroke-opacity: 1;
-      filter: drop-shadow(0 0 12px #ffffff) drop-shadow(0 0 24px rgba(255, 255, 255, 0.95));
+      filter: drop-shadow(0 0 8px #bae6fd);
     }
   }
 
   @keyframes card-border-pulse-emerald {
     0% {
       stroke-opacity: 0.85;
-      filter: drop-shadow(0 0 6px #34d399) drop-shadow(0 0 12px rgba(52, 211, 153, 0.5));
+      filter: drop-shadow(0 0 4px #34d399);
     }
     100% {
       stroke-opacity: 1;
-      filter: drop-shadow(0 0 12px #34d399) drop-shadow(0 0 24px rgba(52, 211, 153, 0.95));
+      filter: drop-shadow(0 0 8px #34d399);
     }
   }
 
@@ -353,58 +350,52 @@
 
   @keyframes title-glow-pulse-lime {
     0% {
-      text-shadow: 0 0 10px rgba(226, 241, 97, 0.5);
+      text-shadow: 0 0 8px rgba(226, 241, 97, 0.4);
       color: #e2f161;
     }
     100% {
       text-shadow:
-        0 0 20px rgba(226, 241, 97, 0.9),
-        0 0 35px rgba(226, 241, 97, 0.5);
+        0 0 16px rgba(226, 241, 97, 0.8),
+        0 0 25px rgba(226, 241, 97, 0.3);
       color: #f5ff82;
     }
   }
 
   @keyframes title-glow-pulse-white {
     0% {
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-      color: #ffffff;
+      text-shadow: 0 0 8px rgba(224, 242, 254, 0.4);
+      color: #f8fafc;
     }
     100% {
       text-shadow:
-        0 0 20px rgba(255, 255, 255, 0.9),
-        0 0 35px rgba(255, 255, 255, 0.5);
-      color: #f8fafc;
+        0 0 16px rgba(186, 230, 253, 0.8),
+        0 0 25px rgba(186, 230, 253, 0.3);
+      color: #ffffff;
     }
   }
 
   @keyframes title-glow-pulse-emerald {
     0% {
-      text-shadow: 0 0 10px rgba(52, 211, 153, 0.5);
+      text-shadow: 0 0 8px rgba(52, 211, 153, 0.4);
       color: #34d399;
     }
     100% {
       text-shadow:
-        0 0 20px rgba(52, 211, 153, 0.9),
-        0 0 35px rgba(52, 211, 153, 0.5);
+        0 0 16px rgba(52, 211, 153, 0.8),
+        0 0 25px rgba(52, 211, 153, 0.3);
       color: #6ee7b7;
     }
   }
 
   .glow-pulse-badge-lime {
-    box-shadow:
-      0 0 14px rgba(226, 241, 97, 0.8),
-      0 0 26px rgba(226, 241, 97, 0.45) !important;
+    box-shadow: 0 0 10px rgba(226, 241, 97, 0.45) !important;
   }
 
   .glow-pulse-badge-white {
-    box-shadow:
-      0 0 14px rgba(255, 255, 255, 0.8),
-      0 0 26px rgba(255, 255, 255, 0.45) !important;
+    box-shadow: 0 0 10px rgba(186, 230, 253, 0.35) !important;
   }
 
   .glow-pulse-badge-emerald {
-    box-shadow:
-      0 0 14px rgba(52, 211, 153, 0.8),
-      0 0 26px rgba(52, 211, 153, 0.45) !important;
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.45) !important;
   }
 </style>
