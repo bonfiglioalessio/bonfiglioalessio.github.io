@@ -126,6 +126,25 @@ export interface SectionsData {
   contact: SectionHeaderData
 }
 
+export interface ContactData {
+  headingPart1?: string
+  headingPart2?: string
+  headingPart3?: string
+  subtitle: string
+  email: string
+  copyEmailPrefix?: string
+  copiedFeedbackText?: string
+  chatPrompt?: string
+}
+
+export interface FooterData {
+  statusText: string
+  latencyText: string
+  engineText: string
+  attribution: string
+  backToTopText: string
+}
+
 export interface PortfolioData {
   profile: Profile
   sections?: SectionsData
@@ -134,4 +153,6 @@ export interface PortfolioData {
   careerMissionLog: Experience[]
   socialLinks: SocialLink[]
   marqueeItems: string[]
+  contact?: ContactData
+  footer?: FooterData
 }

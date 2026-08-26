@@ -1,19 +1,19 @@
 <script setup lang="ts">
-  import { onMounted, onUnmounted, ref } from 'vue'
+  import { computed, onMounted, onUnmounted, ref } from 'vue'
   import { usePortfolioData } from '../../composables/usePortfolioData'
   import { useAudioSynth } from '../../composables/useAudioSynth'
 
-  const { socialLinks } = usePortfolioData()
+  const { socialLinks, contact } = usePortfolioData()
   const { playClick, playDiffToggle } = useAudioSynth()
-  const emailAddress = 'bonfi.alessio98@gmail.com'
+  const emailAddress = computed(() => contact.value?.email || 'bonfi.alessio98@gmail.com')
   const isCopied = ref(false)
   const isEmerged = ref(false)
   const contactSectionRef = ref<HTMLElement | null>(null)
 
   // AI Agent Token Streaming Typewriter Engine
-  const fullPart1 = "Let's build"
-  const fullPart2 = 'something'
-  const fullPart3 = 'extraordinary.'
+  const fullPart1 = computed(() => contact.value?.headingPart1 || "Let's build")
+  const fullPart2 = computed(() => contact.value?.headingPart2 || 'something')
+  const fullPart3 = computed(() => contact.value?.headingPart3 || 'extraordinary.')
 
   const displayedPart1 = ref('')
   const displayedPart2 = ref('')
@@ -25,22 +25,26 @@
     if (isStreamingStarted) return
     isStreamingStarted = true
 
+    const p1 = fullPart1.value
+    const p2 = fullPart2.value
+    const p3 = fullPart3.value
+
     if (
       typeof window !== 'undefined' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches
     ) {
-      displayedPart1.value = fullPart1
-      displayedPart2.value = fullPart2
-      displayedPart3.value = fullPart3
+      displayedPart1.value = p1
+      displayedPart2.value = p2
+      displayedPart3.value = p3
       isTypingComplete.value = true
       return
     }
 
     // Stream Part 1 ("Let's build")
     let i = 0
-    while (i < fullPart1.length) {
-      const chunkSize = Math.min(Math.floor(Math.random() * 3) + 1, fullPart1.length - i)
-      displayedPart1.value = fullPart1.slice(0, i + chunkSize)
+    while (i < p1.length) {
+      const chunkSize = Math.min(Math.floor(Math.random() * 3) + 1, p1.length - i)
+      displayedPart1.value = p1.slice(0, i + chunkSize)
       i += chunkSize
       const delay = Math.random() * 25 + 25 // 25-50ms
       await new Promise((resolve) => setTimeout(resolve, delay))
@@ -50,9 +54,9 @@
 
     // Stream Part 2 ("something")
     let j = 0
-    while (j < fullPart2.length) {
-      const chunkSize = Math.min(Math.floor(Math.random() * 3) + 1, fullPart2.length - j)
-      displayedPart2.value = fullPart2.slice(0, j + chunkSize)
+    while (j < p2.length) {
+      const chunkSize = Math.min(Math.floor(Math.random() * 3) + 1, p2.length - j)
+      displayedPart2.value = p2.slice(0, j + chunkSize)
       j += chunkSize
       const delay = Math.random() * 25 + 25
       await new Promise((resolve) => setTimeout(resolve, delay))
@@ -62,9 +66,9 @@
 
     // Stream Part 3 ("extraordinary.")
     let k = 0
-    while (k < fullPart3.length) {
-      const chunkSize = Math.min(Math.floor(Math.random() * 3) + 1, fullPart3.length - k)
-      displayedPart3.value = fullPart3.slice(0, k + chunkSize)
+    while (k < p3.length) {
+      const chunkSize = Math.min(Math.floor(Math.random() * 3) + 1, p3.length - k)
+      displayedPart3.value = p3.slice(0, k + chunkSize)
       k += chunkSize
       const delay = Math.random() * 30 + 30
       await new Promise((resolve) => setTimeout(resolve, delay))
@@ -176,7 +180,7 @@
 
   async function copyEmail() {
     try {
-      await navigator.clipboard.writeText(emailAddress)
+      await navigator.clipboard.writeText(emailAddress.value)
       playDiffToggle(true)
       isCopied.value = true
       setTimeout(() => {
@@ -299,8 +303,10 @@
 
       <!-- Subtitle Description -->
       <p class="text-sm sm:text-base text-slate-200 font-mono leading-relaxed max-w-2xl pt-1">
-        Se cerchi un Frontend Engineer con solida esperienza in React/Vue che mette la passione per
-        il codice e i dettagli visivi al primo posto, connettiamoci.
+        {{
+          contact?.subtitle ||
+          'Se cerchi un Frontend Engineer con solida esperienza nei framework Javascript, capace di adattarsi al contesto aziendale, ridurre il debito tecnico e guidare il codice verso architetture moderne e strutturate senza rinunciare alla cura dei dettagli visivi, connettiamoci.'
+        }}
       </p>
 
       <!-- Action Interaction Row -->
@@ -310,7 +316,7 @@
           class="relative bg-dark-900/90 border border-lime-400/30 rounded-2xl px-5 py-3 sm:py-3.5 flex items-center justify-between gap-4 shadow-[0_0_20px_rgba(0,0,0,0.6)] min-w-0"
         >
           <div class="flex items-center gap-2.5 min-w-0 font-mono text-xs sm:text-sm">
-            <span class="text-lime-400 font-bold">$ copy:</span>
+            <span class="text-lime-400 font-bold">{{ contact?.copyEmailPrefix || '$ copy:' }}</span>
             <span class="text-slate-100 truncate select-all font-mono">
               {{ emailAddress }}
             </span>
@@ -330,7 +336,7 @@
               class="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out pointer-events-none bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-25deg] w-[180%]"
             />
             <span class="relative z-10 font-bold">
-              {{ isCopied ? 'COPIED!' : 'COPY' }}
+              {{ isCopied ? (contact?.copiedFeedbackText || 'COPIED!') : 'COPY' }}
             </span>
           </button>
         </div>
