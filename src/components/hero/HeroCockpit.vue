@@ -15,6 +15,7 @@
     isCockpitCrashed: isCrashed,
   } = useCockpitState()
   const isCrashAnimating = ref(false)
+  const isWarpInAnimating = ref(false)
   const isRebooting = ref(false)
 
   const { entries, currentInput, executeCommand, handleAutoComplete, navigateHistory } =
@@ -144,8 +145,9 @@
     }, 700)
   }
 
-  // Reboot & Recover Satellite
+  // Reboot & Recover Satellite (with Warp In materialization animation)
   function handleRebootSatellite() {
+    if (isRebooting.value) return
     playRebootSequence()
     isRebooting.value = true
 
@@ -153,9 +155,29 @@
       isCrashed.value = false
       isRebooting.value = false
       isMinimized.value = false
+      isWarpInAnimating.value = true
       activeTab.value = 'terminal'
-      executeCommand('clear')
+
+      // Terminal recovery bootstream
+      entries.value = [
+        {
+          id: `boot-${Date.now()}`,
+          type: 'system',
+          html: `<div class="space-y-1 text-inherit font-mono text-slate-300">
+            <div class="text-lime-400 font-bold tracking-wide">🛰️ [EMERGENCY REBOOT SUCCESSFUL]</div>
+            <div class="text-slate-400">&gt; Orbital telemetry re-synchronized @ 420 KM</div>
+            <div class="text-emerald-400 font-semibold">&gt; Systems online: 60fps Web Audio + 3D Starfield</div>
+            <div class="text-slate-400">&gt; Type <span class="text-lime-400 font-bold">help</span> or choose a quick action below.</div>
+          </div>`,
+        },
+      ]
+
       focusInput()
+      scrollToBottom()
+
+      setTimeout(() => {
+        isWarpInAnimating.value = false
+      }, 950)
     }, 600)
   }
 
@@ -169,12 +191,17 @@
     isMinimized.value = true
   }
 
-  // Restore from Minimized HUD
+  // Restore from Minimized HUD (with smooth re-entry)
   function handleRestore() {
     playRebootSequence()
     isMinimized.value = false
+    isWarpInAnimating.value = true
     focusInput()
     scrollToBottom()
+
+    setTimeout(() => {
+      isWarpInAnimating.value = false
+    }, 950)
   }
 
   // 🟢 Green Button: Fullscreen Terminal Mode
@@ -272,11 +299,21 @@
       <!-- Bottom Emergency Reboot Button -->
       <button
         type="button"
-        class="z-10 group flex items-center gap-2 px-5 sm:px-6 py-3 rounded-2xl bg-rose-500/20 hover:bg-lime-400 text-rose-300 hover:text-black border border-rose-500/60 hover:border-lime-400 font-bold text-xs tracking-wider transition-all duration-300 shadow-[0_0_20px_rgba(244,63,94,0.4)] hover:shadow-[0_0_25px_#e2f161] active:scale-95 cursor-pointer"
+        :disabled="isRebooting"
+        class="z-10 group flex items-center gap-2 px-5 sm:px-6 py-3 rounded-2xl border font-bold text-xs tracking-wider transition-all duration-300 shadow-[0_0_20px_rgba(244,63,94,0.4)] active:scale-95 cursor-pointer"
+        :class="[
+          isRebooting
+            ? 'bg-lime-400/30 text-lime-300 border-lime-400 shadow-[0_0_30px_#e2f161] animate-pulse pointer-events-none'
+            : 'bg-rose-500/20 hover:bg-lime-400 text-rose-300 hover:text-black border-rose-500/60 hover:border-lime-400 hover:shadow-[0_0_25px_#e2f161]',
+        ]"
         @click="handleRebootSatellite"
       >
-        <span class="text-sm group-hover:rotate-180 transition-transform duration-500">🔄</span>
-        <span>EMERGENCY REBOOT SATELLITE</span>
+        <span
+          class="text-sm transition-transform duration-500"
+          :class="isRebooting ? 'animate-spin' : 'group-hover:rotate-180'"
+          >🔄</span
+        >
+        <span>{{ isRebooting ? 'RECONSTRUCTING ORBITAL LINK...' : 'EMERGENCY REBOOT SATELLITE' }}</span>
       </button>
     </div>
 
@@ -313,7 +350,10 @@
       v-else
       ref="cockpitRef"
       class="relative w-full max-w-md lg:max-w-xl orbital-satellite-assembly group"
-      :class="[isCrashAnimating ? 'animate-crash-shake pointer-events-none' : '']"
+      :class="[
+        isCrashAnimating ? 'animate-crash-shake pointer-events-none' : '',
+        isWarpInAnimating ? 'animate-satellite-warp-in pointer-events-none' : '',
+      ]"
       :style="transformStyle"
       style="transform-style: preserve-3d"
       @mouseenter="handleMouseEnter"
@@ -1164,6 +1204,34 @@
 
   .animate-bounce-subtle {
     animation: bounce-subtle 3s ease-in-out infinite;
+  }
+
+  /* Satellite Warp Re-entry / Materialization Animation */
+  .animate-satellite-warp-in {
+    animation: satellite-warp-materialize 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+    will-change: transform, opacity, filter;
+  }
+
+  @keyframes satellite-warp-materialize {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 45px, 0) scale(0.65) rotate(-6deg);
+      filter: blur(14px) brightness(280%) hue-rotate(180deg) drop-shadow(0 0 50px #e2f161);
+    }
+    45% {
+      opacity: 0.85;
+      filter: blur(4px) brightness(170%) hue-rotate(90deg) drop-shadow(0 0 35px #e2f161);
+    }
+    75% {
+      opacity: 1;
+      transform: translate3d(0, -8px, 0) scale(1.04) rotate(1deg);
+      filter: blur(0px) brightness(125%) hue-rotate(0deg) drop-shadow(0 0 20px #e2f161);
+    }
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+      filter: blur(0px) brightness(100%) hue-rotate(0deg) drop-shadow(0 0 0 transparent);
+    }
   }
 
   /* Fade in */
