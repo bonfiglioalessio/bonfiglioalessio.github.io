@@ -3,16 +3,19 @@
   import { useCliEngine } from '../../composables/useCliEngine'
   import { useAudioSynth } from '../../composables/useAudioSynth'
   import { use3DTilt } from '../../composables/use3DTilt'
+  import { useCockpitState } from '../../composables/useCockpitState'
 
   type TabType = 'terminal' | 'config'
   const activeTab = ref<TabType>('terminal')
 
   // Window State Controls (Red: Crash, Yellow: Minimize, Green: Fullscreen)
-  const isCrashed = ref(false)
+  const {
+    isCockpitMinimized: isMinimized,
+    isCockpitFullscreen: isFullscreen,
+    isCockpitCrashed: isCrashed,
+  } = useCockpitState()
   const isCrashAnimating = ref(false)
   const isRebooting = ref(false)
-  const isMinimized = ref(false)
-  const isFullscreen = ref(false)
 
   const { entries, currentInput, executeCommand, handleAutoComplete, navigateHistory } =
     useCliEngine()
@@ -725,11 +728,11 @@
       </div>
     </div>
 
-    <!-- ================= TELEPORT: MINIMIZED FLOATING HUD WIDGET (Stacked above Audio HUD) ================= -->
+    <!-- ================= TELEPORT: MINIMIZED FLOATING HUD WIDGET (Docked at Bottom-Right Corner) ================= -->
     <Teleport to="body">
       <div
         v-if="isMinimized && !isCrashed"
-        class="fixed bottom-[74px] right-5 sm:bottom-[82px] sm:right-6 z-50 animate-bounce-subtle select-none"
+        class="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50 animate-bounce-subtle select-none"
       >
         <div
           class="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-dark-950/95 backdrop-blur-2xl border border-lime-400/50 shadow-[0_0_30px_rgba(226,241,97,0.35)] text-slate-200 font-mono text-xs cursor-pointer hover:border-lime-400 hover:scale-105 transition-all duration-300 group"
