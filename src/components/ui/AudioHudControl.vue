@@ -10,12 +10,12 @@
   <!-- Fixed HUD Audio & Space Ambient Music Control in Bottom Right -->
   <button
     type="button"
-    class="fixed right-5 sm:right-6 z-50 flex items-center gap-2.5 px-3.5 py-2 rounded-2xl bg-dark-950/90 backdrop-blur-md border transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.8)] cursor-pointer group select-none font-mono text-xs"
+    class="fixed right-5 sm:right-6 z-50 flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl bg-dark-950/95 backdrop-blur-2xl border transition-all duration-300 shadow-[0_4px_25px_rgba(0,0,0,0.85)] cursor-pointer group select-none font-mono text-xs"
     :class="[
-      isCockpitMinimized ? 'bottom-[72px] sm:bottom-[78px]' : 'bottom-5 sm:bottom-6',
+      isCockpitMinimized ? 'bottom-[84px] sm:bottom-[92px]' : 'bottom-5 sm:bottom-6',
       isAudioEnabled
-        ? 'border-lime-400/40 shadow-[0_0_18px_rgba(226,241,97,0.2)] hover:border-lime-400 hover:shadow-[0_0_25px_rgba(226,241,97,0.4)] active:scale-95'
-        : 'border-slate-800 bg-dark-950/80 opacity-75 hover:opacity-100 hover:border-slate-700 active:scale-95',
+        ? 'border-lime-400/50 shadow-[0_0_20px_rgba(226,241,97,0.25)] hover:border-lime-400 hover:shadow-[0_0_28px_rgba(226,241,97,0.45)] active:scale-95'
+        : 'border-slate-700/80 hover:border-slate-500 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] active:scale-95',
     ]"
     :aria-label="
       isAudioEnabled
