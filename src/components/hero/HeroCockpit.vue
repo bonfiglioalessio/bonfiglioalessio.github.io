@@ -32,7 +32,6 @@
   const inputRef = ref<HTMLInputElement | null>(null)
   const fullscreenInputRef = ref<HTMLInputElement | null>(null)
   let terminalObserver: MutationObserver | null = null
-  let fullscreenTerminalObserver: MutationObserver | null = null
 
   // Gentle 3D Tilt for Satellite Cockpit
   const { transformStyle, handleMouseEnter, handleMouseMove, handleMouseLeave } = use3DTilt(
@@ -226,10 +225,6 @@
     if (terminalObserver) {
       terminalObserver.disconnect()
       terminalObserver = null
-    }
-    if (fullscreenTerminalObserver) {
-      fullscreenTerminalObserver.disconnect()
-      fullscreenTerminalObserver = null
     }
   })
 </script>
@@ -541,7 +536,7 @@
 
             <!-- Right: Live Telemetry Status -->
             <div
-              class="flex items-center gap-1.5 text-[10px] font-mono text-emerald-400 shrink-0 select-none"
+              class="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono text-emerald-400 shrink-0 select-none"
             >
               <span
                 class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse"
@@ -556,7 +551,7 @@
           <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-0.5">
             <button
               type="button"
-              class="text-[10px] sm:text-[11px] font-mono px-3 py-1 rounded-lg transition-all cursor-pointer shrink-0 whitespace-nowrap"
+              class="text-xs sm:text-[13px] font-mono px-3.5 py-1 rounded-lg transition-all cursor-pointer shrink-0 whitespace-nowrap"
               :class="
                 activeTab === 'terminal'
                   ? 'bg-lime-400/10 text-lime-400 border border-lime-400 shadow-[0_0_12px_rgba(226,241,97,0.45)] font-bold'
@@ -568,7 +563,7 @@
             </button>
             <button
               type="button"
-              class="text-[10px] sm:text-[11px] font-mono px-3 py-1 rounded-lg transition-all cursor-pointer shrink-0 whitespace-nowrap"
+              class="text-xs sm:text-[13px] font-mono px-3.5 py-1 rounded-lg transition-all cursor-pointer shrink-0 whitespace-nowrap"
               :class="
                 activeTab === 'config'
                   ? 'bg-lime-400/10 text-lime-400 border border-lime-400 shadow-[0_0_12px_rgba(226,241,97,0.45)] font-bold'
@@ -584,7 +579,7 @@
         <!-- Tab 1: Real Interactive Terminal Shell -->
         <div
           v-show="activeTab === 'terminal'"
-          class="flex flex-col justify-between flex-1 min-h-0 bg-dark-950/90 border border-lime-400/20 rounded-2xl p-3 sm:p-4 my-2 font-mono text-[11px] sm:text-xs overflow-hidden shadow-inner cursor-text relative z-10"
+          class="flex flex-col justify-between flex-1 min-h-0 bg-dark-950/90 border border-lime-400/20 rounded-2xl p-3.5 sm:p-4 my-2 font-mono text-xs sm:text-[13px] leading-relaxed overflow-hidden shadow-inner cursor-text relative z-10"
           @click="focusInput"
         >
           <!-- Scrolling Output Log -->
@@ -618,7 +613,7 @@
                 <div v-html="entry.html" />
                 <span
                   v-if="entry.isStreaming"
-                  class="inline-block w-1.5 h-3 bg-lime-400 animate-pulse shrink-0 ml-0.5"
+                  class="inline-block w-1.5 h-3.5 bg-lime-400 animate-pulse shrink-0 ml-0.5"
                 />
               </div>
 
@@ -631,10 +626,10 @@
 
           <!-- Active Interactive Command Input Line -->
           <form
-            class="flex items-center gap-2 pt-2 mt-2 border-t border-lime-400/15 shrink-0"
+            class="flex items-center gap-2 pt-2.5 mt-2 border-t border-lime-400/15 shrink-0"
             @submit.prevent="handleFormSubmit"
           >
-            <span class="text-lime-400 font-bold select-none">$</span>
+            <span class="text-lime-400 font-bold select-none text-sm">$</span>
             <input
               ref="inputRef"
               v-model="currentInput"
@@ -644,27 +639,27 @@
               autocorrect="off"
               autocapitalize="off"
               spellcheck="false"
-              class="w-full bg-transparent text-lime-300 font-mono text-[11px] sm:text-xs focus:outline-none placeholder-slate-600 caret-lime-400"
+              class="w-full bg-transparent text-lime-300 font-mono text-xs sm:text-[13px] focus:outline-none placeholder-slate-600 caret-lime-400"
               @keydown.tab.prevent="handleTabKey"
               @keydown.up.prevent="handleArrowUp"
               @keydown.down.prevent="handleArrowDown"
             />
             <button
               type="submit"
-              class="text-[9px] sm:text-[10px] bg-lime-400 text-black px-2.5 py-1 rounded font-bold shrink-0 hover:bg-lime-300 hover:shadow-[0_0_10px_#e2f161] active:scale-95 transition-all cursor-pointer select-none"
+              class="text-[10px] sm:text-[11px] bg-lime-400 text-black px-3 py-1 rounded-md font-bold shrink-0 hover:bg-lime-300 hover:shadow-[0_0_10px_#e2f161] active:scale-95 transition-all cursor-pointer select-none"
             >
               EXEC
             </button>
           </form>
         </div>
 
-        <!-- Tab 2: Config Tab -->
+        <!-- Tab 2: Config Tab (Top-Left Aligned Code Block) -->
         <div
           v-show="activeTab === 'config'"
-          class="flex-1 overflow-hidden bg-dark-950/70 border border-lime-400/15 rounded-2xl p-3 sm:p-4 my-2 font-mono text-[10px] sm:text-[11px] lg:text-xs text-slate-300 leading-relaxed relative z-10 flex flex-col justify-center"
+          class="flex-1 overflow-y-auto bg-dark-950/70 border border-lime-400/15 rounded-2xl p-3.5 sm:p-4 my-2 font-mono text-xs sm:text-[13px] text-slate-300 leading-relaxed no-scrollbar relative z-10 flex flex-col justify-start items-start text-left"
         >
           <pre
-            class="whitespace-pre-wrap break-words overflow-hidden"
+            class="whitespace-pre-wrap break-words w-full text-left"
           ><code><span class="text-lime-400 font-bold">export const</span> engineer = {
   name: <span class="text-lime-300">"Alessio Bonfiglio"</span>,
   role: <span class="text-lime-300">"Frontend Engineer &amp; UI Architect"</span>,
@@ -679,7 +674,7 @@
 
         <!-- Footer Quick Action Chips: Interactive Orbital Telemetry Actions -->
         <div
-          class="flex items-center justify-between gap-1.5 pt-1.5 text-[9px] sm:text-[10px] text-slate-400 font-mono shrink-0 border-t border-lime-400/15 overflow-x-auto no-scrollbar relative z-10"
+          class="flex items-center justify-between gap-1.5 pt-1.5 text-[10px] sm:text-[11px] text-slate-400 font-mono shrink-0 border-t border-lime-400/15 overflow-x-auto no-scrollbar relative z-10"
         >
           <div class="flex items-center gap-1.5 shrink-0 whitespace-nowrap">
             <span class="text-slate-300 font-bold">Quick:</span>
@@ -730,14 +725,14 @@
       </div>
     </div>
 
-    <!-- ================= TELEPORT: MINIMIZED FLOATING HUD WIDGET ================= -->
+    <!-- ================= TELEPORT: MINIMIZED FLOATING HUD WIDGET (Stacked above Audio HUD) ================= -->
     <Teleport to="body">
       <div
         v-if="isMinimized && !isCrashed"
-        class="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50 animate-bounce-subtle select-none"
+        class="fixed bottom-[74px] right-5 sm:bottom-[82px] sm:right-6 z-50 animate-bounce-subtle select-none"
       >
         <div
-          class="flex items-center gap-3 px-4 py-3 rounded-2xl bg-dark-950/95 backdrop-blur-2xl border border-lime-400/50 shadow-[0_0_30px_rgba(226,241,97,0.35)] text-slate-200 font-mono text-xs cursor-pointer hover:border-lime-400 hover:scale-105 transition-all duration-300 group"
+          class="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-dark-950/95 backdrop-blur-2xl border border-lime-400/50 shadow-[0_0_30px_rgba(226,241,97,0.35)] text-slate-200 font-mono text-xs cursor-pointer hover:border-lime-400 hover:scale-105 transition-all duration-300 group"
           @click="handleRestore"
         >
           <span class="relative flex h-2.5 w-2.5">
@@ -746,7 +741,7 @@
             />
             <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-lime-400" />
           </span>
-          <span class="text-lg">🛰️</span>
+          <span class="text-base">🛰️</span>
           <div class="flex flex-col text-left">
             <span
               class="font-bold text-lime-400 text-xs group-hover:text-white transition-colors tracking-wide"
@@ -851,41 +846,40 @@
                 </div>
 
                 <div class="flex items-center gap-2">
-                  <span class="text-sm">🛰️</span>
+                  <span class="text-base">🛰️</span>
                   <span
-                    class="text-xs sm:text-sm font-bold text-lime-400 tracking-wide drop-shadow-[0_0_8px_#e2f161]"
+                    class="text-xs sm:text-sm md:text-base font-bold text-lime-400 tracking-wide drop-shadow-[0_0_8px_#e2f161]"
                   >
                     satellite.sh [EXPANDED COCKPIT MATRIX]
                   </span>
                 </div>
               </div>
 
-              <!-- Right: Escape Hint & Exit Button -->
-              <div class="flex items-center gap-3 text-xs">
-                <span
-                  class="hidden sm:inline text-slate-400 bg-dark-950 px-2.5 py-1 rounded-lg border border-lime-400/20 text-[11px]"
-                >
-                  Press <kbd class="text-lime-300 font-bold">ESC</kbd> to exit
-                </span>
-                <button
-                  type="button"
-                  class="text-slate-400 hover:text-white px-3 py-1 rounded-lg bg-dark-950 border border-lime-400/20 hover:border-lime-400 text-xs transition-colors cursor-pointer"
-                  @click="handleToggleFullscreen"
-                >
-                  ✕ EXIT
-                </button>
-              </div>
-            </div>
-
-            <!-- Tabs -->
-            <div class="flex items-center gap-2">
+              <!-- Right: Clean Single "Press ESC to exit" Button -->
               <button
                 type="button"
-                class="text-xs sm:text-sm px-4 py-1.5 rounded-xl font-bold cursor-pointer transition-all"
+                class="flex items-center gap-1.5 text-slate-400 hover:text-white bg-dark-950 px-3 py-1.5 rounded-xl border border-lime-400/20 hover:border-lime-400/50 text-xs font-mono transition-all cursor-pointer group select-none active:scale-95 shadow-[0_0_8px_rgba(226,241,97,0.1)]"
+                title="Close fullscreen (or press ESC)"
+                @click="handleToggleFullscreen"
+              >
+                <span>Press</span>
+                <kbd
+                  class="text-lime-300 font-bold bg-dark-900 px-1.5 py-0.5 rounded border border-lime-400/30 group-hover:bg-lime-400 group-hover:text-black transition-colors"
+                  >ESC</kbd
+                >
+                <span>to exit</span>
+              </button>
+            </div>
+
+            <!-- Fullscreen Tabs -->
+            <div class="flex items-center gap-2.5">
+              <button
+                type="button"
+                class="text-xs sm:text-sm px-4 py-2 rounded-xl font-bold cursor-pointer transition-all"
                 :class="
                   activeTab === 'terminal'
                     ? 'bg-lime-400/20 text-lime-400 border border-lime-400 shadow-[0_0_12px_rgba(226,241,97,0.35)]'
-                    : 'text-slate-400 hover:text-white border border-transparent'
+                    : 'text-slate-400 hover:text-white border border-transparent hover:border-lime-400/20'
                 "
                 @click="setTab('terminal')"
               >
@@ -893,11 +887,11 @@
               </button>
               <button
                 type="button"
-                class="text-xs sm:text-sm px-4 py-1.5 rounded-xl font-bold cursor-pointer transition-all"
+                class="text-xs sm:text-sm px-4 py-2 rounded-xl font-bold cursor-pointer transition-all"
                 :class="
                   activeTab === 'config'
                     ? 'bg-lime-400/20 text-lime-400 border border-lime-400 shadow-[0_0_12px_rgba(226,241,97,0.35)]'
-                    : 'text-slate-400 hover:text-white border border-transparent'
+                    : 'text-slate-400 hover:text-white border border-transparent hover:border-lime-400/20'
                 "
                 @click="setTab('config')"
               >
@@ -906,56 +900,56 @@
             </div>
           </div>
 
-          <!-- Fullscreen Terminal Tab -->
+          <!-- Fullscreen Terminal Tab (Comfortable Proportional Fonts) -->
           <div
             v-show="activeTab === 'terminal'"
-            class="flex flex-col justify-between flex-1 min-h-0 bg-dark-950/90 border border-lime-400/25 rounded-2xl p-4 sm:p-5 my-3 font-mono text-xs sm:text-sm overflow-hidden shadow-inner cursor-text relative z-10"
+            class="flex flex-col justify-between flex-1 min-h-0 bg-dark-950/90 border border-lime-400/25 rounded-2xl p-4 sm:p-6 my-3 font-mono text-sm sm:text-base lg:text-[15px] leading-relaxed overflow-hidden shadow-inner cursor-text relative z-10"
             @click="focusInput"
           >
             <div
               ref="fullscreenTerminalScrollRef"
-              class="flex-1 overflow-y-auto space-y-2 pr-2 no-scrollbar text-slate-200"
+              class="flex-1 overflow-y-auto space-y-2.5 pr-2 no-scrollbar text-slate-200"
             >
               <div v-for="entry in entries" :key="entry.id">
                 <div
                   v-if="entry.type === 'input'"
                   class="flex items-center gap-2 text-lime-400 font-bold"
                 >
-                  <span>$</span>
+                  <span class="text-lime-400">$</span>
                   <span class="text-white">{{ entry.text }}</span>
                 </div>
-                <div v-else-if="entry.type === 'system'" class="text-slate-400 leading-snug">
+                <div v-else-if="entry.type === 'system'" class="text-slate-400 leading-relaxed">
                   <div v-if="entry.html" v-html="entry.html" />
                   <span v-else>{{ entry.text }}</span>
                 </div>
                 <div
                   v-else-if="entry.type === 'error'"
-                  class="text-rose-400 leading-snug font-mono"
+                  class="text-rose-400 leading-relaxed font-mono"
                 >
                   {{ entry.text }}
                 </div>
                 <div
                   v-else-if="entry.html"
-                  class="leading-snug font-mono flex items-baseline gap-1"
+                  class="leading-relaxed font-mono flex items-baseline gap-1"
                 >
                   <div v-html="entry.html" />
                   <span
                     v-if="entry.isStreaming"
-                    class="inline-block w-1.5 h-3 bg-lime-400 animate-pulse shrink-0 ml-0.5"
+                    class="inline-block w-2 h-4 bg-lime-400 animate-pulse shrink-0 ml-0.5"
                   />
                 </div>
-                <div v-else class="text-slate-300 leading-snug font-mono">
+                <div v-else class="text-slate-300 leading-relaxed font-mono">
                   {{ entry.text }}
                 </div>
               </div>
             </div>
 
-            <!-- Command input -->
+            <!-- Command input line in Fullscreen -->
             <form
-              class="flex items-center gap-2 pt-3 mt-3 border-t border-lime-400/20 shrink-0"
+              class="flex items-center gap-2.5 pt-3 mt-3 border-t border-lime-400/20 shrink-0"
               @submit.prevent="handleFormSubmit"
             >
-              <span class="text-lime-400 font-bold select-none text-base">$</span>
+              <span class="text-lime-400 font-bold select-none text-base sm:text-lg">$</span>
               <input
                 ref="fullscreenInputRef"
                 v-model="currentInput"
@@ -965,27 +959,38 @@
                 autocorrect="off"
                 autocapitalize="off"
                 spellcheck="false"
-                class="w-full bg-transparent text-lime-300 font-mono text-xs sm:text-sm focus:outline-none placeholder-slate-600 caret-lime-400"
+                class="w-full bg-transparent text-lime-300 font-mono text-sm sm:text-base focus:outline-none placeholder-slate-600 caret-lime-400"
                 @keydown.tab.prevent="handleTabKey"
                 @keydown.up.prevent="handleArrowUp"
                 @keydown.down.prevent="handleArrowDown"
               />
               <button
                 type="submit"
-                class="text-xs bg-lime-400 text-black px-3.5 py-1.5 rounded-lg font-bold shrink-0 hover:bg-lime-300 hover:shadow-[0_0_15px_#e2f161] active:scale-95 transition-all cursor-pointer"
+                class="text-xs sm:text-sm bg-lime-400 text-black px-4 py-1.5 rounded-lg font-bold shrink-0 hover:bg-lime-300 hover:shadow-[0_0_15px_#e2f161] active:scale-95 transition-all cursor-pointer"
               >
                 EXEC
               </button>
             </form>
           </div>
 
-          <!-- Fullscreen Config Tab -->
+          <!-- Fullscreen Config Tab (Top-Left Aligned Code Block) -->
           <div
             v-show="activeTab === 'config'"
-            class="flex-1 overflow-y-auto bg-dark-950/80 border border-lime-400/25 rounded-2xl p-5 sm:p-8 my-3 font-mono text-xs sm:text-sm text-slate-300 leading-relaxed no-scrollbar relative z-10 flex flex-col justify-center"
+            class="flex-1 overflow-y-auto bg-dark-950/80 border border-lime-400/25 rounded-2xl p-5 sm:p-7 my-3 font-mono text-sm sm:text-base lg:text-[15px] text-slate-300 leading-relaxed no-scrollbar relative z-10 flex flex-col justify-start items-start text-left"
           >
+            <!-- File Header Info -->
+            <div
+              class="w-full flex items-center justify-between border-b border-lime-400/15 pb-2.5 mb-4 text-xs text-slate-400 select-none"
+            >
+              <div class="flex items-center gap-2">
+                <span class="text-sky-400 font-bold">TS</span>
+                <span>src/config/alessio.config.ts</span>
+              </div>
+              <span class="text-slate-500 font-mono">TypeScript • UTF-8</span>
+            </div>
+
             <pre
-              class="whitespace-pre-wrap break-words"
+              class="whitespace-pre-wrap break-words w-full text-left font-mono"
             ><code><span class="text-lime-400 font-bold">export const</span> engineer = {
   name: <span class="text-lime-300">"Alessio Bonfiglio"</span>,
   role: <span class="text-lime-300">"Frontend Engineer &amp; UI Architect"</span>,
@@ -993,55 +998,62 @@
   exCompany: <span class="text-white font-bold">"AdKaora (Mondadori Media)"</span>,
   base: <span class="text-lime-300">"Milano, IT (from Sanremo '98)"</span>,
   experience: <span class="text-emerald-400">"6+ Years in Production"</span>,
-  stack: [<span class="text-emerald-400">"Vue 3"</span>, <span class="text-emerald-400">"TypeScript"</span>, <span class="text-emerald-400">"Angular"</span>, <span class="text-emerald-400">"React"</span>, <span class="text-emerald-400">"SCSS"</span>, <span class="text-emerald-400">"PHP"</span>],
+  stack: [
+    <span class="text-emerald-400">"Vue 3"</span>,
+    <span class="text-emerald-400">"TypeScript"</span>,
+    <span class="text-emerald-400">"Angular"</span>,
+    <span class="text-emerald-400">"React"</span>,
+    <span class="text-emerald-400">"SCSS"</span>,
+    <span class="text-emerald-400">"PHP"</span>
+  ],
   focus: <span class="text-lime-400">"Enterprise Refactoring &amp; Clean Architecture"</span>
 };</code></pre>
           </div>
 
           <!-- Fullscreen Quick Actions -->
           <div
-            class="flex items-center justify-between gap-2 pt-2 text-xs text-slate-400 font-mono shrink-0 border-t border-lime-400/20 overflow-x-auto no-scrollbar relative z-10"
+            class="flex items-center justify-between gap-2 pt-2.5 text-xs sm:text-sm text-slate-400 font-mono shrink-0 border-t border-lime-400/20 overflow-x-auto no-scrollbar relative z-10"
           >
             <div class="flex items-center gap-2 shrink-0 whitespace-nowrap">
               <span class="text-slate-300 font-bold">Quick Actions:</span>
               <button
                 type="button"
-                class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-2.5 py-1 rounded-lg border border-lime-400/40 font-bold active:scale-95"
+                class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-3 py-1 rounded-lg border border-lime-400/40 font-bold active:scale-95 transition-all"
                 @click="runQuickAction('skills')"
               >
                 skills
               </button>
               <button
                 type="button"
-                class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-2.5 py-1 rounded-lg border border-lime-400/40 font-bold active:scale-95"
+                class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-3 py-1 rounded-lg border border-lime-400/40 font-bold active:scale-95 transition-all"
                 @click="runQuickAction('projects')"
               >
                 projects
               </button>
               <button
                 type="button"
-                class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-2.5 py-1 rounded-lg border border-lime-400/40 font-bold active:scale-95"
+                class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-3 py-1 rounded-lg border border-lime-400/40 font-bold active:scale-95 transition-all"
                 @click="runQuickAction('experience')"
               >
                 experience
               </button>
               <button
                 type="button"
-                class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-2.5 py-1 rounded-lg border border-lime-400/40 font-bold active:scale-95"
+                class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-3 py-1 rounded-lg border border-lime-400/40 font-bold active:scale-95 transition-all"
                 @click="runQuickAction('status')"
               >
                 status
               </button>
               <button
                 type="button"
-                class="text-slate-300 hover:text-lime-400 cursor-pointer bg-dark-950 px-2.5 py-1 rounded-lg border border-slate-700 font-bold active:scale-95"
+                class="text-slate-300 hover:text-lime-400 cursor-pointer bg-dark-950 px-3 py-1 rounded-lg border border-slate-700 font-bold active:scale-95 transition-all"
                 @click="runQuickAction('contact')"
               >
                 contact
               </button>
               <button
                 type="button"
-                class="text-slate-300 hover:text-white cursor-pointer bg-dark-950 px-2 py-1 rounded-lg border border-slate-700 active:scale-95"
+                class="text-slate-300 hover:text-white cursor-pointer bg-dark-950 px-2.5 py-1 rounded-lg border border-slate-700 active:scale-95 transition-all"
                 @click="runQuickAction('clear')"
               >
                 clear
