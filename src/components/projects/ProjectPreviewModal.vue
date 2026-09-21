@@ -365,8 +365,21 @@
               </span>
             </div>
 
-            <!-- Right: Open Live Site External Button -->
+            <!-- Right: Open Live Site External Button & Repo Link -->
             <div class="flex items-center gap-2 font-mono text-xs">
+              <a
+                v-if="project.repoUrl"
+                :href="project.repoUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="px-3.5 py-1.5 rounded-xl bg-dark-950 border border-slate-700/80 text-slate-300 hover:text-white hover:border-lime-400 font-bold hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer"
+                title="View Source on GitHub"
+                @click="playClick"
+              >
+                <span>GITHUB</span>
+                <span class="text-xs text-lime-400">&nearr;</span>
+              </a>
+
               <a
                 v-if="project.liveUrl"
                 :href="project.liveUrl"

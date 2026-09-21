@@ -297,6 +297,21 @@
           </span>
         </button>
 
+        <!-- GitHub Repository Link Button (if repoUrl exists) -->
+        <a
+          v-if="project.repoUrl"
+          :href="project.repoUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl font-mono font-bold text-xs bg-dark-950/80 border border-slate-700/60 text-slate-400 hover:text-white hover:border-slate-500 hover:scale-105 active:scale-95 transition-all cursor-pointer"
+          title="View Repository on GitHub"
+          @click.stop="playClick"
+        >
+          <span class="text-[10px]">⌥</span>
+          <span>REPO</span>
+          <span class="text-[10px]">&nearr;</span>
+        </a>
+
         <!-- Mobile: Direct Visit Link Button (Hidden on Desktop) -->
         <a
           v-if="project.liveUrl"
