@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/bonfiglioalessio/bonfiglioalessio.github.io/compare/v1.1.0...v1.2.0) (2026-09-21)
+
+### 🚀 Features & Updates
+
+* **projects:** update Castform Weather and Snorlax Toodo portfolio data ([`5196ce5`](https://github.com/bonfiglioalessio/bonfiglioalessio.github.io/commit/5196ce5))
+* **projects:** add GitHub repository links to project card and preview modal ([`b4f3f51`](https://github.com/bonfiglioalessio/bonfiglioalessio.github.io/commit/b4f3f51))
+
+---
+
 ## [1.1.0](https://github.com/bonfiglioalessio/bonfiglioalessio.github.io/compare/v1.0.1...v1.1.0) (2026-08-26)
 
 ### 🚀 Features & Interactive Modules
