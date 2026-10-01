@@ -164,7 +164,7 @@
       <div
         class="flex items-center justify-between gap-2 border-b border-lime-400/10 pb-3 flex-wrap relative z-20"
       >
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2.5">
           <span
             class="font-mono font-bold text-xs tracking-wider"
             :class="themeConfig.missionNumberClass"
@@ -173,7 +173,7 @@
           </span>
           <span
             v-if="experience.commitHash"
-            class="text-[10px] font-mono text-slate-400 bg-dark-950/80 px-2 py-0.5 rounded border border-lime-400/10"
+            class="text-[11px] font-mono text-slate-400"
           >
             commit: {{ experience.commitHash }}
           </span>
@@ -242,10 +242,10 @@
         {{ experience.description }}
       </p>
 
-      <!-- Key Engineering Achievements (Highlights) -->
+      <!-- Key Engineering Achievements (Highlights): Direct on card surface without nested sub-card border -->
       <ul
         v-if="experience.diff?.highlights?.length"
-        class="space-y-2 pt-1 text-[11px] sm:text-xs font-mono text-slate-300 bg-dark-950/50 p-3 sm:p-3.5 rounded-xl border border-lime-400/10 relative z-20"
+        class="space-y-2 pt-1 text-[11px] sm:text-xs font-mono text-slate-300 relative z-20"
       >
         <li
           v-for="(highlight, idx) in experience.diff.highlights"
@@ -257,18 +257,20 @@
         </li>
       </ul>
 
-      <!-- Tech Stack Tags -->
+      <!-- Tech Stack: Inline Bullet List like ProjectCard (no box-in-box borders) -->
       <div
         v-if="experience.tags?.length"
-        class="flex flex-wrap gap-2 pt-3 border-t border-lime-400/10 relative z-20"
+        class="flex items-center gap-2 flex-wrap font-mono text-xs font-bold text-slate-300 pt-3 border-t border-lime-400/10 relative z-20"
       >
-        <span
-          v-for="tag in experience.tags"
-          :key="tag"
-          class="text-[10px] font-mono px-2.5 py-1 rounded-md bg-dark-950/80 border border-lime-400/20 text-slate-300 shadow-sm"
-        >
-          {{ tag }}
-        </span>
+        <template v-for="(tag, tIdx) in experience.tags" :key="tag">
+          <span>{{ tag }}</span>
+          <span
+            v-if="tIdx < experience.tags.length - 1"
+            class="text-slate-600 font-bold select-none"
+          >
+            •
+          </span>
+        </template>
       </div>
     </AppCard>
   </div>

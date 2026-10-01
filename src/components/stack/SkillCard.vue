@@ -94,7 +94,7 @@
   <div :class="floatAnimation" class="w-full">
     <div
       ref="cardRef"
-      class="skill-card space-floating-card has-hud-reticles p-4 sm:p-5 rounded-2xl flex items-center justify-between gap-3 group transition-all duration-300 hover:scale-[1.02] select-none cursor-default relative overflow-hidden h-full"
+      class="skill-card space-floating-card p-4 sm:p-5 rounded-2xl flex items-center justify-between gap-3 group transition-all duration-300 hover:scale-[1.02] select-none cursor-default relative overflow-hidden h-full"
       @mouseenter="onMouseEnter"
       @mousemove="onMouseMove"
       @mouseleave="onMouseLeave"
@@ -118,19 +118,19 @@
 
       <!-- HUD Corner Reticles (Precision Themed Cyber Brackets) -->
       <span
-        class="absolute top-2 left-2 w-2 h-2 border-t border-l transition-all pointer-events-none z-10"
+        class="absolute top-2.5 left-2.5 w-2.5 h-2.5 border-t-[1.5px] border-l-[1.5px] rounded-tl-sm transition-all pointer-events-none z-10"
         :class="themeConfig.reticleClass"
       />
       <span
-        class="absolute top-2 right-2 w-2 h-2 border-t border-r transition-all pointer-events-none z-10"
+        class="absolute top-2.5 right-2.5 w-2.5 h-2.5 border-t-[1.5px] border-r-[1.5px] rounded-tr-sm transition-all pointer-events-none z-10"
         :class="themeConfig.reticleClass"
       />
       <span
-        class="absolute bottom-2 left-2 w-2 h-2 border-b border-l transition-all pointer-events-none z-10"
+        class="absolute bottom-2.5 left-2.5 w-2.5 h-2.5 border-b-[1.5px] border-l-[1.5px] rounded-bl-sm transition-all pointer-events-none z-10"
         :class="themeConfig.reticleClass"
       />
       <span
-        class="absolute bottom-2 right-2 w-2 h-2 border-b border-r transition-all pointer-events-none z-10"
+        class="absolute bottom-2.5 right-2.5 w-2.5 h-2.5 border-b-[1.5px] border-r-[1.5px] rounded-br-sm transition-all pointer-events-none z-10"
         :class="themeConfig.reticleClass"
       />
 
