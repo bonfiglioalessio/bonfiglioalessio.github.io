@@ -39,30 +39,43 @@
   box-shadow: 0 0 $spread 0 $color;
 }
 
-// --- HUD Reticles Corner Markers (┌ ┘) ---
+// --- HUD Reticles Corner Markers (Precision Vector Brackets) ---
 @mixin hud-reticles($color: rgba(226, 241, 97, 0.45)) {
   position: relative;
 
   &::before {
-    content: '┌';
+    content: '';
     position: absolute;
-    top: 6px;
+    top: 8px;
     left: 8px;
-    color: $color;
-    font-family: $font-mono;
-    font-size: 11px;
+    width: 8px;
+    height: 8px;
+    border-top: 1.5px solid $color;
+    border-left: 1.5px solid $color;
+    border-top-left-radius: 2px;
     pointer-events: none;
+    transition: all 0.25s ease;
+    z-index: 10;
   }
 
   &::after {
-    content: '┘';
+    content: '';
     position: absolute;
-    bottom: 6px;
+    bottom: 8px;
     right: 8px;
-    color: $color;
-    font-family: $font-mono;
-    font-size: 11px;
+    width: 8px;
+    height: 8px;
+    border-bottom: 1.5px solid $color;
+    border-right: 1.5px solid $color;
+    border-bottom-right-radius: 2px;
     pointer-events: none;
+    transition: all 0.25s ease;
+    z-index: 10;
+  }
+
+  &:hover::before,
+  &:hover::after {
+    filter: drop-shadow(0 0 4px $color);
   }
 }
 
