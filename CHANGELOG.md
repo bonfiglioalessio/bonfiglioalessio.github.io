@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/bonfiglioalessio/bonfiglioalessio.github.io/compare/v1.2.0...v1.3.0) (2026-10-01)
+
+### 🚀 Features & Refinements
+
+* **ui:** upgrade HUD corner reticles to precision vector brackets and clean experience card interior ([`d90136b`](https://github.com/bonfiglioalessio/bonfiglioalessio.github.io/commit/d90136b))
+* **projects:** update Unique Photography project stack and repository details ([`99fab08`](https://github.com/bonfiglioalessio/bonfiglioalessio.github.io/commit/99fab08))
+
+---
+
 ## [1.2.0](https://github.com/bonfiglioalessio/bonfiglioalessio.github.io/compare/v1.1.0...v1.2.0) (2026-09-21)
 
 ### 🚀 Features & Updates
