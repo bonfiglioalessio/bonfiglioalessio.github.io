@@ -465,27 +465,23 @@
       <div
         class="w-full h-[370px] sm:h-[420px] lg:h-[440px] p-3.5 sm:p-5 rounded-3xl bg-dark-900/90 backdrop-blur-2xl border border-lime-400/35 group-hover:border-lime-400/70 flex flex-col justify-between select-none overflow-hidden relative z-10 shadow-[0_0_35px_rgba(226,241,97,0.18),0_0_80px_rgba(0,0,0,0.85)] group-hover:shadow-[0_0_55px_rgba(226,241,97,0.35),0_0_100px_rgba(226,241,97,0.15)] transition-all duration-300"
       >
-        <!-- Corner Reticles -->
-        <div
-          class="absolute top-2.5 left-2.5 text-[8px] font-mono text-lime-400/40 pointer-events-none select-none"
-        >
-          ┌
-        </div>
-        <div
-          class="absolute top-2.5 right-2.5 text-[8px] font-mono text-lime-400/40 pointer-events-none select-none"
-        >
-          ┐
-        </div>
-        <div
-          class="absolute bottom-2.5 left-2.5 text-[8px] font-mono text-lime-400/40 pointer-events-none select-none"
-        >
-          └
-        </div>
-        <div
-          class="absolute bottom-2.5 right-2.5 text-[8px] font-mono text-lime-400/40 pointer-events-none select-none"
-        >
-          ┘
-        </div>
+        <!-- Precision Vector Corner Reticles -->
+        <span
+          class="absolute top-3 left-3 w-2.5 h-2.5 border-t-[1.5px] border-l-[1.5px] border-lime-400/40 rounded-tl-sm pointer-events-none group-hover:border-lime-400/80 group-hover:drop-shadow-[0_0_4px_rgba(226,241,97,0.7)] transition-all duration-300"
+          aria-hidden="true"
+        />
+        <span
+          class="absolute top-3 right-3 w-2.5 h-2.5 border-t-[1.5px] border-r-[1.5px] border-lime-400/40 rounded-tr-sm pointer-events-none group-hover:border-lime-400/80 group-hover:drop-shadow-[0_0_4px_rgba(226,241,97,0.7)] transition-all duration-300"
+          aria-hidden="true"
+        />
+        <span
+          class="absolute bottom-3 left-3 w-2.5 h-2.5 border-b-[1.5px] border-l-[1.5px] border-lime-400/40 rounded-bl-sm pointer-events-none group-hover:border-lime-400/80 group-hover:drop-shadow-[0_0_4px_rgba(226,241,97,0.7)] transition-all duration-300"
+          aria-hidden="true"
+        />
+        <span
+          class="absolute bottom-3 right-3 w-2.5 h-2.5 border-b-[1.5px] border-r-[1.5px] border-lime-400/40 rounded-br-sm pointer-events-none group-hover:border-lime-400/80 group-hover:drop-shadow-[0_0_4px_rgba(226,241,97,0.7)] transition-all duration-300"
+          aria-hidden="true"
+        />
 
         <!-- Satellite Header & Tab Navigation -->
         <div class="space-y-3 shrink-0 relative z-10">
@@ -813,21 +809,23 @@
         <div
           class="w-full max-w-5xl h-[88vh] max-h-[850px] bg-dark-900/95 backdrop-blur-3xl border-2 border-lime-400/50 rounded-3xl p-4 sm:p-6 flex flex-col justify-between shadow-[0_0_60px_rgba(226,241,97,0.35),0_0_120px_rgba(0,0,0,0.9)] relative overflow-hidden"
         >
-          <!-- Corner Reticles -->
-          <div class="absolute top-3 left-3 text-[10px] font-mono text-lime-400/50 pointer-events-none">
-            ┌
-          </div>
-          <div class="absolute top-3 right-3 text-[10px] font-mono text-lime-400/50 pointer-events-none">
-            ┐
-          </div>
-          <div class="absolute bottom-3 left-3 text-[10px] font-mono text-lime-400/50 pointer-events-none">
-            └
-          </div>
-          <div
-            class="absolute bottom-3 right-3 text-[10px] font-mono text-lime-400/50 pointer-events-none"
-          >
-            ┘
-          </div>
+          <!-- Precision Vector Corner Reticles -->
+          <span
+            class="absolute top-4 left-4 w-3 h-3 border-t-[1.5px] border-l-[1.5px] border-lime-400/50 rounded-tl-sm pointer-events-none drop-shadow-[0_0_4px_rgba(226,241,97,0.4)]"
+            aria-hidden="true"
+          />
+          <span
+            class="absolute top-4 right-4 w-3 h-3 border-t-[1.5px] border-r-[1.5px] border-lime-400/50 rounded-tr-sm pointer-events-none drop-shadow-[0_0_4px_rgba(226,241,97,0.4)]"
+            aria-hidden="true"
+          />
+          <span
+            class="absolute bottom-4 left-4 w-3 h-3 border-b-[1.5px] border-l-[1.5px] border-lime-400/50 rounded-bl-sm pointer-events-none drop-shadow-[0_0_4px_rgba(226,241,97,0.4)]"
+            aria-hidden="true"
+          />
+          <span
+            class="absolute bottom-4 right-4 w-3 h-3 border-b-[1.5px] border-r-[1.5px] border-lime-400/50 rounded-br-sm pointer-events-none drop-shadow-[0_0_4px_rgba(226,241,97,0.4)]"
+            aria-hidden="true"
+          />
 
           <!-- Header Row with Controls -->
           <div class="space-y-3 shrink-0 relative z-10">
