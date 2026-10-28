@@ -47,7 +47,7 @@ export const portfolioData: PortfolioData = {
     projects: {
       sectionNumber: '02',
       title: 'Selected Work',
-      statusBadge: '● 4 SELECTED PROJECTS',
+      statusBadge: '● 5 SELECTED PROJECTS',
       description:
         'Una selezione di side project ed esperimenti passati. Clicca su [+] inspect diff per visualizzare architettura e dettagli di codice.',
     },
@@ -387,8 +387,66 @@ export const portfolioData: PortfolioData = {
       },
     },
     {
-      id: 'bonfiglio-dev',
+      id: 'foody-tracker',
       projectNumber: '04',
+      title: 'Foody Tracker',
+      badge: 'live app',
+      typeBadge: 'mobile app',
+      description:
+        'Applicazione mobile local-first per il tracciamento nutrizionale e calorico con AI multimodale (Google Gemini). Zero abbonamenti, architettura BYOK (Bring Your Own Key) e database 100% offline su dispositivo.',
+      stack: ['React Native', 'Expo', 'TypeScript', 'Gemini API', 'SQLite'],
+      liveUrl: 'https://foody-tracker.vercel.app/',
+      diff: {
+        filename: 'src/services/geminiNutritionService.ts',
+        additions: 184,
+        deletions: 22,
+        highlights: [
+          '+ Architettura local-first con storage offline su SQLite e zero tracciamento server.',
+          '+ Analisi multimodale con Google Gemini per stima automatica dei macronutrienti da foto pasto e note vocali.',
+        ],
+        codeLines: [
+          {
+            type: 'context',
+            lineNum: 14,
+            code: 'export async function analyzeMealPhoto(photoUri: string, apiKey: string): Promise<MealMacros> {',
+          },
+          {
+            type: 'del',
+            lineNum: 15,
+            code: '-   const res = await cloudBackend.uploadAndProcess(photoUri)',
+          },
+          {
+            type: 'add',
+            lineNum: 15,
+            code: '+   const base64Data = await FileSystem.readAsStringAsync(photoUri, { encoding: "base64" })',
+          },
+          {
+            type: 'add',
+            lineNum: 16,
+            code: '+   const genAI = new GoogleGenerativeAI(apiKey)',
+          },
+          {
+            type: 'add',
+            lineNum: 17,
+            code: '+   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })',
+          },
+          {
+            type: 'context',
+            lineNum: 18,
+            code: '    const result = await model.generateContent([NUTRITION_PROMPT, { inlineData: { data: base64Data, mimeType: "image/jpeg" } }])',
+          },
+          {
+            type: 'add',
+            lineNum: 19,
+            code: '+   await localDatabase.insertMeal(parseNutritionResponse(result.response.text()))',
+          },
+          { type: 'context', lineNum: 20, code: '}' },
+        ],
+      },
+    },
+    {
+      id: 'bonfiglio-dev',
+      projectNumber: '05',
       title: 'bonfiglio.dev',
       badge: 'active repo',
       typeBadge: 'portfolio',
