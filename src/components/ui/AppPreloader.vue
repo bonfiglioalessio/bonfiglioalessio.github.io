@@ -48,11 +48,11 @@
   ]
 
   const bootLogs = [
-    'BOOTING NEXT-GEN HMR RUNTIME [VITE 6]',
-    'INITIALIZING COMPOSITION TREE [VUE 3.5]',
-    'VALIDATING TYPE SAFETY & SCHEMAS [TYPESCRIPT]',
-    'COMPILING CYBER DESIGN TOKENS [TAILWIND + SCSS]',
-    'ALL SYSTEMS NOMINAL // LAUNCHING COCKPIT',
+    'INITIALIZING VITE 6 RUNTIME',
+    'MOUNTING COMPOSITION TREE [VUE 3.5]',
+    'VALIDATING TYPESAFE SCHEMAS [TYPESCRIPT]',
+    'COMPILING DESIGN SYSTEM TOKENS [TAILWIND + SCSS]',
+    'ALL SYSTEMS NOMINAL // LAUNCHING INTERFACE',
   ]
   const currentLogIndex = ref(0)
 
@@ -132,11 +132,6 @@
     :class="isExiting ? 'opacity-0 scale-105 pointer-events-none' : 'opacity-100 scale-100'"
     @click="skipLoading"
   >
-    <!-- Background Ambient Glow -->
-    <div
-      class="absolute w-[600px] h-[600px] rounded-full bg-lime-400/10 blur-[140px] pointer-events-none -translate-y-6"
-    />
-
     <!-- HUD Container Card -->
     <div
       class="relative z-10 w-full max-w-lg px-6 flex flex-col items-center text-center space-y-6"
@@ -144,22 +139,22 @@
       <!-- Station Identity Brand Logo (Clean typographic logo, no badge/icon) -->
       <div class="space-y-1 flex flex-col items-center">
         <div
-          class="text-base sm:text-lg font-syne font-extrabold tracking-wider text-white flex items-center gap-1.5 select-none drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+          class="text-base sm:text-lg font-syne font-extrabold tracking-wider text-white flex items-center gap-1.5 select-none"
         >
-          <span class="text-lime-400 drop-shadow-[0_0_8px_#e2f161]">&lt;</span>
+          <span class="text-lime-400">&lt;</span>
           <span>A.BONFIGLIO</span>
-          <span class="text-lime-400 drop-shadow-[0_0_8px_#e2f161]">/&gt;</span>
+          <span class="text-lime-400">/&gt;</span>
         </div>
 
         <div
-          class="text-[10px] sm:text-[11px] font-mono text-slate-400 tracking-wider uppercase flex items-center gap-2"
+          class="text-xs font-sans text-slate-400 font-medium flex items-center gap-2"
         >
           <span
-            class="w-1.5 h-1.5 rounded-full bg-lime-400 animate-pulse shadow-[0_0_8px_#e2f161]"
+            class="w-1.5 h-1.5 rounded-full bg-lime-400 animate-pulse"
           />
           <span>INITIALIZING CORE APPLICATION STACK</span>
           <span
-            class="w-1.5 h-1.5 rounded-full bg-lime-400 animate-pulse shadow-[0_0_8px_#e2f161]"
+            class="w-1.5 h-1.5 rounded-full bg-lime-400 animate-pulse"
           />
         </div>
       </div>
@@ -172,7 +167,7 @@
           class="flex flex-col items-center justify-center p-2 sm:p-2.5 rounded-xl border transition-all duration-300 backdrop-blur-md"
           :class="
             progress >= tech.threshold
-              ? 'bg-dark-900/90 border-lime-400/50 shadow-[0_0_15px_rgba(226,241,97,0.25)] scale-105'
+              ? 'bg-dark-900/90 border-lime-400/50 scale-105'
               : 'bg-dark-900/30 border-white/5 opacity-40 scale-95'
           "
         >
@@ -184,7 +179,7 @@
               class="w-full h-full object-contain transition-transform duration-300"
               :class="
                 progress >= tech.threshold
-                  ? 'scale-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]'
+                  ? 'scale-110'
                   : 'grayscale opacity-60'
               "
             />
@@ -192,13 +187,13 @@
 
           <!-- Tech Name & Version Badge -->
           <span
-            class="text-[10px] sm:text-[11px] font-mono font-bold truncate max-w-full"
+            class="text-[10px] sm:text-[11px] font-sans font-bold truncate max-w-full"
             :class="progress >= tech.threshold ? 'text-white' : 'text-slate-500'"
           >
             {{ tech.name }}
           </span>
           <span
-            class="text-[8px] sm:text-[9px] font-mono tracking-tight"
+            class="text-[9px] font-sans tracking-tight"
             :class="progress >= tech.threshold ? 'text-lime-400' : 'text-slate-600'"
           >
             {{ tech.version }}
@@ -208,12 +203,12 @@
 
       <!-- Cyber Digital Progress Bar -->
       <div class="w-full space-y-2">
-        <div class="flex items-center justify-between text-[11px] font-mono font-bold">
+        <div class="flex items-center justify-between text-xs font-sans font-bold">
           <span class="text-lime-400 flex items-center gap-1.5">
             <span class="w-1.5 h-1.5 rounded-full bg-lime-400 animate-ping" />
             <span>SYNCHRONIZING MODULES</span>
           </span>
-          <span class="text-white drop-shadow-[0_0_8px_#e2f161]"> {{ progress }}% </span>
+          <span class="text-white"> {{ progress }}% </span>
         </div>
 
         <!-- Progress Track -->
@@ -221,7 +216,7 @@
           class="w-full h-1.5 bg-dark-900 rounded-full overflow-hidden border border-lime-400/30 p-[1px]"
         >
           <div
-            class="h-full bg-gradient-to-r from-lime-400 via-emerald-400 to-cyan-400 rounded-full shadow-[0_0_12px_#e2f161] transition-all duration-75"
+            class="h-full bg-lime-400 rounded-full transition-all duration-75"
             :style="{ width: `${progress}%` }"
           />
         </div>
@@ -229,15 +224,15 @@
 
       <!-- Streaming Boot Log Message -->
       <div class="h-6 flex items-center justify-center">
-        <div class="text-[10px] sm:text-[11px] font-mono text-slate-400 truncate tracking-tight">
+        <code class="text-[10px] sm:text-[11px] font-mono text-slate-400 truncate tracking-tight">
           <span class="text-lime-400 mr-1.5">&gt;</span>
           <span class="text-slate-200">{{ bootLogs[currentLogIndex] }}</span>
-        </div>
+        </code>
       </div>
 
       <!-- Skip Prompt Helper -->
-      <div class="pt-1 text-[9px] font-mono text-slate-600 tracking-widest uppercase">
-        [ CLICK OR PRESS ANY KEY TO SKIP ]
+      <div class="pt-1 text-xs font-sans text-slate-500 font-medium">
+        [ Click or press any key to skip ]
       </div>
     </div>
   </div>

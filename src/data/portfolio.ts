@@ -5,12 +5,12 @@ export const portfolioData: PortfolioData = {
     name: 'Alessio Bonfiglio',
     displayLogo: 'A.BONFIGLIO',
     role: 'Frontend Engineer & UI Architect',
-    headline: 'Turning complex logic into insane frontend UI.',
+    headline: 'Crafting resilient architectures and high-impact creative frontend.',
     badge: 'Software Engineer @ iliad',
     currentCompany: 'iliad',
     companyUrl: 'https://www.iliad.it/',
     location: 'Milano & Remote',
-    level: '>_ FRONTEND ENGINEER & ARCHITECT',
+    level: 'SENIOR FRONTEND ENGINEER & ARCHITECT',
     bio: "Nato a Sanremo ('98), oggi di base a Milano. Da 6+ anni sviluppo per il web muovendomi su due binari: nel contesto enterprise affronto codebase complesse ed ereditate per modernizzarle, ridurre il debito tecnico e garantire stabilità ad alto carico; nel mio lab personale coltivo la passione per il creative frontend, le architetture moderne e l'AI pair-programming.",
     stats: [
       {
@@ -38,30 +38,30 @@ export const portfolioData: PortfolioData = {
   },
   sections: {
     stack: {
-      sectionNumber: '01',
+      sectionNumber: '',
       title: 'Technical Constellation',
-      statusBadge: '● 4 CORE DOMAINS',
+      statusBadge: '4 Core Domains',
       description:
         'Stack primario e strumenti adoperati quotidianamente in produzione. Ogni modulo rappresenta un cluster specializzato.',
     },
     projects: {
-      sectionNumber: '02',
+      sectionNumber: '',
       title: 'Selected Work',
-      statusBadge: '● 5 SELECTED PROJECTS',
+      statusBadge: 'Selected Projects',
       description:
-        'Una selezione di side project ed esperimenti passati. Clicca su [+] inspect diff per visualizzare architettura e dettagli di codice.',
+        'Una selezione di side project ed esperimenti personali. Clicca su [+] inspect diff per visualizzare architettura e dettagli tecnici.',
     },
     experience: {
-      sectionNumber: '03',
-      title: 'Career Mission Log',
-      statusBadge: '● 3 MILESTONES',
+      sectionNumber: '',
+      title: 'Career & Production Milestones',
+      statusBadge: 'Enterprise Track',
       description:
         'Percorso professionale e milestone di produzione in ambito telco e media publishing.',
     },
     contact: {
-      sectionNumber: '04',
-      title: 'Direct Transmission',
-      statusBadge: '● DIRECT DISPATCH',
+      sectionNumber: '',
+      title: 'Get In Touch',
+      statusBadge: 'Open Channel',
       description:
         'Canale di contatto diretto per collaborazioni, refactoring enterprise, architetture frontend moderne e nuove opportunità.',
     },
@@ -72,7 +72,7 @@ export const portfolioData: PortfolioData = {
     'JAVASCRIPT & TYPESCRIPT FRAMEWORKS',
     'ENTERPRISE REFACTORING & CLEAN ARCHITECTURE',
     'CREATIVE WEB & AI PAIR-PROGRAMMING',
-    "SANREMO '98 ➔ MILANO",
+    "SANREMO '98 -> MILANO",
   ],
   skillsConstellation: [
     {
@@ -193,7 +193,7 @@ export const portfolioData: PortfolioData = {
   selectedWork: [
     {
       id: 'snorlax-toodo',
-      projectNumber: '01',
+      projectNumber: '#01',
       title: 'Snorlax Toodo!',
       badge: 'live app',
       typeBadge: 'side project',
@@ -257,7 +257,7 @@ export const portfolioData: PortfolioData = {
     },
     {
       id: 'castform-weather',
-      projectNumber: '02',
+      projectNumber: '#02',
       title: 'Castform Weather',
       badge: 'live app',
       typeBadge: 'side project',
@@ -321,7 +321,7 @@ export const portfolioData: PortfolioData = {
     },
     {
       id: 'unique-photography',
-      projectNumber: '03',
+      projectNumber: '#03',
       title: 'Unique Photography',
       badge: 'live demo',
       typeBadge: 'side project',
@@ -388,7 +388,7 @@ export const portfolioData: PortfolioData = {
     },
     {
       id: 'foody-tracker',
-      projectNumber: '04',
+      projectNumber: '#04',
       title: 'Foody Tracker',
       badge: 'live app',
       typeBadge: 'mobile app',
@@ -446,7 +446,7 @@ export const portfolioData: PortfolioData = {
     },
     {
       id: 'bonfiglio-dev',
-      projectNumber: '05',
+      projectNumber: '#05',
       title: 'bonfiglio.dev',
       badge: 'active repo',
       typeBadge: 'portfolio',
@@ -534,7 +534,7 @@ export const portfolioData: PortfolioData = {
       missionNumber: 'MISSION // 03',
       role: 'Origins',
       company: 'Formazione Web & Design',
-      location: 'Imperia, Italy ➔ Turin, Italy',
+      location: 'Imperia, Italy -> Turin, Italy',
       department: 'Comics • Delpho • Liceo Artistico',
       period: '2012 — 2020',
       statusBadge: 'FOUNDATIONS',

@@ -6,7 +6,7 @@ import prettierConfig from 'eslint-config-prettier'
 export default tseslint.config(
   {
     name: 'app/files-to-ignore',
-    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**', 'node_modules/**', '.DS_Store'],
+    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**', 'node_modules/**', '.DS_Store', '.agents/**'],
   },
 
   js.configs.recommended,

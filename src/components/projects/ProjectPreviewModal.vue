@@ -143,14 +143,15 @@
 
         <!-- Modal Shell -->
         <div
-          class="relative z-10 w-full max-w-6xl h-[92vh] max-h-[850px] bg-dark-950/95 border border-lime-400/30 rounded-3xl shadow-[0_0_60px_rgba(0,0,0,0.9),0_0_30px_rgba(226,241,97,0.15)] flex flex-col overflow-hidden ring-1 ring-lime-400/20"
+          data-ui="project-preview-modal"
+          class="relative z-10 w-full max-w-6xl h-[92vh] max-h-[850px] bg-dark-950/95 border border-white/10 rounded-3xl flex flex-col overflow-hidden"
         >
-          <!-- Top Cyber Bar / Browser Frame Controls -->
+          <!-- Top Browser Frame Controls -->
           <div
-            class="px-4 py-3 bg-dark-900/90 border-b border-lime-400/15 flex items-center justify-between gap-3 shrink-0"
+            class="px-4 py-3 bg-dark-900/90 border-b border-white/10 flex items-center justify-between gap-3 shrink-0"
           >
             <!-- Left: Project Number & Title Identity -->
-            <div class="flex items-center gap-2 font-mono text-xs sm:text-sm shrink-0">
+            <div class="flex items-center gap-2 font-sans text-xs sm:text-sm shrink-0">
               <span class="text-lime-400 font-bold tracking-wider">
                 {{ project.projectNumber }} //
               </span>
@@ -161,22 +162,22 @@
 
             <!-- Center: URL Bar Mockup with Clickable External Link -->
             <div
-              class="hidden md:flex items-center gap-2 px-3.5 py-1 rounded-xl bg-dark-950 border border-lime-400/20 font-mono text-xs text-slate-300 max-w-md w-full justify-between"
+              class="hidden md:flex items-center gap-2 px-3.5 py-1 rounded-xl bg-dark-950 border border-white/10 font-sans text-xs text-slate-300 max-w-md w-full justify-between"
             >
               <div class="flex items-center gap-2 truncate">
-                <span class="text-lime-400 text-[10px]">🔒</span>
+                <span class="text-lime-400 text-xs">●</span>
                 <a
                   v-if="project.liveUrl"
                   :href="project.liveUrl"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="text-slate-300 hover:text-lime-400 truncate hover:underline transition-colors flex items-center gap-1"
+                  class="text-slate-300 hover:text-lime-400 truncate hover:underline transition-colors flex items-center gap-1 text-[11px]"
                 >
-                  <span class="truncate">{{ project.liveUrl }}</span>
+                  <code class="truncate">{{ project.liveUrl }}</code>
                   <span class="text-[10px] text-lime-400">↗</span>
                 </a>
-                <span v-else class="text-slate-400 truncate">
-                  https://bonfiglio.dev/active-session
+                <span v-else class="text-slate-400 truncate text-[11px]">
+                  <code>https://bonfiglio.dev/active-session</code>
                 </span>
               </div>
 
@@ -191,49 +192,46 @@
             </div>
 
             <!-- Right: Device Mode Switcher & Close [ESC] -->
-            <div class="flex items-center gap-2 font-mono">
+            <div class="flex items-center gap-2 font-sans">
               <!-- Responsive Device Buttons -->
-              <div class="flex items-center bg-dark-950 border border-lime-400/20 rounded-xl p-0.5">
+              <div class="flex items-center bg-dark-950 border border-white/10 rounded-xl p-0.5">
                 <button
                   type="button"
                   title="Desktop View (100%)"
-                  class="px-2.5 py-1 rounded-lg text-xs transition-all cursor-pointer flex items-center gap-1"
+                  class="px-2.5 py-1 rounded-lg text-xs transition-colors cursor-pointer flex items-center gap-1"
                   :class="
                     activeDevice === 'desktop'
-                      ? 'bg-lime-400 text-black font-bold shadow-[0_0_10px_rgba(226,241,97,0.4)]'
+                      ? 'bg-lime-400 text-black font-bold'
                       : 'text-slate-400 hover:text-white'
                   "
                   @click="setDevice('desktop')"
                 >
-                  <span class="hidden sm:inline">🖥️</span>
                   <span>Desk</span>
                 </button>
                 <button
                   type="button"
                   title="Tablet View (768px)"
-                  class="px-2.5 py-1 rounded-lg text-xs transition-all cursor-pointer flex items-center gap-1"
+                  class="px-2.5 py-1 rounded-lg text-xs transition-colors cursor-pointer flex items-center gap-1"
                   :class="
                     activeDevice === 'tablet'
-                      ? 'bg-lime-400 text-black font-bold shadow-[0_0_10px_rgba(226,241,97,0.4)]'
+                      ? 'bg-lime-400 text-black font-bold'
                       : 'text-slate-400 hover:text-white'
                   "
                   @click="setDevice('tablet')"
                 >
-                  <span class="hidden sm:inline">💻</span>
                   <span>Tab</span>
                 </button>
                 <button
                   type="button"
                   title="Mobile View (375px)"
-                  class="px-2.5 py-1 rounded-lg text-xs transition-all cursor-pointer flex items-center gap-1"
+                  class="px-2.5 py-1 rounded-lg text-xs transition-colors cursor-pointer flex items-center gap-1"
                   :class="
                     activeDevice === 'mobile'
-                      ? 'bg-lime-400 text-black font-bold shadow-[0_0_10px_rgba(226,241,97,0.4)]'
+                      ? 'bg-lime-400 text-black font-bold'
                       : 'text-slate-400 hover:text-white'
                   "
                   @click="setDevice('mobile')"
                 >
-                  <span class="hidden sm:inline">📱</span>
                   <span>Mob</span>
                 </button>
               </div>
@@ -242,11 +240,11 @@
               <button
                 type="button"
                 aria-label="Close Lightbox"
-                class="px-2.5 py-1 rounded-xl bg-dark-950 border border-lime-400/30 text-slate-300 hover:text-lime-400 hover:border-lime-400 text-xs font-bold transition-all cursor-pointer flex items-center gap-1 active:scale-95"
+                class="px-2.5 py-1 rounded-xl bg-dark-950 border border-white/10 text-slate-300 hover:text-lime-400 hover:border-lime-400 text-xs font-bold transition-colors cursor-pointer flex items-center gap-1 active:scale-95"
                 @click="handleClose"
               >
-                <span class="text-[11px]">✕</span>
-                <span class="text-[10px] text-slate-400 font-mono">ESC</span>
+                <span class="text-[11px]">&times;</span>
+                <span class="text-[10px] text-slate-400 font-sans">ESC</span>
               </button>
             </div>
           </div>
@@ -255,28 +253,23 @@
           <div
             class="flex-1 bg-dark-950/80 p-2 sm:p-4 overflow-hidden flex items-center justify-center relative"
           >
-            <!-- Background Radial Glow inside Modal -->
-            <div
-              class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(226,241,97,0.04)_0%,transparent_70%)] pointer-events-none"
-            />
-
             <!-- Iframe Container with Dynamic Device Width & Smooth Transition -->
             <div
-              class="h-full bg-dark-900 border border-slate-700/80 rounded-2xl overflow-hidden shadow-2xl relative transition-all duration-300 flex flex-col"
+              class="h-full bg-dark-900 border border-slate-700/80 rounded-2xl overflow-hidden relative transition-all duration-300 flex flex-col"
               :class="[
                 deviceWidthClass,
                 activeDevice !== 'desktop'
-                  ? 'border-2 border-lime-400/40 shadow-[0_0_30px_rgba(226,241,97,0.15)]'
+                  ? 'border-2 border-lime-400/40'
                   : '',
               ]"
             >
               <!-- Loading Spinner Overlay -->
               <div
                 v-if="isIframeLoading && project.liveUrl"
-                class="absolute inset-0 bg-dark-950 flex flex-col items-center justify-center gap-3 z-20 font-mono text-xs text-lime-400"
+                class="absolute inset-0 bg-dark-950 flex flex-col items-center justify-center gap-3 z-20 font-sans text-xs text-lime-400 font-medium"
               >
                 <div
-                  class="w-8 h-8 border-2 border-lime-400/20 border-t-lime-400 rounded-full animate-spin shadow-[0_0_12px_#e2f161]"
+                  class="w-8 h-8 border-2 border-lime-400/20 border-t-lime-400 rounded-full animate-spin"
                 />
                 <div class="flex items-center gap-1.5 animate-pulse">
                   <span>&gt; CONNECTING LIVE DEMO...</span>
@@ -298,19 +291,19 @@
               <!-- Fallback / Interactive Card for Current Active Site (bonfiglio.dev) -->
               <div
                 v-else
-                class="w-full h-full flex flex-col items-center justify-center p-6 text-center space-y-6 bg-dark-950 font-mono"
+                class="w-full h-full flex flex-col items-center justify-center p-6 text-center space-y-6 bg-dark-950 font-sans"
               >
                 <div
-                  class="w-16 h-16 rounded-2xl bg-lime-400/10 border border-lime-400/30 flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(226,241,97,0.25)]"
+                  class="w-16 h-16 rounded-2xl bg-lime-400/10 border border-lime-400/30 flex items-center justify-center text-xl font-bold text-lime-400"
                 >
-                  ⚡
+                  &lt;/&gt;
                 </div>
 
                 <div class="space-y-2 max-w-md">
                   <h4 class="text-xl font-bold font-syne text-white">
                     {{ project.title }}
                   </h4>
-                  <p class="text-xs text-slate-300 leading-relaxed">
+                  <p class="text-xs text-slate-300 leading-relaxed font-sans">
                     {{ project.description }}
                   </p>
                 </div>
@@ -318,7 +311,7 @@
                 <div
                   class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-lime-400/10 border border-lime-400/30 text-lime-400 text-xs font-bold"
                 >
-                  <span class="w-2 h-2 rounded-full bg-lime-400 animate-ping inline-block" />
+                  <span class="w-2 h-2 rounded-full bg-lime-400 inline-block" />
                   <span>ACTIVE RUNTIME SESSION IN YOUR BROWSER</span>
                 </div>
               </div>
@@ -327,10 +320,10 @@
 
           <!-- Bottom Footer Bar: Navigation, Tech Stack, & Direct Launch Link -->
           <div
-            class="px-4 py-3 bg-dark-900/90 border-t border-lime-400/15 flex items-center justify-between gap-4 shrink-0 flex-wrap"
+            class="px-4 py-3 bg-dark-900/90 flex items-center justify-between gap-4 shrink-0 flex-wrap"
           >
             <!-- Left: Stepper Navigation -->
-            <div class="flex items-center gap-2 font-mono text-xs">
+            <div class="flex items-center gap-2 font-sans text-xs">
               <button
                 type="button"
                 class="px-3 py-1.5 rounded-xl bg-dark-950 border border-lime-400/20 hover:border-lime-400 text-slate-300 hover:text-white transition-all cursor-pointer active:scale-95 flex items-center gap-1.5"
@@ -355,7 +348,7 @@
             </div>
 
             <!-- Middle: Tech Stack Pills -->
-            <div class="hidden lg:flex items-center gap-2 font-mono text-xs">
+            <div class="hidden lg:flex items-center gap-2 font-sans text-xs">
               <span
                 v-for="tech in project.stack"
                 :key="tech"
@@ -366,7 +359,7 @@
             </div>
 
             <!-- Right: Open Live Site External Button & Repo Link -->
-            <div class="flex items-center gap-2 font-mono text-xs">
+            <div class="flex items-center gap-2 font-sans text-xs">
               <a
                 v-if="project.repoUrl"
                 :href="project.repoUrl"
@@ -385,7 +378,7 @@
                 :href="project.liveUrl"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="px-4 py-1.5 rounded-xl bg-lime-400 text-black font-bold shadow-[0_0_15px_rgba(226,241,97,0.35)] hover:shadow-[0_0_25px_rgba(226,241,97,0.65)] hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer"
+                class="px-4 py-1.5 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-bold hover:scale-105 active:scale-95 transition-transform flex items-center gap-1.5 cursor-pointer"
                 @click="playClick"
               >
                 <span>VISIT LIVE SITE</span>

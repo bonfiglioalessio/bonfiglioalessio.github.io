@@ -41,14 +41,14 @@
     const theme = getProjectTheme(index)
     switch (theme) {
       case 'white':
-        return 'w-5 bg-white shadow-[0_0_8px_#ffffff]'
+        return 'w-5 bg-white'
       case 'emerald':
-        return 'w-5 bg-emerald-400 shadow-[0_0_8px_#34d399]'
+        return 'w-5 bg-emerald-400'
       case 'cyan':
-        return 'w-5 bg-sky-400 shadow-[0_0_8px_#38bdf8]'
+        return 'w-5 bg-sky-400'
       case 'lime':
       default:
-        return 'w-5 bg-lime-400 shadow-[0_0_8px_#e2f161]'
+        return 'w-5 bg-lime-400'
     }
   }
 
@@ -208,33 +208,17 @@
     ref="projectsSectionRef"
     class="w-screen relative left-1/2 -translate-x-1/2 pt-20 sm:pt-24 lg:pt-28 pb-10 sm:pb-14 lg:pb-16 overflow-hidden select-none transition-colors duration-1000 ease-out scroll-mt-20"
   >
-    <!-- Dedicated Ethereal Radial Space Backdrop Layer -->
-    <div class="absolute inset-0 projects-space-backdrop pointer-events-none" />
-
-    <!-- Ultra-Smooth Cloud Smoke Fog Overlay at Top (Seamless Transition from Stack into Work) -->
-    <div
-      class="absolute top-0 inset-x-0 h-48 bg-gradient-to-b from-dark-950 via-dark-950/70 to-transparent pointer-events-none z-1"
-    />
-
-    <!-- Volumetric Cosmic Nebulas (Direct seamless flow into Career Log at bottom) -->
-    <div
-      class="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[450px] rounded-full bg-lime-500/10 blur-[150px] pointer-events-none"
-    />
-    <div
-      class="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[700px] h-[400px] rounded-full bg-emerald-500/10 blur-[160px] pointer-events-none"
-    />
-
     <!-- Inner Content Stage (Aligned with Main Page Container Max-W-7xl) -->
     <div class="w-full max-w-7xl mx-auto px-6 sm:px-8 relative z-10 space-y-8 sm:space-y-10">
       <!-- Section Header dynamically bound to sections.projects -->
       <SectionHeader
-        :section-number="sections?.projects?.sectionNumber || '02'"
+        :section-number="sections?.projects?.sectionNumber || ''"
         :title="sections?.projects?.title || 'Selected Work'"
         :status-badge="
-          sections?.projects?.statusBadge || `● ${selectedWork.length} SELECTED PROJECTS`
+          sections?.projects?.statusBadge || `${selectedWork.length} Projects`
         "
         :description="
-          sections?.projects?.description || 'Una selezione di side project ed esperimenti passati.'
+          sections?.projects?.description || 'Una selezione di side project ed esperimenti personali.'
         "
       />
 
@@ -242,14 +226,14 @@
       <div class="lg:hidden space-y-5 pt-1">
         <!-- Mobile Carousel Navigation & Stepper Header -->
         <div
-          class="flex items-center justify-between gap-3 px-1 border-b border-lime-400/15 pb-2.5 font-mono"
+          class="flex items-center justify-between gap-3 px-1 pb-2.5 font-sans"
         >
           <div class="flex items-center gap-2">
             <span
               class="text-xs font-bold px-2.5 py-1 rounded-lg border transition-colors"
               :class="getMobileProjectBadgeClass(activeProjectIndex)"
             >
-              PROJECT 0{{ activeProjectIndex + 1 }} / 0{{ selectedWork.length }}
+              PROJECT {{ activeProjectIndex + 1 }} / {{ selectedWork.length }}
             </span>
           </div>
 
@@ -296,7 +280,7 @@
 
         <!-- Mobile Pagination Dots & Swipe Hint with Spectrum Colors -->
         <div
-          class="flex items-center justify-between text-[11px] font-mono text-slate-400 px-1 pt-1"
+          class="flex items-center justify-between text-xs font-sans text-slate-400 px-1 pt-1"
         >
           <span class="text-slate-500 font-bold">&larr; SWIPE PROJECTS &rarr;</span>
           <div class="flex items-center gap-0.5">
@@ -360,11 +344,6 @@
 
 <style scoped lang="scss">
   .projects-space-backdrop {
-    background: radial-gradient(
-      ellipse 90% 70% at 50% 50%,
-      rgba(10, 26, 42, 0.82) 0%,
-      rgba(5, 13, 24, 0.94) 55%,
-      transparent 100%
-    );
+    background: transparent;
   }
 </style>

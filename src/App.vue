@@ -22,7 +22,7 @@
 
 <template>
   <div
-    class="min-h-screen bg-dark-950 text-slate-200 font-mono relative overflow-hidden flex flex-col justify-between"
+    class="min-h-screen bg-dark-950 text-slate-100 font-sans antialiased relative overflow-hidden flex flex-col justify-between"
   >
     <!-- Initial Orbital Boot Preloader -->
     <AppPreloader @finish="onPreloaderFinish" />
@@ -35,12 +35,6 @@
 
     <!-- Sticky/Fixed TopBar Header (Includes Top Marquee + Transparent Borderless Navbar) -->
     <TopBar :is-ready="isAppReady" />
-
-    <!-- Ambient Atmospheric Glows -->
-    <div
-      class="ambient-glow-lime top-[-160px] left-1/2 -translate-x-1/2 w-[800px] h-[400px] animate-glow-pulse"
-    />
-    <div class="ambient-glow-cyan bottom-[-140px] left-1/4 w-[600px] h-[350px]" />
 
     <!-- Main Content Container -->
     <AppContainer size="default">

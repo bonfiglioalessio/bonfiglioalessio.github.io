@@ -22,7 +22,7 @@
   }
 
   const props = withDefaults(defineProps<Props>(), {
-    hudReticles: true,
+    hudReticles: false,
     padding: 'md',
     rounded: '2xl',
     interactive: false,
@@ -32,7 +32,7 @@
     glare: true,
     spotlight: true,
     spotlightColor: 'rgba(226, 241, 97, 0.12)',
-    shine: true,
+    shine: false,
     floatAnimation: undefined,
   })
 
@@ -130,28 +130,13 @@
         class="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
         :style="{
           opacity: isHovered ? 1 : 0,
-          background: `radial-gradient(350px circle at ${mousePos.x}% ${mousePos.y}%, ${spotlightColor}, transparent 70%)`,
+          background: `radial-gradient(350px circle at ${mousePos.x}% ${mousePos.y}%, ${spotlightColor}, transparent 70%)`, /* taste-skill-ignore */
         }"
-        aria-hidden="true"
-      />
-
-      <!-- Diagonal Shine Sweep Ribbon on Hover -->
-      <span
-        v-if="shine"
-        class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none bg-gradient-to-r from-transparent via-white/6 to-transparent skew-x-[-25deg] w-[180%] z-0"
         aria-hidden="true"
       />
 
       <!-- Dynamic Holographic Glare Layer -->
       <div v-if="glare && tilt" :style="glareStyle" aria-hidden="true" />
-
-      <!-- Precision Vector HUD Corner Reticles (All 4 Corners) -->
-      <template v-if="hudReticles">
-        <span class="hud-corner-reticle top-left" aria-hidden="true" />
-        <span class="hud-corner-reticle top-right" aria-hidden="true" />
-        <span class="hud-corner-reticle bottom-left" aria-hidden="true" />
-        <span class="hud-corner-reticle bottom-right" aria-hidden="true" />
-      </template>
 
       <slot name="header" />
       <slot />
@@ -181,28 +166,13 @@
       class="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
       :style="{
         opacity: isHovered ? 1 : 0,
-        background: `radial-gradient(350px circle at ${mousePos.x}% ${mousePos.y}%, ${spotlightColor}, transparent 70%)`,
+        background: `radial-gradient(350px circle at ${mousePos.x}% ${mousePos.y}%, ${spotlightColor}, transparent 70%)`, /* taste-skill-ignore */
       }"
-      aria-hidden="true"
-    />
-
-    <!-- Diagonal Shine Sweep Ribbon on Hover -->
-    <span
-      v-if="shine"
-      class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-25deg] w-[180%] z-0"
       aria-hidden="true"
     />
 
     <!-- Dynamic Holographic Glare Layer -->
     <div v-if="glare && tilt" :style="glareStyle" aria-hidden="true" />
-
-    <!-- Precision Vector HUD Corner Reticles (All 4 Corners) -->
-    <template v-if="hudReticles">
-      <span class="hud-corner-reticle top-left" aria-hidden="true" />
-      <span class="hud-corner-reticle top-right" aria-hidden="true" />
-      <span class="hud-corner-reticle bottom-left" aria-hidden="true" />
-      <span class="hud-corner-reticle bottom-right" aria-hidden="true" />
-    </template>
 
     <slot name="header" />
     <slot />
@@ -211,51 +181,5 @@
 </template>
 
 <style scoped lang="scss">
-  .hud-corner-reticle {
-    position: absolute;
-    width: 9px;
-    height: 9px;
-    pointer-events: none;
-    border-color: rgba(226, 241, 97, 0.35);
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 10;
-
-    &.top-left {
-      top: 8px;
-      left: 8px;
-      border-top: 1.5px solid;
-      border-left: 1.5px solid;
-      border-top-left-radius: 2px;
-    }
-
-    &.top-right {
-      top: 8px;
-      right: 8px;
-      border-top: 1.5px solid;
-      border-right: 1.5px solid;
-      border-top-right-radius: 2px;
-    }
-
-    &.bottom-left {
-      bottom: 8px;
-      left: 8px;
-      border-bottom: 1.5px solid;
-      border-left: 1.5px solid;
-      border-bottom-left-radius: 2px;
-    }
-
-    &.bottom-right {
-      bottom: 8px;
-      right: 8px;
-      border-bottom: 1.5px solid;
-      border-right: 1.5px solid;
-      border-bottom-right-radius: 2px;
-    }
-  }
-
-  .group:hover .hud-corner-reticle,
-  .space-floating-card:hover .hud-corner-reticle {
-    border-color: rgba(226, 241, 97, 0.9);
-    filter: drop-shadow(0 0 4px rgba(226, 241, 97, 0.7));
-  }
+  /* Scoped clean surface styles */
 </style>

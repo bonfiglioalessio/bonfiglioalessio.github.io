@@ -45,46 +45,34 @@
         return {
           strokeColor: '#ffffff',
           spotlightColor: 'rgba(255, 255, 255, 0.12)',
-          shineColor: 'via-white/25',
-          reticleClass:
-            'border-white/40 group-hover:border-white group-hover:shadow-[0_0_6px_#ffffff]',
           titleHoverClass: 'group-hover:text-white',
           glowClass: 'skill-glow-white',
-          nodeDotClass: 'bg-white shadow-[0_0_8px_#ffffff]',
+          nodeDotClass: 'bg-white',
         }
       case 'emerald':
         return {
           strokeColor: '#34d399',
           spotlightColor: 'rgba(52, 211, 153, 0.14)',
-          shineColor: 'via-emerald-400/25',
-          reticleClass:
-            'border-emerald-400/40 group-hover:border-emerald-400 group-hover:shadow-[0_0_6px_#34d399]',
           titleHoverClass: 'group-hover:text-emerald-400',
           glowClass: 'skill-glow-emerald',
-          nodeDotClass: 'bg-emerald-400 shadow-[0_0_8px_#34d399]',
+          nodeDotClass: 'bg-emerald-400',
         }
       case 'cyan':
         return {
           strokeColor: '#38bdf8',
           spotlightColor: 'rgba(56, 189, 248, 0.14)',
-          shineColor: 'via-sky-400/25',
-          reticleClass:
-            'border-sky-400/40 group-hover:border-sky-400 group-hover:shadow-[0_0_6px_#38bdf8]',
           titleHoverClass: 'group-hover:text-sky-400',
           glowClass: 'skill-glow-cyan',
-          nodeDotClass: 'bg-sky-400 shadow-[0_0_8px_#38bdf8]',
+          nodeDotClass: 'bg-sky-400',
         }
       case 'lime':
       default:
         return {
           strokeColor: '#e2f161',
           spotlightColor: 'rgba(226, 241, 97, 0.14)',
-          shineColor: 'via-lime-400/25',
-          reticleClass:
-            'border-lime-400/40 group-hover:border-lime-400 group-hover:shadow-[0_0_6px_#e2f161]',
           titleHoverClass: 'group-hover:text-lime-400',
           glowClass: 'skill-glow-lime',
-          nodeDotClass: 'bg-lime-400 shadow-[0_0_8px_#e2f161]',
+          nodeDotClass: 'bg-lime-400',
         }
     }
   })
@@ -104,34 +92,9 @@
         class="absolute inset-0 pointer-events-none transition-opacity duration-300 z-0"
         :style="{
           opacity: isHovered ? 1 : 0,
-          background: `radial-gradient(280px circle at ${mousePos.x}% ${mousePos.y}%, ${themeConfig.spotlightColor}, transparent 70%)`,
+          background: `radial-gradient(280px circle at ${mousePos.x}% ${mousePos.y}%, ${themeConfig.spotlightColor}, transparent 70%)`, /* taste-skill-ignore */
         }"
         aria-hidden="true"
-      />
-
-      <!-- Diagonal Shine Sweep Ribbon on Hover -->
-      <span
-        class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-800 ease-out pointer-events-none bg-gradient-to-r from-transparent skew-x-[-25deg] w-[180%] z-0"
-        :class="themeConfig.shineColor"
-        aria-hidden="true"
-      />
-
-      <!-- HUD Corner Reticles (Precision Themed Cyber Brackets) -->
-      <span
-        class="absolute top-2.5 left-2.5 w-2.5 h-2.5 border-t-[1.5px] border-l-[1.5px] rounded-tl-sm transition-all pointer-events-none z-10"
-        :class="themeConfig.reticleClass"
-      />
-      <span
-        class="absolute top-2.5 right-2.5 w-2.5 h-2.5 border-t-[1.5px] border-r-[1.5px] rounded-tr-sm transition-all pointer-events-none z-10"
-        :class="themeConfig.reticleClass"
-      />
-      <span
-        class="absolute bottom-2.5 left-2.5 w-2.5 h-2.5 border-b-[1.5px] border-l-[1.5px] rounded-bl-sm transition-all pointer-events-none z-10"
-        :class="themeConfig.reticleClass"
-      />
-      <span
-        class="absolute bottom-2.5 right-2.5 w-2.5 h-2.5 border-b-[1.5px] border-r-[1.5px] rounded-br-sm transition-all pointer-events-none z-10"
-        :class="themeConfig.reticleClass"
       />
 
       <!-- Animated Themed Border Loader on Hover -->
@@ -159,7 +122,7 @@
         <!-- Icon Container (DevIcon or Custom Styled Text Icon) -->
         <div
           v-if="skill.customIconText"
-          class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center font-bold text-lg sm:text-xl font-sans shadow-md shrink-0 select-none transition-transform duration-300 group-hover:scale-105"
+          class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center font-bold text-lg sm:text-xl font-sans shrink-0 select-none transition-transform duration-300 group-hover:scale-105"
           :style="{
             backgroundColor: skill.iconBgColor,
             color: skill.iconTextColor,
@@ -170,7 +133,7 @@
 
         <div
           v-else-if="skill.iconUrl"
-          class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-white/95 flex items-center justify-center p-2 shadow-[0_0_15px_rgba(255,255,255,0.35)] shrink-0 transition-transform duration-300 group-hover:scale-105"
+          class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-white/95 flex items-center justify-center p-2 shrink-0 transition-transform duration-300 group-hover:scale-105"
         >
           <img
             :src="skill.iconUrl"
@@ -192,19 +155,19 @@
                 :class="themeConfig.nodeDotClass"
               />
               <span
-                class="relative inline-flex rounded-full h-1.5 w-1.5 opacity-35 group-hover:opacity-100 group-hover:scale-125 transition-all duration-300"
+                class="relative inline-flex rounded-full h-1.5 w-1.5 opacity-35 group-hover:opacity-100 group-hover:scale-125 transition-transform duration-300"
                 :class="themeConfig.nodeDotClass"
               />
             </span>
             <h3
-              class="font-bold text-sm sm:text-base text-white transition-colors font-mono leading-tight truncate"
+              class="font-bold text-sm sm:text-base text-white transition-colors font-sans leading-tight truncate"
               :class="themeConfig.titleHoverClass"
             >
               {{ skill.name }}
             </h3>
           </div>
           <p
-            class="text-[11px] sm:text-xs text-slate-400 font-mono leading-snug pt-0.5 break-words"
+            class="text-[11px] sm:text-xs text-slate-400 font-sans leading-snug pt-0.5 break-words"
           >
             {{ skill.description }}
           </p>
@@ -236,22 +199,6 @@
     .skill-border-path {
       stroke-dashoffset: 0;
       opacity: 1;
-
-      &.skill-glow-lime {
-        filter: drop-shadow(0 0 6px #e2f161) drop-shadow(0 0 12px rgba(226, 241, 97, 0.6));
-      }
-
-      &.skill-glow-white {
-        filter: drop-shadow(0 0 6px #ffffff) drop-shadow(0 0 12px rgba(255, 255, 255, 0.6));
-      }
-
-      &.skill-glow-emerald {
-        filter: drop-shadow(0 0 6px #34d399) drop-shadow(0 0 12px rgba(52, 211, 153, 0.6));
-      }
-
-      &.skill-glow-cyan {
-        filter: drop-shadow(0 0 6px #38bdf8) drop-shadow(0 0 12px rgba(56, 189, 248, 0.6));
-      }
     }
   }
 </style>

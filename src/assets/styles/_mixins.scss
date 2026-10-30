@@ -23,63 +23,25 @@
   justify-content: center;
 }
 
-// --- Glassmorphism Panel ---
-@mixin glass-panel($bg-opacity: 0.45, $blur: 14px, $border-color: rgba(226, 241, 97, 0.16)) {
-  background: rgba(6, 10, 18, $bg-opacity);
+// --- Solid Tactile Card Panel (High-contrast, clean surface) ---
+@mixin glass-panel($bg-opacity: 0.94, $blur: 12px, $border-color: rgba(255, 255, 255, 0.08)) {
+  background: rgba(8, 13, 24, $bg-opacity);
   backdrop-filter: blur($blur);
   -webkit-backdrop-filter: blur($blur);
   border: 1px solid $border-color;
-  box-shadow:
-    0 8px 32px 0 rgba(0, 0, 0, 0.5),
-    0 0 25px -4px rgba(226, 241, 97, 0.08);
 }
 
-// --- Neon Glow Effect ---
-@mixin neon-glow($color: rgba(226, 241, 97, 0.35), $spread: 25px) {
-  box-shadow: 0 0 $spread 0 $color;
+// --- Focused Accent Glow (Tactile interaction) ---
+@mixin neon-glow($color: rgba(226, 241, 97, 0.2), $spread: 16px) {
+  outline: 1px solid $color;
 }
 
-// --- HUD Reticles Corner Markers (Precision Vector Brackets) ---
-@mixin hud-reticles($color: rgba(226, 241, 97, 0.45)) {
+// --- HUD Reticles (Cleaned / Deprecated) ---
+@mixin hud-reticles($color: transparent) {
   position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    width: 8px;
-    height: 8px;
-    border-top: 1.5px solid $color;
-    border-left: 1.5px solid $color;
-    border-top-left-radius: 2px;
-    pointer-events: none;
-    transition: all 0.25s ease;
-    z-index: 10;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 8px;
-    right: 8px;
-    width: 8px;
-    height: 8px;
-    border-bottom: 1.5px solid $color;
-    border-right: 1.5px solid $color;
-    border-bottom-right-radius: 2px;
-    pointer-events: none;
-    transition: all 0.25s ease;
-    z-index: 10;
-  }
-
-  &:hover::before,
-  &:hover::after {
-    filter: drop-shadow(0 0 4px $color);
-  }
 }
 
-// --- Text Glow ---
-@mixin text-glow($color: rgba(226, 241, 97, 0.5), $blur: 8px) {
-  text-shadow: 0 0 $blur $color;
+// --- Text Glow (Deprecated) ---
+@mixin text-glow($color: rgba(226, 241, 97, 0.35), $blur: 4px) {
+  // deprecated
 }

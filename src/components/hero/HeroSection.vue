@@ -119,7 +119,7 @@
 
 <template>
   <section
-    class="min-h-screen lg:h-screen lg:max-h-screen flex flex-col justify-between pt-28 sm:pt-32 lg:pt-24 xl:pt-26 pb-6 sm:pb-8 lg:pb-3 relative z-10 w-full"
+    class="min-h-[100dvh] lg:h-[100dvh] lg:max-h-screen flex flex-col justify-between pt-28 sm:pt-32 lg:pt-24 xl:pt-26 pb-6 sm:pb-8 lg:pb-3 relative z-10 w-full"
   >
     <div
       class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-10 xl:gap-12 items-center w-full my-auto flex-1"
@@ -134,10 +134,10 @@
           "
         >
           <p
-            class="text-xs sm:text-xs lg:text-[11px] xl:text-xs text-lime-400 font-mono tracking-widest uppercase flex items-center gap-2 drop-shadow-[0_0_8px_rgba(226,241,97,0.5)] select-none"
+            class="text-sm font-sans font-bold text-lime-400 uppercase tracking-wide flex items-center gap-2 select-none"
           >
-            <span>{{ profile.level || '&gt;_ LEVEL 06 DEVELOPER' }}</span>
-            <span class="h-px w-10 sm:w-12 bg-lime-400/60 shadow-[0_0_8px_#e2f161]" />
+            <span>{{ profile.level || 'SENIOR FRONTEND ENGINEER & ARCHITECT' }}</span>
+            <span class="h-px w-8 sm:w-10 bg-lime-400/40" />
           </p>
 
           <!-- AI Streamed Headline with Invisible Ghost Layout Lock (0.00 CLS) -->
@@ -163,14 +163,14 @@
               <br class="hidden sm:inline" />
               <span
                 v-if="displayedPart2"
-                class="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 via-lime-300 to-emerald-400 drop-shadow-[0_0_35px_rgba(204,255,0,0.45)] inline"
+                class="text-lime-400 inline"
               >
                 {{ displayedPart2 }}
               </span>
               <!-- AI Streaming Token Caret -->
               <span
                 v-if="!isTypingComplete"
-                class="inline-block w-[3px] sm:w-[4px] h-[0.75em] align-baseline ml-1 bg-lime-400 shadow-[0_0_10px_#e2f161] rounded-sm animate-pulse"
+                class="inline-block w-[3px] sm:w-[4px] h-[0.75em] align-baseline ml-1 bg-lime-400 rounded-sm animate-pulse"
               />
             </h1>
           </div>
@@ -178,7 +178,7 @@
 
         <!-- Narrative Bio (Smoothly reveals as part of the hero composition) -->
         <p
-          class="text-sm sm:text-base lg:text-xs xl:text-sm text-slate-300 font-mono leading-relaxed max-w-xl drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] transition-all duration-700 delay-150 ease-out"
+          class="text-sm sm:text-base text-slate-300 font-sans leading-relaxed max-w-xl transition-all duration-700 delay-150 ease-out"
           :class="
             isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 pointer-events-none'
           "
@@ -229,10 +229,10 @@
     >
       <a
         href="#stack"
-        class="group inline-flex items-center gap-2 text-[11px] font-mono text-slate-400 hover:text-lime-400 transition-all cursor-pointer hover:scale-105 active:scale-95"
+        class="group inline-flex items-center gap-2 text-xs font-sans text-slate-400 hover:text-lime-400 transition-colors cursor-pointer hover:scale-105 active:scale-95"
       >
-        <span class="w-1.5 h-1.5 rounded-full bg-lime-400 animate-ping inline-block" />
-        <span class="tracking-wider uppercase font-semibold">SCROLL TO ENTER CONSTELLATION</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-lime-400 inline-block" />
+        <span class="tracking-wider uppercase font-semibold">Explore Technical Constellation</span>
         <span class="text-lime-400 font-bold group-hover:translate-y-0.5 transition-transform"
           >&darr;</span
         >

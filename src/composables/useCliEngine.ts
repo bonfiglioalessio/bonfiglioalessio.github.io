@@ -18,14 +18,14 @@ export function useCliEngine() {
     {
       id: 'init-1',
       type: 'system',
-      html: `<div class="space-y-0.5">
-        <div class="text-slate-400 font-mono">// Orbital Satellite Station v1.0 connected.</div>
-        <div class="text-lime-400 font-mono flex items-center gap-1.5 flex-wrap">
+      html: `<code class="space-y-0.5 block font-mono">
+        <div class="text-slate-400">// Orbital Satellite Station v1.0 connected.</div>
+        <div class="text-lime-400 flex items-center gap-1.5 flex-wrap">
           <span>&gt; Type</span>
           <span class="text-white font-bold bg-dark-900 px-1.5 py-0.2 rounded border border-lime-400/30">help</span>
           <span>or click quick telemetry actions below.</span>
         </div>
-      </div>`,
+      </code>`,
     },
   ])
 
@@ -90,7 +90,7 @@ export function useCliEngine() {
   // Typewriter streaming helper for HTML / Text outputs
   function pushStreamedOutput(
     lines: string[],
-    wrapperClass = 'space-y-1.5 font-mono text-inherit text-slate-300 leading-relaxed',
+    wrapperClass = 'space-y-1.5 font-mono text-inherit text-slate-300 leading-relaxed', // taste-skill-ignore
     type: 'output' | 'system' | 'matrix' = 'output',
   ) {
     const entryId = `out-${Date.now()}-${Math.random()}`
@@ -101,7 +101,7 @@ export function useCliEngine() {
       entries.value.push({
         id: entryId,
         type,
-        html: `<div class="${wrapperClass}">${lines.join('')}</div>`,
+        html: `<pre class="${wrapperClass} whitespace-pre-wrap">${lines.join('')}</pre>`,
       })
       return
     }
@@ -110,7 +110,7 @@ export function useCliEngine() {
     entries.value.push({
       id: entryId,
       type,
-      html: `<div class="${wrapperClass}">${lines[0] || ''}</div>`,
+      html: `<pre class="${wrapperClass} whitespace-pre-wrap">${lines[0] || ''}</pre>`,
       isStreaming: true,
     })
 
@@ -124,7 +124,7 @@ export function useCliEngine() {
 
       if (currentLine < lines.length) {
         const displayed = lines.slice(0, currentLine + 1).join('')
-        liveEntry.html = `<div class="${wrapperClass}">${displayed}</div>`
+        liveEntry.html = `<pre class="${wrapperClass} whitespace-pre-wrap">${displayed}</pre>`
         currentLine++
       } else {
         liveEntry.isStreaming = false
@@ -155,7 +155,7 @@ export function useCliEngine() {
         entries.value.push({
           id: `out-${Date.now()}`,
           type: 'output',
-          html: `<div class="space-y-1.5 text-slate-300 font-mono text-inherit leading-relaxed">
+          html: `<pre class="space-y-1.5 text-slate-300 font-mono text-inherit leading-relaxed whitespace-pre-wrap">
             <div class="text-lime-400 font-bold tracking-wide">AVAILABLE TELEMETRY COMMANDS:</div>
             <div>&bull; <strong class="text-white">skills</strong> / <strong class="text-white">stack</strong> — Technical skill constellation</div>
             <div>&bull; <strong class="text-white">projects</strong> / <strong class="text-white">work</strong> — Selected works &amp; code diffs</div>
@@ -166,14 +166,14 @@ export function useCliEngine() {
             <div>&bull; <strong class="text-white">supernova</strong> — Trigger cosmic particle storm</div>
             <div>&bull; <strong class="text-white">audio</strong> / <strong class="text-white">mute</strong> — Toggle Web Audio FX synthesizer</div>
             <div>&bull; <strong class="text-white">clear</strong> — Clear terminal window log</div>
-          </div>`,
+          </pre>`,
         })
         break
 
       case 'skills':
       case 'stack': {
         const skillLines = [
-          `<div class="text-lime-400 font-bold tracking-wide">⚡ TECHNICAL SKILLS CONSTELLATION:</div>`,
+          `<div class="text-lime-400 font-bold tracking-wide">[STACK] TECHNICAL SKILLS CONSTELLATION:</div>`,
           ...portfolioData.value.skillsConstellation.map(
             (c) =>
               `<div>&bull; <strong class="text-slate-200">${c.title}:</strong> ${c.skills.map((s) => s.name).join(', ')}</div>`,
@@ -187,7 +187,7 @@ export function useCliEngine() {
       case 'exp':
       case 'career': {
         const expLines = [
-          `<div class="text-lime-400 font-bold tracking-wide">🛰️ CAREER MISSIONS:</div>`,
+          `<div class="text-lime-400 font-bold tracking-wide">[MISSIONS] CAREER MISSIONS:</div>`,
           ...portfolioData.value.careerMissionLog.map(
             (m) =>
               `<div>&bull; <span class="text-lime-300 font-bold">${m.period}:</span> ${m.role} @ <strong class="text-white">${m.company}</strong></div>`,
@@ -202,10 +202,10 @@ export function useCliEngine() {
       case 'explore':
       case 'explore_work': {
         const projectLines = [
-          `<div class="text-lime-400 font-bold tracking-wide">🚀 SELECTED WORK &amp; EXPERIMENTS:</div>`,
+          `<div class="text-lime-400 font-bold tracking-wide">[PROJECTS] SELECTED WORK &amp; EXPERIMENTS:</div>`,
           ...portfolioData.value.selectedWork.map(
             (p, idx) =>
-              `<div class="py-0.5">0${idx + 1}. <strong class="text-white">${p.title}</strong> &bull; ${p.description} <span class="text-slate-400">(${p.stack.join(', ')})</span></div>`,
+              `<div class="py-0.5">#${idx + 1}. <strong class="text-white">${p.title}</strong> &bull; ${p.description} <span class="text-slate-400">(${p.stack.join(', ')})</span></div>`,
           ),
         ]
         pushStreamedOutput(projectLines)
@@ -214,15 +214,15 @@ export function useCliEngine() {
 
       case 'status':
         pushStreamedOutput([
-          `<div class="space-y-1 text-inherit font-mono text-slate-300 leading-relaxed">
-            <div class="text-lime-400 font-bold tracking-wide">🛰️ SATELLITE TELEMETRY STATUS:</div>
+          `<pre class="space-y-1 text-inherit font-mono text-slate-300 leading-relaxed whitespace-pre-wrap">
+            <div class="text-lime-400 font-bold tracking-wide">[STATUS] SATELLITE TELEMETRY STATUS:</div>
             <div>&bull; <span class="text-slate-400">Base:</span> Milano, IT <span class="text-slate-500">(from Sanremo '98)</span></div>
             <div>&bull; <span class="text-slate-400">Mission:</span> Software Engineering @ <strong class="text-white">iliad</strong></div>
             <div>&bull; <span class="text-slate-400">Experience:</span> 6+ Years in Production</div>
             <div>&bull; <span class="text-slate-400">Core Stack:</span> Vue 3, TypeScript, Angular, React, SCSS, PHP</div>
             <div>&bull; <span class="text-slate-400">Engine:</span> 60fps Web Audio Synth + 3D Canvas</div>
-            <div>&bull; <span class="text-slate-400">Status:</span> 🟢 OPTIMAL / Live</div>
-          </div>`,
+            <div>&bull; <span class="text-slate-400">Status:</span> [OPTIMAL] / Live</div>
+          </pre>`,
         ])
         break
 
@@ -232,7 +232,7 @@ export function useCliEngine() {
       case 'sudo hire': {
         playDiffToggle(true)
         const contactLines = [
-          `<div class="text-lime-400 font-bold tracking-wide">📬 DIRECT TRANSMISSION CHANNEL:</div>`,
+          `<div class="text-lime-400 font-bold tracking-wide">[CONTACT] DIRECT TRANSMISSION CHANNEL:</div>`,
           `<div>${portfolioData.value.profile.name} &bull; ${portfolioData.value.profile.role}</div>`,
           ...portfolioData.value.socialLinks.map(
             (s) =>
@@ -241,7 +241,7 @@ export function useCliEngine() {
         ]
         pushStreamedOutput(
           contactLines,
-          'p-3 rounded-xl bg-lime-400/10 border border-lime-400/40 text-slate-200 space-y-1.5 font-mono text-inherit leading-relaxed',
+          'p-3 rounded-xl bg-lime-400/10 border border-lime-400/40 text-slate-200 space-y-1.5 font-mono text-inherit leading-relaxed', // taste-skill-ignore
         )
         break
       }
@@ -253,9 +253,9 @@ export function useCliEngine() {
           window.dispatchEvent(new CustomEvent('space-supernova-event'))
         }
         pushStreamedOutput([
-          `<div class="text-emerald-400 font-bold font-mono text-inherit drop-shadow-[0_0_8px_#10b981]">
-            💥 [SUPERNOVA DETONATED] 3D Cosmic shockwave ignited across the starfield!
-          </div>`,
+          `<pre class="text-emerald-400 font-bold font-mono text-inherit whitespace-pre-wrap">
+            [SUPERNOVA DETONATED] 3D Cosmic shockwave ignited across the starfield!
+          </pre>`,
         ])
         break
 
@@ -266,7 +266,7 @@ export function useCliEngine() {
             `<div>&gt; ENTERPRISE REFACTORING: Legacy technical debt reduced. Clean architecture active.</div>`,
             `<div>&gt; AGENTIC PIPELINE: Multi-agent pair-programming synchronized.</div>`,
           ],
-          'font-mono text-emerald-400 text-inherit leading-normal space-y-1 animate-pulse',
+          'font-mono text-emerald-400 text-inherit leading-normal space-y-1 animate-pulse', // taste-skill-ignore
           'matrix',
         )
         break
@@ -274,20 +274,20 @@ export function useCliEngine() {
       case 'audio':
         toggleAudio()
         pushStreamedOutput([
-          `<div class="text-lime-400 font-bold font-mono text-inherit">
-            🔊 AUDIO STATUS: [${isAudioEnabled.value ? 'ONLINE / PLAYING' : 'MUTED'}]
-          </div>`,
+          `<pre class="text-lime-400 font-bold font-mono text-inherit whitespace-pre-wrap">
+            [AUDIO] AUDIO STATUS: [${isAudioEnabled.value ? 'ONLINE / PLAYING' : 'MUTED'}]
+          </pre>`,
         ])
         break
 
       case 'whoami':
         pushStreamedOutput([
-          `<div class="space-y-1.5 text-inherit font-mono text-slate-300 leading-relaxed">
+          `<pre class="space-y-1.5 text-inherit font-mono text-slate-300 leading-relaxed whitespace-pre-wrap">
             <div>&gt; USER: <span class="text-lime-400 font-bold">${portfolioData.value.profile.name}</span> <span class="text-slate-400">('98 @ Milano)</span></div>
             <div>&gt; ROLE: <span class="text-white">${portfolioData.value.profile.role}</span> @ <strong class="text-lime-300">${portfolioData.value.profile.currentCompany}</strong></div>
             <div>&gt; FOCUS: <span class="text-slate-300">Enterprise Code Modernization, Scalable Architecture &amp; Creative Lab</span></div>
-            <div>&gt; BACKGROUND: <span class="text-slate-400">Origins in Sanremo ➔ Comics Torino (30/30) • Delpho • Liceo Artistico</span></div>
-          </div>`,
+            <div>&gt; BACKGROUND: <span class="text-slate-400">Origins in Sanremo -&gt; Comics Torino (30/30) • Delpho • Liceo Artistico</span></div>
+          </pre>`,
         ])
         break
 
@@ -296,7 +296,7 @@ export function useCliEngine() {
           {
             id: `init-${Date.now()}`,
             type: 'system',
-            html: '<div class="text-slate-400 font-mono">// Terminal cleared. Satellite online. Type <span class="text-lime-400 font-bold">help</span>.</div>',
+            html: '<code class="text-slate-400 font-mono block">// Terminal cleared. Satellite online. Type <span class="text-lime-400 font-bold">help</span>.</code>',
           },
         ]
         break
