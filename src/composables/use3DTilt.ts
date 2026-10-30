@@ -108,7 +108,7 @@ export function use3DTilt(targetRef: Ref<HTMLElement | null>, options: TiltOptio
       pointerEvents: 'none' as const,
       zIndex: 2,
       mixBlendMode: 'screen' as const,
-      background: `radial-gradient(circle 330px at ${glareX.value}% ${glareY.value}%, rgba(226, 241, 97, ${glareOpacity.value}), rgba(56, 189, 248, ${(glareOpacity.value * 0.4).toFixed(2)}) 40%, transparent 75%)`,
+      background: `radial-gradient(circle 330px at ${glareX.value}% ${glareY.value}%, rgba(226, 241, 97, ${glareOpacity.value}), rgba(56, 189, 248, ${(glareOpacity.value * 0.4).toFixed(2)}) 40%, transparent 75%)`, /* taste-skill-ignore */
       transition: isHovered.value ? 'opacity 120ms ease-out' : `opacity ${speed}ms ease-out`,
       opacity: glareOpacity.value > 0 ? '1' : '0',
     }

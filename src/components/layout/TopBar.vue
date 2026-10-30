@@ -26,10 +26,10 @@
   const emailUrl = 'mailto:bonfi.alessio98@gmail.com'
 
   const navLinks = [
-    { href: '#stack', label: './stack' },
-    { href: '#projects', label: './projects' },
-    { href: '#experience', label: './experience' },
-    { href: '#contact', label: './contact' },
+    { href: '#stack', label: 'stack' },
+    { href: '#projects', label: 'projects' },
+    { href: '#experience', label: 'experience' },
+    { href: '#contact', label: 'contact' },
   ]
 
   function toggleMobileMenu() {
@@ -174,8 +174,8 @@
           ? '-translate-y-full opacity-0 pointer-events-none'
           : 'translate-y-0 opacity-100',
       isScrolled
-        ? 'bg-dark-950/40 backdrop-blur-md border-b border-lime-400/10 shadow-[0_8px_32px_rgba(0,0,0,0.6)]'
-        : 'bg-transparent border-b border-transparent shadow-none',
+        ? 'bg-dark-950/90 backdrop-blur-md'
+        : 'bg-transparent',
     ]"
   >
     <!-- Topmost Marquee Ticker: Disappears on scroll with smooth transition -->
@@ -208,21 +208,21 @@
           :class="isScrolled ? 'h-8 text-xs' : 'h-10 text-sm'"
           @click="playClick"
         >
-          <span class="text-lime-400 font-mono">&lt;</span>
+          <span class="text-lime-400">&lt;</span>
           <span
-            class="tracking-tight font-display font-extrabold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.4)] transition-all duration-300"
+            class="tracking-tight font-display font-extrabold text-white transition-all duration-300"
             :class="isScrolled ? 'text-xs sm:text-sm' : 'text-sm sm:text-base'"
           >
             {{ profile.displayLogo }}
           </span>
-          <span class="text-lime-400 font-mono">/&gt;</span>
+          <span class="text-lime-400">/&gt;</span>
         </a>
 
         <!-- Right Side: Desktop Navigation Links + Dedicated Stationary CTA Slot -->
         <div class="flex items-center gap-2 sm:gap-3">
           <!-- Desktop Navigation Links (Stationary & 100% Zero-Shift) -->
           <nav
-            class="hidden md:flex items-center gap-1 text-slate-300 font-mono transition-all duration-300"
+            class="hidden md:flex items-center gap-1 text-slate-300 font-sans transition-all duration-300"
             :class="isScrolled ? 'text-[11px]' : 'text-xs'"
           >
             <a
@@ -233,14 +233,14 @@
               :class="[
                 isScrolled ? 'h-8' : 'h-10',
                 activeSectionId === link.href
-                  ? 'text-lime-400 font-bold drop-shadow-[0_0_10px_rgba(226,241,97,0.75)]'
-                  : 'text-slate-400 hover:text-slate-100 hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]',
+                  ? 'text-lime-400 font-bold'
+                  : 'text-slate-400 hover:text-slate-100',
               ]"
               @click="(e) => handleNavClick(e, link.href)"
             >
               <span
                 v-if="activeSectionId === link.href"
-                class="w-1.5 h-1.5 rounded-full bg-lime-400 mr-1.5 animate-pulse shadow-[0_0_8px_#e2f161]"
+                class="w-1.5 h-1.5 rounded-full bg-lime-400 mr-1.5"
               />
               {{ link.label }}
             </a>
@@ -260,7 +260,7 @@
               size="sm"
               :href="emailUrl"
               as="a"
-              class="whitespace-nowrap font-extrabold uppercase tracking-wider shadow-[0_0_18px_rgba(226,241,97,0.45)] shrink-0 transition-all duration-300"
+              class="whitespace-nowrap font-extrabold uppercase tracking-wider shrink-0 transition-all duration-300"
               :class="
                 isCtaVisible
                   ? 'opacity-100 scale-100 pointer-events-auto'
@@ -287,7 +287,7 @@
                 class="w-5 h-0.5 bg-current rounded-full transition-all duration-300 origin-center"
                 :class="
                   isMobileMenuOpen
-                    ? 'absolute top-[7px] rotate-45 text-lime-400 shadow-[0_0_8px_#e2f161]'
+                    ? 'absolute top-[7px] rotate-45 text-lime-400'
                     : ''
                 "
               />
@@ -299,7 +299,7 @@
                 class="w-5 h-0.5 bg-current rounded-full transition-all duration-300 origin-center"
                 :class="
                   isMobileMenuOpen
-                    ? 'absolute top-[7px] -rotate-45 text-lime-400 shadow-[0_0_8px_#e2f161]'
+                    ? 'absolute top-[7px] -rotate-45 text-lime-400'
                     : ''
                 "
               />
@@ -320,7 +320,7 @@
     >
       <div
         v-if="isMobileMenuOpen"
-        class="md:hidden absolute inset-x-0 top-full bg-dark-950/95 border-b border-lime-400/15 backdrop-blur-2xl py-3 shadow-2xl font-mono text-xs z-50 transition-all duration-300"
+        class="md:hidden absolute inset-x-0 top-full bg-dark-950/95 backdrop-blur-2xl py-3 font-sans text-xs z-50 transition-all duration-300"
       >
         <div class="w-full mx-auto px-4 sm:px-6">
           <div class="space-y-1">
@@ -331,7 +331,7 @@
               class="flex items-center justify-between h-10 px-4 transition-colors rounded-lg font-semibold"
               :class="[
                 activeSectionId === link.href
-                  ? 'text-lime-400 font-bold drop-shadow-[0_0_10px_rgba(226,241,97,0.75)]'
+                  ? 'text-lime-400 font-bold'
                   : 'text-slate-300 hover:text-lime-400 hover:bg-dark-900/80 active:bg-dark-900',
               ]"
               @click="(e) => handleMobileNavClick(e, link.href)"
@@ -339,17 +339,17 @@
               <span>{{ link.label }}</span>
               <span
                 v-if="activeSectionId === link.href"
-                class="text-[10px] text-lime-400 font-mono"
+                class="text-[10px] text-lime-400 font-sans"
               >
                 ● ACTIVE
               </span>
             </a>
 
             <!-- Mobile Dedicated Direct Email Action CTA -->
-            <div class="pt-2 mt-2 border-t border-lime-400/15">
+            <div class="pt-2 mt-2">
               <a
                 :href="emailUrl"
-                class="w-full py-2.5 px-4 rounded-xl bg-lime-400 text-black font-bold font-mono text-xs shadow-[0_0_15px_rgba(226,241,97,0.35)] flex items-center justify-center gap-2 cursor-pointer active:scale-95 transition-transform"
+                class="w-full py-2.5 px-4 rounded-xl bg-lime-400 text-black font-bold font-sans text-xs flex items-center justify-center gap-2 cursor-pointer active:scale-95 transition-transform"
                 @click="playClick"
               >
                 <span>LET'S TALK</span>

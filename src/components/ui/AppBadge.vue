@@ -80,13 +80,13 @@
 
 <template>
   <span
-    class="inline-flex items-center font-mono font-semibold tracking-wider uppercase border select-none transition-colors"
+    class="inline-flex items-center font-sans font-semibold tracking-wider uppercase border select-none transition-colors"
     :class="[variantClasses, sizeClasses, pill ? 'rounded-full' : 'rounded']"
   >
     <span
       v-if="dot"
       class="w-1.5 h-1.5 rounded-full"
-      :class="dotColor || 'bg-current shadow-[0_0_6px_currentColor]'"
+      :class="dotColor || 'bg-current'"
     />
     <slot />
   </span>

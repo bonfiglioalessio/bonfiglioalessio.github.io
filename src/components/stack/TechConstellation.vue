@@ -60,15 +60,15 @@
     }
     switch (clusterNumber) {
       case '#01':
-        return 'bg-lime-400 text-black shadow-[0_0_15px_rgba(226,241,97,0.4)] font-black'
+        return 'bg-lime-400 text-black font-black'
       case '#02':
-        return 'bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.4)] font-black'
+        return 'bg-white text-black font-black'
       case '#03':
-        return 'bg-emerald-400 text-black shadow-[0_0_15px_rgba(52,211,153,0.4)] font-black'
+        return 'bg-emerald-400 text-black font-black'
       case '#04':
-        return 'bg-sky-400 text-black shadow-[0_0_15px_rgba(56,189,248,0.4)] font-black'
+        return 'bg-sky-400 text-black font-black'
       default:
-        return 'bg-lime-400 text-black shadow-[0_0_15px_rgba(226,241,97,0.4)] font-black'
+        return 'bg-lime-400 text-black font-black'
     }
   }
 
@@ -90,15 +90,15 @@
   function getPaginationActiveClass(clusterNumber: string) {
     switch (clusterNumber) {
       case '#01':
-        return 'w-6 bg-lime-400 shadow-[0_0_8px_#e2f161]'
+        return 'w-6 bg-lime-400'
       case '#02':
-        return 'w-6 bg-white shadow-[0_0_8px_#ffffff]'
+        return 'w-6 bg-white'
       case '#03':
-        return 'w-6 bg-emerald-400 shadow-[0_0_8px_#34d399]'
+        return 'w-6 bg-emerald-400'
       case '#04':
-        return 'w-6 bg-sky-400 shadow-[0_0_8px_#38bdf8]'
+        return 'w-6 bg-sky-400'
       default:
-        return 'w-6 bg-lime-400 shadow-[0_0_8px_#e2f161]'
+        return 'w-6 bg-lime-400'
     }
   }
 
@@ -159,31 +159,15 @@
       </svg>
     </div>
 
-    <!-- Ultra-Smooth Cloud Smoke Fog Overlays at Top & Bottom (Zero hard lines) -->
-    <div
-      class="absolute top-0 inset-x-0 h-20 sm:h-28 bg-gradient-to-b from-dark-950 via-dark-950/70 to-transparent pointer-events-none z-1"
-    />
-    <div
-      class="absolute bottom-0 inset-x-0 h-20 sm:h-28 bg-gradient-to-t from-dark-950 via-dark-950/70 to-transparent pointer-events-none z-1"
-    />
-
-    <!-- Volumetric Cosmic Nebulas (Electric Sky & Indigo) -->
-    <div
-      class="absolute top-1/3 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] rounded-full bg-sky-500/10 blur-[160px] pointer-events-none"
-    />
-    <div
-      class="absolute bottom-1/3 right-1/4 translate-x-1/2 translate-y-1/2 w-[750px] h-[450px] rounded-full bg-indigo-500/10 blur-[170px] pointer-events-none"
-    />
-
     <!-- Inner Content Stage (Aligned with Main Page Container Max-W-7xl) in Pure Open Space -->
     <div
       class="w-full max-w-7xl mx-auto px-6 sm:px-8 relative z-10 space-y-4 sm:space-y-6 lg:space-y-8"
     >
       <!-- Section Header -->
       <SectionHeader
-        :section-number="sections?.stack?.sectionNumber || '01'"
-        :title="sections?.stack?.title || 'The Tech Constellation'"
-        :status-badge="sections?.stack?.statusBadge || '● 12 CORE MODULES & AI ORCHESTRATION'"
+        :section-number="sections?.stack?.sectionNumber || ''"
+        :title="sections?.stack?.title || 'Technical Constellation'"
+        :status-badge="sections?.stack?.statusBadge || 'Core Frameworks & Tools'"
         :description="
           sections?.stack?.description ||
           'I tool e le tecnologie fondamentali su cui fondo architetture solide, veloci e workflow agentici aumentati dall\'AI.'
@@ -194,13 +178,13 @@
       <div class="lg:hidden space-y-3 pt-0" @touchstart="onTouchStart" @touchend="onTouchEnd">
         <!-- Sector Selector Dock (4 Equal Width Cyber Pills) -->
         <div
-          class="grid grid-cols-4 gap-1.5 p-1 rounded-2xl bg-dark-900/90 border border-lime-400/20 backdrop-blur-md"
+          class="grid grid-cols-4 gap-1.5 p-1 rounded-2xl bg-dark-900/90 border border-white/10"
         >
           <button
             v-for="(cluster, idx) in allClusters"
             :key="cluster.clusterNumber"
             type="button"
-            class="py-2 rounded-xl font-mono text-[11px] font-bold transition-all duration-200 cursor-pointer flex flex-col items-center justify-center gap-0.5 select-none active:scale-95"
+            class="py-2 rounded-xl font-sans text-xs font-bold transition-all duration-200 cursor-pointer flex flex-col items-center justify-center gap-0.5 select-none active:scale-95"
             :class="getClusterPillClass(cluster.clusterNumber, activeClusterIndex === idx)"
             @click="selectCluster(idx)"
           >
@@ -212,14 +196,14 @@
         </div>
 
         <!-- Active Constellation Category Header with Coordinates & Swipe Hints -->
-        <div class="flex items-center justify-between px-1 border-b border-lime-400/15 pb-2">
+        <div class="flex items-center justify-between px-1 pb-2 font-sans">
           <span
-            class="font-mono text-xs font-bold tracking-wider"
+            class="text-xs font-bold tracking-wider"
             :class="getClusterTitleColor(activeCluster.clusterNumber)"
           >
-            ✦ {{ activeCluster.clusterNumber }} // {{ activeCluster.title }}
+            {{ activeCluster.title }}
           </span>
-          <span class="text-[9px] font-mono text-slate-400">
+          <span class="text-[9px] text-slate-400">
             {{ activeClusterIndex + 1 }}/4 ⇄
           </span>
         </div>
@@ -255,7 +239,7 @@
               />
             </button>
           </div>
-          <span class="text-[9px] font-mono text-slate-500 uppercase tracking-wider">
+          <span class="text-xs font-sans text-slate-400 font-medium tracking-wide">
             SECTOR {{ activeClusterIndex + 1 }} OF 4 // SWIPE TO EXPLORE
           </span>
         </div>
@@ -320,15 +304,15 @@
           >
             <!-- Category Title with Constellation Accent -->
             <div
-              class="flex items-center gap-2 pb-2 border-b border-lime-400/15 font-mono text-[11px]"
+              class="flex items-center gap-2 pb-2 font-sans text-xs"
             >
               <span
-                class="font-bold tracking-widest"
+                class="font-bold tracking-wider"
                 :class="getClusterTitleColor(cluster.clusterNumber)"
               >
                 {{ cluster.clusterNumber }}
               </span>
-              <span class="text-white font-bold tracking-wider uppercase">
+              <span class="text-white font-semibold text-sm">
                 {{ cluster.title }}
               </span>
             </div>
@@ -350,18 +334,18 @@
         <div v-if="aiCluster" class="pt-4 space-y-4 relative z-10">
           <!-- AI Constellation Header -->
           <div
-            class="flex items-center justify-between pb-2 border-b border-sky-400/20 font-mono text-[11px]"
+            class="flex items-center justify-between pb-2 font-sans text-xs"
           >
             <div class="flex items-center gap-2">
-              <span class="text-sky-400 font-bold tracking-widest">
+              <span class="text-sky-400 font-bold tracking-wider">
                 {{ aiCluster.clusterNumber }}
               </span>
-              <span class="text-white font-bold tracking-wider uppercase">
+              <span class="text-white font-semibold text-sm">
                 {{ aiCluster.title }}
               </span>
             </div>
-            <span class="text-[10px] text-sky-400/90 font-mono tracking-wider">
-              ✦ HUMAN-IN-THE-LOOP AI WORKFLOW // 99.8% SYNC
+            <span class="text-xs text-sky-400 font-medium">
+              AGENTIC ENGINEERING & AUTOMATION
             </span>
           </div>
 
@@ -383,35 +367,6 @@
 
 <style scoped lang="scss">
   .tech-constellation-backdrop {
-    background: radial-gradient(
-      ellipse 90% 70% at 50% 50%,
-      rgba(8, 26, 48, 0.88) 0%,
-      rgba(4, 13, 26, 0.95) 55%,
-      transparent 100%
-    );
-  }
-
-  .constellation-grid {
-    background-image:
-      linear-gradient(to right, rgba(56, 189, 248, 0.08) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(56, 189, 248, 0.08) 1px, transparent 1px);
-    background-size: 40px 40px;
-    mask-image: radial-gradient(ellipse at 50% 50%, black 60%, transparent 95%);
-    -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 60%, transparent 95%);
-  }
-
-  .constellation-pulse-line {
-    animation: constellation-line-pulse 4s ease-in-out infinite alternate;
-  }
-
-  @keyframes constellation-line-pulse {
-    0% {
-      opacity: 0.35;
-      stroke-dashoffset: 0;
-    }
-    100% {
-      opacity: 0.9;
-      stroke-dashoffset: 14;
-    }
+    background: transparent;
   }
 </style>

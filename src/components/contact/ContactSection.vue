@@ -231,22 +231,6 @@
     class="fullscreen-contact-section w-screen relative left-1/2 -translate-x-1/2 min-h-screen py-10 sm:py-14 lg:py-16 px-6 sm:px-12 lg:px-20 flex flex-col justify-center items-center select-none overflow-hidden transition-colors duration-1000 ease-out"
     :class="[isEmerged ? 'bg-emerged' : 'bg-submerged']"
   >
-    <!-- Top Glowing Cyber Horizon Divider -->
-    <div
-      class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-lime-400/40 to-transparent transition-opacity duration-1000"
-      :class="isEmerged ? 'opacity-100' : 'opacity-20'"
-    />
-
-    <!-- Deep Space Atmospheric Nebula Glows -->
-    <div
-      class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] sm:w-[1000px] h-[500px] rounded-full bg-cyan-500/10 blur-[120px] pointer-events-none transition-all duration-1000"
-      :class="isEmerged ? 'scale-110 opacity-100' : 'scale-75 opacity-0'"
-    />
-    <div
-      class="absolute bottom-1/4 left-1/2 -translate-x-1/2 translate-y-1/2 w-[600px] sm:w-[900px] h-[450px] rounded-full bg-lime-400/10 blur-[130px] pointer-events-none transition-all duration-1000"
-      :class="isEmerged ? 'scale-110 opacity-100' : 'scale-75 opacity-0'"
-    />
-
     <!-- Central Content Stage -->
     <div
       class="max-w-4xl w-full mx-auto space-y-6 sm:space-y-8 relative z-10 transition-all duration-1000 cubic-bezier(0.16, 1, 0.3, 1) origin-center text-left"
@@ -256,10 +240,8 @@
     >
       <!-- Top Tag -->
       <div class="flex items-center gap-2">
-        <span
-          class="text-lime-400 font-mono font-bold text-xs sm:text-sm tracking-widest uppercase drop-shadow-[0_0_8px_#e2f161]"
-        >
-          // WANNA WORK WITH ME?
+        <span class="text-lime-400 font-sans font-semibold text-sm">
+          Contact
         </span>
       </div>
 
@@ -289,20 +271,20 @@
           <br v-if="displayedPart2.length >= fullPart2.length" />
           <span
             v-if="displayedPart3"
-            class="text-lime-400 underline decoration-lime-400 decoration-4 sm:decoration-6 underline-offset-6 sm:underline-offset-10 drop-shadow-[0_0_35px_rgba(226,241,97,0.7)]"
+            class="text-lime-400 underline decoration-lime-400 decoration-4 sm:decoration-6 underline-offset-6 sm:underline-offset-10"
           >
             {{ displayedPart3 }}
           </span>
           <!-- AI Streaming Token Caret -->
           <span
             v-if="!isTypingComplete"
-            class="inline-block w-[4px] sm:w-[6px] h-[0.7em] align-baseline ml-1 bg-lime-400 shadow-[0_0_10px_#e2f161] rounded-sm animate-pulse"
+            class="inline-block w-[4px] sm:w-[6px] h-[0.7em] align-baseline ml-1 bg-lime-400 rounded-sm"
           />
         </h2>
       </div>
 
       <!-- Subtitle Description -->
-      <p class="text-sm sm:text-base text-slate-200 font-mono leading-relaxed max-w-2xl pt-1">
+      <p class="text-sm sm:text-base text-slate-300 font-sans leading-relaxed max-w-2xl pt-1">
         {{
           contact?.subtitle ||
           'Se cerchi un Frontend Engineer con solida esperienza nei framework Javascript, capace di adattarsi al contesto aziendale, ridurre il debito tecnico e guidare il codice verso architetture moderne e strutturate senza rinunciare alla cura dei dettagli visivi, connettiamoci.'
@@ -313,43 +295,37 @@
       <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 pt-2 flex-wrap">
         <!-- Copy Email Pill Box -->
         <div
-          class="relative bg-dark-900/90 border border-lime-400/30 rounded-2xl px-5 py-3 sm:py-3.5 flex items-center justify-between gap-4 shadow-[0_0_20px_rgba(0,0,0,0.6)] min-w-0"
+          class="relative bg-dark-900/90 border border-white/10 hover:border-lime-400/40 rounded-2xl px-5 py-3 sm:py-3.5 flex items-center justify-between gap-4 min-w-0"
         >
-          <div class="flex items-center gap-2.5 min-w-0 font-mono text-xs sm:text-sm">
+          <div class="flex items-center gap-2.5 min-w-0 font-sans text-sm">
             <span class="text-lime-400 font-bold">{{ contact?.copyEmailPrefix || '$ copy:' }}</span>
-            <span class="text-slate-100 truncate select-all font-mono">
+            <code class="text-slate-100 truncate select-all font-mono">
               {{ emailAddress }}
-            </span>
+            </code>
           </div>
 
           <button
             type="button"
-            class="relative overflow-hidden group/btn px-3 py-1.5 text-xs font-mono rounded-lg border transition-all cursor-pointer shrink-0"
+            class="relative px-3 py-1.5 text-xs font-sans font-semibold rounded-lg border transition-colors cursor-pointer shrink-0"
             :class="
               isCopied
-                ? 'bg-lime-400 text-black border-lime-400 font-bold shadow-[0_0_12px_rgba(226,241,97,0.5)]'
+                ? 'bg-lime-400 text-black border-lime-400 font-bold'
                 : 'bg-lime-400/15 text-lime-300 hover:bg-lime-400/25 border-lime-400/30'
             "
             @click="copyEmail"
           >
-            <span
-              class="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out pointer-events-none bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-25deg] w-[180%]"
-            />
             <span class="relative z-10 font-bold">
               {{ isCopied ? (contact?.copiedFeedbackText || 'COPIED!') : 'COPY' }}
             </span>
           </button>
         </div>
 
-        <!-- Direct Email Button CTA with Starlight Shine -->
+        <!-- Direct Email Button CTA -->
         <a
           :href="`mailto:${emailAddress}`"
-          class="relative overflow-hidden group/btn inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl bg-lime-400 text-black font-mono font-bold text-xs sm:text-sm shadow-[0_0_25px_rgba(226,241,97,0.4)] hover:shadow-[0_0_40px_rgba(226,241,97,0.8)] hover:scale-105 active:scale-95 transition-all cursor-pointer shrink-0"
+          class="relative inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl bg-lime-400 hover:bg-lime-300 text-black font-sans font-bold text-sm hover:scale-105 active:scale-95 transition-transform cursor-pointer shrink-0"
           @click="playClick"
         >
-          <span
-            class="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out pointer-events-none bg-gradient-to-r from-transparent via-white/50 to-transparent skew-x-[-25deg] w-[180%]"
-          />
           <span class="relative z-10 inline-flex items-center gap-2">
             <span>Send Email</span>
             <span class="text-base">&rarr;</span>
@@ -365,7 +341,7 @@
           :href="link.url"
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 font-mono text-xs sm:text-sm text-slate-300 hover:text-lime-400 transition-all duration-300 group cursor-pointer"
+          class="inline-flex items-center gap-2 font-sans text-sm text-slate-300 hover:text-lime-400 transition-colors duration-200 group cursor-pointer"
           @click="playClick"
         >
           <span
@@ -390,12 +366,6 @@
   }
 
   .bg-emerged {
-    // Deep cosmic cyber-nebula smoothly fading into the footer
-    background: radial-gradient(
-      circle at 50% 40%,
-      rgba(16, 36, 68, 0.75) 0%,
-      rgba(8, 16, 30, 0.92) 60%,
-      rgba(3, 7, 18, 0.98) 100%
-    );
+    background: rgba(2, 4, 8, 0.96);
   }
 </style>

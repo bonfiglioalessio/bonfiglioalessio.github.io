@@ -32,12 +32,12 @@
     const theme = getMissionTheme(idx)
     switch (theme) {
       case 'white':
-        return 'bg-dark-950 border-white shadow-[0_0_12px_#ffffff]'
+        return 'bg-dark-950 border-white'
       case 'emerald':
-        return 'bg-dark-950 border-emerald-400 shadow-[0_0_12px_#34d399]'
+        return 'bg-dark-950 border-emerald-400'
       case 'lime':
       default:
-        return 'bg-dark-950 border-lime-400 shadow-[0_0_12px_#e2f161]'
+        return 'bg-dark-950 border-lime-400'
     }
   }
 
@@ -47,12 +47,12 @@
     if (activeIdx === idx) {
       switch (theme) {
         case 'white':
-          return 'bg-white shadow-[0_0_8px_#ffffff]'
+          return 'bg-white'
         case 'emerald':
-          return 'bg-emerald-400 shadow-[0_0_8px_#34d399]'
+          return 'bg-emerald-400'
         case 'lime':
         default:
-          return 'bg-lime-400 shadow-[0_0_8px_#e2f161]'
+          return 'bg-lime-400'
       }
     }
     switch (theme) {
@@ -224,9 +224,9 @@
       <!-- ================= MOBILE VIEW: Horizontal Swipe Deck (< lg) ================= -->
       <div class="lg:hidden space-y-5">
         <SectionHeader
-          :section-number="sections?.experience?.sectionNumber || '03'"
-          :title="sections?.experience?.title || 'Career Mission Log'"
-          :status-badge="sections?.experience?.statusBadge || '● 6+ YEARS IN PRODUCTION'"
+          :section-number="sections?.experience?.sectionNumber || ''"
+          :title="sections?.experience?.title || 'Career & Production Milestones'"
+          :status-badge="sections?.experience?.statusBadge || 'Enterprise Track'"
           :description="
             sections?.experience?.description ||
             'Il percorso professionale tra grandi realtà enterprise, sistemi ad alto traffico e ingegneria frontend.'
@@ -236,14 +236,14 @@
         <div class="space-y-4 pt-1">
           <!-- Top Mobile Header Bar: Active Mission Counter & Stepper Navigation -->
           <div
-            class="flex items-center justify-between gap-3 px-1 border-b border-lime-400/15 pb-2.5 font-mono"
+            class="flex items-center justify-between gap-3 px-1 pb-2.5 font-sans"
           >
             <div class="flex items-center gap-2">
               <span
                 class="text-xs font-bold px-2.5 py-1 rounded-lg border transition-colors"
                 :class="getMobileMissionBadgeClass(activeMissionIndex)"
               >
-                MISSION 0{{ activeMissionIndex + 1 }} / 0{{ careerMissionLog.length }}
+                MISSION {{ activeMissionIndex + 1 }} / {{ careerMissionLog.length }}
               </span>
             </div>
 
@@ -297,9 +297,9 @@
               class="absolute left-8 right-8 top-[19px] h-[2px] bg-lime-400/20 rounded-full pointer-events-none"
             />
 
-            <!-- Dynamic Active Neon Laser Segment connecting nodes -->
+            <!-- Dynamic Active Laser Segment connecting nodes -->
             <div
-              class="absolute left-8 top-[19px] h-[2px] bg-gradient-to-r from-lime-300 via-lime-400 to-emerald-400 shadow-[0_0_10px_#e2f161] rounded-full transition-all duration-300 pointer-events-none"
+              class="absolute left-8 top-[19px] h-[2px] bg-lime-400 rounded-full transition-all duration-300 pointer-events-none"
               :style="{
                 width: `calc(${
                   (activeMissionIndex / (careerMissionLog.length - 1)) * 100
@@ -328,7 +328,7 @@
                 </div>
 
                 <!-- Mission Tag & Company Name -->
-                <div class="text-center font-mono">
+                <div class="text-center font-sans">
                   <span
                     class="text-[10px] block"
                     :class="getMobileBeaconTextClass(idx, activeMissionIndex)"
@@ -359,9 +359,9 @@
           <!-- Base Static Track Line spanning entire sector -->
           <div class="w-full h-full bg-lime-400/20 rounded-full" />
 
-          <!-- Active Scroll-Driven Neon Laser Beam running smoothly from top to bottom -->
+          <!-- Active Scroll-Driven Laser Beam running smoothly from top to bottom -->
           <div
-            class="absolute top-0 left-0 w-full bg-gradient-to-b from-lime-300 via-lime-400 to-emerald-400 shadow-[0_0_14px_#e2f161] rounded-full z-10 transition-[height] duration-75 ease-out"
+            class="absolute top-0 left-0 w-full bg-lime-400 rounded-full z-10 transition-[height] duration-75 ease-out"
             :style="{ height: `${Math.min(100, scrollProgress)}%` }"
           />
         </div>
@@ -369,9 +369,9 @@
         <!-- Section Header (Aligned cleanly to the right of the continuous rail) -->
         <div class="pb-8 sm:pb-10">
           <SectionHeader
-            :section-number="sections?.experience?.sectionNumber || '03'"
-            :title="sections?.experience?.title || 'Career Mission Log'"
-            :status-badge="sections?.experience?.statusBadge || '● 6+ YEARS IN PRODUCTION'"
+            :section-number="sections?.experience?.sectionNumber || ''"
+            :title="sections?.experience?.title || 'Career & Production Milestones'"
+            :status-badge="sections?.experience?.statusBadge || 'Enterprise Track'"
             :description="
               sections?.experience?.description ||
               'Il percorso professionale tra grandi realtà enterprise, sistemi ad alto traffico e ingegneria frontend.'
@@ -408,11 +408,6 @@
 
 <style scoped lang="scss">
   .career-space-backdrop {
-    background: radial-gradient(
-      ellipse at 50% 50%,
-      rgba(14, 32, 54, 0.8) 0%,
-      rgba(7, 15, 28, 0.95) 55%,
-      rgba(3, 7, 18, 0.98) 100%
-    );
+    background: #030712;
   }
 </style>

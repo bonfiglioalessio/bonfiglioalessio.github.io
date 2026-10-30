@@ -32,7 +32,7 @@
 }
 
 .space-floating-card {
-  @include glass-panel(0.45, 14px, rgba(226, 241, 97, 0.16));
+  @include glass-panel(0.92, 12px, rgba(255, 255, 255, 0.08));
   position: relative;
   transition:
     border-color $transition-base,
@@ -41,14 +41,7 @@
   will-change: transform;
 
   &:hover {
-    border-color: rgba(226, 241, 97, 0.65);
-    box-shadow:
-      0 12px 40px 0 rgba(0, 0, 0, 0.6),
-      0 0 35px 2px rgba(226, 241, 97, 0.25);
-  }
-
-  &.has-hud-reticles {
-    @include hud-reticles(rgba(226, 241, 97, 0.45));
+    border-color: rgba(226, 241, 97, 0.4);
   }
 }
 

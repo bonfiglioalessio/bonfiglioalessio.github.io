@@ -3,7 +3,7 @@
   import { useScrollReveal } from '../../composables/useScrollReveal'
 
   interface Props {
-    sectionNumber: string
+    sectionNumber?: string
     title: string
     statusBadge?: string
     description?: string
@@ -11,6 +11,7 @@
   }
 
   const props = withDefaults(defineProps<Props>(), {
+    sectionNumber: undefined,
     statusBadge: undefined,
     description: undefined,
     reveal: true,
@@ -27,14 +28,17 @@
 </script>
 
 <template>
-  <div ref="headerRef" class="space-y-4" :class="reveal ? 'reveal-on-scroll' : ''">
-    <div class="flex flex-wrap items-center justify-between gap-4 border-b border-lime-400/15 pb-4">
+  <div ref="headerRef" class="space-y-3" :class="reveal ? 'reveal-on-scroll' : ''">
+    <div class="flex flex-wrap items-center justify-between gap-4 pb-2 sm:pb-3">
       <div class="flex items-baseline gap-3">
-        <span class="text-lime-400 font-mono text-sm drop-shadow-[0_0_8px_#e2f161]">{{
-          sectionNumber
-        }}</span>
+        <span
+          v-if="sectionNumber"
+          class="text-lime-400 font-sans text-sm tracking-wider font-bold"
+        >
+          {{ sectionNumber }}
+        </span>
         <h2
-          class="text-2xl sm:text-3xl font-bold text-slate-100 font-display tracking-tight drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]"
+          class="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-100 font-display tracking-tight"
         >
           {{ title }}
         </h2>
@@ -43,7 +47,7 @@
       <div class="flex items-center gap-3">
         <span
           v-if="statusBadge"
-          class="text-xs text-lime-400 font-mono tracking-wider hidden sm:inline drop-shadow-[0_0_6px_#e2f161]"
+          class="text-xs text-slate-300 bg-white/5 px-2.5 py-1 rounded-full font-sans tracking-wider hidden sm:inline"
         >
           {{ statusBadge }}
         </span>
@@ -53,7 +57,7 @@
 
     <p
       v-if="description || $slots.description"
-      class="text-xs sm:text-sm text-slate-400 font-mono max-w-xl leading-relaxed"
+      class="text-sm sm:text-base text-slate-400 font-sans max-w-2xl leading-relaxed"
     >
       <slot name="description">
         {{ description }}
