@@ -37,7 +37,7 @@
     switch (props.theme) {
       case 'white':
         return {
-          textClass: 'text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.75)]',
+          textClass: 'text-white',
           strokeColor: '#ffffff',
           trackColor: 'rgba(255, 255, 255, 0.15)',
           badgeClass: 'text-slate-200',
@@ -46,7 +46,7 @@
         }
       case 'emerald':
         return {
-          textClass: 'text-emerald-400 drop-shadow-[0_0_12px_rgba(52,211,153,0.75)]',
+          textClass: 'text-emerald-400',
           strokeColor: '#34d399',
           trackColor: 'rgba(52, 211, 153, 0.15)',
           badgeClass: 'text-emerald-400',
@@ -56,7 +56,7 @@
       case 'lime':
       default:
         return {
-          textClass: 'text-lime-400 drop-shadow-[0_0_12px_rgba(226,241,97,0.75)]',
+          textClass: 'text-lime-400',
           strokeColor: '#e2f161',
           trackColor: 'rgba(226, 241, 97, 0.12)',
           badgeClass: 'text-lime-400',
@@ -138,7 +138,7 @@
 <template>
   <div :class="floatAnimation" class="w-full">
     <div
-      class="stat-counter-card relative p-3 sm:p-3.5 rounded-2xl bg-dark-900/60 backdrop-blur-md border flex flex-col justify-center text-center sm:text-left select-none cursor-pointer group transition-all duration-300 hover:scale-[1.04] overflow-hidden"
+      class="stat-counter-card relative p-3 sm:p-3.5 rounded-2xl bg-dark-900/90 border flex flex-col justify-center text-center sm:text-left select-none cursor-pointer group transition-all duration-300 hover:scale-[1.04] overflow-hidden"
       :class="themeConfig.borderClass"
       @click="runCounterAnimation"
     >
@@ -180,11 +180,11 @@
 
       <!-- Corner HUD Accents -->
       <div
-        class="absolute top-1.5 right-2 text-[9px] font-mono opacity-40 group-hover:opacity-100 transition-opacity"
+        class="absolute top-1.5 right-2 text-[9px] font-sans opacity-60 group-hover:opacity-100 transition-opacity"
         :class="themeConfig.badgeClass"
       >
-        <span v-if="!isLoaded" class="animate-pulse text-[8px]">● WAIT</span>
-        <span v-else class="text-[8px]">✓ SYNC</span>
+        <span v-if="!isLoaded" class="animate-pulse text-[8px]">WAIT</span>
+        <span v-else class="text-[8px] font-semibold">OK</span>
       </div>
 
       <!-- Animated Stat Value -->
@@ -197,7 +197,7 @@
 
       <!-- Stat Label -->
       <div
-        class="text-[9px] sm:text-[10px] text-slate-400 font-mono uppercase tracking-wider group-hover:text-slate-200 transition-colors relative z-20 pt-0.5 truncate"
+        class="text-[10px] text-slate-400 font-sans font-medium group-hover:text-slate-200 transition-colors relative z-20 pt-0.5 truncate"
       >
         {{ label }}
       </div>
@@ -207,29 +207,21 @@
 
 <style scoped lang="scss">
   .stat-counter-card {
-    box-shadow:
-      0 4px 20px 0 rgba(0, 0, 0, 0.5),
-      0 0 15px -2px rgba(226, 241, 97, 0.1);
-
-    &:hover {
-      box-shadow:
-        0 8px 25px 0 rgba(0, 0, 0, 0.6),
-        0 0 25px 2px rgba(226, 241, 97, 0.35);
-    }
+    will-change: transform;
   }
 
   .stat-border-glow-lime {
-    filter: drop-shadow(0 0 6px #e2f161) drop-shadow(0 0 12px rgba(226, 241, 97, 0.6));
+    stroke: #e2f161;
     animation: border-pulse-lime 3s ease-in-out infinite alternate;
   }
 
   .stat-border-glow-white {
-    filter: drop-shadow(0 0 6px #ffffff) drop-shadow(0 0 12px rgba(255, 255, 255, 0.6));
+    stroke: #ffffff;
     animation: border-pulse-white 3s ease-in-out infinite alternate;
   }
 
   .stat-border-glow-emerald {
-    filter: drop-shadow(0 0 6px #34d399) drop-shadow(0 0 12px rgba(52, 211, 153, 0.6));
+    stroke: #34d399;
     animation: border-pulse-emerald 3s ease-in-out infinite alternate;
   }
 

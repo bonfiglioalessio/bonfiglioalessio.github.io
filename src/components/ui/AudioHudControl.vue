@@ -10,10 +10,10 @@
   <!-- Fixed HUD Audio & Space Ambient Music Control in Bottom Right -->
   <button
     type="button"
-    class="fixed right-5 sm:right-6 z-50 flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl bg-dark-950/95 backdrop-blur-2xl border transition-all duration-300 shadow-[0_4px_25px_rgba(0,0,0,0.85)] cursor-pointer group select-none font-mono text-xs active:scale-95"
+    data-ui="audio-hud"
+    class="fixed right-5 sm:right-6 z-50 flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-dark-900 border border-white/10 hover:border-lime-400/50 transition-colors duration-200 cursor-pointer group select-none font-sans text-xs active:scale-95"
     :class="[
       isCockpitMinimized ? 'bottom-[88px] sm:bottom-[96px]' : 'bottom-5 sm:bottom-6',
-      'border-lime-400/50 hover:border-lime-400 shadow-[0_0_20px_rgba(226,241,97,0.25)] hover:shadow-[0_0_30px_rgba(226,241,97,0.45)]',
     ]"
     :aria-label="
       isAudioEnabled
@@ -27,41 +27,41 @@
     "
     @click="toggleAudio"
   >
-    <!-- 4-Band Multi-Spectrum Dynamic Cyber Equalizer -->
+    <!-- 4-Band Multi-Spectrum Dynamic Equalizer -->
     <div class="flex items-end gap-[2.5px] h-3.5 w-4 shrink-0 justify-center pb-0.5">
-      <!-- Band 1: Lime Yellow -->
+      <!-- Band 1: Lime -->
       <span
-        class="w-[2.5px] rounded-full transition-all duration-300"
+        class="w-[2.5px] rounded-full transition-transform duration-300"
         :class="[
           isAudioEnabled
-            ? 'bg-lime-400 animate-eq-1 shadow-[0_0_6px_#e2f161]'
+            ? 'bg-lime-400 animate-eq-1'
             : 'bg-rose-400/60 h-1.5',
         ]"
       />
       <!-- Band 2: Pure White -->
       <span
-        class="w-[2.5px] rounded-full transition-all duration-300"
+        class="w-[2.5px] rounded-full transition-transform duration-300"
         :class="[
           isAudioEnabled
-            ? 'bg-white animate-eq-2 shadow-[0_0_6px_#ffffff]'
+            ? 'bg-white animate-eq-2'
             : 'bg-rose-400/60 h-2',
         ]"
       />
-      <!-- Band 3: Emerald Mint -->
+      <!-- Band 3: Emerald -->
       <span
-        class="w-[2.5px] rounded-full transition-all duration-300"
+        class="w-[2.5px] rounded-full transition-transform duration-300"
         :class="[
           isAudioEnabled
-            ? 'bg-emerald-400 animate-eq-3 shadow-[0_0_6px_#34d399]'
+            ? 'bg-emerald-400 animate-eq-3'
             : 'bg-rose-400/60 h-1.5',
         ]"
       />
       <!-- Band 4: Cyan Electric -->
       <span
-        class="w-[2.5px] rounded-full transition-all duration-300"
+        class="w-[2.5px] rounded-full transition-transform duration-300"
         :class="[
           isAudioEnabled
-            ? 'bg-sky-400 animate-eq-4 shadow-[0_0_6px_#38bdf8]'
+            ? 'bg-sky-400 animate-eq-4'
             : 'bg-rose-400/60 h-2',
         ]"
       />
@@ -69,13 +69,13 @@
 
     <!-- HUD Label & State -->
     <div class="flex items-center gap-1.5 text-[11px]">
-      <span class="text-slate-300 font-semibold">AUDIO:</span>
+      <span class="text-slate-400 font-semibold">AUDIO:</span>
       <span
         class="font-bold tracking-wider transition-colors"
         :class="
           isAudioEnabled
-            ? 'text-lime-400 drop-shadow-[0_0_6px_rgba(226,241,97,0.6)]'
-            : 'text-rose-400 drop-shadow-[0_0_6px_rgba(244,63,94,0.6)]'
+            ? 'text-lime-400'
+            : 'text-rose-400'
         "
       >
         [{{ isAudioEnabled ? 'ON' : 'MUTED' }}]

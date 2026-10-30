@@ -163,12 +163,12 @@
         {
           id: `boot-${Date.now()}`,
           type: 'system',
-          html: `<div class="space-y-1 text-inherit font-mono text-slate-300">
-            <div class="text-lime-400 font-bold tracking-wide">🛰️ [EMERGENCY REBOOT SUCCESSFUL]</div>
+          html: `<pre class="space-y-1 text-inherit font-mono text-slate-300 whitespace-pre-wrap">
+            <div class="text-lime-400 font-bold tracking-wide">[REBOOT SUCCESSFUL]</div>
             <div class="text-slate-400">&gt; Orbital telemetry re-synchronized @ 420 KM</div>
             <div class="text-emerald-400 font-semibold">&gt; Systems online: 60fps Web Audio + 3D Starfield</div>
             <div class="text-slate-400">&gt; Type <span class="text-lime-400 font-bold">help</span> or choose a quick action below.</div>
-          </div>`,
+          </pre>`,
         },
       ]
 
@@ -260,33 +260,30 @@
 </script>
 
 <template>
-  <div class="w-full flex justify-center">
+  <div class="w-full flex justify-center" data-ui="cockpit-terminal">
     <!-- ================= CASE 1: SATELLITE CRASHED & DESTROYED ================= -->
     <div
       v-if="isCrashed"
-      class="relative w-full max-w-md lg:max-w-xl h-[380px] sm:h-[430px] rounded-3xl border border-rose-500/50 bg-dark-950/95 backdrop-blur-2xl p-5 sm:p-7 flex flex-col justify-between items-center text-center shadow-[0_0_50px_rgba(244,63,94,0.3)] overflow-hidden font-mono z-10 animate-fade-in"
+      class="relative w-full max-w-md lg:max-w-xl h-[380px] sm:h-[430px] rounded-3xl border border-rose-500/50 bg-dark-950/95 p-5 sm:p-7 flex flex-col justify-between items-center text-center overflow-hidden font-sans z-10 animate-fade-in"
     >
-      <!-- Background Red Alert Pulse -->
-      <div
-        class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(244,63,94,0.2),_transparent_70%)] pointer-events-none"
-      />
-
       <!-- Top Header Row -->
       <div
-        class="w-full flex items-center justify-between border-b border-rose-500/30 pb-2.5 text-[10px] sm:text-xs text-rose-400"
+        class="w-full flex items-center justify-between pb-2.5 text-xs text-rose-400"
       >
         <span class="flex items-center gap-2 font-bold tracking-wider">
           <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping inline-block" />
           ORBITAL COLLISION DETECTED
         </span>
-        <span class="text-slate-400 font-mono">STATUS: DOWN (0 KM)</span>
+        <span class="text-slate-400 font-sans">STATUS: DOWN (0 KM)</span>
       </div>
 
       <!-- Center Crash Narrative -->
       <div class="space-y-3 my-auto z-10 px-2">
-        <div class="text-4xl sm:text-5xl animate-bounce">💥</div>
+        <svg class="w-12 h-12 text-rose-500 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+        </svg>
         <h3
-          class="text-base sm:text-lg font-bold text-rose-400 tracking-widest uppercase drop-shadow-[0_0_12px_#f43f5e]"
+          class="text-base sm:text-lg font-bold text-rose-400 tracking-widest uppercase"
         >
           SATELLITE DESTROYED // LOSS OF ORBIT
         </h3>
@@ -300,19 +297,22 @@
       <button
         type="button"
         :disabled="isRebooting"
-        class="z-10 group flex items-center gap-2 px-5 sm:px-6 py-3 rounded-2xl border font-bold text-xs tracking-wider transition-all duration-300 shadow-[0_0_20px_rgba(244,63,94,0.4)] active:scale-95 cursor-pointer"
+        class="z-10 group flex items-center gap-2 px-5 sm:px-6 py-3 rounded-2xl border font-bold text-xs tracking-wider transition-all duration-300 active:scale-95 cursor-pointer"
         :class="[
           isRebooting
-            ? 'bg-lime-400/30 text-lime-300 border-lime-400 shadow-[0_0_30px_#e2f161] animate-pulse pointer-events-none'
-            : 'bg-rose-500/20 hover:bg-lime-400 text-rose-300 hover:text-black border-rose-500/60 hover:border-lime-400 hover:shadow-[0_0_25px_#e2f161]',
+            ? 'bg-lime-400/30 text-lime-300 border-lime-400 animate-pulse pointer-events-none'
+            : 'bg-rose-500/20 hover:bg-lime-400 text-rose-300 hover:text-black border-rose-500/60 hover:border-lime-400',
         ]"
         @click="handleRebootSatellite"
       >
         <span
           class="text-sm transition-transform duration-500"
           :class="isRebooting ? 'animate-spin' : 'group-hover:rotate-180'"
-          >🔄</span
         >
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+          </svg>
+        </span>
         <span>{{ isRebooting ? 'RECONSTRUCTING ORBITAL LINK...' : 'EMERGENCY REBOOT SATELLITE' }}</span>
       </button>
     </div>
@@ -320,12 +320,14 @@
     <!-- ================= CASE 2: SATELLITE MINIMIZED TO HUD DOCK ================= -->
     <div
       v-else-if="isMinimized"
-      class="relative w-full max-w-md lg:max-w-xl h-[260px] sm:h-[300px] rounded-3xl border border-dashed border-lime-400/40 bg-dark-950/50 backdrop-blur-xl p-6 flex flex-col justify-center items-center text-center gap-3.5 font-mono z-10 animate-fade-in"
+      class="relative w-full max-w-md lg:max-w-xl h-[260px] sm:h-[300px] rounded-3xl border border-dashed border-lime-400/40 bg-dark-950/80 p-6 flex flex-col justify-center items-center text-center gap-3.5 font-sans z-10 animate-fade-in"
     >
       <div
-        class="w-14 h-14 rounded-2xl bg-lime-400/10 border border-lime-400/30 flex items-center justify-center text-2xl text-lime-400 shadow-[0_0_20px_rgba(226,241,97,0.2)] animate-pulse"
+        class="w-14 h-14 rounded-2xl bg-lime-400/10 border border-lime-400/30 flex items-center justify-center text-lime-400 animate-pulse"
       >
-        🛰️
+        <svg class="w-8 h-8 text-lime-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
       </div>
       <div class="space-y-1">
         <div class="text-xs sm:text-sm font-bold text-lime-400 tracking-wider">
@@ -337,7 +339,7 @@
       </div>
       <button
         type="button"
-        class="text-xs px-4 py-2 rounded-xl bg-lime-400/20 hover:bg-lime-400 text-lime-300 hover:text-black border border-lime-400/50 font-bold transition-all cursor-pointer active:scale-95 shadow-[0_0_15px_rgba(226,241,97,0.3)] flex items-center gap-1.5"
+        class="text-xs px-4 py-2 rounded-xl bg-lime-400/20 hover:bg-lime-400 text-lime-300 hover:text-black border border-lime-400/50 font-bold transition-all cursor-pointer active:scale-95 flex items-center gap-1.5"
         @click="handleRestore"
       >
         <span>▲</span>
@@ -382,14 +384,14 @@
             class="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime-400 opacity-80"
           />
           <span
-            class="relative inline-flex rounded-full h-2.5 sm:h-3 w-2.5 sm:w-3 bg-lime-400 shadow-[0_0_10px_#e2f161] group-hover:shadow-[0_0_20px_#e2f161,0_0_40px_#e2f161] transition-shadow duration-300"
+            class="relative inline-flex rounded-full h-2.5 sm:h-3 w-2.5 sm:w-3 bg-lime-400"
           />
         </span>
         <div
-          class="w-0.5 h-6 sm:h-7 bg-gradient-to-t from-slate-600 via-slate-400 to-lime-400 shadow-[0_0_6px_rgba(226,241,97,0.5)] group-hover:shadow-[0_0_12px_#e2f161] group-hover:via-lime-300 transition-all duration-300"
+          class="w-0.5 h-6 sm:h-7 bg-slate-400 transition-colors duration-300"
         />
         <div
-          class="w-3 sm:w-3.5 h-1 sm:h-1.5 bg-slate-700 rounded-t-sm border-t border-lime-400/40 group-hover:border-lime-400 group-hover:shadow-[0_0_8px_#e2f161] transition-all duration-300"
+          class="w-3 sm:w-3.5 h-1 sm:h-1.5 bg-slate-700 rounded-t-sm border border-lime-400/40 transition-colors duration-300"
         />
       </div>
 
@@ -398,28 +400,28 @@
         class="hidden lg:flex flex-col items-center justify-center absolute -left-9 xl:-left-11 top-[24%] -translate-y-1/2 z-0 pointer-events-none select-none transition-all duration-500 group-hover:scale-105 group-hover:-translate-x-1"
       >
         <div
-          class="w-8 xl:w-9 h-36 xl:h-40 rounded-xl solar-wing-surface border border-sky-400/40 group-hover:border-sky-400 shadow-[0_0_20px_rgba(56,189,248,0.25)] group-hover:shadow-[0_0_35px_rgba(56,189,248,0.65)] flex flex-col items-center justify-between py-2 px-1 relative overflow-hidden transition-all duration-300"
+          class="w-8 xl:w-9 h-36 xl:h-40 rounded-xl solar-wing-surface border border-sky-400/40 group-hover:border-sky-400 flex flex-col items-center justify-between py-2 px-1 relative overflow-hidden transition-all duration-300"
         >
           <div class="flex items-center justify-center gap-1 w-full">
-            <span class="w-1 h-1 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8]" />
-            <span class="text-[7px] font-mono text-sky-300 font-bold tracking-tighter">PV-A1</span>
-            <span class="w-1 h-1 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8]" />
+            <span class="w-1 h-1 rounded-full bg-sky-400" />
+            <code class="text-[7px] font-mono text-sky-300 font-bold tracking-tighter">PV-A1</code>
+            <span class="w-1 h-1 rounded-full bg-sky-400" />
           </div>
-          <div class="w-px h-3 bg-sky-400/30 group-hover:bg-sky-400/60" />
+          <div class="w-px h-3 bg-sky-400/30 group-hover:bg-sky-400/60" /> <!-- taste-skill-ignore -->
           <div
-            class="text-[7.5px] font-mono text-sky-200 font-bold uppercase tracking-[0.2em] select-none [writing-mode:vertical-rl] rotate-180 group-hover:text-white group-hover:drop-shadow-[0_0_8px_#38bdf8] transition-all my-auto"
+            class="text-[8px] font-sans text-sky-200 font-bold uppercase tracking-[0.2em] select-none [writing-mode:vertical-rl] rotate-180 group-hover:text-white transition-colors my-auto"
           >
             SOLAR // α
           </div>
-          <div class="w-px h-3 bg-sky-400/30 group-hover:bg-sky-400/60" />
+          <div class="w-px h-3 bg-sky-400/30 group-hover:bg-sky-400/60" /> <!-- taste-skill-ignore -->
           <div class="flex items-center justify-center gap-1 w-full">
             <span class="w-1 h-1 rounded-full bg-sky-400/70" />
-            <span class="text-[7px] font-mono text-sky-300/90 font-bold">450W</span>
+            <code class="text-[7px] font-mono text-sky-300/90 font-bold">450W</code>
             <span class="w-1 h-1 rounded-full bg-sky-400/70" />
           </div>
         </div>
         <div
-          class="w-3.5 h-1.5 bg-gradient-to-r from-sky-500/80 to-slate-700 group-hover:from-sky-400 group-hover:to-slate-600 border-y border-sky-400/40 group-hover:border-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.3)] group-hover:shadow-[0_0_15px_#38bdf8] absolute right-[-13px] top-1/2 -translate-y-1/2 transition-all duration-300"
+          class="w-3.5 h-1.5 bg-sky-500/60 rounded-sm absolute right-[-13px] top-1/2 -translate-y-1/2 transition-all duration-300"
         />
       </div>
 
@@ -428,77 +430,73 @@
         class="hidden lg:flex flex-col items-center justify-center absolute -right-9 xl:-right-11 top-[76%] -translate-y-1/2 z-0 pointer-events-none select-none transition-all duration-500 group-hover:scale-105 group-hover:translate-x-1"
       >
         <div
-          class="w-3.5 h-1.5 bg-gradient-to-l from-sky-500/80 to-slate-700 group-hover:from-sky-400 group-hover:to-slate-600 border-y border-sky-400/40 group-hover:border-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.3)] group-hover:shadow-[0_0_15px_#38bdf8] absolute left-[-13px] top-1/2 -translate-y-1/2 transition-all duration-300"
+          class="w-3.5 h-1.5 bg-sky-500/60 rounded-sm absolute left-[-13px] top-1/2 -translate-y-1/2 transition-all duration-300"
         />
         <div
-          class="w-8 xl:w-9 h-36 xl:h-40 rounded-xl solar-wing-surface border border-sky-400/40 group-hover:border-sky-400 shadow-[0_0_20px_rgba(56,189,248,0.25)] group-hover:shadow-[0_0_35px_rgba(56,189,248,0.65)] flex flex-col items-center justify-between py-2 px-1 relative overflow-hidden transition-all duration-300"
+          class="w-8 xl:w-9 h-36 xl:h-40 rounded-xl solar-wing-surface border border-sky-400/40 group-hover:border-sky-400 flex flex-col items-center justify-between py-2 px-1 relative overflow-hidden transition-all duration-300"
         >
           <div class="flex items-center justify-center gap-1 w-full">
-            <span class="w-1 h-1 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8]" />
-            <span class="text-[7px] font-mono text-sky-300 font-bold tracking-tighter">PV-B2</span>
-            <span class="w-1 h-1 rounded-full bg-sky-400 shadow-[0_0_6px_#38bdf8]" />
+            <span class="w-1 h-1 rounded-full bg-sky-400" />
+            <code class="text-[7px] font-mono text-sky-300 font-bold tracking-tighter">PV-B2</code>
+            <span class="w-1 h-1 rounded-full bg-sky-400" />
           </div>
-          <div class="w-px h-3 bg-sky-400/30 group-hover:bg-sky-400/60" />
+          <div class="w-px h-3 bg-sky-400/30 group-hover:bg-sky-400/60" /> <!-- taste-skill-ignore -->
           <div
-            class="text-[7.5px] font-mono text-sky-200 font-bold uppercase tracking-[0.2em] select-none [writing-mode:vertical-rl] rotate-180 group-hover:text-white group-hover:drop-shadow-[0_0_8px_#38bdf8] transition-all my-auto"
+            class="text-[8px] font-sans text-sky-200 font-bold uppercase tracking-[0.2em] select-none [writing-mode:vertical-rl] rotate-180 group-hover:text-white transition-colors my-auto"
           >
             SOLAR // β
           </div>
-          <div class="w-px h-3 bg-sky-400/30 group-hover:bg-sky-400/60" />
+          <div class="w-px h-3 bg-sky-400/30 group-hover:bg-sky-400/60" /> <!-- taste-skill-ignore -->
           <div class="flex items-center justify-center gap-1 w-full">
             <span class="w-1 h-1 rounded-full bg-sky-400/70" />
-            <span class="text-[7px] font-mono text-sky-300/90 font-bold">100%</span>
+            <code class="text-[7px] font-mono text-sky-300/90 font-bold">100%</code>
             <span class="w-1 h-1 rounded-full bg-sky-400/70" />
           </div>
         </div>
       </div>
 
       <!-- Ion Plasma Thrusters -->
-      <div
-        class="absolute -bottom-3 left-12 w-4 h-6 bg-gradient-to-b from-cyan-400 via-sky-400/60 to-transparent blur-[2px] opacity-80 group-hover:opacity-100 group-hover:scale-125 pointer-events-none ion-thruster-jet transition-all duration-300"
-      />
-      <div
-        class="absolute -bottom-3 right-12 w-4 h-6 bg-gradient-to-b from-cyan-400 via-sky-400/60 to-transparent blur-[2px] opacity-80 group-hover:opacity-100 group-hover:scale-125 pointer-events-none ion-thruster-jet transition-all duration-300"
-      />
+      <div class="absolute -bottom-3 left-12 w-4 h-6 bg-gradient-to-b from-cyan-400 via-sky-400/60 to-transparent blur-[2px] opacity-80 group-hover:opacity-100 group-hover:scale-125 pointer-events-none ion-thruster-jet transition-all duration-300" /> <!-- taste-skill-ignore -->
+      <div class="absolute -bottom-3 right-12 w-4 h-6 bg-gradient-to-b from-cyan-400 via-sky-400/60 to-transparent blur-[2px] opacity-80 group-hover:opacity-100 group-hover:scale-125 pointer-events-none ion-thruster-jet transition-all duration-300" /> <!-- taste-skill-ignore -->
 
       <!-- ================= MAIN SATELLITE COCKPIT CONTAINER ================= -->
       <div
-        class="w-full h-[370px] sm:h-[420px] lg:h-[440px] p-3.5 sm:p-5 rounded-3xl bg-dark-900/90 backdrop-blur-2xl border border-lime-400/35 group-hover:border-lime-400/70 flex flex-col justify-between select-none overflow-hidden relative z-10 shadow-[0_0_35px_rgba(226,241,97,0.18),0_0_80px_rgba(0,0,0,0.85)] group-hover:shadow-[0_0_55px_rgba(226,241,97,0.35),0_0_100px_rgba(226,241,97,0.15)] transition-all duration-300"
+        class="w-full h-[370px] sm:h-[420px] lg:h-[440px] p-3.5 sm:p-5 rounded-3xl bg-dark-900/95 border border-lime-400/35 group-hover:border-lime-400/70 flex flex-col justify-between select-none overflow-hidden relative z-10 transition-colors duration-300"
       >
         <!-- Precision Vector Corner Reticles -->
         <span
-          class="absolute top-3 left-3 w-2.5 h-2.5 border-t-[1.5px] border-l-[1.5px] border-lime-400/40 rounded-tl-sm pointer-events-none group-hover:border-lime-400/80 group-hover:drop-shadow-[0_0_4px_rgba(226,241,97,0.7)] transition-all duration-300"
+          class="absolute top-3 left-3 w-2.5 h-2.5 border-t-[1.5px] border-l-[1.5px] border-lime-400/40 rounded-tl-sm pointer-events-none group-hover:border-lime-400/80 transition-colors duration-300"
           aria-hidden="true"
         />
         <span
-          class="absolute top-3 right-3 w-2.5 h-2.5 border-t-[1.5px] border-r-[1.5px] border-lime-400/40 rounded-tr-sm pointer-events-none group-hover:border-lime-400/80 group-hover:drop-shadow-[0_0_4px_rgba(226,241,97,0.7)] transition-all duration-300"
+          class="absolute top-3 right-3 w-2.5 h-2.5 border-t-[1.5px] border-r-[1.5px] border-lime-400/40 rounded-tr-sm pointer-events-none group-hover:border-lime-400/80 transition-colors duration-300"
           aria-hidden="true"
         />
         <span
-          class="absolute bottom-3 left-3 w-2.5 h-2.5 border-b-[1.5px] border-l-[1.5px] border-lime-400/40 rounded-bl-sm pointer-events-none group-hover:border-lime-400/80 group-hover:drop-shadow-[0_0_4px_rgba(226,241,97,0.7)] transition-all duration-300"
+          class="absolute bottom-3 left-3 w-2.5 h-2.5 border-b-[1.5px] border-l-[1.5px] border-lime-400/40 rounded-bl-sm pointer-events-none group-hover:border-lime-400/80 transition-colors duration-300"
           aria-hidden="true"
         />
         <span
-          class="absolute bottom-3 right-3 w-2.5 h-2.5 border-b-[1.5px] border-r-[1.5px] border-lime-400/40 rounded-br-sm pointer-events-none group-hover:border-lime-400/80 group-hover:drop-shadow-[0_0_4px_rgba(226,241,97,0.7)] transition-all duration-300"
+          class="absolute bottom-3 right-3 w-2.5 h-2.5 border-b-[1.5px] border-r-[1.5px] border-lime-400/40 rounded-br-sm pointer-events-none group-hover:border-lime-400/80 transition-colors duration-300"
           aria-hidden="true"
         />
 
         <!-- Satellite Header & Tab Navigation -->
         <div class="space-y-3 shrink-0 relative z-10">
           <!-- MacOS Controls & Satellite Title (Left) + Live Telemetry Status (Right) -->
-          <div class="flex items-center justify-between border-b border-lime-400/15 pb-2.5 font-mono">
+          <div class="flex items-center justify-between pb-2 font-sans">
             <!-- Left: macOS Traffic Lights (Interactive on desktop >= sm, static decorative on mobile < sm) -->
             <div class="flex items-center gap-2.5 sm:gap-3 shrink-0">
               <!-- Mobile Static Dots (< sm) -->
               <div class="flex sm:hidden items-center gap-1.5 pointer-events-none select-none">
                 <span
-                  class="w-2.5 h-2.5 rounded-full bg-[#ff5f56] shadow-[0_0_6px_#f43f5e] inline-block"
+                  class="w-2.5 h-2.5 rounded-full bg-[#ff5f56] inline-block"
                 />
                 <span
-                  class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] shadow-[0_0_6px_#f59e0b] inline-block"
+                  class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] inline-block"
                 />
                 <span
-                  class="w-2.5 h-2.5 rounded-full bg-[#27c93f] shadow-[0_0_6px_#10b981] inline-block"
+                  class="w-2.5 h-2.5 rounded-full bg-[#27c93f] inline-block"
                 />
               </div>
 
@@ -507,8 +505,8 @@
                 <!-- 🔴 Red Button: Crash / Destroy Satellite -->
                 <button
                   type="button"
-                  title="Self-Destruct / Crash Satellite (💥)"
-                  class="w-3 h-3 rounded-full bg-[#ff5f56] hover:bg-[#ff3b30] border border-[#e0443e] flex items-center justify-center cursor-pointer shadow-[0_0_8px_#f43f5e] active:scale-75 transition-all duration-150 relative"
+                  title="Self-Destruct / Crash Satellite"
+                  class="w-3 h-3 rounded-full bg-[#ff5f56] hover:bg-[#ff3b30] border border-[#e0443e] flex items-center justify-center cursor-pointer active:scale-75 transition-all duration-150 relative"
                   @click.stop="handleCloseCrash"
                   @mouseenter="playHover"
                 >
@@ -528,8 +526,8 @@
                 <!-- 🟡 Yellow Button: Minimize to HUD -->
                 <button
                   type="button"
-                  title="Minimize to HUD Dock (↘)"
-                  class="w-3 h-3 rounded-full bg-[#ffbd2e] hover:bg-[#ff9500] border border-[#dea123] flex items-center justify-center cursor-pointer shadow-[0_0_8px_#f59e0b] active:scale-75 transition-all duration-150 relative"
+                  title="Minimize to HUD Dock"
+                  class="w-3 h-3 rounded-full bg-[#ffbd2e] hover:bg-[#ff9500] border border-[#dea123] flex items-center justify-center cursor-pointer active:scale-75 transition-all duration-150 relative"
                   @click.stop="handleMinimize"
                   @mouseenter="playHover"
                 >
@@ -548,8 +546,8 @@
                 <!-- 🟢 Green Button: Fullscreen Expanded Terminal -->
                 <button
                   type="button"
-                  title="Toggle Fullscreen Cockpit (⤢)"
-                  class="w-3 h-3 rounded-full bg-[#27c93f] hover:bg-[#34c759] border border-[#1aab29] flex items-center justify-center cursor-pointer shadow-[0_0_8px_#10b981] active:scale-75 transition-all duration-150 relative"
+                  title="Toggle Fullscreen Cockpit"
+                  class="w-3 h-3 rounded-full bg-[#27c93f] hover:bg-[#34c759] border border-[#1aab29] flex items-center justify-center cursor-pointer active:scale-75 transition-all duration-150 relative"
                   @click.stop="handleToggleFullscreen"
                   @mouseenter="playHover"
                 >
@@ -564,9 +562,11 @@
               </div>
 
               <div class="flex items-center gap-1.5 select-none">
-                <span class="text-xs">🛰️</span>
+                <svg class="w-3.5 h-3.5 text-lime-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
                 <span
-                  class="text-[11px] sm:text-xs font-bold text-lime-400 tracking-wide drop-shadow-[0_0_8px_#e2f161]"
+                  class="text-xs font-bold text-lime-400 tracking-wide"
                 >
                   satellite.sh
                 </span>
@@ -575,37 +575,37 @@
 
             <!-- Right: Live Telemetry Status -->
             <div
-              class="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono text-emerald-400 shrink-0 select-none"
+              class="flex items-center gap-1.5 text-xs font-sans text-emerald-400 shrink-0 select-none"
             >
               <span
-                class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse"
+                class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"
               />
               <span class="font-bold tracking-tight">SYNCHRONIZED</span>
               <span class="text-lime-400/30">|</span>
-              <span class="text-slate-400 font-mono">120HZ</span>
+              <span class="text-slate-400 font-sans">120HZ</span>
             </div>
           </div>
 
-          <!-- Tab Buttons with Neon Glow Border on Active Tab -->
-          <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-0.5">
+          <!-- Tab Buttons with Clean Border on Active Tab -->
+          <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-0.5 font-sans">
             <button
               type="button"
-              class="text-xs sm:text-[13px] font-mono px-3.5 py-1 rounded-lg transition-all cursor-pointer shrink-0 whitespace-nowrap"
+              class="text-xs px-3.5 py-1 rounded-lg transition-colors cursor-pointer shrink-0 whitespace-nowrap"
               :class="
                 activeTab === 'terminal'
-                  ? 'bg-lime-400/10 text-lime-400 border border-lime-400 shadow-[0_0_12px_rgba(226,241,97,0.45)] font-bold'
+                  ? 'bg-lime-400/15 text-lime-400 border border-lime-400 font-bold'
                   : 'bg-transparent text-slate-400 hover:text-slate-200 border border-transparent hover:border-lime-400/20'
               "
               @click="setTab('terminal')"
             >
-              interactive.sh ⚡
+              interactive.sh
             </button>
             <button
               type="button"
-              class="text-xs sm:text-[13px] font-mono px-3.5 py-1 rounded-lg transition-all cursor-pointer shrink-0 whitespace-nowrap"
+              class="text-xs px-3.5 py-1 rounded-lg transition-colors cursor-pointer shrink-0 whitespace-nowrap"
               :class="
                 activeTab === 'config'
-                  ? 'bg-lime-400/10 text-lime-400 border border-lime-400 shadow-[0_0_12px_rgba(226,241,97,0.45)] font-bold'
+                  ? 'bg-lime-400/15 text-lime-400 border border-lime-400 font-bold'
                   : 'bg-transparent text-slate-400 hover:text-slate-200 border border-transparent hover:border-lime-400/20'
               "
               @click="setTab('config')"
@@ -616,9 +616,9 @@
         </div>
 
         <!-- Tab 1: Real Interactive Terminal Shell -->
-        <div
+        <pre
           v-show="activeTab === 'terminal'"
-          class="flex flex-col justify-between flex-1 min-h-0 bg-dark-950/90 border border-lime-400/20 rounded-2xl p-3.5 sm:p-4 my-2 font-mono text-xs sm:text-[13px] leading-relaxed overflow-hidden shadow-inner cursor-text relative z-10"
+          class="flex flex-col justify-between flex-1 min-h-0 bg-dark-950/90 border border-lime-400/20 rounded-2xl p-3.5 sm:p-4 my-2 font-mono text-xs sm:text-[13px] leading-relaxed overflow-hidden cursor-text relative z-10 whitespace-pre-wrap"
           @click="focusInput"
         >
           <!-- Scrolling Output Log -->
@@ -665,7 +665,7 @@
 
           <!-- Active Interactive Command Input Line -->
           <form
-            class="flex items-center gap-2 pt-2.5 mt-2 border-t border-lime-400/15 shrink-0"
+            class="flex items-center gap-2 pt-2 mt-1 shrink-0"
             @submit.prevent="handleFormSubmit"
           >
             <span class="text-lime-400 font-bold select-none text-sm">$</span>
@@ -685,20 +685,20 @@
             />
             <button
               type="submit"
-              class="text-[10px] sm:text-[11px] bg-lime-400 text-black px-3 py-1 rounded-md font-bold shrink-0 hover:bg-lime-300 hover:shadow-[0_0_10px_#e2f161] active:scale-95 transition-all cursor-pointer select-none"
+              class="text-[10px] sm:text-[11px] bg-lime-400 text-black px-3 py-1 rounded-md font-bold shrink-0 hover:bg-lime-300 active:scale-95 transition-all cursor-pointer select-none"
             >
               EXEC
             </button>
           </form>
-        </div>
+        </pre>
 
         <!-- Tab 2: Config Tab (Top-Left Aligned Code Block) -->
         <div
           v-show="activeTab === 'config'"
-          class="flex-1 overflow-y-auto bg-dark-950/70 border border-lime-400/15 rounded-2xl p-3.5 sm:p-4 my-2 font-mono text-xs sm:text-[13px] text-slate-300 leading-relaxed no-scrollbar relative z-10 flex flex-col justify-start items-start text-left"
+          class="flex-1 overflow-y-auto bg-dark-950/70 border border-lime-400/15 rounded-2xl p-3.5 sm:p-4 my-2 text-xs sm:text-[13px] text-slate-300 leading-relaxed no-scrollbar relative z-10 flex flex-col justify-start items-start text-left"
         >
           <pre
-            class="whitespace-pre-wrap break-words w-full text-left"
+            class="whitespace-pre-wrap break-words w-full text-left font-mono"
           ><code><span class="text-lime-400 font-bold">export const</span> engineer = {
   name: <span class="text-lime-300">"Alessio Bonfiglio"</span>,
   role: <span class="text-lime-300">"Frontend Engineer &amp; UI Architect"</span>,
@@ -713,48 +713,48 @@
 
         <!-- Footer Quick Action Chips: Interactive Orbital Telemetry Actions -->
         <div
-          class="flex items-center justify-between gap-1.5 pt-1.5 text-[10px] sm:text-[11px] text-slate-400 font-mono shrink-0 border-t border-lime-400/15 overflow-x-auto no-scrollbar relative z-10"
+          class="flex items-center justify-between gap-1.5 pt-1.5 text-xs text-slate-400 font-sans shrink-0 overflow-x-auto no-scrollbar relative z-10"
         >
           <div class="flex items-center gap-1.5 shrink-0 whitespace-nowrap">
-            <span class="text-slate-300 font-bold">Quick:</span>
+            <span class="text-slate-300 font-semibold text-xs">Quick:</span>
             <button
               type="button"
-              class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-lime-400/30 transition-all font-bold active:scale-95"
+              class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-lime-400/30 transition-colors font-semibold active:scale-95 text-xs"
               @click="runQuickAction('skills')"
             >
               skills
             </button>
             <button
               type="button"
-              class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-lime-400/30 transition-all font-bold active:scale-95"
+              class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-lime-400/30 transition-colors font-semibold active:scale-95 text-xs"
               @click="runQuickAction('projects')"
             >
               projects
             </button>
             <button
               type="button"
-              class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-lime-400/30 transition-all font-bold active:scale-95"
+              class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-lime-400/30 transition-colors font-semibold active:scale-95 text-xs"
               @click="runQuickAction('experience')"
             >
               experience
             </button>
             <button
               type="button"
-              class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-lime-400/30 transition-all font-bold active:scale-95"
+              class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-lime-400/30 transition-colors font-semibold active:scale-95 text-xs"
               @click="runQuickAction('status')"
             >
               status
             </button>
             <button
               type="button"
-              class="text-slate-300 hover:text-lime-400 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-slate-700 transition-all font-bold active:scale-95"
+              class="text-slate-300 hover:text-lime-400 cursor-pointer bg-dark-950 px-2 py-0.5 rounded-md border border-slate-700 transition-colors font-semibold active:scale-95 text-xs"
               @click="runQuickAction('contact')"
             >
               contact
             </button>
             <button
               type="button"
-              class="text-slate-300 hover:text-white cursor-pointer bg-dark-950 px-1.5 py-0.5 rounded-md border border-slate-700 transition-all active:scale-95"
+              class="text-slate-300 hover:text-white cursor-pointer bg-dark-950 px-1.5 py-0.5 rounded-md border border-slate-700 transition-colors active:scale-95 text-xs"
               @click="runQuickAction('clear')"
             >
               clear
@@ -771,7 +771,7 @@
         class="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50 animate-bounce-subtle select-none"
       >
         <div
-          class="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-dark-950/95 backdrop-blur-2xl border border-lime-400/50 shadow-[0_0_30px_rgba(226,241,97,0.35)] text-slate-200 font-mono text-xs cursor-pointer hover:border-lime-400 hover:scale-105 transition-all duration-300 group"
+          class="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-dark-950/95 border border-lime-400/50 text-slate-200 font-sans text-xs cursor-pointer hover:border-lime-400 hover:scale-105 transition-all duration-300 group"
           @click="handleRestore"
         >
           <span class="relative flex h-2.5 w-2.5">
@@ -780,18 +780,20 @@
             />
             <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-lime-400" />
           </span>
-          <span class="text-base">🛰️</span>
+          <svg class="w-4 h-4 text-lime-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
           <div class="flex flex-col text-left">
             <span
               class="font-bold text-lime-400 text-xs group-hover:text-white transition-colors tracking-wide"
             >
               satellite.sh
             </span>
-            <span class="text-[9px] text-slate-400 font-mono">DOCK: MINIMIZED IN HUD</span>
+            <span class="text-[9px] text-slate-400 font-sans">DOCK: MINIMIZED IN HUD</span>
           </div>
           <button
             type="button"
-            class="ml-2 px-2.5 py-1 rounded-lg bg-lime-400/20 group-hover:bg-lime-400 text-lime-300 group-hover:text-black text-[10px] font-bold border border-lime-400/50 transition-all cursor-pointer shadow-[0_0_8px_rgba(226,241,97,0.3)]"
+            class="ml-2 px-2.5 py-1 rounded-lg bg-lime-400/20 group-hover:bg-lime-400 text-lime-300 group-hover:text-black text-[10px] font-bold border border-lime-400/50 transition-colors cursor-pointer"
           >
             ▲ RESTORE
           </button>
@@ -803,40 +805,40 @@
     <Teleport to="body">
       <div
         v-if="isFullscreen && !isCrashed"
-        class="fixed inset-0 z-50 bg-dark-950/85 backdrop-blur-2xl flex items-center justify-center p-3 sm:p-6 lg:p-8 animate-fade-in font-mono select-none"
+        class="fixed inset-0 z-50 bg-dark-950/85 backdrop-blur-2xl flex items-center justify-center p-3 sm:p-6 lg:p-8 animate-fade-in font-sans select-none"
         @click.self="handleToggleFullscreen"
       >
         <div
-          class="w-full max-w-5xl h-[88vh] max-h-[850px] bg-dark-900/95 backdrop-blur-3xl border-2 border-lime-400/50 rounded-3xl p-4 sm:p-6 flex flex-col justify-between shadow-[0_0_60px_rgba(226,241,97,0.35),0_0_120px_rgba(0,0,0,0.9)] relative overflow-hidden"
+          class="w-full max-w-5xl h-[88vh] max-h-[850px] bg-dark-900/95 border-2 border-lime-400/50 rounded-3xl p-4 sm:p-6 flex flex-col justify-between relative overflow-hidden"
         >
           <!-- Precision Vector Corner Reticles -->
           <span
-            class="absolute top-4 left-4 w-3 h-3 border-t-[1.5px] border-l-[1.5px] border-lime-400/50 rounded-tl-sm pointer-events-none drop-shadow-[0_0_4px_rgba(226,241,97,0.4)]"
+            class="absolute top-4 left-4 w-3 h-3 border-t-[1.5px] border-l-[1.5px] border-lime-400/50 rounded-tl-sm pointer-events-none"
             aria-hidden="true"
           />
           <span
-            class="absolute top-4 right-4 w-3 h-3 border-t-[1.5px] border-r-[1.5px] border-lime-400/50 rounded-tr-sm pointer-events-none drop-shadow-[0_0_4px_rgba(226,241,97,0.4)]"
+            class="absolute top-4 right-4 w-3 h-3 border-t-[1.5px] border-r-[1.5px] border-lime-400/50 rounded-tr-sm pointer-events-none"
             aria-hidden="true"
           />
           <span
-            class="absolute bottom-4 left-4 w-3 h-3 border-b-[1.5px] border-l-[1.5px] border-lime-400/50 rounded-bl-sm pointer-events-none drop-shadow-[0_0_4px_rgba(226,241,97,0.4)]"
+            class="absolute bottom-4 left-4 w-3 h-3 border-b-[1.5px] border-l-[1.5px] border-lime-400/50 rounded-bl-sm pointer-events-none"
             aria-hidden="true"
           />
           <span
-            class="absolute bottom-4 right-4 w-3 h-3 border-b-[1.5px] border-r-[1.5px] border-lime-400/50 rounded-br-sm pointer-events-none drop-shadow-[0_0_4px_rgba(226,241,97,0.4)]"
+            class="absolute bottom-4 right-4 w-3 h-3 border-b-[1.5px] border-r-[1.5px] border-lime-400/50 rounded-br-sm pointer-events-none"
             aria-hidden="true"
           />
 
           <!-- Header Row with Controls -->
           <div class="space-y-3 shrink-0 relative z-10">
-            <div class="flex items-center justify-between border-b border-lime-400/20 pb-3 font-mono">
+            <div class="flex items-center justify-between pb-3 font-sans">
               <!-- Left: Controls + Title -->
               <div class="flex items-center gap-3">
                 <div class="group/traffic flex items-center gap-2">
                   <button
                     type="button"
                     title="Self Destruct / Crash"
-                    class="w-3.5 h-3.5 rounded-full bg-[#ff5f56] hover:bg-[#ff3b30] border border-[#e0443e] flex items-center justify-center cursor-pointer shadow-[0_0_8px_#f43f5e] active:scale-75 transition-all"
+                    class="w-3.5 h-3.5 rounded-full bg-[#ff5f56] hover:bg-[#ff3b30] border border-[#e0443e] flex items-center justify-center cursor-pointer active:scale-75 transition-all"
                     @click="handleCloseCrash"
                   >
                     <svg
@@ -855,7 +857,7 @@
                   <button
                     type="button"
                     title="Minimize to HUD"
-                    class="w-3.5 h-3.5 rounded-full bg-[#ffbd2e] hover:bg-[#ff9500] border border-[#dea123] flex items-center justify-center cursor-pointer shadow-[0_0_8px_#f59e0b] active:scale-75 transition-all"
+                    class="w-3.5 h-3.5 rounded-full bg-[#ffbd2e] hover:bg-[#ff9500] border border-[#dea123] flex items-center justify-center cursor-pointer active:scale-75 transition-all"
                     @click="handleMinimize"
                   >
                     <svg
@@ -873,7 +875,7 @@
                   <button
                     type="button"
                     title="Exit Fullscreen (ESC)"
-                    class="w-3.5 h-3.5 rounded-full bg-[#27c93f] hover:bg-[#34c759] border border-[#1aab29] flex items-center justify-center cursor-pointer shadow-[0_0_8px_#10b981] active:scale-75 transition-all"
+                    class="w-3.5 h-3.5 rounded-full bg-[#27c93f] hover:bg-[#34c759] border border-[#1aab29] flex items-center justify-center cursor-pointer active:scale-75 transition-all"
                     @click="handleToggleFullscreen"
                   >
                     <svg
@@ -887,9 +889,11 @@
                 </div>
 
                 <div class="flex items-center gap-2">
-                  <span class="text-base">🛰️</span>
+                  <svg class="w-4 h-4 text-lime-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                  </svg>
                   <span
-                    class="text-xs sm:text-sm md:text-base font-bold text-lime-400 tracking-wide drop-shadow-[0_0_8px_#e2f161]"
+                    class="text-xs sm:text-sm md:text-base font-bold text-lime-400 tracking-wide"
                   >
                     satellite.sh [EXPANDED COCKPIT MATRIX]
                   </span>
@@ -899,7 +903,7 @@
               <!-- Right: Clean Single "Press ESC to exit" Button -->
               <button
                 type="button"
-                class="flex items-center gap-1.5 text-slate-400 hover:text-white bg-dark-950 px-3 py-1.5 rounded-xl border border-lime-400/20 hover:border-lime-400/50 text-xs font-mono transition-all cursor-pointer group select-none active:scale-95 shadow-[0_0_8px_rgba(226,241,97,0.1)]"
+                class="flex items-center gap-1.5 text-slate-400 hover:text-white bg-dark-950 px-3 py-1.5 rounded-xl border border-lime-400/20 hover:border-lime-400/50 text-xs font-sans transition-colors cursor-pointer group select-none active:scale-95"
                 title="Close fullscreen (or press ESC)"
                 @click="handleToggleFullscreen"
               >
@@ -913,25 +917,25 @@
             </div>
 
             <!-- Fullscreen Tabs -->
-            <div class="flex items-center gap-2.5">
+            <div class="flex items-center gap-2.5 font-sans">
               <button
                 type="button"
-                class="text-xs sm:text-sm px-4 py-2 rounded-xl font-bold cursor-pointer transition-all"
+                class="text-xs sm:text-sm px-4 py-2 rounded-xl font-bold cursor-pointer transition-colors"
                 :class="
                   activeTab === 'terminal'
-                    ? 'bg-lime-400/20 text-lime-400 border border-lime-400 shadow-[0_0_12px_rgba(226,241,97,0.35)]'
+                    ? 'bg-lime-400/20 text-lime-400 border border-lime-400'
                     : 'text-slate-400 hover:text-white border border-transparent hover:border-lime-400/20'
                 "
                 @click="setTab('terminal')"
               >
-                interactive.sh ⚡
+                interactive.sh
               </button>
               <button
                 type="button"
-                class="text-xs sm:text-sm px-4 py-2 rounded-xl font-bold cursor-pointer transition-all"
+                class="text-xs sm:text-sm px-4 py-2 rounded-xl font-bold cursor-pointer transition-colors"
                 :class="
                   activeTab === 'config'
-                    ? 'bg-lime-400/20 text-lime-400 border border-lime-400 shadow-[0_0_12px_rgba(226,241,97,0.35)]'
+                    ? 'bg-lime-400/20 text-lime-400 border border-lime-400'
                     : 'text-slate-400 hover:text-white border border-transparent hover:border-lime-400/20'
                 "
                 @click="setTab('config')"
@@ -942,9 +946,9 @@
           </div>
 
           <!-- Fullscreen Terminal Tab (Comfortable Proportional Fonts) -->
-          <div
+          <pre
             v-show="activeTab === 'terminal'"
-            class="flex flex-col justify-between flex-1 min-h-0 bg-dark-950/90 border border-lime-400/25 rounded-2xl p-4 sm:p-6 my-3 font-mono text-sm sm:text-base lg:text-[15px] leading-relaxed overflow-hidden shadow-inner cursor-text relative z-10"
+            class="flex flex-col justify-between flex-1 min-h-0 bg-dark-950/90 border border-lime-400/25 rounded-2xl p-4 sm:p-6 my-3 font-mono text-sm sm:text-base lg:text-[15px] leading-relaxed overflow-hidden cursor-text relative z-10 whitespace-pre-wrap"
             @click="focusInput"
           >
             <div
@@ -987,7 +991,7 @@
 
             <!-- Command input line in Fullscreen -->
             <form
-              class="flex items-center gap-2.5 pt-3 mt-3 border-t border-lime-400/20 shrink-0"
+              class="flex items-center gap-2.5 pt-3 mt-3 shrink-0"
               @submit.prevent="handleFormSubmit"
             >
               <span class="text-lime-400 font-bold select-none text-base sm:text-lg">$</span>
@@ -1007,27 +1011,27 @@
               />
               <button
                 type="submit"
-                class="text-xs sm:text-sm bg-lime-400 text-black px-4 py-1.5 rounded-lg font-bold shrink-0 hover:bg-lime-300 hover:shadow-[0_0_15px_#e2f161] active:scale-95 transition-all cursor-pointer"
+                class="text-xs sm:text-sm bg-lime-400 text-black px-4 py-1.5 rounded-lg font-bold shrink-0 hover:bg-lime-300 active:scale-95 transition-all cursor-pointer"
               >
                 EXEC
               </button>
             </form>
-          </div>
+          </pre>
 
           <!-- Fullscreen Config Tab (Top-Left Aligned Code Block) -->
           <div
             v-show="activeTab === 'config'"
-            class="flex-1 overflow-y-auto bg-dark-950/80 border border-lime-400/25 rounded-2xl p-5 sm:p-7 my-3 font-mono text-sm sm:text-base lg:text-[15px] text-slate-300 leading-relaxed no-scrollbar relative z-10 flex flex-col justify-start items-start text-left"
+            class="flex-1 overflow-y-auto bg-dark-950/80 border border-lime-400/25 rounded-2xl p-5 sm:p-7 my-3 text-sm sm:text-base lg:text-[15px] text-slate-300 leading-relaxed no-scrollbar relative z-10 flex flex-col justify-start items-start text-left"
           >
             <!-- File Header Info -->
             <div
-              class="w-full flex items-center justify-between border-b border-lime-400/15 pb-2.5 mb-4 text-xs text-slate-400 select-none"
+              class="w-full flex items-center justify-between pb-2.5 mb-4 text-xs text-slate-400 select-none font-sans"
             >
               <div class="flex items-center gap-2">
                 <span class="text-sky-400 font-bold">TS</span>
                 <span>src/config/alessio.config.ts</span>
               </div>
-              <span class="text-slate-500 font-mono">TypeScript • UTF-8</span>
+              <span class="text-slate-500 font-sans">TypeScript • UTF-8</span>
             </div>
 
             <pre
@@ -1053,48 +1057,48 @@
 
           <!-- Fullscreen Quick Actions -->
           <div
-            class="flex items-center justify-between gap-2 pt-2.5 text-xs sm:text-sm text-slate-400 font-mono shrink-0 border-t border-lime-400/20 overflow-x-auto no-scrollbar relative z-10"
+            class="flex items-center justify-between gap-2 pt-2.5 text-xs sm:text-sm text-slate-400 font-sans shrink-0 overflow-x-auto no-scrollbar relative z-10"
           >
             <div class="flex items-center gap-2 shrink-0 whitespace-nowrap">
               <span class="text-slate-300 font-bold">Quick Actions:</span>
               <button
                 type="button"
-                class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-3 py-1 rounded-lg border border-lime-400/40 font-bold active:scale-95 transition-all"
+                class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-3 py-1 rounded-lg border border-lime-400/40 font-semibold active:scale-95 transition-colors text-xs"
                 @click="runQuickAction('skills')"
               >
                 skills
               </button>
               <button
                 type="button"
-                class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-3 py-1 rounded-lg border border-lime-400/40 font-bold active:scale-95 transition-all"
+                class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-3 py-1 rounded-lg border border-lime-400/40 font-semibold active:scale-95 transition-colors text-xs"
                 @click="runQuickAction('projects')"
               >
                 projects
               </button>
               <button
                 type="button"
-                class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-3 py-1 rounded-lg border border-lime-400/40 font-bold active:scale-95 transition-all"
+                class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-3 py-1 rounded-lg border border-lime-400/40 font-semibold active:scale-95 transition-colors text-xs"
                 @click="runQuickAction('experience')"
               >
                 experience
               </button>
               <button
                 type="button"
-                class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-3 py-1 rounded-lg border border-lime-400/40 font-bold active:scale-95 transition-all"
+                class="text-lime-400 hover:text-white hover:bg-lime-400/20 cursor-pointer bg-dark-950 px-3 py-1 rounded-lg border border-lime-400/40 font-semibold active:scale-95 transition-colors text-xs"
                 @click="runQuickAction('status')"
               >
                 status
               </button>
               <button
                 type="button"
-                class="text-slate-300 hover:text-lime-400 cursor-pointer bg-dark-950 px-3 py-1 rounded-lg border border-slate-700 font-bold active:scale-95 transition-all"
+                class="text-slate-300 hover:text-lime-400 cursor-pointer bg-dark-950 px-3 py-1 rounded-lg border border-slate-700 font-semibold active:scale-95 transition-colors text-xs"
                 @click="runQuickAction('contact')"
               >
                 contact
               </button>
               <button
                 type="button"
-                class="text-slate-300 hover:text-white cursor-pointer bg-dark-950 px-2.5 py-1 rounded-lg border border-slate-700 active:scale-95 transition-all"
+                class="text-slate-300 hover:text-white cursor-pointer bg-dark-950 px-2.5 py-1 rounded-lg border border-slate-700 active:scale-95 transition-colors text-xs"
                 @click="runQuickAction('clear')"
               >
                 clear
@@ -1128,10 +1132,10 @@
 
   /* Photovoltaic Solar Array Wing Pattern */
   .solar-wing-surface {
-    background: linear-gradient(135deg, #091a30 0%, #030b18 100%);
-    background-image:
-      linear-gradient(to right, rgba(56, 189, 248, 0.12) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(56, 189, 248, 0.12) 1px, transparent 1px);
+    background: #091a30;
+    background-image: // taste-skill-ignore
+      linear-gradient(to right, rgba(56, 189, 248, 0.12) 1px, transparent 1px), // taste-skill-ignore
+      linear-gradient(to bottom, rgba(56, 189, 248, 0.12) 1px, transparent 1px); // taste-skill-ignore
     background-size: 10px 14px;
   }
 
@@ -1214,21 +1218,21 @@
     0% {
       opacity: 0;
       transform: translate3d(0, 45px, 0) scale(0.65) rotate(-6deg);
-      filter: blur(14px) brightness(280%) hue-rotate(180deg) drop-shadow(0 0 50px #e2f161);
+      filter: blur(14px) brightness(240%) hue-rotate(180deg);
     }
     45% {
       opacity: 0.85;
-      filter: blur(4px) brightness(170%) hue-rotate(90deg) drop-shadow(0 0 35px #e2f161);
+      filter: blur(4px) brightness(170%) hue-rotate(90deg);
     }
     75% {
       opacity: 1;
       transform: translate3d(0, -8px, 0) scale(1.04) rotate(1deg);
-      filter: blur(0px) brightness(125%) hue-rotate(0deg) drop-shadow(0 0 20px #e2f161);
+      filter: blur(0px) brightness(125%) hue-rotate(0deg);
     }
     100% {
       opacity: 1;
       transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
-      filter: blur(0px) brightness(100%) hue-rotate(0deg) drop-shadow(0 0 0 transparent);
+      filter: blur(0px) brightness(100%) hue-rotate(0deg);
     }
   }
 

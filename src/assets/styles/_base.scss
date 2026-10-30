@@ -17,6 +17,13 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  font-family: $font-sans;
+}
+
+code,
+pre,
+kbd,
+samp {
   font-family: $font-mono;
 }
 

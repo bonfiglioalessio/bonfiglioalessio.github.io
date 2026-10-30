@@ -103,17 +103,17 @@
     <!-- Instant Center Dot (Direct DOM Hardware Transform) -->
     <div
       ref="dotRef"
-      class="fixed top-0 left-0 w-2 h-2 rounded-full bg-[#e2f161] shadow-[0_0_8px_#e2f161] transition-transform duration-100 ease-out will-change-transform pointer-events-none"
+      class="fixed top-0 left-0 w-2 h-2 rounded-full bg-[#e2f161] transition-transform duration-100 ease-out will-change-transform pointer-events-none"
     />
 
-    <!-- Smooth Concentric Ring / Expanding Glowing Disc on Hover (LERP Direct Hardware Transform) -->
+    <!-- Smooth Concentric Ring / Expanding Disc on Hover (LERP Direct Hardware Transform) -->
     <div
       ref="ringRef"
       class="fixed top-0 left-0 rounded-full border border-[#e2f161] transition-all duration-300 ease-out will-change-transform pointer-events-none flex items-center justify-center"
       :class="[
         isHovered
-          ? 'w-14 h-14 bg-[#e2f161]/20 shadow-[0_0_22px_rgba(226,241,97,0.55)] border-[1.5px]'
-          : 'w-8 h-8 bg-transparent shadow-[0_0_12px_rgba(226,241,97,0.35)] border border-[#e2f161]',
+          ? 'w-14 h-14 bg-[#e2f161]/15 border-[1.5px]'
+          : 'w-8 h-8 bg-transparent border border-[#e2f161]/70',
         isMouseDown ? 'scale-90' : 'scale-100',
       ]"
     />
