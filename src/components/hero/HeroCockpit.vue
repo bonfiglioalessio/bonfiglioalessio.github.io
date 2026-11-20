@@ -616,9 +616,9 @@
         </div>
 
         <!-- Tab 1: Real Interactive Terminal Shell -->
-        <pre
+        <div
           v-show="activeTab === 'terminal'"
-          class="flex flex-col justify-between flex-1 min-h-0 bg-dark-950/90 border border-lime-400/20 rounded-2xl p-3.5 sm:p-4 my-2 font-mono text-xs sm:text-[13px] leading-relaxed overflow-hidden cursor-text relative z-10 whitespace-pre-wrap"
+          class="flex flex-col justify-between flex-1 min-h-0 bg-dark-950/90 border border-lime-400/20 rounded-2xl p-3.5 sm:p-4 my-2 font-mono text-xs sm:text-[13px] leading-relaxed overflow-hidden cursor-text relative z-10"
           @click="focusInput"
         >
           <!-- Scrolling Output Log -->
@@ -690,7 +690,7 @@
               EXEC
             </button>
           </form>
-        </pre>
+        </div>
 
         <!-- Tab 2: Config Tab (Top-Left Aligned Code Block) -->
         <div
@@ -946,9 +946,9 @@
           </div>
 
           <!-- Fullscreen Terminal Tab (Comfortable Proportional Fonts) -->
-          <pre
+          <div
             v-show="activeTab === 'terminal'"
-            class="flex flex-col justify-between flex-1 min-h-0 bg-dark-950/90 border border-lime-400/25 rounded-2xl p-4 sm:p-6 my-3 font-mono text-sm sm:text-base lg:text-[15px] leading-relaxed overflow-hidden cursor-text relative z-10 whitespace-pre-wrap"
+            class="flex flex-col justify-between flex-1 min-h-0 bg-dark-950/90 border border-lime-400/25 rounded-2xl p-4 sm:p-6 my-3 font-mono text-sm sm:text-base lg:text-[15px] leading-relaxed overflow-hidden cursor-text relative z-10"
             @click="focusInput"
           >
             <div
@@ -1016,7 +1016,7 @@
                 EXEC
               </button>
             </form>
-          </pre>
+          </div>
 
           <!-- Fullscreen Config Tab (Top-Left Aligned Code Block) -->
           <div
