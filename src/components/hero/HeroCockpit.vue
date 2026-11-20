@@ -163,12 +163,12 @@
         {
           id: `boot-${Date.now()}`,
           type: 'system',
-          html: `<pre class="space-y-1 text-inherit font-mono text-slate-300 whitespace-pre-wrap">
+          html: `<div class="space-y-1 text-inherit font-mono text-slate-300">
             <div class="text-lime-400 font-bold tracking-wide">[REBOOT SUCCESSFUL]</div>
             <div class="text-slate-400">&gt; Orbital telemetry re-synchronized @ 420 KM</div>
             <div class="text-emerald-400 font-semibold">&gt; Systems online: 60fps Web Audio + 3D Starfield</div>
             <div class="text-slate-400">&gt; Type <span class="text-lime-400 font-bold">help</span> or choose a quick action below.</div>
-          </pre>`,
+          </div>`,
         },
       ]
 

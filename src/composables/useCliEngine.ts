@@ -155,7 +155,7 @@ export function useCliEngine() {
         entries.value.push({
           id: `out-${Date.now()}`,
           type: 'output',
-          html: `<pre class="space-y-1.5 text-slate-300 font-mono text-inherit leading-relaxed whitespace-pre-wrap">
+          html: `<div class="space-y-1.5 text-slate-300 font-mono text-inherit leading-relaxed">
             <div class="text-lime-400 font-bold tracking-wide">AVAILABLE TELEMETRY COMMANDS:</div>
             <div>&bull; <strong class="text-white">skills</strong> / <strong class="text-white">stack</strong> — Technical skill constellation</div>
             <div>&bull; <strong class="text-white">projects</strong> / <strong class="text-white">work</strong> — Selected works &amp; code diffs</div>
@@ -166,7 +166,7 @@ export function useCliEngine() {
             <div>&bull; <strong class="text-white">supernova</strong> — Trigger cosmic particle storm</div>
             <div>&bull; <strong class="text-white">audio</strong> / <strong class="text-white">mute</strong> — Toggle Web Audio FX synthesizer</div>
             <div>&bull; <strong class="text-white">clear</strong> — Clear terminal window log</div>
-          </pre>`,
+          </div>`,
         })
         break
 
@@ -214,7 +214,7 @@ export function useCliEngine() {
 
       case 'status':
         pushStreamedOutput([
-          `<pre class="space-y-1 text-inherit font-mono text-slate-300 leading-relaxed whitespace-pre-wrap">
+          `<div class="space-y-1 text-inherit font-mono text-slate-300 leading-relaxed">
             <div class="text-lime-400 font-bold tracking-wide">[STATUS] SATELLITE TELEMETRY STATUS:</div>
             <div>&bull; <span class="text-slate-400">Base:</span> Milano, IT <span class="text-slate-500">(from Sanremo '98)</span></div>
             <div>&bull; <span class="text-slate-400">Mission:</span> Software Engineering @ <strong class="text-white">iliad</strong></div>
@@ -222,7 +222,7 @@ export function useCliEngine() {
             <div>&bull; <span class="text-slate-400">Core Stack:</span> Vue 3, TypeScript, Angular, React, SCSS, PHP</div>
             <div>&bull; <span class="text-slate-400">Engine:</span> 60fps Web Audio Synth + 3D Canvas</div>
             <div>&bull; <span class="text-slate-400">Status:</span> [OPTIMAL] / Live</div>
-          </pre>`,
+          </div>`,
         ])
         break
 
@@ -253,9 +253,9 @@ export function useCliEngine() {
           window.dispatchEvent(new CustomEvent('space-supernova-event'))
         }
         pushStreamedOutput([
-          `<pre class="text-emerald-400 font-bold font-mono text-inherit whitespace-pre-wrap">
+          `<div class="text-emerald-400 font-bold font-mono text-inherit">
             [SUPERNOVA DETONATED] 3D Cosmic shockwave ignited across the starfield!
-          </pre>`,
+          </div>`,
         ])
         break
 
@@ -274,20 +274,20 @@ export function useCliEngine() {
       case 'audio':
         toggleAudio()
         pushStreamedOutput([
-          `<pre class="text-lime-400 font-bold font-mono text-inherit whitespace-pre-wrap">
+          `<div class="text-lime-400 font-bold font-mono text-inherit">
             [AUDIO] AUDIO STATUS: [${isAudioEnabled.value ? 'ONLINE / PLAYING' : 'MUTED'}]
-          </pre>`,
+          </div>`,
         ])
         break
 
       case 'whoami':
         pushStreamedOutput([
-          `<pre class="space-y-1.5 text-inherit font-mono text-slate-300 leading-relaxed whitespace-pre-wrap">
+          `<div class="space-y-1.5 text-inherit font-mono text-slate-300 leading-relaxed">
             <div>&gt; USER: <span class="text-lime-400 font-bold">${portfolioData.value.profile.name}</span> <span class="text-slate-400">('98 @ Milano)</span></div>
             <div>&gt; ROLE: <span class="text-white">${portfolioData.value.profile.role}</span> @ <strong class="text-lime-300">${portfolioData.value.profile.currentCompany}</strong></div>
             <div>&gt; FOCUS: <span class="text-slate-300">Enterprise Code Modernization, Scalable Architecture &amp; Creative Lab</span></div>
             <div>&gt; BACKGROUND: <span class="text-slate-400">Origins in Sanremo -&gt; Comics Torino (30/30) • Delpho • Liceo Artistico</span></div>
-          </pre>`,
+          </div>`,
         ])
         break
 
